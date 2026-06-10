@@ -1,7 +1,7 @@
 /* ============================================================
    FLYNEW SHILAJIT ULTRA — lógica de la landing
    ============================================================ */
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbwxeXqbyHoyfaiLB8i6lGnfWIJisMa6cN4ybX9YJ8vDGc-fDWxVnM0vRPuIpBidII5sYA/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwilBW_z6KWfF8yS3fHEQ7ufMjfM4fEMxkgrOiNmw7H7Opzwu4E7gBBaJNfQ9dFAgBPXg/exec";
 const PRODUCTO = "Flynew Shilajit Ultra 60 cápsulas";
 const clp = n => "$" + Math.round(n).toLocaleString("es-CL");
 
