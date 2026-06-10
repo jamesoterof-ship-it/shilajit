@@ -3,6 +3,7 @@
    ============================================================ */
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwilBW_z6KWfF8yS3fHEQ7ufMjfM4fEMxkgrOiNmw7H7Opzwu4E7gBBaJNfQ9dFAgBPXg/exec";
 const PRODUCTO = "Flynew Shilajit Ultra 60 cápsulas";
+const N8N_CONFIRM = "https://n8n-production-8a42.up.railway.app/webhook/d4f51138-9611-4f93-9c51-e137fea97dcc"; // confirmación WhatsApp
 const clp = n => "$" + Math.round(n).toLocaleString("es-CL");
 
 /* ---------- Píxel de Meta (helper seguro) ---------- */
@@ -295,6 +296,17 @@ form.addEventListener("submit",async e=>{
     if(SHEET_URL){
       await fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
     } else { console.warn("SHEET_URL vacío: configúralo en app.js para guardar pedidos."); }
+    // Confirmación por WhatsApp (n8n) — formato que espera el flujo
+    if(N8N_CONFIRM){
+      var telWA = (form.codpais.value+"").replace(/\D/g,"") + (form.telefono.value+"").replace(/\D/g,"");
+      fetch(N8N_CONFIRM,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        customer:{ phone: telWA },
+        shipping_address:{ first_name: nombre.split(" ")[0], address1: dir },
+        order_number: "JG-"+String(Date.now()).slice(-6),
+        line_items:[{ title: PRODUCTO, quantity: qty }],
+        total_price: String(total)
+      })}).catch(function(){});
+    }
     // marcar el pedido abandonado como COMPLETADO (misma fila por sid)
     if(abandonedSent) sendSheet(Object.assign(currentFormData(),{tipo:"abandonado",estado:"COMPLETADO"}));
     // Píxel de Meta: Purchase (conversión)
