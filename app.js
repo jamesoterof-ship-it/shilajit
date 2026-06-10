@@ -277,7 +277,6 @@ form.addEventListener("submit",async e=>{
   bad=nombre.length<2; setInvalid("nombre",bad); if(bad)ok=false;
   bad=tel.length<8;    setInvalid("telefono",bad); if(bad)ok=false;
   bad=dir.length<4;    setInvalid("direccion",bad); if(bad)ok=false;
-  bad=form.referencia.value.trim().length<3; setInvalid("referencia",bad); if(bad)ok=false;
   bad=!form.region.value; setInvalid("region",bad); if(bad)ok=false;
   bad=!form.comuna.value; setInvalid("comuna",bad); if(bad)ok=false;
   if(!ok){ form.querySelector(".invalid")?.scrollIntoView({behavior:"smooth",block:"center"}); return; }
