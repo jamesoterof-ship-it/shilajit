@@ -4,7 +4,15 @@
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwilBW_z6KWfF8yS3fHEQ7ufMjfM4fEMxkgrOiNmw7H7Opzwu4E7gBBaJNfQ9dFAgBPXg/exec";
 const PRODUCTO = "Flynew Shilajit Ultra 60 cápsulas";
 const N8N_CONFIRM = "https://n8n-production-8a42.up.railway.app/webhook/d4f51138-9611-4f93-9c51-e137fea97dcc"; // confirmación WhatsApp
+const PANEL_URL = "https://script.google.com/macros/s/AKfycbyke2zc02sx0MheNjfmuncegV2kKT5rI1Ev25skc6EDTq932nJtpPnowSBAslikFjhiQA/exec"; // panel: visitas/conversión
 const clp = n => "$" + Math.round(n).toLocaleString("es-CL");
+
+/* ---------- Contador de visitas (para el panel) ---------- */
+function trackPanel(tipo){
+  if(!PANEL_URL) return;
+  try{ fetch(PANEL_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({tipo:tipo})}).catch(function(){}); }catch(e){}
+}
+try{ if(!sessionStorage.getItem("jaye_vis")){ sessionStorage.setItem("jaye_vis","1"); trackPanel("visita"); } }catch(e){ trackPanel("visita"); }
 
 /* ---------- Píxel de Meta (helper seguro) ---------- */
 function fb(evento, datos){ if(window.fbq){ try{ fbq("track", evento, datos || {}); }catch(e){} } }
@@ -32,6 +40,7 @@ document.querySelectorAll("[data-scroll]").forEach(b=>{
       _checkoutTracked = true;
       var p = (typeof current!=="undefined" && current) ? parseInt(current.dataset.price,10) : 22500;
       fb("InitiateCheckout", { content_name: PRODUCTO, value: p, currency: "CLP" });
+      trackPanel("visita_form");   // llegó al formulario
     }
   });
 });
