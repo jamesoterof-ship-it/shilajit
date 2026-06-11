@@ -4,7 +4,7 @@
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwilBW_z6KWfF8yS3fHEQ7ufMjfM4fEMxkgrOiNmw7H7Opzwu4E7gBBaJNfQ9dFAgBPXg/exec";
 const PRODUCTO = "Flynew Shilajit Ultra 60 cápsulas";
 const N8N_CONFIRM = "https://n8n-production-8a42.up.railway.app/webhook/d4f51138-9611-4f93-9c51-e137fea97dcc"; // confirmación WhatsApp
-const PANEL_URL = "https://script.google.com/macros/s/AKfycbyke2zc02sx0MheNjfmuncegV2kKT5rI1Ev25skc6EDTq932nJtpPnowSBAslikFjhiQA/exec"; // panel: visitas/conversión
+const PANEL_URL = "https://script.google.com/macros/s/AKfycbzhWqfMJVJiquBdOfOAqkgVFp9dHBphmpEk4CLd4woXSb4A9vIN_1iPq3PkjKKKHCusGQ/exec"; // panel: visitas/conversión
 const clp = n => "$" + Math.round(n).toLocaleString("es-CL");
 
 /* ---------- Contador de visitas (para el panel) ---------- */
