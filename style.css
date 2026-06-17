@@ -92,9 +92,11 @@ h3{color:var(--indigo)}
   box-shadow:0 8px 22px rgba(180,10,10,.32);transition:transform .08s,filter .15s;font-family:inherit;text-align:center}
 .btn:hover{filter:brightness(1.07)}
 .btn:active{transform:translateY(1px)}
-.btn--cta{animation:bounce 1.7s ease-in-out infinite}
+.btn--cta{animation:bounce 1.7s ease-in-out infinite;position:relative;overflow:hidden}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-@media (prefers-reduced-motion:reduce){.btn--cta{animation:none}}
+.btn--cta::after{content:"";position:absolute;top:0;left:-130%;width:55%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:btnShine 3.4s ease-in-out infinite;pointer-events:none}
+@keyframes btnShine{0%{left:-130%}58%,100%{left:150%}}
+@media (prefers-reduced-motion:reduce){.btn--cta{animation:none}.btn--cta::after{display:none}}
 .btn--naranja{background:var(--naranja);box-shadow:0 8px 20px rgba(255,107,0,.32)}
 .btn--teal{background:var(--teal);box-shadow:0 8px 20px rgba(16,132,116,.30)}
 .btn--block{margin-top:14px}
