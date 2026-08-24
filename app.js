@@ -1,397 +1,418 @@
 /* ============================================================
-   FLYNEW SHILAJIT ULTRA — lógica de la landing
+   FÁBRICA JAYE — MOTOR (app.js)
+   Renderiza la página desde window.CONFIG, aplica la paleta,
+   anima (reveal + contadores) y conserva el backend que ya
+   vende (Apps Script + n8n confirmación + panel + Meta Pixel +
+   captura de carrito abandonado + región/comuna + packs).
+   NO se edita por producto: solo se toca config.js.
    ============================================================ */
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbwilBW_z6KWfF8yS3fHEQ7ufMjfM4fEMxkgrOiNmw7H7Opzwu4E7gBBaJNfQ9dFAgBPXg/exec";
-const PRODUCTO = "Flynew Shilajit Ultra 60 cápsulas";
-const N8N_CONFIRM = "https://n8n-production-8a42.up.railway.app/webhook/d4f51138-9611-4f93-9c51-e137fea97dcc"; // confirmación WhatsApp
-const PANEL_URL = "https://script.google.com/macros/s/AKfycbzhWqfMJVJiquBdOfOAqkgVFp9dHBphmpEk4CLd4woXSb4A9vIN_1iPq3PkjKKKHCusGQ/exec"; // panel: visitas/conversión
+(function(){
+const C = window.CONFIG || {};
 /* ---- seguimiento de campaña: captura ?cmp del anuncio (Meta) para atribución exacta por teléfono ---- */
 try{ var _qsC=new URLSearchParams(location.search); var _cmpV=_qsC.get("cmp")||_qsC.get("utm_campaign")||""; if(_cmpV){ try{localStorage.setItem("_cmp",_cmpV);}catch(e){} window._CMP=_cmpV; } else { try{ window._CMP=localStorage.getItem("_cmp")||""; }catch(e){ window._CMP=""; } } }catch(e){ window._CMP=""; }
-window._trackVenta=function(phone){ try{ if(window._CMP&&phone) fetch("https://n8n-production-8a42.up.railway.app/webhook/track-click",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:phone,cmp:window._CMP,producto:PRODUCTO,canal:"pagina"})}).catch(function(){}); }catch(e){} };
-const clp = n => "$" + Math.round(n).toLocaleString("es-CL");
+window._trackVenta=function(phone){ try{ if(window._CMP&&phone) fetch("https://n8n-production-8a42.up.railway.app/webhook/track-click",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone:phone,cmp:window._CMP,producto:(C.producto||""),canal:"pagina"})}).catch(function(){}); }catch(e){} };
+const $ = (s,r)=> (r||document).querySelector(s);
+const $$ = (s,r)=> [].slice.call((r||document).querySelectorAll(s));
+const money = n => "$" + Math.round(n).toLocaleString(C.pais && C.pais.locale || "es-CL");
+const set = (id,txt)=>{ var e=$("#"+id); if(e) e.textContent=txt; };
+const html = (id,h)=>{ var e=$("#"+id); if(e) e.innerHTML=h; };
 
-/* ---------- Contador de visitas (para el panel) ---------- */
-function trackPanel(tipo){
-  try{ fetch("https://n8n-production-8a42.up.railway.app/webhook/track-visita",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({pagina:PRODUCTO,producto:PRODUCTO,tipo:tipo})}).catch(function(){}); }catch(e){}
-}
-try{ if(!sessionStorage.getItem("jaye_vis")){ sessionStorage.setItem("jaye_vis","1"); trackPanel("visita"); } }catch(e){ trackPanel("visita"); }
-
-/* ---------- Píxel de Meta (helper seguro) ---------- */
-function fb(evento, datos){ if(window.fbq){ try{ fbq("track", evento, datos || {}); }catch(e){} } }
-/* ---------- Píxel de TikTok (helper seguro) ---------- */
-function tt(evento, datos){ if(window.ttq){ try{ ttq.track(evento, datos || {}); }catch(e){} } }
-// ViewContent al cargar la página de producto
-fb("ViewContent", { content_name: PRODUCTO, content_ids: ["shilajit-ultra"], content_type: "product", value: 22500, currency: "CLP" });
-tt("ViewContent", { content_id: "shilajit-ultra", content_name: PRODUCTO, content_type: "product", value: 22500, currency: "CLP" });
-var _checkoutTracked = false;
-
-/* ---------- Scroll suave + cantidad preseleccionada ---------- */
-function irAlObjetivo(sel){
-  var el=document.querySelector(sel); if(!el) return;
-  var head=document.querySelector(".header");
-  var off=(head?head.offsetHeight:0)+8;
-  function go(b){ window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - off, behavior: b }); }
-  go("smooth");
-  setTimeout(function(){ go("smooth"); }, 400);   // re-corrige el salto por imágenes que cargan tarde
-  setTimeout(function(){ go("auto"); }, 900);
-}
-document.querySelectorAll("[data-scroll]").forEach(b=>{
-  b.addEventListener("click",()=>{
-    if(b.dataset.qty) selectPack(b.dataset.qty);
-    irAlObjetivo(b.dataset.scroll);
-    var m=document.getElementById("menu"); if(m) m.hidden=true;   // cerrar menú si está abierto
-    // InitiateCheckout al tocar un botón de compra (una sola vez)
-    if(b.dataset.scroll === "#pedido" && !_checkoutTracked){
-      _checkoutTracked = true;
-      var p = (typeof current!=="undefined" && current) ? parseInt(current.dataset.price,10) : 22500;
-      fb("InitiateCheckout", { content_name: PRODUCTO, value: p, currency: "CLP" });
-      tt("InitiateCheckout", { content_id: "shilajit-ultra", content_name: PRODUCTO, value: p, currency: "CLP" });
-      trackPanel("visita_form");   // llegó al formulario
-    }
-  });
-});
-
-/* ---------- Menú desplegable (☰) ---------- */
+/* ---------- 1) PALETA → variables CSS ---------- */
 (function(){
-  var ham=document.getElementById("hamBtn"), menu=document.getElementById("menu");
-  if(!ham||!menu) return;
-  ham.addEventListener("click",function(e){ e.stopPropagation(); menu.hidden=!menu.hidden; });
-  menu.querySelectorAll("a[href]").forEach(function(a){ a.addEventListener("click",function(){ menu.hidden=true; }); });
-  document.addEventListener("click",function(e){ if(!menu.hidden && !menu.contains(e.target) && e.target!==ham) menu.hidden=true; });
+  var p = C.paleta||{}; var r = document.documentElement.style;
+  if(p.pri) r.setProperty("--pri", p.pri);
+  if(p.sec) r.setProperty("--sec", p.sec);
+  if(p.acc) r.setProperty("--acc", p.acc);
+  if(p.priD) r.setProperty("--pri-d", p.priD);
+  if(p.ink) r.setProperty("--ink", p.ink);
 })();
 
-/* ---------- Packs + resumen ---------- */
-const packs = [...document.querySelectorAll("#packs .pack")];
-let current = packs.find(p=>p.classList.contains("sel")) || packs[1] || packs[0];
-function selectPack(qty){
-  const p = packs.find(x=>x.dataset.qty===String(qty));
-  if(!p) return;
-  packs.forEach(x=>x.classList.remove("sel"));
-  p.classList.add("sel");
-  current = p;
-  refresh();
-}
-packs.forEach(p=>{
-  p.addEventListener("click",e=>{ e.preventDefault(); selectPack(p.dataset.qty); });
+/* ---------- 2) Cabecera / SEO / contacto ---------- */
+$$("[data-cfg]").forEach(function(el){
+  var v = C[el.getAttribute("data-cfg")];
+  if(v==null) return;
+  if(el.tagName==="META") el.setAttribute("content", v);
+  else el.textContent = v;
 });
+document.documentElement.lang = "es-" + ((C.pais&&C.pais.cc)||"cl").toUpperCase();
+if(C.img && C.img.logo){ var bl=$("#brandLogo"); bl.src=C.img.logo; bl.hidden=false; bl.onerror=function(){this.hidden=true;}; }
+var _bn=$("#brandName"); if(C.marca && _bn){ _bn.innerHTML = C.marca.replace(/Group/i,'<span class="g">Group</span>'); }
+var waLink = "https://wa.me/"+(C.whatsapp||"")+"?text="+encodeURIComponent("Hola, quiero pedir el "+(C.productoCorto||C.producto||""));
+["#navWa","#waFloat"].forEach(function(s){ var e=$(s); if(e) e.href=waLink; });
+set("footTitle", C.footTitle||C.marca||"JAYE GROUP");
+set("footAddr", C.footAddr||"");
+var fm=$("#footMail"); if(fm){ fm.textContent=C.footMail||""; fm.href="mailto:"+(C.footMail||""); }
+var fw=$("#footWa"); if(fw){ fw.textContent="+"+(C.whatsapp||""); fw.href=waLink; }
+set("year", new Date().getFullYear());
+
+/* ---------- 3) Marquees ---------- */
+(function(){
+  var items = ["Calidad Premium","Envío Gratis","Pago Contra Entrega","Satisfacción Garantizada","Mejores Precios"];
+  var h = items.concat(items).map(function(t){return "<span>✦ "+t+"</span>";}).join("");
+  html("mq1", h); html("mq2", h);
+})();
+
+/* ---------- 4) HERO ---------- */
+set("heroKicker", C.heroKicker||"");
+html("heroTitle", C.heroTitle||C.producto||"");
+set("heroLead", C.heroLead||"");
+set("heroTag", C.heroTag||"Envío gratis");
+set("heroPrice", money(C.precioUnidad||0));
+html("heroBadges", (C.badges||[]).map(function(b){return "<span>"+b+"</span>";}).join(""));
+var hImg=$("#heroImg"); if(hImg && C.img){ hImg.src=C.img.hero||C.img.oferta||""; hImg.alt=C.producto||""; }
+set("introPrice", money(C.precioUnidad||0));
+
+/* ---------- 5) TRUST ---------- */
+html("trust", (C.trust||[]).map(function(t){
+  return '<div class="t"><div class="em">'+t.em+'</div><b>'+t.b+'</b><span>'+t.s+'</span></div>';
+}).join(""));
+
+/* ---------- 6) BENEFICIOS ---------- */
+set("benTitle", C.benTitle||"Beneficios");
+set("benSub", C.benSub||"");
+html("benefits", (C.beneficios||[]).map(function(b,i){
+  return '<div class="card" data-rv data-rv-d="'+(i*90)+'"><div class="ic">'+b.ic+'</div><h3>'+b.t+'</h3><p>'+b.d+'</p></div>';
+}).join(""));
+
+/* ---------- 7) CÓMO ACTÚA ---------- */
+set("howTitle", C.howTitle||"");
+set("howIntro", C.howIntro||"");
+html("howSteps", (C.howSteps||[]).map(function(s,i){
+  return '<div class="step" data-rv data-rv-d="'+(i*90)+'"><div class="n">'+(i+1)+'</div><h3>'+s.t+'</h3><p>'+s.d+'</p></div>';
+}).join(""));
+
+/* ---------- 8) OFERTA ---------- */
+set("offerTitle", C.offerTitle||"");
+set("offerSub", C.offerSub||"");
+if(C.offerWas>C.offerNew){ set("offerWas", money(C.offerWas)); } else { var _ow=$("#offerWas"); if(_ow) _ow.style.display="none"; }
+set("offerNew", money(C.offerNew||0)+" CLP");
+var oImg=$("#offerImg"); if(oImg && C.img){ oImg.src=C.img.oferta||C.img.hero||""; oImg.alt=C.offerTitle||""; }
+
+/* ---------- 9) GALERÍA ---------- */
+html("gallery", ((C.img&&C.img.galeria)||[]).map(function(src){
+  return '<img src="'+src+'" loading="lazy" alt="'+(C.productoCorto||"")+'">';
+}).join(""));
+
+/* ---------- 10) STATS ---------- */
+set("statTitle", C.statTitle||"Resultados");
+html("stats", (C.stats||[]).map(function(s){
+  return '<div class="s"><div class="em">'+s.em+'</div><b data-count="'+s.valor+'" data-suf="'+(s.suf||"")+'">0</b><p>'+s.d+'</p></div>';
+}).join(""));
+
+/* ---------- 11) COMPARATIVA ---------- */
+set("cmpTitle", C.cmpTitle||"");
+set("cmpUs", C.productoCorto||C.marca||"Nosotros");
+var _CHK='<svg class="cmpi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+var _XIC='<svg class="cmpi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+html("compare", (C.comparativa||[]).map(function(f){
+  return '<tr><td>'+f+'</td><td class="us">'+_CHK+'</td><td class="ot">'+_XIC+'</td></tr>';
+}).join(""));
+
+/* ---------- 12) GARANTÍA ---------- */
+set("garDias", C.garDias||30);
+set("garTitle", C.garTitle||"");
+set("garText", C.garText||"");
+
+/* ---------- 13) FAQ ---------- */
+html("faqList", (C.faq||[]).map(function(f,i){
+  return '<details'+(i===0?' open':'')+'><summary>'+f.q+'</summary><div class="a">'+f.a+'</div></details>';
+}).join(""));
+
+/* ---------- 14) Carriers ---------- */
+if(C.carriers && C.carriers.length){
+  $("#carriers").hidden=false;
+  html("cbadges", C.carriers.map(function(src){return '<img src="'+src+'" alt="" onerror="this.remove()">';}).join(""));
+}
+
+/* ---------- 15) PACKS + resumen ---------- */
+var packsWrap = $("#packs");
+html("packs", (C.packs||[]).map(function(p,i){
+  var sel = (i===1 || (C.packs.length===1));
+  var thumb = i===0 ? (C.img&&C.img.packThumb1) : (C.img&&C.img.packThumb2);
+  return '<label class="pack'+(sel?' sel':'')+'" data-qty="'+p.qty+'" data-price="'+p.price+'" data-was="'+(p.was||p.price)+'">'+
+    (p.tag?'<span class="tag">'+p.tag+'</span>':'')+
+    '<span class="radio"></span>'+
+    (thumb?'<img class="thumb" src="'+thumb+'" alt="" onerror="this.style.display=\'none\'">':'')+
+    '<span class="info"><span class="t">'+p.label+'</span><span class="s">'+p.sub+'</span></span>'+
+    '<span class="pr"><span class="n">'+money(p.price)+'</span>'+(p.was>p.price?'<span class="w">'+money(p.was)+'</span>':'')+'</span>'+
+  '</label>';
+}).join(""));
+
+var packs = $$("#packs .pack");
+var current = packs.find(function(p){return p.classList.contains("sel");}) || packs[0];
+function selectPack(qty){
+  var p = packs.find(function(x){return x.dataset.qty===String(qty);});
+  if(!p) return;
+  packs.forEach(function(x){x.classList.remove("sel");});
+  p.classList.add("sel"); current=p; refresh();
+}
+packs.forEach(function(p){ p.addEventListener("click",function(e){ e.preventDefault(); selectPack(p.dataset.qty); }); });
 function refresh(){
-  const qty = parseInt(current.dataset.qty,10);
-  const price = parseInt(current.dataset.price,10);   // total a pagar
-  const sub = 22500 * qty;                            // precio lista
-  const disc = sub - price;
-  document.getElementById("sumSub").textContent = clp(sub);
-  document.getElementById("sumDisc").textContent = "-" + clp(disc);
-  document.getElementById("sumTot").textContent = clp(price);
-  var cc = document.getElementById("cartCount");
-  if(cc) cc.textContent = qty;
+  if(!current) return;
+  var qty=parseInt(current.dataset.qty,10), price=parseInt(current.dataset.price,10);
+  var was=parseInt(current.dataset.was,10)||price, sub=was, disc=sub-price;
+  set("sumSub", money(sub)); set("sumDisc", "-"+money(disc)); set("sumTot", money(price));
 }
 refresh();
 
-/* ---------- Regiones / Comunas ---------- */
-const regionSel = document.getElementById("region");
-const comunaSel = document.getElementById("comuna");
-Object.keys(window.CHILE_REGIONES||{}).forEach(r=>{
-  const o=document.createElement("option"); o.value=r; o.textContent=r; regionSel.appendChild(o);
-});
-regionSel.addEventListener("change",()=>{
-  comunaSel.innerHTML='<option value="">Selecciona…</option>';
-  const cs = window.CHILE_REGIONES[regionSel.value]||[];
-  cs.forEach(c=>{const o=document.createElement("option");o.value=c;o.textContent=c;comunaSel.appendChild(o);});
-  comunaSel.disabled = cs.length===0;
-});
-
-/* ---------- Countdown evergreen (24 h) ---------- */
+/* ---------- 16) Reveal on scroll + contadores ---------- */
 (function(){
-  const DUR=24*60*60*1000;
-  let end=parseInt(localStorage.getItem("cd_end")||"0",10);
-  const now=Date.now();
-  if(!end||end<now){ end=now+DUR; localStorage.setItem("cd_end",end); }
-  const d=document.getElementById("cd-d"),h=document.getElementById("cd-h"),m=document.getElementById("cd-m"),s=document.getElementById("cd-s");
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el=e.target, d=parseInt(el.getAttribute("data-rv-d")||"0",10);
+      setTimeout(function(){ el.classList.add("in"); }, d);
+      if(el.hasAttribute("data-count")) animateCount(el);
+      io.unobserve(el);
+    });
+  },{threshold:.15});
+  $$("[data-rv]").forEach(function(el){ io.observe(el); });
+  $$("[data-count]").forEach(function(el){ io.observe(el); });
+  function animateCount(el){
+    var meta=parseFloat(el.getAttribute("data-count")), suf=el.getAttribute("data-suf")||"";
+    var dec = meta%1!==0, v=0, step=meta/55;
+    var t=setInterval(function(){ v+=step; if(v>=meta){v=meta;clearInterval(t);} el.textContent=(dec?v.toFixed(1):Math.floor(v))+suf; },20);
+  }
+})();
+
+/* ---------- 17) Countdown de 2 días que se reinicia solo (ciclo de 48h) ---------- */
+(function(){
+  var pad=function(n){return String(n).padStart(2,"0");};
+  var CYCLE=2*86400; /* 2 días en segundos */
   function tick(){
-    let left=Math.max(0,end-Date.now());
-    const dd=Math.floor(left/8.64e7), hh=Math.floor(left%8.64e7/3.6e6), mm=Math.floor(left%3.6e6/6e4), ss=Math.floor(left%6e4/1e3);
-    d.textContent=String(dd).padStart(2,"0");h.textContent=String(hh).padStart(2,"0");
-    m.textContent=String(mm).padStart(2,"0");s.textContent=String(ss).padStart(2,"0");
+    var now=Math.floor(Date.now()/1000);
+    var rem=CYCLE-(now%CYCLE); /* cuenta de 2 días a 0 y vuelve a empezar */
+    set("cd-d",pad(Math.floor(rem/86400)));
+    set("cd-h",pad(Math.floor(rem%86400/3600)));
+    set("cd-m",pad(Math.floor(rem%3600/60)));
+    set("cd-s",pad(rem%60));
   }
   tick(); setInterval(tick,1000);
 })();
 
-/* ---------- Carrusel con auto-deslizamiento ---------- */
-(function(){
-  var car = document.querySelector(".carousel");
-  if(!car) return;
-  var cards = [].slice.call(car.querySelectorAll(".imgcard"));
-  if(cards.length < 2) return;
-  if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var i = 0, paused = false, resume;
-  var base = function(){ return cards[0].offsetLeft; };
-  function go(){
-    if(paused || document.hidden) return;
-    i = (i + 1) % cards.length;
-    car.scrollTo({ left: cards[i].offsetLeft - base(), behavior: "smooth" });
-  }
-  setInterval(go, 3000);
-  ["pointerdown","touchstart","wheel"].forEach(function(ev){
-    car.addEventListener(ev, function(){
-      paused = true; clearTimeout(resume);
-      resume = setTimeout(function(){
-        // sincronizar el índice con la tarjeta visible actual
-        var best = 0, bd = 1e9;
-        cards.forEach(function(c, idx){
-          var d = Math.abs((c.offsetLeft - base()) - car.scrollLeft);
-          if(d < bd){ bd = d; best = idx; }
-        });
-        i = best; paused = false;
-      }, 4500);
-    }, {passive:true});
+/* ---------- 18) Scroll suave + nav móvil ---------- */
+function goTo(sel){
+  var el=$(sel); if(!el) return;
+  var off=($(".header")?$(".header").offsetHeight:0)+8;
+  window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-off,behavior:"smooth"});
+}
+$$("[data-scroll]").forEach(function(b){
+  b.addEventListener("click",function(){
+    if(b.dataset.qty) selectPack(b.dataset.qty);
+    goTo(b.dataset.scroll);
+    var nav=$("#nav"); if(nav) nav.classList.remove("open");
+    if(b.dataset.scroll==="#pedido" && !_checkout){ _checkout=true; fb("InitiateCheckout",{content_name:C.producto,value:current?+current.dataset.price:C.precioUnidad,currency:C.pais.moneda}); trackPanel("visita_form"); }
   });
-})();
+});
+$("#ham").addEventListener("click",function(){ $("#nav").classList.toggle("open"); });
 
-/* ---------- Sticky CTA ---------- */
+/* ---------- 19) Sticky CTA ---------- */
 (function(){
-  const bar=document.getElementById("stickycta"), form=document.getElementById("pedido");
-  window.addEventListener("scroll",()=>{
-    const ft=form.getBoundingClientRect().top;
+  var bar=$("#stickycta"), form=$("#pedido");
+  window.addEventListener("scroll",function(){
+    var ft=form.getBoundingClientRect().top;
     bar.classList.toggle("show", window.scrollY>520 && ft>window.innerHeight*0.5);
   },{passive:true});
 })();
 
-/* ---------- RESEÑAS ---------- */
+/* ---------- 20) Selector código de país ---------- */
 (function(){
-  var list = document.getElementById("revList");
-  if(!list) return;
-  var NAMES = ["José Muñoz","María González","Camila Rojas","Matías Soto","Javiera Díaz","Felipe Contreras","Catalina Pérez","Sebastián Silva","Antonia Martínez","Vicente Sepúlveda","Fernanda Morales","Diego Rodríguez","Valentina López","Cristóbal Fuentes","Daniela Hernández","Ignacio Torres","Constanza Araya","Benjamín Flores","Francisca Espinoza","Tomás Valenzuela","Josefa Castillo","Martín Tapia","Isidora Reyes","Agustín Gutiérrez","Trinidad Castro","Joaquín Vargas","Florencia Álvarez","Maximiliano Vásquez","Emilia Sánchez","Vicente Fernández","Gabriela Gómez","Rodrigo Cortés","Paula Herrera","Andrés Núñez","Carolina Pizarro","Cristián Bravo","Macarena Cáceres","Nicolás Vera","Bárbara Riquelme","Álvaro Saavedra","Pía Carrasco","Mauricio Lagos","Romina Salazar","Esteban Ramírez","Javier Aguilera","Catalina Navarro","Pedro Fuentealba","Karen Ortega","Luis Henríquez","Marcela Cárdenas"];
-  var TEXTS = ["Excelente producto, llegó rápido y se siente la energía.","Lo recomiendo 100%, ya voy por el segundo frasco.","Llevo dos semanas y duermo mucho mejor.","Me siento con más vitalidad y menos cansancio.","Buenísimo, el pago contra entrega facilitó todo.","Se nota el cambio desde la primera semana.","Mi pareja lo usa y está feliz con los resultados.","Llegó a regiones sin problema, muy buena atención.","Tremendo producto, recomendado para el día a día.","Más foco y energía para el trabajo. Gracias.","Pedí dos y nos sirvió para toda la familia.","La verdad sí funciona, me siento mejor.","Despacho rápido y producto de calidad.","Lo compré desconfiado y quedé sorprendido.","Excelente para el rendimiento físico, lo noto en el gym.","Muy buen suplemento, repito sin duda.","Me ayudó con el cansancio de la tarde."];
-  var SEED = [];
-  for(var k=0;k<50;k++){
-    var st = (k%9===4)?4 : (k%24===7?3:5);
-    var dd = String((k*7)%28+1).padStart(2,"0");
-    var mm = String((k%5)+1).padStart(2,"0");
-    SEED.push({ name:NAMES[k%NAMES.length], stars:st, ver:(k%3===0), text:TEXTS[k%TEXTS.length], date:dd+"/"+mm+"/2026" });
-  }
-  SEED[2].img = "img/1777337735__1777337725131-capturadepantalla2026-04-2__huge.png";
-  SEED[11].img = "img/1777337735__1777337725131-capturadepantalla2026-04-2__huge.png";
-
-  var KEY = "reviews_flynew_v1";
-  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||"[]"); }catch(e){ return []; } }
-  function save(arr){ try{ localStorage.setItem(KEY, JSON.stringify(arr)); }catch(e){} }
-  function stars(n){ var s=""; for(var i=1;i<=5;i++){ s += i<=n ? "★" : '<span class="off">★</span>'; } return s; }
-  function av(name){ return (name||"?").trim().charAt(0).toUpperCase(); }
-  function card(r){
-    return '<div class="rev"><div class="top"><span class="av">'+av(r.name)+'</span>'+
-      '<div><div class="who">'+r.name+(r.ver?'<span class="ver">✓ Verificado</span>':'')+'</div>'+
-      '<div class="date">'+r.date+'</div></div></div>'+
-      '<div class="st">'+stars(r.stars)+'</div><p>'+r.text+'</p>'+
-      (r.img?'<img class="rimg" src="'+r.img+'" loading="lazy" alt="Foto reseña">':'')+'</div>';
-  }
-  function render(){
-    var all = load().concat(SEED);
-    // 6 en el cuadro principal
-    list.innerHTML = all.slice(0, 6).map(card).join("");
-    // el resto se desliza solo (duplicado para loop continuo)
-    var rest = all.slice(6);
-    var auto = document.getElementById("revAuto");
-    if(auto){ auto.innerHTML = (rest.concat(rest)).map(card).join(""); }
-    document.getElementById("revCount").textContent = 50 + load().length;
-  }
-  render();
-
-  /* Modal */
-  var modal = document.getElementById("revModal");
-  var rating = 0;
-  var picks = [].slice.call(document.querySelectorAll("#starPick span"));
-  function paint(n){ picks.forEach(function(s,i){ s.classList.toggle("on", i < n); }); }
-  picks.forEach(function(s){
-    s.addEventListener("click", function(){ rating = +s.dataset.v; paint(rating); });
-    s.addEventListener("mouseenter", function(){ paint(+s.dataset.v); });
-  });
-  document.getElementById("starPick").addEventListener("mouseleave", function(){ paint(rating); });
-  document.getElementById("btnWrite").addEventListener("click", function(){ modal.hidden=false; });
-  document.getElementById("revClose").addEventListener("click", function(){ modal.hidden=true; });
-  modal.addEventListener("click", function(e){ if(e.target===modal) modal.hidden=true; });
-
-  document.getElementById("revSubmit").addEventListener("click", function(){
-    var name = document.getElementById("revName").value.trim();
-    var text = document.getElementById("revText").value.trim();
-    var msg = document.getElementById("revMsg");
-    if(!rating){ msg.style.color="#ee1c25"; msg.textContent="Elige cuántas estrellas."; return; }
-    if(name.length<2 || text.length<3){ msg.style.color="#ee1c25"; msg.textContent="Escribe tu nombre y tu reseña."; return; }
-    var hoy = new Date();
-    var review = { name:name, text:text, stars:rating, ver:false,
-      date: String(hoy.getDate()).padStart(2,"0")+"/"+String(hoy.getMonth()+1).padStart(2,"0")+"/"+hoy.getFullYear() };
-    // guardar local + mostrar al instante
-    var mine = load(); mine.unshift(review); save(mine);
-    render();
-    // enviar al Google Sheet (si está configurado)
-    if(typeof SHEET_URL!=="undefined" && SHEET_URL){
-      fetch(SHEET_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"},
-        body: JSON.stringify({tipo:"resena", producto:PRODUCTO, nombre:name, estrellas:rating, resena:text, fecha:review.date})}).catch(function(){});
-    }
-    msg.style.color="var(--teal)"; msg.textContent="¡Gracias! Tu reseña se publicó. 🎉";
-    document.getElementById("revName").value=""; document.getElementById("revText").value="";
-    rating=0; paint(0);
-    setTimeout(function(){ modal.hidden=true; msg.textContent=""; document.getElementById("resenas").scrollIntoView({behavior:"smooth"}); }, 1200);
-  });
-})();
-
-/* ---------- Selector de código de país (banderas) ---------- */
-(function(){
-  var cc=document.getElementById("cc"); if(!cc) return;
-  var btn=document.getElementById("ccBtn"), list=document.getElementById("ccList"),
-      flag=document.getElementById("ccFlag"), code=document.getElementById("ccCode"),
-      hidden=document.getElementById("codpais");
+  var paises=[["+56","cl","Chile"],["+57","co","Colombia"],["+595","py","Paraguay"],["+54","ar","Argentina"],["+591","bo","Bolivia"],["+593","ec","Ecuador"],["+51","pe","Perú"],["+598","uy","Uruguay"],["+58","ve","Venezuela"],["+52","mx","México"],["+1","us","Estados Unidos"],["+34","es","España"]];
+  var pre=(C.pais&&C.pais.prefijo)||"+56", cc=(C.pais&&C.pais.cc)||"cl";
+  html("ccList", paises.map(function(p){return '<button type="button" data-code="'+p[0]+'" data-cc="'+p[1]+'"><img src="https://flagcdn.com/'+p[1]+'.svg" alt="">'+p[2]+'<span class="code">'+p[0]+'</span></button>';}).join(""));
+  $("#ccFlag").src="https://flagcdn.com/"+cc+".svg"; set("ccCode",pre); $("#codpais").value=pre;
+  var box=$("#cc"), btn=$("#ccBtn"), list=$("#ccList");
   btn.addEventListener("click",function(e){ e.stopPropagation(); list.hidden=!list.hidden; });
-  list.querySelectorAll("button").forEach(function(b){
-    b.addEventListener("click",function(){
-      hidden.value=b.dataset.code;
-      flag.src="https://flagcdn.com/"+b.dataset.cc+".svg";
-      code.textContent=b.dataset.code;
-      list.hidden=true;
-    });
-  });
-  document.addEventListener("click",function(e){ if(!cc.contains(e.target)) list.hidden=true; });
+  window.TELPAIS={ "56":{n:9,ini:/^9/,ej:"9 1234 5678",txt:"9 dígitos, empieza con 9"},
+    "57":{n:10,ini:/^3/,ej:"300 123 4567",txt:"10 dígitos, empieza con 3"},
+    "595":{n:9,ini:/^9/,ej:"981 123 456",txt:"9 dígitos, empieza con 9"},
+    "54":{n:10,ini:/^\d/,ej:"11 1234 5678",txt:"10 dígitos"},
+    "51":{n:9,ini:/^9/,ej:"912 345 678",txt:"9 dígitos, empieza con 9"},
+    "593":{n:9,ini:/^9/,ej:"99 123 4567",txt:"9 dígitos, empieza con 9"},
+    "591":{n:8,ini:/^[67]/,ej:"7123 4567",txt:"8 dígitos"},
+    "598":{n:8,ini:/^9/,ej:"9 123 4567",txt:"8 dígitos, empieza con 9"},
+    "58":{n:10,ini:/^4/,ej:"412 123 4567",txt:"10 dígitos, empieza con 4"},
+    "52":{n:10,ini:/^\d/,ej:"55 1234 5678",txt:"10 dígitos"},
+    "1":{n:10,ini:/^\d/,ej:"305 123 4567",txt:"10 dígitos"},
+    "34":{n:9,ini:/^[67]/,ej:"612 345 678",txt:"9 dígitos"} };
+  window.pintaTelPais=function(code){
+    var cc=String(code||"").replace(/[^0-9]/g,""), r=window.TELPAIS[cc];
+    var inp=$("#telefono"); if(inp) inp.placeholder=r?r.ej:"Número de celular";
+  };
+  $$("#ccList button").forEach(function(b){ b.addEventListener("click",function(){ $("#codpais").value=b.dataset.code; $("#ccFlag").src="https://flagcdn.com/"+b.dataset.cc+".svg"; set("ccCode",b.dataset.code); list.hidden=true; window.pintaTelPais(b.dataset.code); }); });
+  window.pintaTelPais(pre);
+  document.addEventListener("click",function(e){ if(!box.contains(e.target)) list.hidden=true; });
 })();
 
-/* ---------- Validación + envío ---------- */
-const form=document.getElementById("orderForm");
-function setInvalid(id,bad){ document.getElementById(id).closest(".field").classList.toggle("invalid",bad); }
-
-/* ---------- Captura de PEDIDOS ABANDONADOS ----------
-   Apenas hay un teléfono válido, guardamos lo que el cliente lleva lleno
-   (en la hoja "Pedidos Abandonados") para poder escribirle si no completa. */
-const ORDER_SID = "AB" + Date.now() + Math.floor(Math.random()*1e6);
-// Si el cliente escribe su número CON el código de país (ej: +56 9...), se lo quitamos para no duplicarlo
-function telLimpio(){
-  var cc=(form.codpais.value||"").replace(/\D/g,"");
-  var d=(form.telefono.value||"").replace(/\D/g,"");
-  if(cc && d.indexOf(cc)===0 && d.length-cc.length>=8) d=d.slice(cc.length);
-  return d;
-}
-function sendSheet(payload){
-  if(typeof SHEET_URL==="undefined" || !SHEET_URL) return;
-  try{ fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)}).catch(function(){}); }catch(e){}
-}
-function postAbandono(payload){
-  try{ fetch("https://n8n-production-8a42.up.railway.app/webhook/abandonado",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).catch(function(){}); }catch(e){}
-}
-function currentFormData(){
-  return {
-    sid:ORDER_SID, producto:PRODUCTO,
-    cantidad: current?parseInt(current.dataset.qty,10):"", total: current?parseInt(current.dataset.price,10):"",
-    nombre:form.nombre.value.trim(), indicativo:form.codpais.value, telefono:telLimpio(),
-    correo:form.correo.value.trim(), direccion:form.direccion.value.trim(),
-    referencia:form.referencia.value.trim(), region:form.region.value, comuna:form.comuna.value,
-    pagina:location.href, fecha:new Date().toLocaleString("es-CL")
-  };
-}
-let abandonedSent=false, abTimer, leadTracked=false;
-function captureAbandoned(){
-  if(form.telefono.value.replace(/\D/g,"").length < 8) return;   // solo con teléfono válido
-  abandonedSent=true;
-  postAbandono(Object.assign(currentFormData(),{estado:"INCOMPLETO"}));
-  if(!leadTracked){ leadTracked=true; fb("Lead", { content_name: PRODUCTO, value: current?parseInt(current.dataset.price,10):22500, currency: "CLP" }); }
-}
-["telefono","nombre","correo","direccion","referencia"].forEach(function(id){
-  var el=document.getElementById(id);
-  if(el) el.addEventListener("blur",function(){ clearTimeout(abTimer); abTimer=setTimeout(captureAbandoned,300); });
-});
-["region","comuna"].forEach(function(id){
-  var el=document.getElementById(id);
-  if(el) el.addEventListener("change",function(){ clearTimeout(abTimer); abTimer=setTimeout(captureAbandoned,300); });
-});
-// captura mientras escribe el teléfono (apenas llega a 8+ dígitos), no solo al salir del campo
-form.telefono.addEventListener("input",function(){
-  if(form.telefono.value.replace(/\D/g,"").length >= 8){ clearTimeout(abTimer); abTimer=setTimeout(captureAbandoned,1200); }
-});
-form.addEventListener("submit",async e=>{
-  e.preventDefault();
-  let ok=true,bad;
-  const nombre=form.nombre.value.trim();
-  const tel=form.telefono.value.replace(/\D/g,"");
-  const dir=form.direccion.value.trim();
-  bad=nombre.length<2; setInvalid("nombre",bad); if(bad)ok=false;
-  var _ccd=(form.codpais.value||"").replace(/\D/g,"");
-  bad = _ccd==="56" ? !/^9\d{8}$/.test(tel) : tel.length<8;   // Chile: 9 dígitos y empieza con 9
-  var _tf=document.getElementById("telefono"), _te=_tf&&_tf.closest(".field").querySelector(".err");
-  if(_te) _te.textContent = (_ccd==="56"&&bad) ? "Escribe los 9 dígitos de tu celular (empieza con 9). Ej: 9 1234 5678" : "Escribe un teléfono válido.";
-  setInvalid("telefono",bad); if(bad)ok=false;
-  bad=dir.length<4;    setInvalid("direccion",bad); if(bad)ok=false;
-  bad=!form.region.value; setInvalid("region",bad); if(bad)ok=false;
-  bad=!form.comuna.value; setInvalid("comuna",bad); if(bad)ok=false;
-  if(!ok){ if(window.__ayudaFormWA) window.__ayudaFormWA(); var _inv=form.querySelector(".invalid"); if(_inv) _inv.scrollIntoView({behavior:"smooth",block:"center"}); return; }
-
-  const qty=parseInt(current.dataset.qty,10);
-  const total=parseInt(current.dataset.price,10);
-  const data={
-    sid:ORDER_SID, producto:PRODUCTO, cantidad:qty, total:total,
-    nombre, indicativo:form.codpais.value, telefono:telLimpio(), direccion:dir,
-    correo:form.correo.value.trim(), referencia:form.referencia.value.trim(), region:form.region.value, comuna:form.comuna.value,
-    pagina:location.href, fecha:new Date().toLocaleString("es-CL")
-  };
-  const btn=document.getElementById("submitBtn");
-  btn.disabled=true; btn.textContent="Enviando…";
-  try{
-    if(SHEET_URL){
-      await fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
-    } else { console.warn("SHEET_URL vacío: configúralo en app.js para guardar pedidos."); }
-    // Confirmación por WhatsApp (n8n) — formato que espera el flujo
-    if(N8N_CONFIRM){
-      var telWA = (form.codpais.value+"").replace(/\D/g,"") + telLimpio(); window._trackVenta&&window._trackVenta(telWA);
-      fetch(N8N_CONFIRM,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-        customer:{ phone: telWA, email: form.correo.value.trim() },
-        shipping_address:{ first_name: nombre.split(" ")[0], address1: dir, province: form.region.value, city: form.comuna.value, address2: form.referencia.value.trim(), country_code: form.codpais.value },
-        order_number: "JG-"+String(Date.now()).slice(-6),
-        line_items:[{ title: PRODUCTO, quantity: qty }],
-        total_price: String(total)
-      })}).catch(function(){});
-    }
-    // marcar el pedido abandonado como COMPLETADO (misma fila por sid)
-    if(abandonedSent) postAbandono(Object.assign(currentFormData(),{estado:"COMPLETADO"}));
-    // Píxel de Meta: Purchase (conversión)
-    fb("Purchase", { content_name: PRODUCTO, content_ids: ["shilajit-ultra"], contents: [{ id: "shilajit-ultra", quantity: qty }], value: total, currency: "CLP" });
-    // Píxel de TikTok: CompletePayment (conversión)
-    tt("CompletePayment", { content_id: "shilajit-ultra", content_name: PRODUCTO, content_type: "product", contents: [{ content_id: "shilajit-ultra", content_name: PRODUCTO, quantity: qty }], value: total, currency: "CLP" });
-    form.style.display="none";
-    document.querySelector(".packs").style.display="none";
-    document.querySelector(".summary").style.display="none";
-    document.getElementById("okName").textContent=nombre.split(" ")[0];
-    document.getElementById("okMsg").style.display="block";
-    document.getElementById("okMsg").scrollIntoView({behavior:"smooth",block:"center"});
-  }catch(err){
-    btn.disabled=false; btn.textContent="COMPRAR (Pagar al Recibir) 🚚";
-    alert("Hubo un problema al enviar. Intenta de nuevo o escríbenos por WhatsApp.");
-  }
-});
+/* ---------- 21) Regiones / comunas (Chile) ---------- */
+(function(){
+  var region=$("#region"), comuna=$("#comuna");
+  var data = window.CHILE_REGIONES;
+  if(!data){ return; }
+  Object.keys(data).forEach(function(r){ var o=document.createElement("option"); o.value=r; o.textContent=r; region.appendChild(o); });
+  region.addEventListener("change",function(){
+    comuna.innerHTML='<option value="">Selecciona…</option>';
+    (data[region.value]||[]).forEach(function(c){ var o=document.createElement("option"); o.value=c; o.textContent=c; comuna.appendChild(o); });
+    comuna.disabled=(data[region.value]||[]).length===0;
+  });
+})();
 
 /* ============================================================
-   AYUDA WhatsApp si el formulario no deja avanzar + AVISO AL SALIR
+   BACKEND (igual que las landings que ya venden)
    ============================================================ */
+var SHEET_URL=C.sheetUrl||"", N8N=C.n8nConfirm||"", PANEL=C.panelUrl||"", PRODUCTO=C.producto||"";
+function trackPanel(tipo){ try{ var _p=(C&&C.producto)||""; fetch("https://n8n-production-8a42.up.railway.app/webhook/track-visita",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({pagina:_p,producto:_p,tipo:tipo})}).catch(function(){}); }catch(e){} }
+try{ if(!sessionStorage.getItem("jaye_vis")){ sessionStorage.setItem("jaye_vis","1"); trackPanel("visita"); } }catch(e){ trackPanel("visita"); }
+
+/* Meta Pixel: base + PageView se cargan en el <head> del index. Aquí solo se disparan los eventos. */
+function fb(ev,d){ if(window.fbq){ try{ fbq("track",ev,d||{}); }catch(e){} } }
+/* COINCIDENCIA AVANZADA (17-ago-2026). Los eventos del navegador iban SIN un solo
+   dato del cliente y por eso Meta calificaba la coincidencia en 6,1 de 10 y pedia
+   "mejorar la calidad". Aqui le pasamos lo que el cliente YA escribio en el
+   formulario -- telefono, nombre y comuna -- para que Meta pueda reconocerlo.
+   El propio pixel los encripta antes de mandarlos: en claro no salen nunca. */
+function fbUser(){
+  if(!window.fbq || !C.pixelId) return;
+  try{
+    var d = formData(), u = {};
+    // telefono con el indicativo real que eligio el cliente (no forzamos Chile)
+    var cc  = String(d.indicativo||"+56").replace(/\D/g,"") || "56";
+    var tel = String(d.telefono||"").replace(/\D/g,"");
+    if(tel){ u.ph = (tel.indexOf(cc)===0 ? tel : cc+tel); }
+    // correo: es lo que Meta más valora para reconocer a la persona
+    var mail = String(d.correo||"").trim().toLowerCase();
+    if(mail.indexOf("@")>0) u.em = mail;
+    // nombre y apellido por separado
+    var partes = String(d.nombre||"").trim().split(/\s+/).filter(Boolean);
+    if(partes[0]) u.fn = partes[0].toLowerCase();
+    if(partes.length>1) u.ln = partes.slice(1).join(" ").toLowerCase();
+    if(d.comuna) u.ct = String(d.comuna).toLowerCase().replace(/\s+/g,"");
+    if(d.region) u.st = String(d.region).toLowerCase().replace(/\s+/g,"");
+    u.country = ({"56":"cl","57":"co","595":"py","54":"ar","51":"pe","593":"ec","591":"bo","598":"uy","58":"ve","52":"mx","1":"us","34":"es"})[cc] || "cl";
+    if(u.ph || u.em || u.fn) fbq("init", C.pixelId, u);
+  }catch(e){}
+}
+fb("ViewContent",{content_name:PRODUCTO,content_type:"product",value:C.precioUnidad,currency:C.pais.moneda});
+var _checkout=false;
+
+/* ---------- Reseñas ---------- */
 (function(){
-  var WA = (document.querySelector('.wa') && document.querySelector('.wa').href) || 'https://wa.me/56920007288';
-  var WAICO = '<svg viewBox="0 0 32 32" width="15" height="15" style="vertical-align:-2px;fill:currentColor" aria-hidden="true"><path d="M16 .4C7.4.4.5 7.3.5 15.9c0 2.8.7 5.4 2.1 7.8L.3 31.6l8.1-2.1c2.3 1.3 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.4 16 .4zm0 28.3c-2.4 0-4.7-.6-6.7-1.9l-.5-.3-4.8 1.3 1.3-4.7-.3-.5c-1.4-2.1-2.1-4.6-2.1-7 0-7.1 5.8-12.9 12.9-12.9S28.9 8.8 28.9 15.9 23.1 28.7 16 28.7zm7.1-9.6c-.4-.2-2.3-1.1-2.6-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3.1-1.9-1.1-1-1.9-2.3-2.1-2.7-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.7.1-.3 0-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.8-.6-.7-.9-.7h-.8c-.2 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.8c.2.2 2.6 4 6.3 5.6.9.4 1.6.6 2.1.8.9.3 1.7.2 2.3.1.7-.1 2.3-.9 2.6-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.7-.5z"/></svg>';
+  var list=$("#revList"); if(!list) return;
+  set("revScore", C.revScore||4.8);
+  var NAMES=["Camila Muñoz","Valentina Soto","Francisca Contreras","Catalina Silva","Javiera Sepúlveda","Constanza Rodríguez","Fernanda Fuentes","Antonia Torres","María José Flores","Daniela Valenzuela","Carolina Tapia","Josefa Gutiérrez","Paula Vargas","Andrea Núñez","Marcela Riquelme","Pía Cáceres","Bárbara Salazar","Rocío Fuentealba","Camila Carrasco","Claudia Bravo","Sofía Vera","Isidora Pizarro","Macarena Aravena","Romina Sandoval","Verónica Miranda","Loreto Ortiz","Ximena Vergara","Amanda Cisternas","Gabriela Lagos","Pamela Maturana","Nicole Fuentes","Karina Poblete","Ignacia Espinoza","Alejandra Rojas","Trinidad Castillo","Paulina Herrera","Florencia Reyes","Victoria Morales","Raquel Pérez","Fernanda Díaz","Montserrat Bravo","Gracia Muñoz","Estefanía Ruiz","Joaquina Tapia"];
+  var TEXTS=["Me encantó, cero grumos y el volumen se nota al tiro.","La recomiendo 100%, ya pedí el pack para mi hermana.","Aguanta el día entero, ni con la llovizna se me corrió.","Tengo pestañas cortas y de verdad se ven el doble de largas.","El pago contra entrega me dio confianza para pedir.","Se nota la diferencia desde la primera pasada.","Por fin una máscara que no me deja las pestañas pegadas.","Llegó a regiones sin problema, muy buena atención.","Dejé las postizas por esta, mucho más cómodo.","El cepillo separa una por una, quedan de abanico.","A mis 45 mis pestañas se veían ralas, con esta se ven pobladas.","Me dura desde la mañana hasta la noche intacta.","Se la recomendé a mi mamá y también quedó feliz.","Buen precio, y trae dos así que una queda en la cartera.","No mancha los párpados como otras que he probado.","Calidad premium, se nota que no es cualquier máscara.","La pedí desconfiada y quedé sorprendida, funciona.","De noche sale fácil con agua tibia, no maltrata.","Después de un mes sigue rindiendo, no se seca.","Atención por WhatsApp muy rápida, llegó en dos días.","Waterproof de verdad, lloré en un matrimonio y nada.","Nada de grumos ni pestañas tiesas como con otras.","Me la pongo en la mañana y queda perfecta hasta la noche.","Hasta mi pololo me preguntó si me había hecho extensiones.","Recomendada para las que tenemos pestañas cortitas.","El efecto postizas es real, quedé impresionada.","Se nota el largo y el volumen sin verse cargada.","Llegó bien embalada y antes de lo esperado.","Vale cada peso, ya la volví a pedir.","Mis pestañas se ven más largas y con curva todo el día.","Sin apelmazar, quedan livianas y separadas.","A mi edad cuesta encontrar una que funcione, esta sí.","Me veo más despierta hasta sin sombra ni delineador.","Buenísima, la recomendé a mis amigas del trabajo.","Aguanta gimnasio y piscina, no se corre nada.","Pedido fácil, pagué al recibir, todo perfecto.","El dorado del envase es precioso y rinde harto.","La uso hace un mes y no pienso cambiarla.","Volumen parejo, sin pegotes desde la raíz.","Mis pestañas quedan con curva sin encrespador.","Producto serio, se nota la calidad.","Llegó a Antofagasta en tres días, excelente.","El pack de dos conviene, una para mí y una de regalo.","Lo mejor es que no se borra ni deja sombra negra."];
+  var IMGS=["img/r1.webp","img/r2.webp","img/r3.webp","img/r4.webp"];
+  var seedN=C.revSeed||40, SEED=[];
+  for(var k=0;k<seedN;k++){ var st=(k%9===4)?4:(k%24===7?3:5); var dd=String((k*7)%28+1).padStart(2,"0"); var mm=String((k%5)+1).padStart(2,"0");
+    SEED.push({name:NAMES[k%NAMES.length],stars:st,ver:(k%3===0),text:TEXTS[k%TEXTS.length],date:dd+"/"+mm+"/2026",img:IMGS[k]||""}); }
+  var KEY="rev_"+(C.productoCorto||"prod").replace(/\W+/g,"_");
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||"[]"); }catch(e){ return []; } }
+  function save(a){ try{ localStorage.setItem(KEY,JSON.stringify(a)); }catch(e){} }
+  function stars(n){ var s=""; for(var i=1;i<=5;i++){ s+= i<=n?"★":'<span class="off">★</span>'; } return s; }
+  function av(n){ return (n||"?").trim().charAt(0).toUpperCase(); }
+  function card(r){ return '<div class="rev"><div class="top"><span class="av">'+av(r.name)+'</span><div><div class="who">'+r.name+(r.ver?'<span class="ver">✓ Verificado</span>':'')+'</div><div class="date">'+r.date+'</div></div></div><div class="st">'+stars(r.stars)+'</div><p>'+r.text+'</p>'+(r.img?'<img class="rev-img" src="'+r.img+'" loading="lazy" onerror="this.remove()">':'')+'</div>'; }
+  function render(){ var all=load().concat(SEED); list.innerHTML=all.slice(0,8).map(card).join(""); var auto=$("#revAuto"); if(auto){ var rest=SEED.slice(8,32); auto.innerHTML=rest.concat(rest).map(card).join(""); } set("revCount",(C.revSeed||40)+load().length); }
+  render();
+  var modal=$("#revModal"), rating=0, picks=$$("#starPick span");
+  function paint(n){ picks.forEach(function(s,i){ s.classList.toggle("on",i<n); }); }
+  picks.forEach(function(s){ s.addEventListener("click",function(){ rating=+s.dataset.v; paint(rating); }); s.addEventListener("mouseenter",function(){ paint(+s.dataset.v); }); });
+  $("#starPick").addEventListener("mouseleave",function(){ paint(rating); });
+  $("#btnWrite").addEventListener("click",function(){ modal.hidden=false; });
+  $("#revClose").addEventListener("click",function(){ modal.hidden=true; });
+  modal.addEventListener("click",function(e){ if(e.target===modal) modal.hidden=true; });
+  $("#revSubmit").addEventListener("click",function(){
+    var name=$("#revName").value.trim(), text=$("#revText").value.trim(), msg=$("#revMsg");
+    if(!rating){ msg.style.color="#e1283c"; msg.textContent="Elige cuántas estrellas."; return; }
+    if(name.length<2||text.length<3){ msg.style.color="#e1283c"; msg.textContent="Escribe tu nombre y tu reseña."; return; }
+    var hoy=new Date(), review={name:name,text:text,stars:rating,ver:false,date:String(hoy.getDate()).padStart(2,"0")+"/"+String(hoy.getMonth()+1).padStart(2,"0")+"/"+hoy.getFullYear()};
+    var mine=load(); mine.unshift(review); save(mine); render();
+    if(SHEET_URL){ fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({tipo:"resena",producto:PRODUCTO,nombre:name,estrellas:rating,resena:text,fecha:review.date})}).catch(function(){}); }
+    msg.style.color="#27ae60"; msg.textContent="¡Gracias! Tu reseña se publicó. 🎉";
+    $("#revName").value=""; $("#revText").value=""; rating=0; paint(0);
+    setTimeout(function(){ modal.hidden=true; msg.textContent=""; },1200);
+  });
+})();
 
-  /* estilos inyectados */
+/* ---------- Validación + envío + carrito abandonado ---------- */
+(function(){
+  var form=$("#orderForm");
+  function setInvalid(id,bad){ $("#"+id).closest(".field").classList.toggle("invalid",bad); }
+  var SID="AB"+Date.now()+Math.floor(Math.random()*1e6);
+  function telLimpio(){ var cc=(form.codpais.value||"").replace(/\D/g,""), d=(form.telefono.value||"").replace(/\D/g,""); if(cc&&d.indexOf(cc)===0&&d.length-cc.length>=8) d=d.slice(cc.length); return d; }
+  function sendSheet(p){ if(!SHEET_URL) return; try{ fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(p)}).catch(function(){}); }catch(e){} }
+  function formData(){ return { sid:SID, producto:PRODUCTO, cantidad:current?parseInt(current.dataset.qty,10):"", total:current?parseInt(current.dataset.price,10):"", nombre:form.nombre.value.trim(), indicativo:form.codpais.value, telefono:telLimpio(), correo:form.correo.value.trim(), direccion:form.direccion.value.trim(), referencia:form.referencia.value.trim(), region:form.region.value, comuna:form.comuna.value, pagina:location.href, fecha:new Date().toLocaleString(C.pais.locale) }; }
+  var abSent=false, abTimer, leadTracked=false;
+  function captureAb(){ if(form.telefono.value.replace(/\D/g,"").length<8) return; abSent=true; sendSheet(Object.assign(formData(),{tipo:"abandonado",estado:"INCOMPLETO"})); fbUser(); if(!leadTracked){ leadTracked=true; fb("Lead",{content_name:PRODUCTO,value:current?+current.dataset.price:C.precioUnidad,currency:C.pais.moneda}); } }
+  ["telefono","nombre","correo","direccion","referencia"].forEach(function(id){ var e=$("#"+id); if(e) e.addEventListener("blur",function(){ clearTimeout(abTimer); abTimer=setTimeout(captureAb,300); }); });
+  var _mail=$("#correo"); if(_mail) _mail.addEventListener("blur",function(){ fbUser(); });
+  ["region","comuna"].forEach(function(id){ var e=$("#"+id); if(e) e.addEventListener("change",function(){ clearTimeout(abTimer); abTimer=setTimeout(captureAb,300); }); });
+  form.telefono.addEventListener("input",function(){ if(form.telefono.value.replace(/\D/g,"").length>=8){ clearTimeout(abTimer); abTimer=setTimeout(captureAb,1200); } });
+
+  form.addEventListener("submit",async function(e){
+    e.preventDefault();
+    var ok=true,bad;
+    var nombre=form.nombre.value.trim(), tel=form.telefono.value.replace(/\D/g,""), dir=form.direccion.value.trim();
+    bad=nombre.length<2; setInvalid("nombre",bad); if(bad)ok=false;
+    var _ccd=(form.codpais.value||"").replace(/\D/g,"");
+    var _rp=(window.TELPAIS||{})[_ccd];
+    bad = _rp ? (tel.length!==_rp.n || !_rp.ini.test(tel)) : (tel.length<7 || tel.length>13);
+    var _te=$("#telefono").closest(".field").querySelector(".err");
+    if(_te) _te.textContent=(_rp&&bad)?("Escribe tu celular: "+_rp.txt+". Ej: "+_rp.ej):"Escribe un teléfono válido.";
+    setInvalid("telefono",bad); if(bad)ok=false;
+    bad=dir.length<4; setInvalid("direccion",bad); if(bad)ok=false;
+    var _esCL=(form.codpais.value||"").replace(/\D/g,"")==="56";
+    if(_esCL){ bad=!form.region.value; setInvalid("region",bad); if(bad)ok=false; bad=!form.comuna.value; setInvalid("comuna",bad); if(bad)ok=false; }
+    if(!ok){ if(window.__ayudaFormWA) window.__ayudaFormWA(); var inv=form.querySelector(".invalid"); if(inv) inv.scrollIntoView({behavior:"smooth",block:"center"}); return; }
+    var qty=parseInt(current.dataset.qty,10), total=parseInt(current.dataset.price,10);
+    var data={ sid:SID, producto:PRODUCTO, cantidad:qty, total:total, nombre:nombre, indicativo:form.codpais.value, telefono:telLimpio(), direccion:dir, correo:form.correo.value.trim(), referencia:form.referencia.value.trim(), region:form.region.value, comuna:form.comuna.value, pagina:location.href, fecha:new Date().toLocaleString(C.pais.locale) };
+    var btn=$("#submitBtn"); btn.disabled=true; btn.textContent="Enviando…";
+    try{
+      if(SHEET_URL) await fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
+      if(C.orderWebhook) await fetch(C.orderWebhook,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+      if(N8N){ var telWA=(form.codpais.value+"").replace(/\D/g,"")+telLimpio();
+        fetch(N8N,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({ customer:{phone:telWA}, shipping_address:{first_name:nombre.split(" ")[0],address1:dir,province:form.region.value,city:form.comuna.value,address2:form.referencia.value.trim(),country_code:form.codpais.value}, order_number:"JG-"+String(Date.now()).slice(-6), line_items:[{title:PRODUCTO,quantity:qty}], total_price:String(total) })}).catch(function(){}); window._trackVenta&&window._trackVenta(telWA); }
+      if(abSent) sendSheet(Object.assign(formData(),{tipo:"abandonado",estado:"COMPLETADO"}));
+      fbUser(); fb("Purchase",{content_name:PRODUCTO,value:total,currency:C.pais.moneda});
+      form.style.display="none"; $("#packs").style.display="none"; document.querySelector(".summary").style.display="none";
+      set("okName",nombre.split(" ")[0]); $("#okMsg").style.display="block"; $("#okMsg").scrollIntoView({behavior:"smooth",block:"center"});
+      if(C.upsell && C.upsell.precio>0) abrirUpsell(nombre.split(" ")[0], (form.codpais.value+"").replace(/[^0-9]/g,"")+telLimpio());
+    }catch(err){ btn.disabled=false; btn.textContent="COMPRAR (pagar al recibir)"; alert("Hubo un problema al enviar. Intenta de nuevo o escríbenos por WhatsApp."); }
+  });
+})();
+
+})();
+
+/* ====== Ayuda WhatsApp si el formulario no avanza ====== */
+(function(){
+  var WA='https://wa.me/'+((window.CONFIG&&CONFIG.whatsapp)||'56964775539');
+  var WAICO='<svg viewBox="0 0 32 32" width="15" height="15" style="vertical-align:-2px;fill:currentColor" aria-hidden="true"><path d="M16 .4C7.4.4.5 7.3.5 15.9c0 2.8.7 5.4 2.1 7.8L.3 31.6l8.1-2.1c2.3 1.3 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.4 16 .4zm0 28.3c-2.4 0-4.7-.6-6.7-1.9l-.5-.3-4.8 1.3 1.3-4.7-.3-.5c-1.4-2.1-2.1-4.6-2.1-7 0-7.1 5.8-12.9 12.9-12.9S28.9 8.8 28.9 15.9 23.1 28.7 16 28.7zm7.1-9.6c-.4-.2-2.3-1.1-2.6-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3.1-1.9-1.1-1-1.9-2.3-2.1-2.7-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.7.1-.3 0-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.8-.6-.7-.9-.7h-.8c-.2 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.8c.2.2 2.6 4 6.3 5.6.9.4 1.6.6 2.1.8.9.3 1.7.2 2.3.1.7-.1 2.3-.9 2.6-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.7-.5z"/></svg>';
   var st=document.createElement('style');
-  st.textContent='.form-help-wa{display:none;margin-top:12px;padding:11px 14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;font-size:13.5px;color:#9a3412;text-align:center;line-height:1.5}.form-help-wa a{color:#16a34a;font-weight:700;text-decoration:none}'+
-    '.exit-ov{position:fixed;inset:0;background:rgba(15,12,28,.62);display:grid;place-items:center;z-index:99999;padding:18px;animation:exitfade .2s ease}@keyframes exitfade{from{opacity:0}to{opacity:1}}'+
-    '.exit-card{background:#fff;border-radius:22px;max-width:380px;width:100%;padding:30px 24px 26px;text-align:center;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.45)}'+
-    '.exit-x{position:absolute;top:10px;right:15px;border:0;background:none;font-size:27px;cursor:pointer;color:#aaa;line-height:1}'+
-    '.exit-card .em{font-size:46px;line-height:1}.exit-card h3{font-size:22px;margin:8px 0 10px;color:#10131c;font-weight:800}'+
-    '.exit-card p{font-size:15px;color:#555;line-height:1.55;margin-bottom:18px}.exit-card p b{color:#10131c}'+
-    '.exit-card .exit-wa{display:block;margin-top:13px;color:#16a34a;font-weight:700;text-decoration:none;font-size:14px}';
+  st.textContent='.form-help-wa{display:none;margin-top:12px;padding:11px 14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;font-size:13.5px;color:#9a3412;text-align:center;line-height:1.5}.form-help-wa a{color:#16a34a;font-weight:700;text-decoration:none}';
   document.head.appendChild(st);
-
-  /* mensaje de ayuda cuando el formulario no deja avanzar */
   window.__ayudaFormWA=function(){
     var btn=document.getElementById('submitBtn'); if(!btn) return;
     var h=document.getElementById('formHelpWA');
     if(!h){ h=document.createElement('div'); h.id='formHelpWA'; h.className='form-help-wa';
-      h.innerHTML='⚠️ ¿Tienes algún inconveniente con el formulario? <a href="'+WA+'" target="_blank" rel="noopener">Escríbenos por WhatsApp y te ayudamos '+WAICO+'</a>';
+      h.innerHTML='¿Tienes algún inconveniente con el formulario? <a href="'+WA+'" target="_blank" rel="noopener">Escríbenos por WhatsApp y te ayudamos '+WAICO+'</a>';
       btn.parentNode.insertBefore(h, btn.nextSibling); }
     h.style.display='block';
   };
+})();
 
-  /* aviso al salir (exit-intent) — 1 vez por sesion */
+/* (ruleta eliminada a pedido del jefe) */
+
+/* ====== Aviso al salir (exit-intent) — 1 vez por sesión ====== */
+(function(){
+  var WA='https://wa.me/'+((window.CONFIG&&CONFIG.whatsapp)||'56964775539');
+  var WAICO='<svg viewBox="0 0 32 32" width="15" height="15" style="vertical-align:-2px;fill:currentColor" aria-hidden="true"><path d="M16 .4C7.4.4.5 7.3.5 15.9c0 2.8.7 5.4 2.1 7.8L.3 31.6l8.1-2.1c2.3 1.3 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.4 16 .4zm0 28.3c-2.4 0-4.7-.6-6.7-1.9l-.5-.3-4.8 1.3 1.3-4.7-.3-.5c-1.4-2.1-2.1-4.6-2.1-7 0-7.1 5.8-12.9 12.9-12.9S28.9 8.8 28.9 15.9 23.1 28.7 16 28.7zm7.1-9.6c-.4-.2-2.3-1.1-2.6-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3.1-1.9-1.1-1-1.9-2.3-2.1-2.7-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.7.1-.3 0-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.8-.6-.7-.9-.7h-.8c-.2 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.8c.2.2 2.6 4 6.3 5.6.9.4 1.6.6 2.1.8.9.3 1.7.2 2.3.1.7-.1 2.3-.9 2.6-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.7-.5z"/></svg>';
+  var st=document.createElement('style');
+  st.textContent='.exit-ov{position:fixed;inset:0;background:rgba(6,9,18,.7);display:grid;place-items:center;z-index:99999;padding:18px;animation:exitfade .2s ease}@keyframes exitfade{from{opacity:0}to{opacity:1}}'+
+    '.exit-card{background:#fff;border-radius:22px;max-width:380px;width:100%;padding:30px 24px 26px;text-align:center;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.45)}'+
+    '.exit-x{position:absolute;top:10px;right:15px;border:0;background:none;font-size:27px;cursor:pointer;color:#aaa;line-height:1}'+
+    '.exit-card .em{font-size:46px;line-height:1}.exit-card h3{font-size:22px;margin:8px 0 10px;color:var(--txt-dk,#0c1526);font-weight:800}'+
+    '.exit-card p{font-size:15px;color:#555;line-height:1.55;margin-bottom:18px}.exit-card p b{color:var(--txt-dk,#0c1526)}'+
+    '.exit-card .exit-wa{display:block;margin-top:13px;color:#16a34a;font-weight:700;text-decoration:none;font-size:14px}';
+  document.head.appendChild(st);
   var shown=false;
   function yaCompro(){ var ok=document.getElementById('okMsg'); return ok && ok.style.display==='block'; }
   function showExit(){
@@ -399,10 +420,10 @@ form.addEventListener("submit",async e=>{
     try{ if(sessionStorage.getItem('jaye_exit')) return; sessionStorage.setItem('jaye_exit','1'); }catch(e){}
     shown=true;
     var ov=document.createElement('div'); ov.className='exit-ov';
-    ov.innerHTML='<div class="exit-card"><button class="exit-x" aria-label="Cerrar">×</button>'+
+    ov.innerHTML='<div class="exit-card"><button class="exit-x" aria-label="Cerrar">&times;</button>'+
       '<div class="em">🎁</div><h3>¡Espera! No te vayas todavía</h3>'+
       '<p>Esta promoción con <b>envío gratis</b> es <b>solo por hoy</b>. No pagas nada ahora: <b>pagas al recibir</b> en tu casa.</p>'+
-      '<button class="btn btn--cta exit-cta" style="width:100%">Quiero completar mi pedido</button>'+
+      '<button class="btn btn--acc exit-cta" style="width:100%;display:flex">Quiero completar mi pedido</button>'+
       '<a class="exit-wa" href="'+WA+'" target="_blank" rel="noopener">o escríbenos por WhatsApp '+WAICO+'</a></div>';
     document.body.appendChild(ov);
     function close(){ if(ov.parentNode) ov.parentNode.removeChild(ov); }
@@ -410,91 +431,56 @@ form.addEventListener("submit",async e=>{
     ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
     ov.querySelector('.exit-cta').onclick=function(){ close(); var p=document.getElementById('pedido'); if(p) p.scrollIntoView({behavior:'smooth'}); };
   }
-  /* PC: el mouse sale por arriba (hacia cerrar/cambiar pestana) */
   document.addEventListener('mouseout',function(e){ if(e.clientY<=0 && !e.relatedTarget) showExit(); });
-  /* Movil: boton atras */
   try{ history.pushState(null,'',location.href); window.addEventListener('popstate',function(){ if(!shown){ showExit(); history.pushState(null,'',location.href); } }); }catch(e){}
 })();
 
-/* ============================================================
-   RULETA DE PREMIOS al entrar — premio SIEMPRE Envío Gratis.
-   Usa las VARIABLES DE COLOR de la propia página (cada landing
-   sale con su paleta). Al ganar entra a la página al instante.
-   ============================================================ */
-(function(){
-  try{ if(sessionStorage.getItem('jaye_ruleta')) return; }catch(e){}
-  var cf=document.createElement('script'); cf.src='confetti.min.js'; cf.async=true; document.head.appendChild(cf);
 
-  var st=document.createElement('style');
-  st.textContent=
-  '.jrul-ov{position:fixed;inset:0;background:rgba(8,8,12,.8);backdrop-filter:blur(5px);display:grid;place-items:center;z-index:99998;padding:16px;animation:jrf .25s ease}@keyframes jrf{from{opacity:0}to{opacity:1}}'+
-  '.jrul-ov[hidden]{display:none}'+
-  '.jrul-card{position:relative;width:100%;max-width:360px;background:linear-gradient(160deg,#141416,#000);border:1px solid var(--gold,#d4af37);border-radius:24px;padding:24px 20px 26px;text-align:center;color:#fff;font-family:var(--ff,sans-serif);box-shadow:0 26px 80px rgba(0,0,0,.6)}'+
-  '.jrul-x{position:absolute;top:10px;right:14px;background:none;border:0;color:#9a93a8;font-size:25px;cursor:pointer;line-height:1}'+
-  '.jrul-k{display:inline-block;background:rgba(255,255,255,.1);color:var(--gold,#d4af37);border:1px solid var(--gold,#d4af37);font-weight:800;font-size:11px;padding:5px 12px;border-radius:999px;letter-spacing:.04em}'+
-  '.jrul-card h2{font-family:var(--ff-head,inherit);font-size:22px;font-weight:800;margin:10px 0 2px;color:#fff}'+
-  '.jrul-sub{color:#c9c2d6;font-size:13.5px;margin-bottom:14px}'+
-  '.jrul-wrap{position:relative;width:272px;height:272px;margin:0 auto 4px}'+
-  '.jrul-ptr{position:absolute;top:-4px;left:50%;transform:translateX(-50%);z-index:5;width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:24px solid #fff;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4))}'+
-  '.jrul-wheel{width:272px;height:272px;border-radius:50%;position:relative;transition:transform 4.6s cubic-bezier(.16,.84,.3,1);border:7px solid #fff;box-shadow:0 0 0 5px rgba(255,255,255,.12),0 16px 44px rgba(0,0,0,.5);background:conic-gradient(var(--teal,#108474) 0 60deg,var(--gold,#d4af37) 60deg 120deg,var(--indigo,#1a0a5c) 120deg 180deg,var(--naranja,#ff6b00) 180deg 240deg,var(--gold-d,#b8860b) 240deg 300deg,var(--teal-d,#0c6b5d) 300deg 360deg)}'+
-  '.jrul-wheel .l{position:absolute;left:50%;top:14px;width:120px;margin-left:-60px;text-align:center;transform-origin:60px 122px;font-family:var(--ff-head,sans-serif);font-weight:800;font-size:12px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.55);white-space:nowrap;pointer-events:none}'+
-  '.jrul-hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:#fff;z-index:4;display:grid;place-items:center;font-weight:800;color:var(--teal,#108474);font-size:11px;font-family:var(--ff-head,sans-serif)}'+
-  '.jrul-spin{margin-top:16px;width:100%;background:linear-gradient(90deg,var(--gold,#d4af37),var(--gold-l,#f0d080));color:#241a02;border:0;border-radius:13px;padding:15px;font-family:var(--ff-head,sans-serif);font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 10px 24px rgba(0,0,0,.3)}'+
-  '.jrul-spin:disabled{opacity:.5;cursor:not-allowed}'+
-  '.jrul-foot{color:#8a82a3;font-size:11px;margin-top:10px}'+
-  '.jrul-win{display:none}.jrul-win .em{font-size:48px}.jrul-win h2{font-size:24px;margin:4px 0;color:#fff}'+
-  '.jrul-premio{font-family:var(--ff-head,sans-serif);font-weight:800;font-size:28px;color:var(--gold,#d4af37);margin:4px 0}'+
-  '.jrul-win p{color:#c9c2d6;font-size:14px;margin-bottom:16px}'+
-  '.jrul-cta{width:100%;background:var(--rojo-cta,linear-gradient(90deg,#3a0808,#e0110f));color:#fff;border:0;border-radius:13px;padding:15px;font-family:var(--ff-head,sans-serif);font-weight:800;font-size:16px;cursor:pointer}'+
-  '.jrul-note{margin-top:10px;color:var(--gold,#d4af37);font-weight:700;font-size:12.5px}';
+/* ====== VENTANA POST-COMPRA: oferta del Parche Adelgazante ====== */
+function abrirUpsell(nombre, telWA){
+  var C=window.CONFIG||{};
+  var U=C.upsell||{}; if(!(U.precio>0)) return;
+  var money=function(n){ return "$"+Math.round(n).toLocaleString((C.pais&&C.pais.locale)||"es-CL"); };
+  var fb=function(ev,obj){ try{ if(window.fbq) window.fbq("track",ev,obj); }catch(e){} };
+  var st=document.createElement("style");
+  st.textContent=".upov{position:fixed;inset:0;background:rgba(8,6,2,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}"+
+  ".upcard{background:#ffffff;border:2px solid #f5a04a;border-radius:18px;max-width:330px;width:92%;padding:16px;text-align:center;color:#4a3113;box-shadow:0 24px 60px rgba(0,0,0,.45)}"+
+  ".upcard .tag{display:inline-block;background:linear-gradient(135deg,#ee7f1d,#fbaf3f);color:#fff;font-weight:800;border-radius:999px;padding:6px 14px;font-size:12px;letter-spacing:.04em;text-shadow:0 1px 2px rgba(120,60,0,.35)}"+
+  ".upcard h3{font-family:var(--fh);font-size:19px;margin:10px 0 2px;color:#e2711d}"+
+  ".upcard .sub{font-size:12.5px;color:#8a6a3c;margin-bottom:9px}"+
+  ".upcard img{width:52%;max-width:180px;border-radius:12px;margin:4px auto 8px;display:block}"+
+  ".upcard ul{list-style:none;padding:0;margin:0 0 12px;text-align:left;display:inline-block}"+
+  ".upcard li{font-size:12.5px;margin:4px 0;padding-left:20px;position:relative}"+
+  ".upcard li::before{content:\"✓\";position:absolute;left:0;color:#2e9e4f;font-weight:800}"+
+  ".upcard .precio{font-family:var(--fh);font-size:25px;font-weight:800;color:#ee7f1d;margin:2px 0 10px}"+
+  ".upcard .precio small{font-size:13px;color:#8a6a3c;font-weight:400;display:block}"+
+  ".upsi{width:100%;border:0;border-radius:999px;padding:13px;font-weight:800;font-size:14.5px;background:linear-gradient(135deg,#ee7f1d,#fbaf3f);color:#fff;text-shadow:0 1px 2px rgba(120,60,0,.4);cursor:pointer}"+
+  ".upno{width:100%;border:0;background:none;color:#8f8264;margin-top:10px;font-size:13px;cursor:pointer;text-decoration:underline}";
   document.head.appendChild(st);
-
-  var PREM=['ENVÍO GRATIS','5% OFF','🎁 REGALO','10% OFF','ENVÍO GRATIS','15% OFF'];
-  var GRATIS=[0,4];   // la rueda SIEMPRE se detiene en un segmento de Envío Gratis
-  var N=PREM.length, SEG=360/N, labels='';
-  for(var i=0;i<N;i++){ labels+='<div class="l" style="transform:rotate('+(i*SEG+SEG/2)+'deg)">'+PREM[i]+'</div>'; }
-  var ov=document.createElement('div'); ov.className='jrul-ov'; ov.hidden=true;
-  ov.innerHTML=
-   '<div class="jrul-card">'+
-    '<button class="jrul-x" aria-label="Cerrar">&times;</button>'+
-    '<div class="jrul-intro">'+
-      '<span class="jrul-k">🎁 SOLO POR HOY</span>'+
-      '<h2>¡Gira y gana tu premio!</h2><div class="jrul-sub">Tienes 1 giro gratis. ¡Mucha suerte!</div>'+
-      '<div class="jrul-wrap"><div class="jrul-ptr"></div><div class="jrul-wheel">'+labels+'</div><div class="jrul-hub">GIRA</div></div>'+
-      '<button class="jrul-spin">🎯 GIRAR LA RULETA</button>'+
-      '<div class="jrul-foot">Válido solo en tu compra de hoy · pago contra entrega</div>'+
-    '</div>'+
-    '<div class="jrul-win">'+
-      '<div class="em">🎉</div><h2>¡Felicidades!</h2>'+
-      '<div class="jrul-premio">ENVÍO GRATIS</div>'+
-      '<p>¡Tu envío gratis quedó activo en tu compra de hoy!</p>'+
-      '<button class="jrul-cta">¡Empezar a comprar!</button>'+
-      '<div class="jrul-note">🚚 Envío gratis aplicado</div>'+
-    '</div>'+
-   '</div>';
+  var ov=document.createElement("div"); ov.className="upov";
+  ov.innerHTML='<div class="upcard">'+
+    '<span class="tag">🎁 OFERTA SOLO PARA TI, '+nombre.toUpperCase()+'</span>'+
+    '<h3>'+U.nombre+'</h3>'+
+    '<p class="sub">Antes de despachar tu paquete, agrégalo con UN toque — va en el mismo envío.</p>'+
+    (U.img?'<img src="'+U.img+'" alt="'+U.nombre+'">':'')+
+    '<ul>'+(U.beneficios||[]).map(function(b){return "<li>"+b+"</li>";}).join("")+'</ul>'+
+    '<div class="precio">+'+money(U.precio)+'<small>lo pagas al recibir, junto con tu pedido</small></div>'+
+    '<button class="upsi" id="upSi">SÍ, AGREGARLO A MI PEDIDO</button>'+
+    '<button class="upno" id="upNo">No gracias, solo mi pedido</button>'+
+  '</div>';
   document.body.appendChild(ov);
+  fb("ViewContent",{content_name:U.nombre,content_type:"product",value:U.precio,currency:C.pais.moneda});
+  ov.querySelector("#upNo").addEventListener("click",function(){ ov.remove(); });
+  ov.querySelector("#upSi").addEventListener("click",function(){
+    var b=ov.querySelector("#upSi"); b.disabled=true; b.textContent="Agregando…";
+    fetch(C.upsellWebhook,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefono:telWA})})
+      .then(function(r){return r.json();}).catch(function(){return {};})
+      .then(function(){
+        fb("Purchase",{content_name:U.nombre,value:U.precio,currency:C.pais.moneda});
+        ov.querySelector(".upcard").innerHTML='<h3 style="margin:18px 0 8px;color:#2e9e4f">✅ ¡Agregado a tu pedido!</h3><p class="sub">Tu '+U.nombre+' va en el mismo envío. Pagas todo junto al recibir.</p><button class="upsi" id="upOk">Listo</button>';
+        ov.querySelector("#upOk").addEventListener("click",function(){ ov.remove(); });
+      });
+  });
+}
 
-  var wheel=ov.querySelector('.jrul-wheel'), spin=ov.querySelector('.jrul-spin');
-  var girando=false, giro=0;
-  function cerrar(){ ov.hidden=true; }
-  function entrarPagina(){ cerrar(); try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); } }
-  function fiesta(){ if(typeof confetti!=='function') return;
-    confetti({particleCount:120,spread:80,origin:{y:.4}});
-    var fin=Date.now()+1000;(function fr(){ confetti({particleCount:4,angle:60,spread:55,origin:{x:0}}); confetti({particleCount:4,angle:120,spread:55,origin:{x:1}}); if(Date.now()<fin) requestAnimationFrame(fr); })();
-  }
-  function girar(){ if(girando) return; girando=true; spin.disabled=true;
-    var idx=GRATIS[Math.floor(Math.random()*GRATIS.length)], centro=idx*SEG+SEG/2, jit=(Math.random()*0.6-0.3)*SEG;
-    giro+=360*6+(360-(centro+jit)); wheel.style.transform='rotate('+giro+'deg)';
-    setTimeout(function(){ ov.querySelector('.jrul-intro').style.display='none'; ov.querySelector('.jrul-win').style.display='block'; fiesta(); setTimeout(entrarPagina,1500); },4700);
-  }
-  function _spinTap(e){
-    if(e && e.target && (e.target.closest('.jrul-x') || e.target.closest('.jrul-cta'))) return; // × cierra, CTA entra
-    var win=ov.querySelector('.jrul-win'); if(win && win.style.display==='block') return;        // ya ganó: no re-gira
-    girar();
-  }
-  ov.querySelector('.jrul-x').addEventListener('click',cerrar);
-  ov.querySelector('.jrul-cta').addEventListener('click',entrarPagina);
-  ov.addEventListener('click',_spinTap);   // tocar CUALQUIER parte de la ruleta la hace girar (no solo el botón)
-  /* la ruleta aparece sola al entrar (1 vez por sesión) */
-  setTimeout(function(){ ov.hidden=false; try{ sessionStorage.setItem('jaye_ruleta','1'); }catch(e){} }, 700);
-})();
+
