@@ -36,7 +36,7 @@ h2.sec{font-size:clamp(26px,6.4vw,40px);font-weight:800;margin-bottom:12px;lette
 @media(prefers-reduced-motion:reduce){[data-rv]{opacity:1!important;transform:none!important}}
 
 /* marquee */
-.marquee{background:linear-gradient(90deg,#0039a6 0%,#012a72 55%,#080d14 100%);color:#fff;overflow:hidden;white-space:nowrap;padding:11px 0;font-weight:600;font-size:12.5px;border-bottom:1px solid rgba(255,255,255,.12)}
+.marquee{background:linear-gradient(90deg,#d52b1e 0%,#8c1a12 48%,#0a0e14 100%);color:#fff;overflow:hidden;white-space:nowrap;padding:11px 0;font-weight:600;font-size:12.5px;border-bottom:1px solid rgba(255,255,255,.12)}
 .marquee--acc{background:linear-gradient(90deg,var(--pri-d),var(--bg2));border-top:1px solid var(--line);border-bottom:0}
 .mq__t{display:inline-flex;gap:34px;animation:mq 26s linear infinite}
 .mq__t span{display:inline-flex;align-items:center;gap:7px;color:#fff;letter-spacing:.04em;font-weight:700;text-shadow:none}
