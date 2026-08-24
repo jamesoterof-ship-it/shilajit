@@ -43,7 +43,7 @@ h2.sec{font-size:clamp(26px,6.4vw,40px);font-weight:800;margin-bottom:12px;lette
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* header — logo centrado + carrito, transparente al scroll */
-.header{position:sticky;top:0;z-index:60;background:rgba(7,13,26,.66);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);transition:background .3s,backdrop-filter .3s}
+.header{position:sticky;top:0;z-index:60;background:#000;backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.12);transition:background .3s}
 .header .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:60px}
 .ham{justify-self:start;display:grid;place-items:center;background:none;border:0;cursor:pointer;color:#fff;width:40px;height:40px;padding:0}
 .ham svg{width:24px;height:24px}
