@@ -63,11 +63,11 @@ h2.sec{font-size:clamp(26px,6.4vw,40px);font-weight:800;margin-bottom:12px;lette
 .nav .mi{width:20px;height:20px;color:var(--acc);flex:0 0 auto}
 
 /* ===== HERO full-bleed ===== */
-.hero{position:relative;color:#fff;overflow:hidden;min-height:88svh;display:flex;isolation:isolate;background:var(--ink);padding:0}
+.hero{position:relative;color:#fff;overflow:hidden;min-height:78svh;display:flex;isolation:isolate;background:var(--ink);padding:0}
 .hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%;z-index:0;transform:scale(1.02)}
 .hero__fx{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.8}
-.hero__scrim{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(4,20,40,.55) 0%,rgba(4,20,40,.12) 28%,rgba(4,20,40,0) 50%,rgba(4,20,40,.35) 80%,rgba(4,20,40,.78) 100%)}
-.hero__in{position:relative;z-index:3;width:100%;max-width:var(--maxw);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:14px 22px 24px;min-height:88svh}
+.hero__scrim{position:absolute;inset:0;z-index:2;background:linear-gradient(100deg,rgba(4,20,40,.86) 0%,rgba(4,20,40,.68) 38%,rgba(4,20,40,.22) 62%,rgba(4,20,40,.10) 100%)}
+.hero__in{position:relative;z-index:3;width:100%;max-width:var(--maxw);margin:0 auto;display:flex;flex-direction:column;justify-content:center;gap:0;padding:26px 22px 30px;min-height:78svh}
 .hero__top{display:flex;flex-direction:column;align-items:flex-start}
 .kicker{display:inline-flex;align-items:center;gap:7px;background:rgba(0,194,255,.16);border:1px solid rgba(0,194,255,.5);color:#7fdcff;padding:6px 13px;border-radius:999px;font-size:11.5px;font-weight:600;letter-spacing:.03em;margin-bottom:12px}
 .hero h1{font-size:clamp(26px,7vw,50px);font-weight:800;line-height:1.06;letter-spacing:-.03em;margin:0;color:#fff;text-shadow:0 6px 34px rgba(0,0,0,.75);max-width:15ch}
@@ -78,7 +78,7 @@ h2.sec{font-size:clamp(26px,6.4vw,40px);font-weight:800;margin-bottom:12px;lette
 .hm{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .hm svg{width:24px;height:24px;stroke:var(--acc);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .hm span{font-size:11px;font-weight:600;color:#cfe0f2;letter-spacing:.01em}
-@media(min-width:820px){.hero{min-height:82vh}.hero__in{position:relative;z-index:3;width:100%;max-width:var(--maxw);margin:0 auto;display:flex;flex-direction:column;gap:18px;padding:14px 22px 24px;min-height:88svh}.hero h1{max-width:16ch}.hero__mini{max-width:520px}}
+@media(min-width:820px){.hero{min-height:74vh}.hero__in{position:relative;z-index:3;width:100%;max-width:var(--maxw);margin:0 auto;display:flex;flex-direction:column;justify-content:center;gap:0;padding:26px 22px 30px;min-height:78svh}.hero h1{max-width:16ch}.hero__mini{max-width:520px}}
 
 /* ===== Botones ===== */
 .btn{font-family:var(--fh);font-weight:700;font-size:15.5px;border:0;border-radius:999px;padding:15px 24px;cursor:pointer;transition:.22s;display:inline-flex;align-items:center;justify-content:center;gap:9px;letter-spacing:.01em;position:relative;overflow:hidden;isolation:isolate;width:290px;max-width:100%;min-height:50px;white-space:normal;text-align:center;line-height:1.25}
@@ -531,3 +531,46 @@ p.cd-title{margin:22px 0 0;text-align:center;font-family:var(--fh);font-weight:7
   section{padding:50px 0}
   .statgrid,.row2{grid-template-columns:1fr 1fr}
 }
+
+/* ---- Hero estilo ficha: beneficios con ícono + CTA ---- */
+.hero__feats{display:flex;flex-direction:column;gap:13px;margin:18px 0 22px;max-width:330px}
+.hf{display:flex;align-items:flex-start;gap:11px}
+.hf__ic{flex:0 0 38px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(150deg,var(--sec),var(--pri));box-shadow:0 6px 16px rgba(11,61,145,.45);font-size:17px;line-height:1}
+.hf__tx{display:flex;flex-direction:column;line-height:1.25}
+.hf__tx b{font-family:var(--fh);font-size:13.5px;font-weight:800;color:#fff;letter-spacing:.01em}
+.hf__tx span{font-size:12px;color:#c3d6ec}
+.hero__cta{align-self:flex-start;display:inline-flex;align-items:center;gap:9px;padding:13px 24px;font-size:14px;letter-spacing:.02em}
+@media(min-width:820px){.hero__feats{max-width:420px;gap:16px}.hf__tx b{font-size:15px}.hf__tx span{font-size:13px}}
+
+/* ---- Franja blanca de sellos ---- */
+.ministrip{background:#fff;border-bottom:1px solid var(--line);padding:0}
+.sellos{display:grid;grid-template-columns:repeat(4,1fr);max-width:var(--maxw);margin:0 auto}
+.sl{padding:18px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;border-right:1px solid var(--line)}
+.sl:last-child{border-right:0}
+.sl__ic{font-size:20px;line-height:1}
+.sl b{font-family:var(--fh);font-size:11px;font-weight:800;color:var(--h);text-transform:uppercase;letter-spacing:.03em;line-height:1.25}
+.sl span{font-size:10.5px;color:var(--txt2);line-height:1.25}
+@media(min-width:820px){.sl{padding:24px 14px}.sl b{font-size:13px}.sl span{font-size:12px}}
+
+/* ---- Pasos 1-2-3 sobre blanco ---- */
+.science{background:#fff}
+.science .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:640px;margin:20px auto 0}
+.science .step{text-align:center;border-right:1px solid var(--line);padding:0 8px}
+.science .step:last-child{border-right:0}
+.science .step .n{margin:0 auto 10px}
+.science .step h3{font-size:13px;color:var(--h)}
+.science .step p{font-size:12px;color:var(--txt2)}
+
+/* ---- Tarjeta azul oscura con checks (la de la referencia) ---- */
+.ingredients{background:var(--bg2);color:var(--txt-dk)}
+.ingredients .wrap{max-width:var(--maxw)}
+.ing-grid{background:linear-gradient(155deg,#0b3d91,#06213f);border-radius:22px;padding:22px 20px;
+  box-shadow:0 20px 46px rgba(6,33,63,.26);display:grid;grid-template-columns:1fr;gap:12px}
+.ing{display:flex;align-items:flex-start;gap:11px;color:#dbe8f7}
+.ing .cir{flex:0 0 34px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(0,194,255,.18);border:1px solid rgba(0,194,255,.45);box-shadow:none}
+.ing .cir svg{width:17px;height:17px;stroke:#7fdcff}
+.ing b{color:#fff;font-size:13.5px}
+.ing p{color:#b9cee6;font-size:12.5px;margin:2px 0 0}
+@media(min-width:820px){.ing-grid{grid-template-columns:1fr 1fr;gap:14px 22px;padding:28px 26px}}

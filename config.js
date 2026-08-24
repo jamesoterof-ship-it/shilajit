@@ -1,7 +1,7 @@
 /* ============================================================
    CONFIG — ANTENA TV DIGITAL HD · Chile
-   Mismo molde que la landing de la máscara. Paleta celeste/negro,
-   la misma de los anuncios de la antena.
+   Mismo molde que la landing de la máscara. Paleta azul fuerte sobre blanco,
+   estructura tipo ficha de producto.
    Precios aprobados: 2 antenas $24.500 · 4 $34.500 · 6 $44.500
    ============================================================ */
 window.CONFIG = {
@@ -13,7 +13,7 @@ window.CONFIG = {
   seoDesc: "Ve los canales de la TV abierta chilena gratis y en HD, sin mensualidad ni contrato. Se instala en 2 minutos. Cada pack trae 2 antenas. Envío gratis y pago al recibir en todo Chile.",
 
   /* ---- Motor de diseño (celeste / negro de los anuncios) ---- */
-  paleta: { pri:"#2196c9", sec:"#4fc3f7", acc:"#7fd6fb", priD:"#04141f", ink:"#050f16" },
+  paleta: { pri:"#0b3d91", sec:"#1665e0", acc:"#00c2ff", priD:"#06213f", ink:"#06213f" },
 
   /* ---- País / moneda ---- */
   pais: { nombre:"Chile", cc:"cl", prefijo:"+56", moneda:"CLP", locale:"es-CL" },
@@ -43,12 +43,19 @@ window.CONFIG = {
     packThumb2: "img/duo.webp"
   },
 
+  /* ---- Beneficios dentro del hero (referencia del jefe) ---- */
+  heroFeats: [
+    { ic:"📡", t:"RECEPCIÓN HD", d:"Señal digital terrestre de alta definición" },
+    { ic:"🧲", t:"BASE MAGNÉTICA", d:"Se adhiere firme a superficies metálicas" },
+    { ic:"🔌", t:"CABLE LARGO", d:"3 metros de alcance para mejor ubicación" }
+  ],
+
   /* ---- Trust strip (4) ---- */
   trust: [
-    { em:"🚚", b:"Envío gratis", s:"a todo Chile" },
-    { em:"💵", b:"Paga al recibir", s:"contra entrega" },
-    { em:"📺", b:"Canales gratis", s:"sin mensualidad" },
-    { em:"⚡", b:"2 minutos", s:"y funciona" }
+    { em:"🚚", b:"Pago contraentrega", s:"en todo Chile 🇨🇱" },
+    { em:"🛡️", b:"Compra segura", s:"y garantizada" },
+    { em:"⚡", b:"Fácil de instalar", s:"y de usar" },
+    { em:"🎧", b:"Soporte local", s:"en Chile" }
   ],
 
   /* ---- Beneficios (3) ---- */

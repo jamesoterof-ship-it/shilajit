@@ -19,7 +19,7 @@ fbq('track','PageView');
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 
@@ -54,17 +54,19 @@ fbq('track','PageView');
       <span class="kicker" id="heroKicker"></span>
       <h1 id="heroTitle"></h1>
       <p class="lead" id="heroLead"></p>
+      <div class="hero__feats" id="heroFeats"></div>
+      <button class="btn btn--pri hero__cta" data-scroll="#pedido">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M2.5 3.5h2.3l1.9 11.5h10.8l1.6-8H6"/></svg>
+        COMPRAR AHORA
+      </button>
     </div>
   </div>
 </section>
 
 <!-- SELLOS (franja propia bajo el hero — no tocan el producto) -->
 <div class="ministrip">
-  <div class="hero__mini">
-    <div class="hm"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg><span>Canales gratis</span></div>
-    <div class="hm"><svg viewBox="0 0 24 24"><path d="M12 2 3 6v6c0 5.5 3.8 9.5 9 11 5.2-1.5 9-5.5 9-11V6z"/><circle cx="12" cy="11" r="3"/></svg><span>Sin mensualidad</span></div>
-    <div class="hm"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.2"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg><span>Listo en 2 minutos</span></div>
-  </div>
+  <div class="sellos" id="sellos"></div>
+</div>
 </div>
 
 <!-- INTRO PRODUCTO (formato Shilajit: producto + 2 propuestas + precio) -->
@@ -448,13 +450,13 @@ fbq('track','PageView');
 <!-- STICKY CTA -->
 <div class="stickycta" id="stickycta"><button class="btn btn--acc" data-scroll="#pedido">Pedir ahora — pago contra entrega</button></div>
 
-<script src="config.js?v=9"></script>
-<script src="chile-regiones.js?v=9"></script>
-<script src="app.js?v=9"></script>
+<script src="config.js?v=10"></script>
+<script src="chile-regiones.js?v=10"></script>
+<script src="app.js?v=10"></script>
 <script defer src="lib/gsap.min.js"></script>
 <script defer src="lib/SplitText.min.js"></script>
 <script defer src="lib/vanilla-tilt.min.js"></script>
 <script defer src="lib/confetti.browser.min.js"></script>
-<script defer src="motors.js?v=9"></script>
+<script defer src="motors.js?v=10"></script>
 </body>
 </html>

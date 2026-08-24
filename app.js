@@ -63,6 +63,14 @@ var hImg=$("#heroImg"); if(hImg && C.img){ hImg.src=C.img.hero||C.img.oferta||""
 set("introPrice", money(C.precioUnidad||0));
 
 /* ---------- 5) TRUST ---------- */
+/* beneficios dentro del hero (íconos redondos, como la referencia) */
+html("heroFeats", (C.heroFeats||[]).map(function(f){
+  return '<div class="hf"><span class="hf__ic">'+f.ic+'</span><div class="hf__tx"><b>'+f.t+'</b><span>'+f.d+'</span></div></div>';
+}).join(""));
+/* franja blanca de sellos bajo el hero */
+html("sellos", (C.trust||[]).map(function(t){
+  return '<div class="sl"><span class="sl__ic">'+t.em+'</span><b>'+t.b+'</b><span>'+t.s+'</span></div>';
+}).join(""));
 html("trust", (C.trust||[]).map(function(t){
   return '<div class="t"><div class="em">'+t.em+'</div><b>'+t.b+'</b><span>'+t.s+'</span></div>';
 }).join(""));
