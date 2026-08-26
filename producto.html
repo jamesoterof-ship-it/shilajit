@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=55">
+<link rel="stylesheet" href="tienda.css?v=56">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -565,6 +565,28 @@
 .form .listo h3{color:var(--tinta)}
 .form .listo p{color:var(--suave)}
 .form .ctaSub{color:var(--suave) !important}
+
+
+/* --- v4: whatsapp limpio y resultados sobrios ---
+   El WhatsApp: le puse un aro oscuro que se ve como una mancha, y el
+   degradado de la barra lo ensucia. Fuera el aro y fuera el degradado: barra
+   solida, botones a la misma altura, nada encima del verde.
+   Resultados: la mitad dorada y la mitad roja quedo de circo. Se deja el
+   numero en un solo tono (tinta) y solo el filete de arriba alterna. 
+.flota{background:var(--negro);border-top:1px solid rgba(255,255,255,.12);
+  padding:12px 14px calc(12px + env(safe-area-inset-bottom));gap:12px;align-items:stretch}
+.flota .cta{flex:1;margin:0;border-radius:12px;padding:0 14px;font-size:14px;
+  display:flex;align-items:center;justify-content:center;min-height:54px;line-height:1.15}
+.flota .wa{flex:0 0 54px;width:54px;height:54px;min-height:54px;border-radius:50%;
+  background:#25d366;display:grid;place-items:center;box-shadow:none;transition:transform .2s ease}
+.flota .wa:hover{transform:scale(1.06)}
+.flota .wa svg{width:28px;height:28px;fill:#fff}
+
+/* Resultados: un solo tono para el numero; solo el filete alterna */
+.res b{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--tinta)}
+.res:nth-child(2n) b{background:none;color:var(--tinta)}
+.res::before{background:var(--oro)}
+.res:nth-child(2n)::before{background:var(--rojo)}
 
 @media (min-width:860px){
   .arriba2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
