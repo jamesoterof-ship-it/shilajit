@@ -379,7 +379,7 @@ body{--altoCab:0px}
 }
 /* redondas a proposito: la tienda entera son rectangulos, y una fila de
    circulos con caras le quita la dureza sin salirse del molde */
-.rese-fotos .fo{flex:0 0 auto;width:118px;height:118px;border-radius:50%;overflow:hidden;
+.rese-fotos .fo{flex:0 0 auto;width:112px;height:112px;border-radius:50%;overflow:hidden;
                 background:#E4E1DB;position:relative;
                 box-shadow:0 0 0 1px var(--linea), 0 8px 20px rgba(15,14,12,.09);
                 transition:box-shadow .35s ease,transform .35s cubic-bezier(.2,.7,.2,1)}
@@ -391,7 +391,7 @@ body{--altoCab:0px}
 /* marco vacio mientras no esten las fotos cargadas */
 .rese-fotos .fo.hueco::after{content:'';position:absolute;inset:0;
   background:linear-gradient(120deg,#EAE7E1,#F4F2EE 45%,#E4E1DB)}
-@media (min-width:900px){ .rese-fotos .fo{width:142px;height:142px} }
+@media (min-width:900px){ .rese-fotos .fo{width:126px;height:126px} }
 
 /* ABAJO: las tarjetas con lo que escribieron. Chicas y QUIETAS: solo se
    mueven con las flechas o arrastrando. Lo unico que corre solo son las

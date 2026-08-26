@@ -138,7 +138,7 @@
 
   /* Fotos de clientes. Se reparten entre las reseñas: no todas llevan foto,
      igual que en la vida real. */
-  var FOTOS = ['r1','r2','r3','r4','r5','r6','r7','r8','r9','r10']
+  var FOTOS = ['r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','r13','r14','r15']
     .map(function (n) { return 'img/resenas/' + n + '.webp'; });
 
   /* Numeros fijos, no al azar: si cambian en cada visita se nota y se ve mal. */
