@@ -215,17 +215,35 @@ a{color:inherit;text-decoration:none}
 .ficha .btn:hover{background:#2A2724}
 
 /* ---------- garantia ---------- */
-/* ---------- garantia con el video de la pareja de fondo ---------- */
+/* ---------- garantia con el video de la pareja de fondo ----------
+   Ocupa TODO el ancho de la pantalla, sin bordes ni lineas. */
 .gar-video{position:relative;overflow:hidden;background:var(--negro);
-           min-height:300px;display:flex;align-items:center;justify-content:center}
+           min-height:420px;display:flex;align-items:center;justify-content:center;
+           width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);
+           border:0;padding:0}
 .gar-video .clip-gar{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
                      object-position:center 30%;opacity:0;transition:opacity .8s ease}
-.gar-video .clip-gar.listo{opacity:.72}
-.gar-video .velo{position:absolute;inset:0;background:rgba(15,14,12,.42)}
-.gar-video .dentro{position:relative;padding:34px 16px;max-width:56ch}
-.gar-video h2{color:var(--hueso)}
-.gar-video p{color:#D8D3CA}
-@media (prefers-reduced-motion:reduce){ .gar-video .clip-gar{display:none} }
+.gar-video .clip-gar.listo{opacity:.62}
+/* el velo, mas oscuro abajo, para que el texto se lea siempre */
+.gar-video .velo{position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(15,14,12,.42) 0%,rgba(15,14,12,.66) 42%,rgba(15,14,12,.42) 100%)}
+.gar-video .dentro{position:relative;padding:44px 18px;max-width:56ch}
+.gar-video h2{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.75)}
+.gar-video p{color:#EDE9E1;text-shadow:0 1px 14px rgba(0,0,0,.7)}
+
+/* Entrada distinta a la del hero: el texto llega desenfocado y se va
+   aclarando mientras se acerca. */
+.gar-video h2,.gar-video p{opacity:0;filter:blur(14px);transform:scale(.94)}
+.gar-video.entro h2{animation:aclara 1.1s cubic-bezier(.16,1,.3,1) forwards}
+.gar-video.entro p{animation:aclara 1.1s cubic-bezier(.16,1,.3,1) .28s forwards}
+@keyframes aclara{
+  60% {opacity:1}
+  to  {opacity:1;filter:blur(0);transform:scale(1)}
+}
+@media (prefers-reduced-motion:reduce){
+  .gar-video .clip-gar{display:none}
+  .gar-video h2,.gar-video p{opacity:1;filter:none;transform:none;animation:none}
+}
 
 .gar{background:var(--gris);padding:28px 16px;text-align:center}
 .gar h2{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;

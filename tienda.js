@@ -115,6 +115,9 @@
         var t = v.play();
         if (t && t.catch) t.catch(function () {});
         v.classList.add('listo');
+        // el texto entra cuando el cliente llega a esta parte
+        var sec = v.closest('.gar-video');
+        if (sec) sec.classList.add('entro');
       });
     }, { threshold: 0.25 });
     ojo.observe(v);
