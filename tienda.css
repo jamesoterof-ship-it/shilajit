@@ -393,52 +393,45 @@ body{--altoCab:0px}
   background:linear-gradient(120deg,#EAE7E1,#F4F2EE 45%,#E4E1DB)}
 @media (min-width:900px){ .rese-fotos .fo{width:142px;height:142px} }
 
-/* ABAJO: las tarjetas chicas con lo que escribieron. Se arrastran de lado. */
-.rese-pista{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
-            padding:4px 16px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.rese-pista::-webkit-scrollbar{display:none}
-@media (min-width:1220px){ .rese-pista{padding-left:calc(50vw - var(--maxw)/2 + 16px)} }
-
-.rsn{flex:0 0 auto;width:min(252px,72vw);scroll-snap-align:start;background:#fff;
-     border:1px solid var(--linea);padding:15px 15px 14px;position:relative;overflow:hidden;
-     display:flex;flex-direction:column;
-     transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease,border-color .3s ease,
-                opacity .8s ease var(--d,0s),translate .8s cubic-bezier(.16,1,.3,1) var(--d,0s)}
-/* mismo destello y misma linea dorada que las tarjetas del sello */
-.rsn::before{content:'';position:absolute;top:-12%;bottom:-12%;left:-160%;width:42%;
-  pointer-events:none;z-index:0;transform:skewX(-16deg);
-  background:linear-gradient(100deg,transparent 0%,rgba(216,165,46,.30) 42%,
-             rgba(255,249,229,.66) 52%,rgba(216,165,46,.26) 62%,transparent 100%)}
-.rsn>*{position:relative;z-index:1}
-.rsn::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;z-index:2;
-            background:linear-gradient(90deg,var(--oro-osc),var(--oro),#F0D588);
-            transform:scaleX(0);transform-origin:left;
-            transition:transform .38s cubic-bezier(.2,.7,.2,1)}
-.rsn:hover{transform:translateY(-5px);border-color:var(--oro);
-           box-shadow:0 18px 38px rgba(216,165,46,.24)}
-.rsn:hover::after{transform:scaleX(1)}
-.rsn:hover::before{animation:destello 1s ease-out}
-
-.rsn .quien{display:flex;align-items:center;gap:9px;margin:0 0 9px}
-.rsn .av{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;
-         background:var(--negro);color:#fff;font-family:'Barlow Condensed','Inter',sans-serif;
-         font-weight:800;font-size:15px}
-.rsn .nom{font-weight:600;font-size:13px;color:var(--negro);line-height:1.25}
-.rsn .lug{font-size:11.5px;color:var(--suave);line-height:1.3}
-.rsn .est{color:var(--oro);font-size:12.5px;letter-spacing:.08em;margin:0 0 6px}
-.rsn .est i{color:#D6D2C8;font-style:normal}
-.rsn p{margin:0;font-size:13px;line-height:1.62;font-weight:300;color:var(--tinta);flex:1}
-.rsn .foto{margin:11px -15px -14px;display:block;width:calc(100% + 30px);aspect-ratio:4/5;
-           object-fit:cover;background:#F2F1EE}
-.rsn .prod{margin:10px 0 0;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
-           text-transform:uppercase;font-size:11px;letter-spacing:.07em;color:var(--oro-osc)}
-.rsn .fec{font-size:11px;color:#A29C90;margin-top:6px}
-
-@media (min-width:900px){
-  .rese-flechas{display:flex}
-  .rsn{width:268px}
+/* ABAJO: las tarjetas con lo que escribieron. Chicas, y corriendo solas hacia
+   el OTRO lado que las fotos: asi la seccion se ve viva sin marear. */
+.rese-pista{overflow:hidden;padding:2px 0 4px;
+            -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.rese-pista .tira{display:flex;gap:10px;width:max-content;
+                  animation:correTextos 58s linear infinite}
+.rese-pista:hover .tira,.rese-pista:active .tira{animation-play-state:paused}
+/* arranca corrida y avanza hacia la derecha: al reves que las fotos */
+@keyframes correTextos{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){
+  .rese-pista .tira{animation:none}
+  .rese-pista{overflow-x:auto;scrollbar-width:none}
 }
-@media (prefers-reduced-motion:reduce){ .rsn::before{display:none} }
+
+/* Tarjetas chicas de verdad: son el coro, no el protagonista. Sin destello. */
+.rsn{flex:0 0 auto;width:186px;background:#fff;
+     border:1px solid var(--linea);padding:11px 12px 10px;position:relative;
+     display:flex;flex-direction:column;
+     transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease,border-color .3s ease}
+.rsn:hover{transform:translateY(-4px);border-color:var(--oro);
+           box-shadow:0 12px 26px rgba(216,165,46,.22)}
+
+.rsn .quien{display:flex;align-items:center;gap:7px;margin:0 0 6px}
+.rsn .av{width:24px;height:24px;flex:none;border-radius:50%;display:grid;place-items:center;
+         background:var(--negro);color:#fff;font-family:'Barlow Condensed','Inter',sans-serif;
+         font-weight:800;font-size:12px}
+.rsn .nom{font-weight:600;font-size:11.5px;color:var(--negro);line-height:1.2;
+          white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
+.rsn .lug{font-size:10px;color:var(--suave);line-height:1.3}
+.rsn .est{color:var(--oro);font-size:10.5px;letter-spacing:.06em;margin:0 0 4px}
+.rsn .est i{color:#D6D2C8;font-style:normal}
+.rsn p{margin:0;font-size:11.5px;line-height:1.55;font-weight:300;color:var(--tinta);flex:1}
+.rsn .prod{margin:7px 0 0;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
+           text-transform:uppercase;font-size:9px;letter-spacing:.06em;color:var(--oro-osc);
+           white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rsn .fec{font-size:9.5px;color:#A29C90;margin-top:3px}
+
+@media (min-width:900px){ .rsn{width:206px} }
 
 /* ---------- garantia ---------- */
 /* ---------- garantia con el video de la pareja de fondo ----------

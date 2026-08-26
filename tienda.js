@@ -283,30 +283,40 @@
       for (var i = 1; i <= 5; i++) s += (i <= k ? '★' : '<i>★</i>');
       return s;
     };
-    var pista = document.getElementById('resePista');
-    if (pista) {
-      pista.innerHTML = lista.slice(0, 24).map(function (r, i) {
-        return '<article class="rsn" data-rv style="--d:' + Math.min(i, 6) * 0.05 + 's">'
-          + '<div class="quien"><span class="av">' + r.nombre.charAt(0) + '</span>'
-          + '<div><div class="nom">' + r.nombre + '</div>'
-          + '<div class="lug">' + r.comuna + '</div></div></div>'
-          + '<div class="est">' + estrellas(r.estrellas) + '</div>'
-          + '<p>' + r.texto + '</p>'
-          + '<div class="prod">' + r.producto + '</div>'
-          + '<div class="fec">' + r.fecha + '</div>'
-          + '</article>';
-      }).join('');
+    var tarjeta = function (r) {
+      return '<article class="rsn">'
+        + '<div class="quien"><span class="av">' + r.nombre.charAt(0) + '</span>'
+        + '<div><div class="nom">' + r.nombre + '</div>'
+        + '<div class="lug">' + r.comuna + '</div></div></div>'
+        + '<div class="est">' + estrellas(r.estrellas) + '</div>'
+        + '<p>' + r.texto + '</p>'
+        + '<div class="prod">' + r.producto + '</div>'
+        + '<div class="fec">' + r.fecha + '</div>'
+        + '</article>';
+    };
+    /* Se van turnando los productos, uno de cada uno y vuelta a empezar, para
+       que en la tira se vean TODOS los que vendemos y no cinco seguidas de
+       la máscara solo porque son las primeras de la lista. */
+    var porProd = {};
+    lista.forEach(function (r) { (porProd[r.producto] = porProd[r.producto] || []).push(r); });
+    var prods = Object.keys(porProd), turnadas = [], k = 0;
+    while (turnadas.length < 25) {
+      var alguna = false;
+      for (var j = 0; j < prods.length; j++) {
+        var g = porProd[prods[j]];
+        if (g[k]) { turnadas.push(g[k]); alguna = true; }
+        if (turnadas.length >= 25) break;
+      }
+      if (!alguna) break;
+      k++;
     }
 
-    // flechas de la pantalla grande
-    var mover = function (dir) {
-      if (!pista) return;
-      var t = pista.querySelector('.rsn');
-      pista.scrollBy({ left: dir * ((t ? t.offsetWidth : 260) + 12) * 2, behavior: 'smooth' });
-    };
-    var a = document.getElementById('reseIzq'), b = document.getElementById('reseDer');
-    if (a) a.addEventListener('click', function () { mover(-1); });
-    if (b) b.addEventListener('click', function () { mover(1); });
+    var pistaT = document.getElementById('reseTiraTxt');
+    if (pistaT) {
+      // se duplica el juego para que el giro no tenga costura
+      pistaT.innerHTML = turnadas.concat(turnadas).map(tarjeta).join('');
+      pistaT.style.animationDuration = Math.max(46, turnadas.length * 3.2) + 's';
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function () {
