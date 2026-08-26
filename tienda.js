@@ -268,8 +268,12 @@
       }
       var doble = fotos.concat(fotos);
       tira.innerHTML = doble.map(function (f) {
+        /* OJO: nada de loading="lazy" aca. La tira se mueve con transform, y la
+           carga diferida mira la posicion de maquetado, no la movida: las fotos
+           que van entrando nunca se enteran de que les toca cargar y el circulo
+           se queda gris. Son 15 fotos de 7 KB, se cargan todas y ya. */
         return f
-          ? '<div class="fo"><img src="' + f + '" alt="Foto de cliente" loading="lazy"'
+          ? '<div class="fo"><img src="' + f + '" alt="Foto de cliente" decoding="async"'
             + ' onerror="this.parentNode.classList.add(\'hueco\');this.remove()"></div>'
           : '<div class="fo hueco"></div>';
       }).join('');
