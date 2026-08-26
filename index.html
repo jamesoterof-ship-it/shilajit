@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=8">
+<link rel="stylesheet" href="tienda.css?v=9">
 </head>
 <body>
 
@@ -51,6 +51,11 @@
   <!-- hero -->
   <section class="hero">
     <div class="foto" style="background-image:url('img/hero-tienda.webp')"></div>
+    <!-- si existe el video, se pone encima de la foto y se ve caminando -->
+    <video class="clip" id="clipHero" muted loop playsinline preload="metadata"
+           poster="img/hero-tienda.webp" aria-hidden="true">
+      <source src="img/hero-tienda.mp4" type="video/mp4">
+    </video>
     <div class="capa"></div>
     <div class="txt">
       <h1>Pídelo hoy,<br>paga al recibir</h1>
@@ -109,6 +114,6 @@
   </footer>
 
 <script src="productos.js?v=1"></script>
-<script src="tienda.js?v=6"></script>
+<script src="tienda.js?v=9"></script>
 </body>
 </html>

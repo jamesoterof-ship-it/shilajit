@@ -84,9 +84,27 @@
     mirar();
   }
 
+  /* El video del hero: solo se muestra si de verdad existe y puede reproducirse.
+     Si no, queda la foto y nadie ve un hueco negro. En datos moviles lentos
+     tampoco se fuerza. */
+  function videoHero() {
+    var v = document.getElementById('clipHero');
+    if (!v) return;
+    var con = navigator.connection || {};
+    if (con.saveData || /2g/.test(con.effectiveType || '')) return;   // no gastarle los datos
+    v.addEventListener('loadeddata', function () {
+      v.classList.add('listo');
+      var t = v.play();
+      if (t && t.catch) t.catch(function () { v.classList.remove('listo'); });
+    });
+    v.addEventListener('error', function () { v.classList.remove('listo'); });
+    v.load();
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     categorias();
     pintar('Todos');
     cabecera();
+    videoHero();
   });
 })();
