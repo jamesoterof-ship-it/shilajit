@@ -571,10 +571,10 @@ body{--altoCab:0px}
    (la landing vieja) y los titulos salian celestes. */
 .legal-head{background:var(--negro);border-bottom:1px solid rgba(255,255,255,.10);position:sticky;top:0;z-index:40}
 .legal-head .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:820px;margin:0 auto;padding:0 20px}
-.legal-head .brand{display:flex;align-items:center;gap:9px;text-decoration:none}
-.legal-head .brand .bj{color:#fff;font-weight:800;font-size:17px;letter-spacing:.1em}
-.legal-head .brand .bsep{width:1px;height:17px;background:rgba(255,255,255,.45)}
-.legal-head .brand .bgold{color:var(--oro);font-weight:600;font-size:13.5px;letter-spacing:.22em}
+/* el logo, EXACTAMENTE el del encabezado de la tienda: JAYE y GROUP del mismo
+   color (aqui blanco, porque el fondo es negro) y solo la raya dorada. */
+.legal-head .logo{visibility:visible}
+.legal-head .logo .j,.legal-head .logo .g{color:#fff}
 .legal-head .volver{color:var(--oro);font-weight:700;font-size:14px;text-decoration:none;letter-spacing:.01em}
 .legal-head .volver:hover{color:#fff}
 
