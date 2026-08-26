@@ -212,6 +212,18 @@ a{color:inherit;text-decoration:none}
 .ficha .btn:hover{background:#2A2724}
 
 /* ---------- garantia ---------- */
+/* ---------- garantia con el video de la pareja de fondo ---------- */
+.gar-video{position:relative;overflow:hidden;background:var(--negro);
+           min-height:300px;display:flex;align-items:center;justify-content:center}
+.gar-video .clip-gar{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+                     object-position:center 30%;opacity:0;transition:opacity .8s ease}
+.gar-video .clip-gar.listo{opacity:.72}
+.gar-video .velo{position:absolute;inset:0;background:rgba(15,14,12,.42)}
+.gar-video .dentro{position:relative;padding:34px 16px;max-width:56ch}
+.gar-video h2{color:var(--hueso)}
+.gar-video p{color:#D8D3CA}
+@media (prefers-reduced-motion:reduce){ .gar-video .clip-gar{display:none} }
+
 .gar{background:var(--gris);padding:28px 16px;text-align:center}
 .gar h2{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
         font-size:24px;margin:0 0 7px;letter-spacing:.02em}

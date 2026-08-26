@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=10">
+<link rel="stylesheet" href="tienda.css?v=11">
 </head>
 <body>
 
@@ -91,10 +91,16 @@
   </div>
   <div class="rejilla" id="rejilla"></div>
 
-  <!-- garantia -->
-  <section class="gar">
-    <h2>Si no te gusta, lo devuelves</h2>
-    <p>No pagas nada por adelantado. Revisas el producto cuando llega y recién ahí pagas.</p>
+  <!-- garantia: aca va el video de la pareja, que es de marca -->
+  <section class="gar gar-video">
+    <video class="clip-gar" id="clipGar" muted loop playsinline preload="none" aria-hidden="true">
+      <source src="img/pareja-compras.mp4" type="video/mp4">
+    </video>
+    <div class="velo"></div>
+    <div class="dentro">
+      <h2>Si no te gusta, lo devuelves</h2>
+      <p>No pagas nada por adelantado. Revisas el producto cuando llega y recién ahí pagas.</p>
+    </div>
   </section>
 
   <!-- pie -->
@@ -114,6 +120,6 @@
   </footer>
 
 <script src="productos.js?v=1"></script>
-<script src="tienda.js?v=10"></script>
+<script src="tienda.js?v=11"></script>
 </body>
 </html>

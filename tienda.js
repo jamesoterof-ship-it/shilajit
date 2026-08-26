@@ -101,6 +101,25 @@
     v.load();
   }
 
+  /* El video de la garantia solo se carga cuando el cliente llega ahi abajo,
+     para no gastarle datos de entrada. */
+  function videoGarantia() {
+    var v = document.getElementById('clipGar');
+    if (!v || !('IntersectionObserver' in window)) return;
+    var con = navigator.connection || {};
+    if (con.saveData || /2g/.test(con.effectiveType || '')) return;
+    var ojo = new IntersectionObserver(function (ent) {
+      ent.forEach(function (e) {
+        if (!e.isIntersecting) { if (!v.paused) v.pause(); return; }
+        if (!v.dataset.cargado) { v.dataset.cargado = '1'; v.load(); }
+        var t = v.play();
+        if (t && t.catch) t.catch(function () {});
+        v.classList.add('listo');
+      });
+    }, { threshold: 0.25 });
+    ojo.observe(v);
+  }
+
   /* El titulo entra EN CASCADA: letra por letra, cada una asomando desde
      abajo detras de una mascara, una detras de la otra. */
   function letrasDelHero() {
@@ -128,5 +147,6 @@
     cabecera();
     videoHero();
     letrasDelHero();
+    videoGarantia();
   });
 })();
