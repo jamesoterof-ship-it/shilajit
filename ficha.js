@@ -542,3 +542,42 @@ revelarFicha();
   }).join('');
   t.innerHTML = uno + uno;
 })();
+
+/* ---------- los numeros de Resultados suben desde cero ----------
+   Se respeta el formato: 701 sube entero, 4,6 sube con decimal, /usr/bin/bash y 30
+   quedan tal cual porque contar hasta 0 no se ve. */
+function contarNumeros() {
+  var caja = document.querySelector('.res-sec');
+  if (!caja) return;
+  var quieto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function subir(el) {
+    var fin = String(el.dataset.num || el.textContent).trim();
+    var num = parseFloat(fin.replace(/[^0-9,.]/g, '').replace(',', '.'));
+    if (!num || quieto) return;
+    var dec = fin.indexOf(',') >= 0 ? 1 : 0;
+    var pre = fin.match(/^[^0-9]*/)[0], pos = fin.match(/[^0-9,.]*$/)[0];
+    var t0 = null, dur = 1100;
+    function paso(t) {
+      if (!t0) t0 = t;
+      var p = Math.min((t - t0) / dur, 1);
+      var suave = 1 - Math.pow(1 - p, 3);          // arranca rapido y frena
+      var v = (num * suave).toFixed(dec).replace('.', ',');
+      el.textContent = pre + v + pos;
+      if (p < 1) requestAnimationFrame(paso); else el.textContent = fin;
+    }
+    el.textContent = pre + (dec ? '0,0' : '0') + pos;
+    requestAnimationFrame(paso);
+  }
+  var arrancado = false;
+  function mirar() {
+    if (arrancado) return;
+    if (caja.getBoundingClientRect().top > window.innerHeight * 0.85) return;
+    arrancado = true;
+    caja.querySelectorAll('b[data-num]').forEach(function (el, i) {
+      setTimeout(function () { subir(el); }, i * 110);
+    });
+  }
+  window.addEventListener('scroll', mirar, { passive: true });
+  mirar();
+}
+contarNumeros();
