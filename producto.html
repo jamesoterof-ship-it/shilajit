@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=53">
+<link rel="stylesheet" href="tienda.css?v=54">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -507,6 +507,21 @@
 .rev-auto .rsc p{font-size:12.5px;line-height:1.5;
   display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .rev-auto .rsc:hover{transform:none;box-shadow:none}
+
+
+/* --- rojo en el formulario ---
+   Estaba TODO dorado: etiquetas, ahorro, borde del elegido y el Gratis.
+   El rojo se queda para lo que empuja (mas vendido, descuento, ahorro) y el
+   dorado para lo que da confianza (mejor precio, envio gratis). */
+.form .pack .tag{background:var(--rojo);color:#fff}
+.form .pack:last-child .tag{background:var(--oro);color:var(--negro)}
+.form .pack.sel{border-color:var(--rojo);background:rgba(196,18,47,.10);
+  box-shadow:0 0 0 3px rgba(196,18,47,.16)}
+.form .pack.sel .radio{border-color:var(--rojo);
+  background:radial-gradient(circle,var(--rojo) 42%,transparent 46%)}
+.form .pack .info .s{color:#FF8FA0}
+.form .pack.sel .info .s{color:#FF6B80}
+.summary .desc{color:#FF6B80;font-weight:700}
 
 @media (min-width:860px){
   .arriba2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
