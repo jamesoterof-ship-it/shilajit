@@ -175,8 +175,24 @@
       }).join('') + '</div></section>' : '';
 
   /* ---------- 10 · formulario ---------- */
+  /* el mismo selector de packs de arriba, tambien aca: el cliente elige sin
+     tener que volver a subir */
+  function packsHTML(sufijo) {
+    return p.packs.map(function (k, i) {
+      var o = k.antes ? Math.round((1 - k.precio / k.antes) * 100) : 0;
+      return '<button type="button" class="pack' + (i === iPop ? ' esPopular' : '') + '" aria-pressed="' + (i === elegido) + '" data-i="' + i + '">'
+        + (i === iPop ? '<span class="cinta">El más pedido</span>' : '')
+        + '<span class="marca"></span>'
+        + '<span class="qt">' + esc(k.texto) + (o ? ' · ' + o + '% menos' : '') + '</span>'
+        + '<span class="pz">' + pesos(k.precio) + '</span>'
+        + (k.antes ? '<span class="an">' + pesos(k.antes) + '</span>' : '')
+        + '</button>';
+    }).join('');
+  }
+
   var formulario = '<section class="form" id="pedir"><h2>Pide el tuyo</h2>'
     + '<p class="baj">Lo despachamos hoy. Pagas cuando lo recibes.</p>'
+    + '<div class="packs enForm" id="packsForm">' + packsHTML('f') + '</div>'
     + '<div class="resu"><div class="qq" id="resuTx">' + esc(p.nombre) + '<small id="resuPack">' + esc(kPop.texto) + '</small></div>'
     + '<div class="pp" id="resuPz">' + pesos(kPop.precio) + '</div></div>'
     + '<form id="fPedido" novalidate>'
@@ -215,11 +231,24 @@
     $('resuPack').textContent = k.texto;
     $('resuPz').textContent = pesos(k.precio);
   }
-  $('packs').addEventListener('click', function (e) {
-    var b = e.target.closest('.pack'); if (!b) return;
-    elegido = Number(b.dataset.i);
-    this.querySelectorAll('.pack').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+  /* los dos selectores (el de arriba y el del formulario) se mueven juntos:
+     si el cliente cambia el pack abajo, arriba tambien cambia */
+  function elegirPack(i) {
+    elegido = i;
+    ['packs', 'packsForm'].forEach(function (cual) {
+      var caja = $(cual); if (!caja) return;
+      caja.querySelectorAll('.pack').forEach(function (x) {
+        x.setAttribute('aria-pressed', String(Number(x.dataset.i) === i));
+      });
+    });
     pintarPrecio();
+  }
+  ['packs', 'packsForm'].forEach(function (cual) {
+    var caja = $(cual); if (!caja) return;
+    caja.addEventListener('click', function (e) {
+      var b = e.target.closest('.pack'); if (!b) return;
+      elegirPack(Number(b.dataset.i));
+    });
   });
   $('btnArriba').addEventListener('click', function () {
     $('pedir').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -287,5 +316,22 @@
         + ' para confirmar el despacho.<br>Pagas cuando lo recibes.</p></div>';
       $('pedir').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+  });
+})();
+
+/* ---------- el boletin del pie ----------
+   El pie es el mismo de la tienda, y su formulario lo maneja tienda.js, que
+   esta ficha no carga (traeria la rejilla de productos entera). Se copia solo
+   esta parte, para que el pie no quede muerto. */
+(function () {
+  var f = document.getElementById('fBoletin');
+  if (!f) return;
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var c = document.getElementById('correoBoletin');
+    var ok = document.getElementById('aceptoBoletin');
+    if (!c.value || c.value.indexOf('@') < 0) { c.focus(); return; }
+    if (ok && !ok.checked) { ok.focus(); return; }
+    f.outerHTML = '<p class=gracias>Listo. Te avisamos cuando haya novedades.</p>';
   });
 })();
