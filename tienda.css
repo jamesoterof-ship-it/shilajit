@@ -69,7 +69,10 @@ body{--altoCab:0px}
 /* ---------- header: gris arriba, NEGRO al bajar ---------- */
 .top{background:var(--gris);border-bottom:1px solid var(--linea);
      transition:background .28s ease,border-color .28s ease}
-.pegado.bajando .top{background:var(--negro);border-bottom-color:#262320}
+/* al bajar: negro translucido con desenfoque, como el de Konecta */
+.pegado.bajando .top{background:rgba(12,11,9,.66);
+                     -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+                     border-bottom-color:rgba(255,255,255,.10)}
 .top .fila{
   max-width:var(--maxw);margin:0 auto;
   display:flex;align-items:center;flex-wrap:nowrap;gap:14px;padding:12px 16px;
