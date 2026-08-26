@@ -260,7 +260,20 @@ body{--altoCab:0px}
                            box-shadow .3s ease,border-color .3s ease,
                            opacity .8s ease var(--d,0s),
                            translate .8s cubic-bezier(.16,1,.3,1) var(--d,0s)}
-.nos-puntos>div::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;
+/* DESTELLO: la misma banda diagonal de NAD+ (.imgcard__ph::after), pero en
+   dorado, porque sobre una tarjeta blanca un destello blanco no se ve.
+   Cruza cuando la tarjeta entra en pantalla y otra vez al pasar el mouse. */
+.nos-puntos>div::before{content:'';position:absolute;top:-12%;bottom:-12%;left:-160%;
+  width:42%;pointer-events:none;z-index:0;transform:skewX(-16deg);
+  background:linear-gradient(100deg,transparent 0%,rgba(216,165,46,.34) 42%,
+             rgba(255,249,229,.72) 52%,rgba(216,165,46,.30) 62%,transparent 100%)}
+.nos-puntos>div>*{position:relative;z-index:1}
+.nos-puntos>div[data-rv].vino::before{
+  animation:destello 1.25s ease-out calc(.34s + var(--d,0s)) backwards}
+.nos-puntos>div:hover::before{animation:destello 1s ease-out}
+@keyframes destello{0%{left:-160%}70%{left:160%}100%{left:160%}}
+
+.nos-puntos>div::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;z-index:2;
                        background:linear-gradient(90deg,var(--oro-osc),var(--oro),#F0D588);
                        transform:scaleX(0);transform-origin:left;
                        transition:transform .38s cubic-bezier(.2,.7,.2,1)}
@@ -321,7 +334,10 @@ body{--altoCab:0px}
   100%{transform:scaleX(0);transform-origin:right}
 }
 @media (prefers-reduced-motion:reduce){
-  .nos-puntos>div[data-rv].vino::after{animation:none}
+  .nos-puntos>div[data-rv].vino::after,
+  .nos-puntos>div[data-rv].vino::before,
+  .nos-puntos>div:hover::before{animation:none}
+  .nos-puntos>div::before{display:none}
 }
 
 /* ---------- garantia ---------- */
