@@ -131,10 +131,10 @@
       var palabras = linea.replace(/<[^>]+>/g, '').trim().split(/\s+/).filter(Boolean);
       return '<span class="linea">' + palabras.map(function (pal) {
         var letras = pal.split('').map(function (ch) {
-          var d = (0.05 + n * 0.035).toFixed(3); n++;
+          var d = (0.18 + n * 0.058).toFixed(3); n++;
           return '<span class="ltr" style="animation-delay:' + d + 's">' + ch + '</span>';
         }).join('');
-        n += 1;   // un respiro entre palabras
+        n += 1.6;   // un respiro mas largo entre palabras
         return '<span class="pal">' + letras + '</span>';
       }).join(' ') + '</span>';
     }).join('');

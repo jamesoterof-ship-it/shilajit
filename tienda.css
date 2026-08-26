@@ -126,11 +126,11 @@ a{color:inherit;text-decoration:none}
 .hero h1 .linea{display:block;overflow:hidden;padding-bottom:.06em}
 .hero h1 .pal{display:inline-block;white-space:nowrap}
 .hero h1 .ltr{display:inline-block;transform:translateY(115%);
-  animation:asoma .8s cubic-bezier(.16,1,.3,1) forwards}
+  animation:asoma 1.05s cubic-bezier(.16,1,.3,1) forwards}
 @keyframes asoma{to{transform:translateY(0)}}
 .hero p,.hero .cta{opacity:0;transform:translateY(14px);
   animation:sube .7s cubic-bezier(.22,.9,.3,1) forwards}
-.hero p{animation-delay:.62s}.hero .cta{animation-delay:.78s}
+.hero p{animation-delay:1.55s}.hero .cta{animation-delay:1.75s}
 @keyframes sube{to{opacity:1;transform:translateY(0)}}
 @media (prefers-reduced-motion:reduce){
   .hero h1 .ltr{animation:none;transform:none}
