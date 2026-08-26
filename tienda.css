@@ -238,13 +238,24 @@ body{--altoCab:0px}
 .nos-sello{width:min(178px,46vw);flex:none}
 .nos-sello svg{width:100%;height:auto;display:block}
 
-/* los tres puntos del sello de calidad */
-.nos-puntos{max-width:var(--maxw);margin:26px auto 0;display:grid;gap:0;
-            border-top:1px solid var(--linea)}
-.nos-puntos>div{padding:18px 4px;text-align:center;border-bottom:1px solid var(--linea)}
-.nos-puntos>div:last-child{border-bottom:0}
-.nos-puntos .ic{width:26px;height:26px;stroke:var(--oro-osc);fill:none;stroke-width:1.5;
-                stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 9px}
+/* los tres puntos del sello de calidad, como tarjetas */
+.nos-puntos{max-width:var(--maxw);margin:30px auto 0;display:grid;gap:11px}
+.nos-puntos>div{background:#fff;border:1px solid var(--linea);padding:20px 16px;
+                text-align:center;position:relative;
+                transition:transform .4s cubic-bezier(.16,1,.3,1),
+                           box-shadow .4s ease,border-color .4s ease}
+.nos-puntos>div::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;
+                       background:var(--oro);transform:scaleX(0);transform-origin:50% 50%;
+                       transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.nos-puntos>div:hover{transform:translateY(-4px);border-color:#BFB9AC;
+                      box-shadow:0 14px 30px rgba(15,14,12,.11)}
+.nos-puntos>div:hover::after{transform:scaleX(1)}
+.nos-puntos .ic{width:27px;height:27px;stroke:var(--oro-osc);fill:none;stroke-width:1.5;
+                stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 10px;
+                transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.nos-puntos>div:hover .ic{transform:translateY(-2px) scale(1.06)}
+/* el logo de WhatsApp es macizo, no de trazo */
+.nos-puntos .ic-wa{fill:var(--oro-osc);stroke:none}
 .nos-puntos b{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
               text-transform:uppercase;font-size:15px;letter-spacing:.05em;color:var(--negro);
               margin:0 0 4px}
@@ -256,9 +267,20 @@ body{--altoCab:0px}
   .nos-in{flex-direction:row;text-align:left;gap:44px;align-items:center}
   .nos-txt{flex:1}
   .nos p{margin-left:0;margin-right:0}
-  .nos-puntos{grid-template-columns:repeat(3,1fr);border-top:1px solid var(--linea);margin-top:36px}
-  .nos-puntos>div{border-bottom:0;border-right:1px solid var(--linea);padding:22px 18px}
-  .nos-puntos>div:last-child{border-right:0}
+  .nos-puntos{grid-template-columns:repeat(3,1fr);gap:14px;margin-top:38px}
+  .nos-puntos>div{padding:26px 20px}
+}
+
+/* ---------- entrada de cada seccion ----------
+   Solo opacidad y desplazamiento. NO se anima el letter-spacing ni el ancho:
+   eso re-parte el texto en otros renglones mientras entra y parece parpadeo.
+   La clase la pone tienda.js cuando la pieza llega a la pantalla. */
+[data-rv]{opacity:0;transform:translateY(24px);
+          transition:opacity .75s ease var(--d,0s),
+                     transform .75s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+[data-rv].vino{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  [data-rv]{opacity:1;transform:none;transition:none}
 }
 
 /* ---------- garantia ---------- */

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=32">
+<link rel="stylesheet" href="tienda.css?v=33">
 <script>
 /* Evita el parpadeo del logo: se muestra cuando la tipografia ya cargo,
    y si tarda demasiado se muestra igual a los 400 ms. */
@@ -78,15 +78,15 @@
   <!-- confianza -->
   <div class="conf">
     <div class="fila">
-      <div>
+      <div data-rv>
         <svg class="ic" viewBox="0 0 24 24"><path d="M2 7h11v9H2zM13 10h4.5l2.5 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
         Envío gratis
       </div>
-      <div>
+      <div data-rv style="--d:.07s">
         <svg class="ic" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="1.6"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg>
         Pagas al recibir
       </div>
-      <div>
+      <div data-rv style="--d:.14s">
         <svg class="ic" viewBox="0 0 24 24"><path d="M12 2.7l8.5 4.4v9.8L12 21.3 3.5 16.9V7.1z"/><path d="M3.5 7.1L12 11.5l8.5-4.4M12 11.5v9.8"/></svg>
         2 a 4 días
       </div>
@@ -97,58 +97,128 @@
   <section class="nos" id="nosotros">
     <div class="nos-in">
       <div class="nos-txt">
-        <span class="ceja">Quiénes somos</span>
-        <h2>Pocos productos,<br>bien elegidos</h2>
-        <p>Jaye Group es una tienda chilena. No subimos catálogos enteros: trabajamos
-           con pocos productos a la vez, los que de verdad resuelven algo, y los tenemos
-           con despacho a todo el país.</p>
-        <p>No pagas nada por adelantado. El producto llega a tu dirección, lo revisas,
-           y recién ahí pagas.</p>
+        <span class="ceja" data-rv>Quiénes somos</span>
+        <h2 data-rv style="--d:.06s">Detrás de cada pedido<br>hay una empresa</h2>
+        <p data-rv style="--d:.14s">Jaye Group tiene oficina en Santiago, despacha con transportadoras formales
+           y atiende por WhatsApp con nombre y apellido. No somos una página que aparece
+           un día y desaparece al otro.</p>
+        <p data-rv style="--d:.20s">Por eso puedes pedir sin arriesgar nada: el producto llega a tu dirección,
+           lo revisas, y pagas recién ahí. Si no quedas conforme, tienes 30 días para
+           devolverlo.</p>
       </div>
 
-      <div class="nos-sello" aria-hidden="false">
-        <svg viewBox="0 0 220 220" role="img" aria-label="Garantía de satisfacción de 30 días">
+      <div class="nos-sello" data-rv style="--d:.10s">
+        <svg viewBox="0 0 240 250" role="img" aria-label="Garantía de satisfacción de 30 días">
           <defs>
-            <radialGradient id="selloOro" cx="0.34" cy="0.28" r="0.95">
-              <stop offset="0" stop-color="#F6E3AC"/><stop offset=".38" stop-color="#E2BC57"/>
-              <stop offset=".68" stop-color="#D8A52E"/><stop offset="1" stop-color="#8A6714"/>
+            <!-- oro metalico: el metal se lee por las bandas claras y oscuras
+                 alternadas, no por un degradado suave de un tono a otro -->
+            <linearGradient id="oroMetal" x1="0.12" y1="0" x2="0.72" y2="1">
+              <stop offset="0"    stop-color="#FFF7DC"/>
+              <stop offset=".10"  stop-color="#F0D588"/>
+              <stop offset=".24"  stop-color="#D8A52E"/>
+              <stop offset=".38"  stop-color="#F7E8B4"/>
+              <stop offset=".52"  stop-color="#C99A28"/>
+              <stop offset=".66"  stop-color="#A2761A"/>
+              <stop offset=".80"  stop-color="#E7C976"/>
+              <stop offset=".92"  stop-color="#B08222"/>
+              <stop offset="1"    stop-color="#775810"/>
+            </linearGradient>
+            <!-- el mismo oro al reves: sirve para los surcos, porque un surco se
+                 ilumina por abajo y se oscurece por arriba -->
+            <linearGradient id="oroSurco" x1="0.72" y1="1" x2="0.12" y2="0">
+              <stop offset="0"    stop-color="#FFF3CE"/>
+              <stop offset=".30"  stop-color="#C1902A"/>
+              <stop offset=".62"  stop-color="#7A5A11"/>
+              <stop offset="1"    stop-color="#5C430B"/>
+            </linearGradient>
+            <linearGradient id="oroCanto" x1="0" y1="0" x2="0.4" y2="1">
+              <stop offset="0"   stop-color="#FFF8E2"/>
+              <stop offset=".45" stop-color="#CB9C2C"/>
+              <stop offset="1"   stop-color="#6E4F0D"/>
+            </linearGradient>
+            <!-- el centro no es plano: es una pastilla abombada -->
+            <radialGradient id="domo" cx=".36" cy=".28" r=".92">
+              <stop offset="0"   stop-color="#FFFFFF"/>
+              <stop offset=".62" stop-color="#FBFAF7"/>
+              <stop offset="1"   stop-color="#DFDBD2"/>
             </radialGradient>
-            <path id="selloArr" fill="none" d="M44 110a66 66 0 0 1 132 0"/>
-            <path id="selloAba" fill="none" d="M48 118a62 62 0 0 0 124 0"/>
+            <radialGradient id="brilloAlto" cx=".5" cy=".5" r=".5">
+              <stop offset="0"   stop-color="#fff" stop-opacity=".85"/>
+              <stop offset="1"   stop-color="#fff" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="sombraSello" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#3A2B06" flood-opacity=".34"/>
+            </filter>
+            <filter id="hundido" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="2" stdDeviation="2.4" flood-color="#8A7A5A" flood-opacity=".55"/>
+            </filter>
+            <path id="arcoArr" fill="none" d="M32 122a88 88 0 0 1 176 0"/>
+            <path id="arcoAba" fill="none" d="M40 126a80 80 0 0 0 160 0"/>
           </defs>
-          <circle cx="110" cy="110" r="98" fill="url(#selloOro)" opacity=".14"/>
-          <circle cx="110" cy="110" r="92" fill="url(#selloOro)" stroke="#8A6714" stroke-width="3"/>
-          <ellipse cx="86" cy="72" rx="46" ry="26" fill="#fff" opacity=".26"/>
-          <circle cx="110" cy="110" r="84" fill="none" stroke="#fff" stroke-opacity=".5"
-                  stroke-width="2" stroke-dasharray="1.5 6" stroke-linecap="round"/>
-          <text font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="16"
-                letter-spacing="2.6" fill="#fff">
-            <textPath href="#selloArr" startOffset="50%" text-anchor="middle">GARANTÍA DE SATISFACCIÓN</textPath></text>
-          <text font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="14"
-                letter-spacing="2" fill="#fff">
-            <textPath href="#selloAba" startOffset="50%" text-anchor="middle">JAYE GROUP CHILE</textPath></text>
-          <circle cx="110" cy="110" r="55" fill="#fff"/>
-          <text x="110" y="106" text-anchor="middle" font-family="'Barlow Condensed',sans-serif"
-                font-weight="800" font-size="48" fill="#0F0E0C">30</text>
-          <text x="110" y="132" text-anchor="middle" font-family="'Barlow Condensed',sans-serif"
-                font-weight="700" font-size="16" letter-spacing="3.4" fill="#0F0E0C">DÍAS</text>
+
+          <g filter="url(#sombraSello)">
+            <!-- canto estriado, como el filo de una moneda -->
+            <circle cx="120" cy="122" r="112" fill="url(#oroCanto)"/>
+            <circle cx="120" cy="122" r="112" fill="none" stroke="#6E4F0D" stroke-opacity=".55"
+                    stroke-width="7" stroke-dasharray="2.6 5.2"/>
+            <!-- cuerpo -->
+            <circle cx="120" cy="122" r="108" fill="url(#oroMetal)"/>
+            <!-- bisel: luz arriba, sombra abajo -->
+            <circle cx="120" cy="122" r="107" fill="none" stroke="#FFF6D8" stroke-opacity=".55"
+                    stroke-width="2" stroke-dasharray="150 400" stroke-dashoffset="330"/>
+            <circle cx="120" cy="122" r="107" fill="none" stroke="#5C430B" stroke-opacity=".45"
+                    stroke-width="2.4" stroke-dasharray="150 400" stroke-dashoffset="90"/>
+            <!-- surco grabado alrededor del texto -->
+            <circle cx="120" cy="122" r="97" fill="none" stroke="url(#oroSurco)" stroke-width="4.5"/>
+            <circle cx="120" cy="122" r="66" fill="none" stroke="url(#oroSurco)" stroke-width="4"/>
+            <!-- puntitos entre los dos textos -->
+            <circle cx="120" cy="122" r="88" fill="none" stroke="#FFF3CE" stroke-opacity=".5"
+                    stroke-width="2.2" stroke-dasharray="1.6 7" stroke-linecap="round"/>
+
+            <!-- pastilla central abombada -->
+            <circle cx="120" cy="122" r="62" fill="#8A6714" opacity=".35"/>
+            <circle cx="120" cy="122" r="60" fill="url(#domo)" filter="url(#hundido)"/>
+            <circle cx="120" cy="122" r="60" fill="none" stroke="#B08222" stroke-opacity=".45" stroke-width="1.4"/>
+
+            <!-- textos en relieve: primero la sombra, encima la letra clara -->
+            <g font-family="'Barlow Condensed','Inter',sans-serif" font-weight="700">
+              <text font-size="17.5" letter-spacing="1.7" fill="#5C430B" fill-opacity=".55">
+                <textPath href="#arcoArr" startOffset="50%" text-anchor="middle" dy="1.4">GARANTÍA DE SATISFACCIÓN</textPath></text>
+              <text font-size="17.5" letter-spacing="1.7" fill="#FFFBEF">
+                <textPath href="#arcoArr" startOffset="50%" text-anchor="middle">GARANTÍA DE SATISFACCIÓN</textPath></text>
+              <text font-size="15" letter-spacing="2.6" fill="#5C430B" fill-opacity=".55">
+                <textPath href="#arcoAba" startOffset="50%" text-anchor="middle" dy="1.4">JAYE GROUP CHILE</textPath></text>
+              <text font-size="15" letter-spacing="2.6" fill="#FFFBEF">
+                <textPath href="#arcoAba" startOffset="50%" text-anchor="middle">JAYE GROUP CHILE</textPath></text>
+            </g>
+
+            <text x="120" y="118" text-anchor="middle" font-family="'Barlow Condensed','Inter',sans-serif"
+                  font-weight="800" font-size="56" fill="#17150F">30</text>
+            <path d="M92 128h56" stroke="#D8A52E" stroke-width="1.6" opacity=".75"/>
+            <text x="120" y="150" text-anchor="middle" font-family="'Barlow Condensed','Inter',sans-serif"
+                  font-weight="700" font-size="17" letter-spacing="4.5" fill="#17150F" dx="2.2">DÍAS</text>
+
+            <!-- reflejo: donde le pega la luz -->
+            <ellipse cx="88" cy="66" rx="52" ry="27" fill="url(#brilloAlto)" opacity=".55"
+                     transform="rotate(-22 88 66)"/>
+          </g>
         </svg>
       </div>
     </div>
 
     <div class="nos-puntos">
-      <div>
+      <div data-rv>
         <svg class="ic" viewBox="0 0 24 24"><path d="M12 2.7l8 3.4v6c0 4.6-3.3 8.2-8 9.2-4.7-1-8-4.6-8-9.2v-6z"/><path d="M8.6 12.2l2.4 2.4 4.6-4.8"/></svg>
         <b>Garantía de 30 días</b>
         <span>Si no quedas conforme, lo devuelves y te devolvemos el dinero.</span>
       </div>
-      <div>
+      <div data-rv style="--d:.08s">
         <svg class="ic" viewBox="0 0 24 24"><path d="M2 7h11v9H2zM13 10h4.5l2.5 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
         <b>Despacho a todo Chile</b>
         <span>Con Bluexpress y Starken, a cualquier región del país.</span>
       </div>
-      <div>
-        <svg class="ic" viewBox="0 0 24 24"><path d="M20.5 11.6a8.4 8.4 0 0 1-12.2 7.5L3.5 20.5l1.4-4.7a8.4 8.4 0 1 1 15.6-4.2z"/></svg>
+      <div data-rv style="--d:.16s">
+        <svg class="ic ic-wa" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.886-9.885 9.886m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
         <b>Te respondemos por WhatsApp</b>
         <span>Antes de comprar y después de que te llegue el pedido.</span>
       </div>
@@ -157,7 +227,7 @@
 
   <!-- productos -->
   <div class="sec" id="productos">
-    <h2>Lo más vendido</h2>
+    <h2 data-rv>Lo más vendido</h2>
     <span class="cuantos" id="cuantos"></span>
   </div>
   <div class="rejilla" id="rejilla"></div>
@@ -255,6 +325,6 @@
   </footer>
 
 <script src="productos.js?v=1"></script>
-<script src="tienda.js?v=31"></script>
+<script src="tienda.js?v=33"></script>
 </body>
 </html>

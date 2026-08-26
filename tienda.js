@@ -22,7 +22,7 @@
     var img = p.foto
       ? '<img src="' + p.foto + '" alt="' + p.nombre + '" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'vacio\',textContent:\'' + p.nombre.charAt(0) + '\'}))">'
       : '<span class="vacio">' + p.nombre.charAt(0) + '</span>';
-    return '<article class="ficha" data-cat="' + p.categoria + '">'
+    return '<article class="ficha" data-cat="' + p.categoria + '" data-rv>'
       + '<a class="im" href="producto.html?p=' + p.id + '">' + et + img + '</a>'
       + '<div class="cuerpo">'
       + '<h3>' + p.nombre + '</h3>'
@@ -42,8 +42,13 @@
     var cont = document.getElementById('rejilla');
     if (!cont) return;
     cont.innerHTML = lista.map(tarjeta).join('');
+    // las tarjetas entran una detras de la otra, no todas de golpe
+    cont.querySelectorAll('.ficha').forEach(function (f, i) {
+      f.style.setProperty('--d', Math.min(i, 7) * 0.055 + 's');
+    });
     var c = document.getElementById('cuantos');
     if (c) c.textContent = lista.length + (lista.length === 1 ? ' producto' : ' productos');
+    revelar();
   }
 
   /* El menu vive en la linea blanca del medio */
@@ -189,6 +194,38 @@
     });
   }
 
+  /* Entrada de las piezas marcadas con data-rv: suben y aparecen cuando el
+     cliente llega a ellas. Se puede llamar varias veces (la rejilla se
+     re-pinta al filtrar por categoria) y solo mira lo que aun no ha entrado.
+     REGLA: nada puede quedarse invisible. */
+  var ojoRv = null;
+  function revelar() {
+    var nuevos = document.querySelectorAll('[data-rv]:not(.vino):not([data-visto])');
+    if (!nuevos.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      nuevos.forEach(function (e) { e.classList.add('vino'); });
+      return;
+    }
+    if (!ojoRv) {
+      ojoRv = new IntersectionObserver(function (ent) {
+        ent.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('vino');
+          ojoRv.unobserve(e.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    }
+    nuevos.forEach(function (e) { e.dataset.visto = '1'; ojoRv.observe(e); });
+
+    // red de seguridad: lo que ya esta a la vista se muestra igual
+    setTimeout(function () {
+      document.querySelectorAll('[data-rv]:not(.vino)').forEach(function (e) {
+        if (e.getBoundingClientRect().top < window.innerHeight) e.classList.add('vino');
+      });
+    }, 900);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     categorias();
     pintar('Todos');
@@ -197,5 +234,6 @@
     letrasDelHero();
     videoGarantia();
     boletin();
+    revelar();
   });
 })();
