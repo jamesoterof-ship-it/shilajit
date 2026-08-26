@@ -336,8 +336,19 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    /* Si se llega desde la ficha de un producto con ?cat=Hogar, la tienda
+       abre ya filtrada por esa categoria. */
+    var pedida = 'Todos';
+    try {
+      var q = new URLSearchParams(location.search).get('cat');
+      if (q && (window.PRODUCTOS || []).some(function (p) { return p.categoria === q; })) pedida = q;
+    } catch (e) {}
     categorias();
-    pintar('Todos');
+    var bt = document.querySelector('#cats button[data-cat="' + pedida + '"]');
+    if (bt) document.querySelectorAll('#cats button').forEach(function (x) {
+      x.setAttribute('aria-pressed', String(x === bt));
+    });
+    pintar(pedida);
     resenas();
     cabecera();
     videoHero();

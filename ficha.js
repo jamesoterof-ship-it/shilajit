@@ -42,6 +42,7 @@
     return;
   }
 
+  window.PRODUCTO_ACTUAL = p;   // lo usa efectos.js para marcar la categoria
   document.title = p.nombre + ' · Jaye Group Chile';
   var meta = document.querySelector('meta[name="description"]');
   if (meta && p.sub) meta.setAttribute('content', p.sub + ' · Envío gratis a todo Chile, pagas al recibir.');
