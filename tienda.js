@@ -158,6 +158,21 @@
     h.dataset.listo = '1';
   }
 
+  /* Suscripcion al correo del pie. Por ahora solo confirma en pantalla;
+     cuando definas a donde mandarlos, se engancha aca. */
+  function boletin() {
+    var f = document.getElementById('fBoletin');
+    if (!f) return;
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var c = document.getElementById('correoBoletin');
+      var ok = document.getElementById('aceptoBoletin');
+      if (!c.value || c.value.indexOf('@') < 0) { c.focus(); return; }
+      if (!ok.checked) { ok.focus(); return; }
+      f.outerHTML = '<p class=gracias>Listo. Te avisamos cuando haya novedades.</p>';
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     categorias();
     pintar('Todos');
@@ -165,5 +180,6 @@
     videoHero();
     letrasDelHero();
     videoGarantia();
+    boletin();
   });
 })();

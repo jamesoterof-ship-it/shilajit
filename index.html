@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=23">
+<link rel="stylesheet" href="tienda.css?v=24">
 <script>
 /* Evita el parpadeo del logo: se muestra cuando la tipografia ya cargo,
    y si tarda demasiado se muestra igual a los 400 ms. */
@@ -128,12 +128,14 @@
         </details>
 
         <details class="col">
-          <summary>La empresa<i class="mas"></i></summary>
+          <summary>Legal<i class="mas"></i></summary>
           <div class="dentro">
-            <a href="#productos">Nuestros productos</a>
             <a href="terminos.html">Términos y condiciones</a>
             <a href="privacidad.html">Política de privacidad</a>
             <a href="reembolso.html">Política de reembolsos</a>
+            <a href="reembolso.html">Política de cambios y garantía</a>
+            <a href="envio.html">Política de envíos</a>
+            <a href="privacidad.html">Tratamiento de datos</a>
           </div>
         </details>
 
@@ -143,6 +145,20 @@
           <p><a href="https://wa.me/56964775539" target="_blank" rel="noopener">WhatsApp +56 9 6477 5539</a></p>
           <p>Chile · Despacho a todo el país</p>
         </div>
+      </div>
+
+      <!-- suscripcion al correo -->
+      <div class="boletin">
+        <h4>Recibe nuestras ofertas</h4>
+        <p class="dice">Te avisamos cuando entren productos nuevos y cuando haya descuentos. Sin spam.</p>
+        <form id="fBoletin" novalidate>
+          <input type="email" id="correoBoletin" placeholder="Tu correo electrónico" autocomplete="email" required>
+          <label class="acepto">
+            <input type="checkbox" id="aceptoBoletin" required>
+            <span>Acepto recibir correos con ofertas y novedades, según la <a href="privacidad.html">política de privacidad</a>.</span>
+          </label>
+          <button type="submit">Suscribirme</button>
+        </form>
       </div>
 
       <div class="redes">
@@ -176,6 +192,6 @@
   </footer>
 
 <script src="productos.js?v=1"></script>
-<script src="tienda.js?v=17"></script>
+<script src="tienda.js?v=24"></script>
 </body>
 </html>

@@ -32,14 +32,13 @@ a{color:inherit;text-decoration:none}
 /* ---------- cabecera pegada ----------
    Al bajar se esconde la barra blanca y quedan TRES: la marquesina con las
    letras en movimiento, el header gris con la marca y las categorias. */
-.pegado{position:sticky;top:0;z-index:50;background:transparent}
+.pegado{position:sticky;top:0;z-index:50;background:#fff}
 /* la cabecera flota sobre el video, en negro translucido con desenfoque */
 body{--altoCab:0px}
 
 
 /* ---------- marquesina ---------- */
-.marq{background:rgba(12,11,9,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-      color:#fff;overflow:hidden;padding:9px 0}
+.marq{background:var(--negro);color:#fff;overflow:hidden;padding:9px 0}
 .marq .pista{
   display:flex;gap:34px;white-space:nowrap;width:max-content;
   animation:corre 26s linear infinite;
@@ -51,8 +50,7 @@ body{--altoCab:0px}
 
 /* ---------- linea blanca del medio: el menu. Se esconde al bajar ---------- */
 .barra{
-  background:rgba(12,11,9,.5);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,255,255,.08);padding:9px 16px;
+  background:#fff;border-bottom:1px solid var(--linea);padding:9px 16px;
   display:flex;justify-content:center;align-items:center;gap:20px;
   overflow-x:auto;scrollbar-width:none;white-space:nowrap;
   max-height:46px;
@@ -62,17 +60,16 @@ body{--altoCab:0px}
 .barra button{
   flex:none;background:none;border:0;padding:0 0 3px;cursor:pointer;
   font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;font-size:14px;
-  text-transform:uppercase;letter-spacing:.05em;color:#fff;
+  text-transform:uppercase;letter-spacing:.05em;color:var(--negro);
   border-bottom:2px solid transparent;
 }
-.barra button[aria-pressed="true"]{border-bottom-color:#fff}
+.barra button[aria-pressed="true"]{border-bottom-color:var(--negro)}
 .pegado.bajando .barra{max-height:0;padding-top:0;padding-bottom:0;opacity:0;border-bottom-color:transparent}
 
 /* ---------- header: gris arriba, NEGRO al bajar ---------- */
-.top{background:rgba(12,11,9,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-     border-bottom:1px solid rgba(255,255,255,.10);
-     transition:background .28s ease}
-.pegado.bajando .top{background:rgba(12,11,9,.9)}
+.top{background:var(--gris);border-bottom:1px solid var(--linea);
+     transition:background .28s ease,border-color .28s ease}
+.pegado.bajando .top{background:var(--negro);border-bottom-color:#262320}
 .top .fila{
   max-width:var(--maxw);margin:0 auto;
   display:flex;align-items:center;flex-wrap:nowrap;gap:14px;padding:12px 16px;
@@ -81,7 +78,7 @@ body{--altoCab:0px}
 .top .fila>.ofertas,.top .fila>.icos{flex:1 1 0;display:flex;align-items:center}
 .top .fila>.icos{justify-content:flex-end;gap:15px}
 .ofertas{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:14px;
-         text-transform:uppercase;letter-spacing:.06em;color:var(--oro)}
+         text-transform:uppercase;letter-spacing:.06em;color:var(--oro-osc);transition:color .28s ease}
 .pegado.bajando .ofertas{color:var(--oro)}
 .top .fila>.logo{flex:0 0 auto;text-align:center}
 @media (max-width:520px){ .logo{font-size:18px} .ofertas{font-size:13px} }
@@ -94,9 +91,11 @@ body{--altoCab:0px}
       /* no se pinta hasta que la tipografia esta lista: asi no salta de letra */
       visibility:hidden}
 .fuentesListas .logo{visibility:visible}
-.logo .j{font-weight:800;font-size:1em;letter-spacing:-.005em;color:#fff}
+.logo .j{font-weight:800;font-size:1em;letter-spacing:-.005em;
+         color:var(--negro);transition:color .28s ease}
 /* GROUP es mas chico y mas delgado que JAYE, como en el logo */
-.logo .g{font-weight:300;font-size:.76em;letter-spacing:.15em;color:#fff}
+.logo .g{font-weight:300;font-size:.76em;letter-spacing:.15em;
+         color:var(--negro);transition:color .28s ease}
 .logo .raya{display:inline-block;width:1.5px;height:1.45em;background:var(--oro);
             margin:0 11px 0 12px;flex:none}
 /* sobre negro, la marca se lee en blanco; la linea sigue dorada */
@@ -105,16 +104,16 @@ body{--altoCab:0px}
 .pegado.bajando .top .ic,.pegado.bajando .top .hamb{color:#fff}
 .icos{display:flex;gap:15px;align-items:center}
 .ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;
-    stroke-linecap:round;stroke-linejoin:round;display:block;color:#fff}
+    stroke-linecap:round;stroke-linejoin:round;display:block;color:var(--negro)}
 .hamb{background:none;border:0;padding:0;cursor:pointer;color:var(--negro)}
 
 
 /* ---------- hero ----------
    En el celular ocupa casi toda la pantalla; en pantalla grande se limita
    para que no quede desproporcionado. */
-.hero{position:relative;margin-top:-132px;height:100svh;min-height:600px;max-height:820px;
+.hero{position:relative;height:calc(100svh - 132px);min-height:520px;max-height:760px;
       display:flex;align-items:flex-end;overflow:hidden;background:#2A2724}
-@supports not (height:100svh){ .hero{height:100vh} }
+@supports not (height:100svh){ .hero{height:calc(100vh - 132px)} }
 @media (min-width:900px){ .hero{height:auto;min-height:560px;max-height:640px} }
 /* El fondo del hero puede ser VIDEO (que caminen de verdad) o foto.
    El video manda; la foto queda debajo para que se vea algo mientras carga
@@ -296,6 +295,33 @@ body{--altoCab:0px}
 @media (min-width:760px){ .pie .contacto h4{margin-bottom:14px} }
 .pie .contacto p{margin:0 0 9px;font-size:14px;color:#BEB8AC}
 
+/* suscripcion al correo, como la de 5.11 */
+.pie .boletin{border-top:1px solid #23211C;padding:24px 0 22px;margin-top:8px}
+.pie .boletin h4{
+  margin:0 0 7px;color:#fff;text-align:center;
+  font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:17px;letter-spacing:.05em;
+}
+.pie .boletin .dice{margin:0 auto 14px;max-width:44ch;text-align:center;font-size:13px;
+                    color:#9A9384;font-weight:300;line-height:1.6}
+.pie .boletin form{display:flex;flex-direction:column;gap:10px;max-width:420px;margin:0 auto}
+.pie .boletin input[type=email]{
+  width:100%;background:#fff;border:1px solid #23211C;color:var(--tinta);
+  padding:13px 14px;font-size:15px;font-family:inherit;border-radius:0;
+}
+.pie .boletin input[type=email]:focus{outline:2px solid var(--oro);outline-offset:-2px}
+.pie .boletin .acepto{display:flex;gap:9px;align-items:flex-start;font-size:12px;
+                      color:#9A9384;font-weight:300;line-height:1.5}
+.pie .boletin .acepto input{margin-top:2px;flex:none;accent-color:var(--oro)}
+.pie .boletin .acepto a{color:#BEB8AC;text-decoration:underline}
+.pie .boletin button{
+  background:var(--oro);color:var(--negro);border:0;padding:13px;cursor:pointer;
+  font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
+  letter-spacing:.08em;font-size:15px;transition:background .18s;
+}
+.pie .boletin button:hover{background:#E8B84A}
+.pie .boletin .gracias{text-align:center;color:var(--oro);font-size:14px;font-weight:600;padding:8px 0}
+
 /* siguenos, centrado como en 5.11 */
 .pie .redes{text-align:center;padding:26px 0 22px;border-top:1px solid #23211C;margin-top:8px}
 .pie .redes .rot{
@@ -303,20 +329,21 @@ body{--altoCab:0px}
   font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
   font-size:15px;letter-spacing:.09em;
 }
-.pie .iconos{display:flex;justify-content:center;gap:16px}
-.pie .iconos a{display:block;transition:transform .18s,opacity .18s;opacity:.95}
+.pie .iconos{display:flex;justify-content:center;gap:13px}
+.pie .iconos a{display:block;transition:transform .18s,opacity .18s;opacity:.9}
+.pie .iconos svg{width:26px;height:26px;display:block}
 .pie .iconos a:hover{transform:translateY(-2px);opacity:1}
 
 /* la marca grande al final, como el 5.11 gigante */
 .pie .marca-grande{
-  display:flex;align-items:center;justify-content:center;padding:14px 0 18px;
+  display:flex;align-items:center;justify-content:center;padding:6px 0 16px;
   font-family:'Inter','Barlow Condensed',sans-serif;text-transform:uppercase;line-height:1;
 }
-.pie .marca-grande .j{font-weight:800;font-size:clamp(38px,11vw,62px);color:#fff;letter-spacing:-.01em}
-.pie .marca-grande .g{font-weight:200;font-size:clamp(29px,8.4vw,47px);color:#fff;letter-spacing:.14em}
+.pie .marca-grande .j{font-weight:800;font-size:22px;color:#fff;letter-spacing:-.005em}
+.pie .marca-grande .g{font-weight:200;font-size:17px;color:#fff;letter-spacing:.15em}
 .pie .marca-grande .raya{
-  display:inline-block;width:2px;height:clamp(46px,13vw,74px);background:var(--oro);
-  margin:0 14px 0 15px;flex:none;
+  display:inline-block;width:1.5px;height:26px;background:var(--oro);
+  margin:0 12px 0 13px;flex:none;
 }
 
 .pie .abajo{
