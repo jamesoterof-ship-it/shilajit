@@ -71,9 +71,14 @@
   function cabecera() {
     var p = document.getElementById('pegado');
     if (!p) return;
-    var esperando = false;
+    var esperando = false, bajando = false;
+    /* Dos umbrales distintos (se activa a 90, se suelta a 24). Con un solo
+       umbral, al quedar el dedo justo en el borde la barra oscilaba entre
+       gris y negro y el logo parecia parpadear. */
     function mirar() {
-      p.classList.toggle('bajando', window.scrollY > 40);
+      var y = window.scrollY || window.pageYOffset || 0;
+      if (!bajando && y > 90) { bajando = true; p.classList.add('bajando'); }
+      else if (bajando && y < 24) { bajando = false; p.classList.remove('bajando'); }
       esperando = false;
     }
     window.addEventListener('scroll', function () {

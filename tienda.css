@@ -85,9 +85,9 @@ a{color:inherit;text-decoration:none}
 .logo{font-family:'Inter','Barlow Condensed',sans-serif;font-size:19px;
       text-transform:uppercase;display:inline-flex;align-items:center;
       white-space:nowrap;line-height:1;
-      /* no se pinta hasta que la tipografia esta lista: asi no parpadea */
-      opacity:0;transition:opacity .25s ease}
-.fuentesListas .logo{opacity:1}
+      /* no se pinta hasta que la tipografia esta lista: asi no salta de letra */
+      visibility:hidden}
+.fuentesListas .logo{visibility:visible}
 .logo .j{font-weight:800;font-size:1em;letter-spacing:-.005em;
          color:var(--negro);transition:color .28s ease}
 /* GROUP es mas chico y mas delgado que JAYE, como en el logo */
