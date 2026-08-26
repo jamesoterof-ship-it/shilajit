@@ -227,9 +227,11 @@ a{color:inherit;text-decoration:none}
 /* el velo, mas oscuro abajo, para que el texto se lea siempre */
 .gar-video .velo{position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(15,14,12,.42) 0%,rgba(15,14,12,.66) 42%,rgba(15,14,12,.42) 100%)}
-.gar-video .dentro{position:relative;padding:44px 18px;max-width:56ch}
-.gar-video h2{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.75)}
-.gar-video p{color:#EDE9E1;text-shadow:0 1px 14px rgba(0,0,0,.7)}
+.gar-video .dentro{position:relative;padding:44px 18px;max-width:56ch;text-align:center}
+.gar-video h2{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.85)}
+/* el subtitulo, mas grande y con mas contraste: antes se perdia */
+.gar-video p{color:#fff;font-size:16px;line-height:1.6;margin:0 auto;max-width:44ch;
+             text-shadow:0 2px 16px rgba(0,0,0,.9),0 0 30px rgba(0,0,0,.6)}
 
 /* Entrada distinta a la del hero: el texto llega desenfocado y se va
    aclarando mientras se acerca. */

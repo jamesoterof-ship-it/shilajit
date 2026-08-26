@@ -101,26 +101,35 @@
     v.load();
   }
 
-  /* El video de la garantia solo se carga cuando el cliente llega ahi abajo,
-     para no gastarle datos de entrada. */
+  /* El texto de esa parte entra cuando el cliente llega, y el video se carga
+     ahi mismo para no gastarle datos de entrada.
+     REGLA: el texto NUNCA puede quedar invisible. Si el video no carga, si no
+     hay soporte o si algo falla, el texto se muestra igual. */
   function videoGarantia() {
+    var sec = document.querySelector('.gar-video');
+    if (!sec) return;
     var v = document.getElementById('clipGar');
-    if (!v || !('IntersectionObserver' in window)) return;
-    var con = navigator.connection || {};
-    if (con.saveData || /2g/.test(con.effectiveType || '')) return;
+    var mostrar = function () { sec.classList.add('entro'); };
+
+    // red de seguridad: pase lo que pase, a los 2,5 s el texto se ve
+    setTimeout(mostrar, 2500);
+
+    if (!('IntersectionObserver' in window)) { mostrar(); return; }
+
     var ojo = new IntersectionObserver(function (ent) {
       ent.forEach(function (e) {
-        if (!e.isIntersecting) { if (!v.paused) v.pause(); return; }
+        if (!e.isIntersecting) { if (v && !v.paused) v.pause(); return; }
+        mostrar();
+        if (!v) return;
+        var con = navigator.connection || {};
+        if (con.saveData || /2g/.test(con.effectiveType || '')) return;
         if (!v.dataset.cargado) { v.dataset.cargado = '1'; v.load(); }
         var t = v.play();
         if (t && t.catch) t.catch(function () {});
         v.classList.add('listo');
-        // el texto entra cuando el cliente llega a esta parte
-        var sec = v.closest('.gar-video');
-        if (sec) sec.classList.add('entro');
       });
-    }, { threshold: 0.25 });
-    ojo.observe(v);
+    }, { threshold: 0.2 });
+    ojo.observe(sec);
   }
 
   /* El titulo entra EN CASCADA: letra por letra, cada una asomando desde
