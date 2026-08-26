@@ -240,26 +240,35 @@ body{--altoCab:0px}
 
 /* los tres puntos del sello de calidad, como tarjetas */
 .nos-puntos{max-width:var(--maxw);margin:30px auto 0;display:grid;gap:11px}
+/* La tarjeta se da vuelta al pasar el mouse: pasa a negro con la letra blanca
+   y el icono dorado. Es el mismo golpe de contraste que usa 5.11, con tu oro
+   en vez de su naranja. Se nota de una, no hay que adivinar si paso algo. */
 .nos-puntos>div{background:#fff;border:1px solid var(--linea);padding:20px 16px;
-                text-align:center;position:relative;
-                transition:transform .4s cubic-bezier(.16,1,.3,1),
-                           box-shadow .4s ease,border-color .4s ease}
-.nos-puntos>div::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;
-                       background:var(--oro);transform:scaleX(0);transform-origin:50% 50%;
-                       transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.nos-puntos>div:hover{transform:translateY(-4px);border-color:#BFB9AC;
-                      box-shadow:0 14px 30px rgba(15,14,12,.11)}
-.nos-puntos>div:hover::after{transform:scaleX(1)}
+                text-align:center;position:relative;overflow:hidden;cursor:default;
+                transition:transform .38s cubic-bezier(.16,1,.3,1),
+                           box-shadow .38s ease,border-color .38s ease}
+/* el negro entra desde abajo, no aparece de golpe */
+.nos-puntos>div::before{content:'';position:absolute;inset:0;background:var(--negro);
+                        transform:translateY(101%);z-index:0;
+                        transition:transform .42s cubic-bezier(.16,1,.3,1)}
+.nos-puntos>div>*{position:relative;z-index:1}
+.nos-puntos>div:hover{transform:translateY(-5px);border-color:var(--negro);
+                      box-shadow:0 16px 34px rgba(15,14,12,.16)}
+.nos-puntos>div:hover::before{transform:translateY(0)}
+.nos-puntos>div:hover b{color:#fff}
+.nos-puntos>div:hover span{color:#C9C3B6}
+.nos-puntos>div:hover .ic{stroke:var(--oro);transform:translateY(-3px) scale(1.08)}
+.nos-puntos>div:hover .ic-wa{fill:var(--oro);stroke:none}
+
 .nos-puntos .ic{width:27px;height:27px;stroke:var(--oro-osc);fill:none;stroke-width:1.5;
                 stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 10px;
-                transition:transform .4s cubic-bezier(.16,1,.3,1)}
-.nos-puntos>div:hover .ic{transform:translateY(-2px) scale(1.06)}
+                transition:transform .38s cubic-bezier(.16,1,.3,1),stroke .38s ease,fill .38s ease}
 /* el logo de WhatsApp es macizo, no de trazo */
 .nos-puntos .ic-wa{fill:var(--oro-osc);stroke:none}
-.nos-puntos b{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
+.nos-puntos b{transition:color .38s ease;display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
               text-transform:uppercase;font-size:15px;letter-spacing:.05em;color:var(--negro);
               margin:0 0 4px}
-.nos-puntos span{display:block;font-size:13px;line-height:1.6;font-weight:300;
+.nos-puntos span{transition:color .38s ease;display:block;font-size:13px;line-height:1.6;font-weight:300;
                  color:var(--suave);max-width:34ch;margin:0 auto}
 
 @media (min-width:760px){
@@ -286,9 +295,13 @@ body{--altoCab:0px}
 /* ---------- garantia ---------- */
 /* ---------- garantia con el video de la pareja de fondo ----------
    Ocupa TODO el ancho de la pantalla, sin bordes ni lineas. */
+/* OJO: esta seccion cuelga directo del body, o sea que YA ocupa todo el ancho.
+   Tenia width:100vw + margin-left:calc(50% - 50vw) y eso la sacaba 8 px por el
+   lado derecho, porque 100vw cuenta la barra de desplazamiento y el body no.
+   Resultado: TODA la tienda se corria de lado en el celular. */
 .gar.gar-video{position:relative;overflow:hidden;background:var(--negro);
            min-height:420px;display:flex;align-items:center;justify-content:center;
-           width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);
+           width:auto;max-width:none;margin-left:0;
            border:0;padding:0}
 .gar.gar-video .clip-gar{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
                      object-position:center 30%;opacity:0;transition:opacity 1.2s ease}
