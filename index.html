@@ -12,9 +12,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=1">
+<link rel="stylesheet" href="tienda.css?v=2">
 </head>
 <body>
+
+  <!-- cabecera: al bajar se esconde la blanca y las otras tres quedan fijas -->
+  <div class="pegado" id="pegado">
 
   <!-- marquesina -->
   <div class="marq" aria-label="Avisos">
@@ -53,6 +56,8 @@
   <nav class="cats" aria-label="Categorías">
     <div class="fila" id="cats"></div>
   </nav>
+
+  </div><!-- /pegado -->
 
   <!-- hero -->
   <section class="hero">
@@ -115,6 +120,6 @@
   </footer>
 
 <script src="productos.js?v=1"></script>
-<script src="tienda.js?v=1"></script>
+<script src="tienda.js?v=2"></script>
 </body>
 </html>

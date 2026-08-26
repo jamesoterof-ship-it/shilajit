@@ -65,8 +65,27 @@
     });
   }
 
+  /* Al bajar: se esconde la barra blanca y el header gris se pone negro.
+     Al volver arriba del todo, vuelve como estaba. */
+  function cabecera() {
+    var p = document.getElementById('pegado');
+    if (!p) return;
+    var esperando = false;
+    function mirar() {
+      p.classList.toggle('bajando', window.scrollY > 40);
+      esperando = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (esperando) return;
+      esperando = true;
+      requestAnimationFrame(mirar);
+    }, { passive: true });
+    mirar();
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     categorias();
     pintar('Todos');
+    cabecera();
   });
 })();

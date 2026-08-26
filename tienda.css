@@ -29,6 +29,11 @@ a{color:inherit;text-decoration:none}
 .cond{font-family:'Barlow Condensed','Inter',sans-serif;text-transform:uppercase}
 .envoltorio{max-width:var(--maxw);margin:0 auto}
 
+/* ---------- cabecera pegada ----------
+   Al bajar se esconde la barra blanca y quedan TRES: la marquesina con las
+   letras en movimiento, el header gris con la marca y las categorias. */
+.pegado{position:sticky;top:0;z-index:50;background:#fff}
+
 /* ---------- marquesina ---------- */
 .marq{background:var(--negro);color:#fff;overflow:hidden;padding:9px 0}
 .marq .pista{
@@ -40,31 +45,47 @@ a{color:inherit;text-decoration:none}
 @keyframes corre{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.marq .pista{animation:none}}
 
-/* ---------- barra fina ---------- */
+/* ---------- barra blanca: se esconde al bajar ---------- */
 .barra{
   background:#fff;border-bottom:1px solid var(--linea);padding:8px 16px;
   display:flex;justify-content:center;gap:22px;flex-wrap:wrap;
   font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;font-size:11.5px;
   text-transform:uppercase;letter-spacing:.06em;
+  max-height:44px;overflow:hidden;
+  transition:max-height .28s ease,padding .28s ease,opacity .2s ease;
 }
+.pegado.bajando .barra{max-height:0;padding-top:0;padding-bottom:0;opacity:0;border-bottom-color:transparent}
 
-/* ---------- header ---------- */
-.top{background:var(--gris);border-bottom:1px solid var(--linea)}
+/* ---------- header: gris arriba, NEGRO al bajar ---------- */
+.top{background:var(--gris);border-bottom:1px solid var(--linea);
+     transition:background .28s ease,border-color .28s ease}
+.pegado.bajando .top{background:var(--negro);border-bottom-color:#262320}
 .top .fila{
   max-width:var(--maxw);margin:0 auto;
   display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;
 }
 .logo{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:20px;
       letter-spacing:.05em;text-transform:uppercase}
-.logo .j{color:var(--negro)}
-.logo .g{color:var(--oro-osc)}
+.logo .j{color:var(--negro);transition:color .28s ease}
+.logo .g{color:var(--oro-osc);transition:color .28s ease}
+/* sobre negro, la marca se lee al reves: JAYE blanco y GROUP dorado */
+.pegado.bajando .logo .j{color:#fff}
+.pegado.bajando .logo .g{color:var(--oro)}
+.top .ic,.top .hamb{transition:color .28s ease}
+.pegado.bajando .top .ic,.pegado.bajando .top .hamb{color:#fff}
 .icos{display:flex;gap:15px;align-items:center}
 .ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;
     stroke-linecap:round;stroke-linejoin:round;display:block;color:var(--negro)}
 .hamb{background:none;border:0;padding:0;cursor:pointer;color:var(--negro)}
 
-/* ---------- categorias ---------- */
-.cats{background:var(--gris);border-bottom:1px solid var(--linea)}
+/* ---------- categorias: acompañan al header ---------- */
+.cats{background:var(--gris);border-bottom:1px solid var(--linea);
+      transition:background .28s ease,border-color .28s ease}
+.pegado.bajando .cats{background:var(--negro);border-bottom-color:#262320}
+.cats button{transition:color .28s ease,border-color .28s ease}
+.pegado.bajando .cats button{color:#fff}
+.pegado.bajando .cats button[aria-pressed="true"]{border-bottom-color:#fff}
+.pegado.bajando .cats button.oferta{color:var(--oro)}
 .cats .fila{
   max-width:var(--maxw);margin:0 auto;
   display:flex;gap:20px;overflow-x:auto;padding:10px 16px;scrollbar-width:none;
