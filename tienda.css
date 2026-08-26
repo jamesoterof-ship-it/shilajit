@@ -217,36 +217,36 @@ a{color:inherit;text-decoration:none}
 /* ---------- garantia ---------- */
 /* ---------- garantia con el video de la pareja de fondo ----------
    Ocupa TODO el ancho de la pantalla, sin bordes ni lineas. */
-.gar-video{position:relative;overflow:hidden;background:var(--negro);
+.gar.gar-video{position:relative;overflow:hidden;background:var(--negro);
            min-height:420px;display:flex;align-items:center;justify-content:center;
            width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);
            border:0;padding:0}
-.gar-video .clip-gar{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+.gar.gar-video .clip-gar{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
                      object-position:center 30%;opacity:0;transition:opacity .8s ease}
-.gar-video .clip-gar.listo{opacity:.72}
+.gar.gar-video .clip-gar.listo{opacity:.72}
 /* el velo tapa fuerte en el centro: ahi va el texto y tiene que leerse */
-.gar-video .velo{position:absolute;inset:0;background:rgba(15,14,12,.42)}
-.gar-video .dentro{position:relative;padding:44px 18px;max-width:56ch;text-align:center}
-.gar-video h2{color:#fff;font-size:clamp(24px,6.5vw,34px);margin:0 0 12px;
+.gar.gar-video .velo{position:absolute;inset:0;background:rgba(15,14,12,.42)}
+.gar.gar-video .dentro{position:relative;padding:44px 18px;max-width:56ch;text-align:center}
+.gar.gar-video h2{color:#fff;font-size:clamp(24px,6.5vw,34px);margin:0 0 12px;
               text-shadow:0 2px 20px rgba(0,0,0,.95),0 0 40px rgba(0,0,0,.7)}
 /* el subtitulo, mas grande y con mas contraste: antes se perdia */
-.gar-video p{color:#fff;font-weight:600;font-size:16px;line-height:1.6;
+.gar.gar-video p{color:#fff;font-weight:600;font-size:16px;line-height:1.6;
              margin:0 auto;max-width:44ch;
              text-shadow:0 2px 12px rgba(0,0,0,.9),0 0 26px rgba(0,0,0,.75)}
 
 /* Entrada distinta a la del hero: el texto se abre desde el centro y sube.
    Termina SIEMPRE a plena opacidad, sin desenfoque: primero que se lea. */
-.gar-video h2,.gar-video p{opacity:0;transform:translateY(22px)}
-.gar-video.entro h2{animation:abre 1s cubic-bezier(.16,1,.3,1) forwards}
-.gar-video.entro p{animation:abre 1s cubic-bezier(.16,1,.3,1) .25s forwards}
+.gar.gar-video h2,.gar.gar-video p{opacity:0;transform:translateY(22px)}
+.gar.gar-video.entro h2{animation:abre 1s cubic-bezier(.16,1,.3,1) forwards}
+.gar.gar-video.entro p{animation:abre 1s cubic-bezier(.16,1,.3,1) .25s forwards}
 @keyframes abre{
   from{opacity:0;transform:translateY(22px);letter-spacing:.3em}
   to  {opacity:1;transform:translateY(0)}
 }
-.gar-video.entro h2{letter-spacing:.02em}
+.gar.gar-video.entro h2{letter-spacing:.02em}
 @media (prefers-reduced-motion:reduce){
-  .gar-video .clip-gar{display:none}
-  .gar-video h2,.gar-video p{opacity:1;transform:none;animation:none;letter-spacing:normal}
+  .gar.gar-video .clip-gar{display:none}
+  .gar.gar-video h2,.gar.gar-video p{opacity:1;transform:none;animation:none;letter-spacing:normal}
 }
 
 .gar{background:var(--gris);padding:28px 16px;text-align:center}
