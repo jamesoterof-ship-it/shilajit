@@ -217,14 +217,31 @@
       }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     }
     nuevos.forEach(function (e) { e.dataset.visto = '1'; ojoRv.observe(e); });
-
-    // red de seguridad: lo que ya esta a la vista se muestra igual
-    setTimeout(function () {
-      document.querySelectorAll('[data-rv]:not(.vino)').forEach(function (e) {
-        if (e.getBoundingClientRect().top < window.innerHeight) e.classList.add('vino');
-      });
-    }, 900);
+    barrer();
   }
+
+  /* Red de seguridad de verdad: revisa a mano lo que esta dentro de la pantalla
+     y lo muestra. El observador solo se entera de lo que CRUZA el borde, asi que
+     si alguien cae a mitad de pagina (un enlace con #, volver atras, o un salto
+     de golpe) lo que ya estaba ahi se quedaba invisible para siempre.
+     Se cuelga del scroll y del cambio de tamano, no de un temporizador. */
+  var barriendo = false;
+  function barrer() {
+    var falta = document.querySelectorAll('[data-rv]:not(.vino)');
+    if (!falta.length) return;
+    var alto = window.innerHeight;
+    falta.forEach(function (e) {
+      var c = e.getBoundingClientRect();
+      if (c.top < alto * 0.96 && c.bottom > 0) e.classList.add('vino');
+    });
+  }
+  window.addEventListener('scroll', function () {
+    if (barriendo) return;
+    barriendo = true;
+    requestAnimationFrame(function () { barrer(); barriendo = false; });
+  }, { passive: true });
+  window.addEventListener('resize', barrer, { passive: true });
+  window.addEventListener('load', barrer);
 
   document.addEventListener('DOMContentLoaded', function () {
     categorias();
