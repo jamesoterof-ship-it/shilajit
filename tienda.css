@@ -32,10 +32,14 @@ a{color:inherit;text-decoration:none}
 /* ---------- cabecera pegada ----------
    Al bajar se esconde la barra blanca y quedan TRES: la marquesina con las
    letras en movimiento, el header gris con la marca y las categorias. */
-.pegado{position:sticky;top:0;z-index:50;background:#fff}
+.pegado{position:sticky;top:0;z-index:50;background:transparent}
+/* la cabecera flota sobre el video, en negro translucido con desenfoque */
+body{--altoCab:0px}
+
 
 /* ---------- marquesina ---------- */
-.marq{background:var(--negro);color:#fff;overflow:hidden;padding:9px 0}
+.marq{background:rgba(12,11,9,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+      color:#fff;overflow:hidden;padding:9px 0}
 .marq .pista{
   display:flex;gap:34px;white-space:nowrap;width:max-content;
   animation:corre 26s linear infinite;
@@ -47,7 +51,8 @@ a{color:inherit;text-decoration:none}
 
 /* ---------- linea blanca del medio: el menu. Se esconde al bajar ---------- */
 .barra{
-  background:#fff;border-bottom:1px solid var(--linea);padding:9px 16px;
+  background:rgba(12,11,9,.5);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.08);padding:9px 16px;
   display:flex;justify-content:center;align-items:center;gap:20px;
   overflow-x:auto;scrollbar-width:none;white-space:nowrap;
   max-height:46px;
@@ -57,16 +62,17 @@ a{color:inherit;text-decoration:none}
 .barra button{
   flex:none;background:none;border:0;padding:0 0 3px;cursor:pointer;
   font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;font-size:14px;
-  text-transform:uppercase;letter-spacing:.05em;color:var(--negro);
+  text-transform:uppercase;letter-spacing:.05em;color:#fff;
   border-bottom:2px solid transparent;
 }
-.barra button[aria-pressed="true"]{border-bottom-color:var(--negro)}
+.barra button[aria-pressed="true"]{border-bottom-color:#fff}
 .pegado.bajando .barra{max-height:0;padding-top:0;padding-bottom:0;opacity:0;border-bottom-color:transparent}
 
 /* ---------- header: gris arriba, NEGRO al bajar ---------- */
-.top{background:var(--gris);border-bottom:1px solid var(--linea);
-     transition:background .28s ease,border-color .28s ease}
-.pegado.bajando .top{background:var(--negro);border-bottom-color:#262320}
+.top{background:rgba(12,11,9,.62);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+     border-bottom:1px solid rgba(255,255,255,.10);
+     transition:background .28s ease}
+.pegado.bajando .top{background:rgba(12,11,9,.9)}
 .top .fila{
   max-width:var(--maxw);margin:0 auto;
   display:flex;align-items:center;flex-wrap:nowrap;gap:14px;padding:12px 16px;
@@ -75,7 +81,7 @@ a{color:inherit;text-decoration:none}
 .top .fila>.ofertas,.top .fila>.icos{flex:1 1 0;display:flex;align-items:center}
 .top .fila>.icos{justify-content:flex-end;gap:15px}
 .ofertas{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:14px;
-         text-transform:uppercase;letter-spacing:.06em;color:var(--oro-osc);transition:color .28s ease}
+         text-transform:uppercase;letter-spacing:.06em;color:var(--oro)}
 .pegado.bajando .ofertas{color:var(--oro)}
 .top .fila>.logo{flex:0 0 auto;text-align:center}
 @media (max-width:520px){ .logo{font-size:18px} .ofertas{font-size:13px} }
@@ -88,11 +94,9 @@ a{color:inherit;text-decoration:none}
       /* no se pinta hasta que la tipografia esta lista: asi no salta de letra */
       visibility:hidden}
 .fuentesListas .logo{visibility:visible}
-.logo .j{font-weight:800;font-size:1em;letter-spacing:-.005em;
-         color:var(--negro);transition:color .28s ease}
+.logo .j{font-weight:800;font-size:1em;letter-spacing:-.005em;color:#fff}
 /* GROUP es mas chico y mas delgado que JAYE, como en el logo */
-.logo .g{font-weight:300;font-size:.76em;letter-spacing:.15em;
-         color:var(--negro);transition:color .28s ease}
+.logo .g{font-weight:300;font-size:.76em;letter-spacing:.15em;color:#fff}
 .logo .raya{display:inline-block;width:1.5px;height:1.45em;background:var(--oro);
             margin:0 11px 0 12px;flex:none}
 /* sobre negro, la marca se lee en blanco; la linea sigue dorada */
@@ -101,16 +105,16 @@ a{color:inherit;text-decoration:none}
 .pegado.bajando .top .ic,.pegado.bajando .top .hamb{color:#fff}
 .icos{display:flex;gap:15px;align-items:center}
 .ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;
-    stroke-linecap:round;stroke-linejoin:round;display:block;color:var(--negro)}
+    stroke-linecap:round;stroke-linejoin:round;display:block;color:#fff}
 .hamb{background:none;border:0;padding:0;cursor:pointer;color:var(--negro)}
 
 
 /* ---------- hero ----------
    En el celular ocupa casi toda la pantalla; en pantalla grande se limita
    para que no quede desproporcionado. */
-.hero{position:relative;height:calc(100svh - 132px);min-height:520px;max-height:760px;
+.hero{position:relative;margin-top:-132px;height:100svh;min-height:600px;max-height:820px;
       display:flex;align-items:flex-end;overflow:hidden;background:#2A2724}
-@supports not (height:100svh){ .hero{height:calc(100vh - 132px)} }
+@supports not (height:100svh){ .hero{height:100vh} }
 @media (min-width:900px){ .hero{height:auto;min-height:560px;max-height:640px} }
 /* El fondo del hero puede ser VIDEO (que caminen de verdad) o foto.
    El video manda; la foto queda debajo para que se vea algo mientras carga
@@ -123,7 +127,7 @@ a{color:inherit;text-decoration:none}
 @media (prefers-reduced-motion:reduce){ .hero .clip{display:none} }
 .hero .capa{position:absolute;inset:0;
   background:linear-gradient(90deg,rgba(15,14,12,.74) 0%,rgba(15,14,12,.36) 55%,transparent 100%)}
-.hero .txt{position:relative;max-width:var(--maxw);margin:0 auto;width:100%;padding:0 16px 32px}
+.hero .txt{position:relative;max-width:var(--maxw);margin:0 auto;width:100%;padding:0 16px 44px}
 /* El titulo entra EN CASCADA: letra por letra, asomando desde abajo detras
    de una mascara, una detras de la otra. */
 .hero h1 .linea{display:block;overflow:hidden;padding-bottom:.06em}
@@ -255,11 +259,68 @@ a{color:inherit;text-decoration:none}
         font-size:24px;margin:0 0 7px;letter-spacing:.02em}
 .gar p{margin:0 auto;max-width:52ch;font-size:14px;color:var(--suave)}
 
-/* ---------- pie ---------- */
-.pie{background:var(--negro);color:#8B857A;padding:26px 16px}
+/* ---------- pie: columnas plegables como 5.11 + contacto y redes ---------- */
+.pie{background:var(--negro);color:#9A9384;padding:34px 16px 26px}
 .pie .envoltorio{max-width:var(--maxw);margin:0 auto}
-.pie .logo{font-size:19px;margin-bottom:11px}
-.pie .enlaces{display:flex;flex-wrap:wrap;gap:10px 20px;margin-bottom:12px;
-  font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;font-size:13px;
-  text-transform:uppercase;letter-spacing:.05em;color:#BEB8AC}
-.pie small{font-size:12px}
+
+.pie .cols{display:grid;gap:0}
+@media (min-width:760px){ .pie .cols{grid-template-columns:repeat(3,1fr);gap:34px} }
+
+.pie .col{border-bottom:1px solid #23211C}
+@media (min-width:760px){ .pie .col{border-bottom:0} }
+.pie summary{
+  list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 0;color:#fff;
+  font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:16px;letter-spacing:.04em;
+}
+.pie summary::-webkit-details-marker{display:none}
+/* el mas que se vuelve menos al abrir, como en 5.11 */
+.pie .mas{position:relative;width:14px;height:14px;flex:none}
+.pie .mas::before,.pie .mas::after{content:'';position:absolute;background:#fff;transition:transform .25s ease}
+.pie .mas::before{left:0;top:6px;width:14px;height:1.6px}
+.pie .mas::after{left:6px;top:0;width:1.6px;height:14px}
+.pie details[open] .mas::after{transform:scaleY(0)}
+@media (min-width:760px){ .pie .mas{display:none} .pie summary{cursor:default;padding:0 0 14px} }
+
+.pie .dentro{display:flex;flex-direction:column;gap:11px;padding:0 0 18px}
+.pie .dentro a,.pie .contacto a{color:#BEB8AC;font-size:14px}
+.pie .dentro a:hover,.pie .contacto a:hover{color:#fff}
+
+.pie .contacto{padding:16px 0 18px}
+.pie .contacto h4{
+  margin:0 0 12px;color:#fff;
+  font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:16px;letter-spacing:.04em;
+}
+@media (min-width:760px){ .pie .contacto h4{margin-bottom:14px} }
+.pie .contacto p{margin:0 0 9px;font-size:14px;color:#BEB8AC}
+
+/* siguenos, centrado como en 5.11 */
+.pie .redes{text-align:center;padding:26px 0 22px;border-top:1px solid #23211C;margin-top:8px}
+.pie .redes .rot{
+  display:block;margin-bottom:14px;color:#fff;
+  font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:15px;letter-spacing:.09em;
+}
+.pie .iconos{display:flex;justify-content:center;gap:16px}
+.pie .iconos a{display:block;transition:transform .18s,opacity .18s;opacity:.95}
+.pie .iconos a:hover{transform:translateY(-2px);opacity:1}
+
+/* la marca grande al final, como el 5.11 gigante */
+.pie .marca-grande{
+  display:flex;align-items:center;justify-content:center;padding:14px 0 18px;
+  font-family:'Inter','Barlow Condensed',sans-serif;text-transform:uppercase;line-height:1;
+}
+.pie .marca-grande .j{font-weight:800;font-size:clamp(38px,11vw,62px);color:#fff;letter-spacing:-.01em}
+.pie .marca-grande .g{font-weight:200;font-size:clamp(29px,8.4vw,47px);color:#fff;letter-spacing:.14em}
+.pie .marca-grande .raya{
+  display:inline-block;width:2px;height:clamp(46px,13vw,74px);background:var(--oro);
+  margin:0 14px 0 15px;flex:none;
+}
+
+.pie .abajo{
+  border-top:1px solid #23211C;padding-top:16px;text-align:center;
+  display:flex;flex-direction:column;gap:5px;
+}
+.pie .abajo small{font-size:12px;color:#7E7869}
