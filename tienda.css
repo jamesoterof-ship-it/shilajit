@@ -221,6 +221,46 @@ body{--altoCab:0px}
 }
 .ficha .btn:hover{background:#2A2724}
 
+/* ---------- quienes somos + sello de calidad ----------
+   Va sobre hueso para que se despegue del blanco de la rejilla de productos. */
+.nos{background:var(--hueso);border-top:1px solid var(--linea);
+     border-bottom:1px solid var(--linea);padding:34px 16px 8px}
+.nos-in{max-width:var(--maxw);margin:0 auto;display:flex;flex-direction:column;
+        align-items:center;gap:22px;text-align:center}
+.nos .ceja{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
+           text-transform:uppercase;font-size:12px;letter-spacing:.22em;color:var(--oro-osc);
+           margin:0 0 8px}
+.nos h2{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
+        font-size:clamp(27px,7.4vw,40px);line-height:.96;margin:0 0 14px;letter-spacing:.01em;
+        color:var(--negro);text-wrap:balance}
+.nos p{margin:0 auto 11px;max-width:46ch;font-size:14.5px;line-height:1.7;
+       font-weight:300;color:var(--suave)}
+.nos-sello{width:min(178px,46vw);flex:none}
+.nos-sello svg{width:100%;height:auto;display:block}
+
+/* los tres puntos del sello de calidad */
+.nos-puntos{max-width:var(--maxw);margin:26px auto 0;display:grid;gap:0;
+            border-top:1px solid var(--linea)}
+.nos-puntos>div{padding:18px 4px;text-align:center;border-bottom:1px solid var(--linea)}
+.nos-puntos>div:last-child{border-bottom:0}
+.nos-puntos .ic{width:26px;height:26px;stroke:var(--oro-osc);fill:none;stroke-width:1.5;
+                stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto 9px}
+.nos-puntos b{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
+              text-transform:uppercase;font-size:15px;letter-spacing:.05em;color:var(--negro);
+              margin:0 0 4px}
+.nos-puntos span{display:block;font-size:13px;line-height:1.6;font-weight:300;
+                 color:var(--suave);max-width:34ch;margin:0 auto}
+
+@media (min-width:760px){
+  .nos{padding:52px 16px 10px}
+  .nos-in{flex-direction:row;text-align:left;gap:44px;align-items:center}
+  .nos-txt{flex:1}
+  .nos p{margin-left:0;margin-right:0}
+  .nos-puntos{grid-template-columns:repeat(3,1fr);border-top:1px solid var(--linea);margin-top:36px}
+  .nos-puntos>div{border-bottom:0;border-right:1px solid var(--linea);padding:22px 18px}
+  .nos-puntos>div:last-child{border-right:0}
+}
+
 /* ---------- garantia ---------- */
 /* ---------- garantia con el video de la pareja de fondo ----------
    Ocupa TODO el ancho de la pantalla, sin bordes ni lineas. */

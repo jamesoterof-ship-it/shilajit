@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=31">
+<link rel="stylesheet" href="tienda.css?v=32">
 <script>
 /* Evita el parpadeo del logo: se muestra cuando la tipografia ya cargo,
    y si tarda demasiado se muestra igual a los 400 ms. */
@@ -92,6 +92,68 @@
       </div>
     </div>
   </div>
+
+  <!-- quienes somos + sello de calidad -->
+  <section class="nos" id="nosotros">
+    <div class="nos-in">
+      <div class="nos-txt">
+        <span class="ceja">Quiénes somos</span>
+        <h2>Pocos productos,<br>bien elegidos</h2>
+        <p>Jaye Group es una tienda chilena. No subimos catálogos enteros: trabajamos
+           con pocos productos a la vez, los que de verdad resuelven algo, y los tenemos
+           con despacho a todo el país.</p>
+        <p>No pagas nada por adelantado. El producto llega a tu dirección, lo revisas,
+           y recién ahí pagas.</p>
+      </div>
+
+      <div class="nos-sello" aria-hidden="false">
+        <svg viewBox="0 0 220 220" role="img" aria-label="Garantía de satisfacción de 30 días">
+          <defs>
+            <radialGradient id="selloOro" cx="0.34" cy="0.28" r="0.95">
+              <stop offset="0" stop-color="#F6E3AC"/><stop offset=".38" stop-color="#E2BC57"/>
+              <stop offset=".68" stop-color="#D8A52E"/><stop offset="1" stop-color="#8A6714"/>
+            </radialGradient>
+            <path id="selloArr" fill="none" d="M44 110a66 66 0 0 1 132 0"/>
+            <path id="selloAba" fill="none" d="M48 118a62 62 0 0 0 124 0"/>
+          </defs>
+          <circle cx="110" cy="110" r="98" fill="url(#selloOro)" opacity=".14"/>
+          <circle cx="110" cy="110" r="92" fill="url(#selloOro)" stroke="#8A6714" stroke-width="3"/>
+          <ellipse cx="86" cy="72" rx="46" ry="26" fill="#fff" opacity=".26"/>
+          <circle cx="110" cy="110" r="84" fill="none" stroke="#fff" stroke-opacity=".5"
+                  stroke-width="2" stroke-dasharray="1.5 6" stroke-linecap="round"/>
+          <text font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="16"
+                letter-spacing="2.6" fill="#fff">
+            <textPath href="#selloArr" startOffset="50%" text-anchor="middle">GARANTÍA DE SATISFACCIÓN</textPath></text>
+          <text font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="14"
+                letter-spacing="2" fill="#fff">
+            <textPath href="#selloAba" startOffset="50%" text-anchor="middle">JAYE GROUP CHILE</textPath></text>
+          <circle cx="110" cy="110" r="55" fill="#fff"/>
+          <text x="110" y="106" text-anchor="middle" font-family="'Barlow Condensed',sans-serif"
+                font-weight="800" font-size="48" fill="#0F0E0C">30</text>
+          <text x="110" y="132" text-anchor="middle" font-family="'Barlow Condensed',sans-serif"
+                font-weight="700" font-size="16" letter-spacing="3.4" fill="#0F0E0C">DÍAS</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="nos-puntos">
+      <div>
+        <svg class="ic" viewBox="0 0 24 24"><path d="M12 2.7l8 3.4v6c0 4.6-3.3 8.2-8 9.2-4.7-1-8-4.6-8-9.2v-6z"/><path d="M8.6 12.2l2.4 2.4 4.6-4.8"/></svg>
+        <b>Garantía de 30 días</b>
+        <span>Si no quedas conforme, lo devuelves y te devolvemos el dinero.</span>
+      </div>
+      <div>
+        <svg class="ic" viewBox="0 0 24 24"><path d="M2 7h11v9H2zM13 10h4.5l2.5 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+        <b>Despacho a todo Chile</b>
+        <span>Con Bluexpress y Starken, a cualquier región del país.</span>
+      </div>
+      <div>
+        <svg class="ic" viewBox="0 0 24 24"><path d="M20.5 11.6a8.4 8.4 0 0 1-12.2 7.5L3.5 20.5l1.4-4.7a8.4 8.4 0 1 1 15.6-4.2z"/></svg>
+        <b>Te respondemos por WhatsApp</b>
+        <span>Antes de comprar y después de que te llegue el pedido.</span>
+      </div>
+    </div>
+  </section>
 
   <!-- productos -->
   <div class="sec" id="productos">
