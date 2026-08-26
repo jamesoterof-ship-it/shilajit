@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=51">
+<link rel="stylesheet" href="tienda.css?v=52">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -437,6 +437,52 @@
   transition:transform .2s ease}
 .flota .wa:hover{transform:scale(1.07)}
 
+
+/* --- efectos tabla y formulario --- */
+/* la comparativa: la tarjeta entra en 3D y cada fila aparece una tras otra */
+.cmp-sec{perspective:1100px}
+.cmp{border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(23,21,15,.22);
+  transform:rotateX(7deg) translateY(20px);opacity:0;
+  transition:transform .7s cubic-bezier(.2,.7,.3,1), opacity .6s ease, box-shadow .3s ease}
+.cmp-sec.vino .cmp{transform:none;opacity:1}
+.cmp:hover{box-shadow:0 26px 56px rgba(23,21,15,.32)}
+.cmp tbody tr{opacity:0;transform:translateY(10px);transition:.5s cubic-bezier(.2,.7,.3,1)}
+.cmp-sec.vino tbody tr{opacity:1;transform:none}
+.cmp-sec.vino tbody tr:nth-child(1){transition-delay:.20s}
+.cmp-sec.vino tbody tr:nth-child(2){transition-delay:.32s}
+.cmp-sec.vino tbody tr:nth-child(3){transition-delay:.44s}
+.cmp-sec.vino tbody tr:nth-child(4){transition-delay:.56s}
+.cmp tbody tr{transition-property:opacity,transform,background}
+.cmp tbody tr:hover{background:rgba(255,255,255,.05)}
+/* el visto se dibuja solo */
+.cmp .si svg path{stroke-dasharray:26;stroke-dashoffset:26;transition:stroke-dashoffset .5s ease}
+.cmp-sec.vino .si svg path{stroke-dashoffset:0}
+.cmp-sec.vino tbody tr:nth-child(1) .si svg path{transition-delay:.40s}
+.cmp-sec.vino tbody tr:nth-child(2) .si svg path{transition-delay:.52s}
+.cmp-sec.vino tbody tr:nth-child(3) .si svg path{transition-delay:.64s}
+.cmp .no svg{opacity:0;transition:opacity .4s ease .6s}
+.cmp-sec.vino .no svg{opacity:1}
+
+/* el formulario: la tarjeta entra igual y los campos se encienden al escribir */
+.form{perspective:1100px}
+.formcard{transform:rotateX(6deg) translateY(22px);opacity:0;
+  transition:transform .7s cubic-bezier(.2,.7,.3,1), opacity .6s ease, box-shadow .3s ease}
+.form.vino .formcard{transform:none;opacity:1}
+.formcard:hover{box-shadow:0 26px 60px rgba(0,0,0,.42)}
+.form .pack{transform:translateY(10px);opacity:0;transition:.5s cubic-bezier(.2,.7,.3,1)}
+.form.vino .pack{transform:none;opacity:1}
+.form.vino .pack:nth-child(1){transition-delay:.18s}
+.form.vino .pack:nth-child(2){transition-delay:.28s}
+.form.vino .pack:nth-child(3){transition-delay:.38s}
+.form .pack{transition-property:opacity,transform,border-color,background,box-shadow}
+.form .pack:hover{transform:translateY(-3px)}
+.field input:focus,.field select:focus{transform:translateY(-1px)}
+.field input,.field select{transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease}
+@media (prefers-reduced-motion:reduce){
+  .cmp,.cmp tbody tr,.formcard,.form .pack{transform:none;opacity:1;transition:none}
+  .cmp .si svg path{stroke-dashoffset:0}.cmp .no svg{opacity:1}
+}
+
 @media (min-width:860px){
   .arriba2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
     max-width:var(--maxw);margin:0 auto;padding:20px 16px 0}
@@ -570,6 +616,6 @@
 <script src="chile-regiones.js?v=1"></script>
 <script src="resenas.js?v=3"></script>
 <script src="efectos.js?v=1"></script>
-<script src="ficha.js?v=9"></script>
+<script src="ficha.js?v=10"></script>
 </body>
 </html>

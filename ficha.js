@@ -247,7 +247,7 @@
   /* ---------- 8 · QUE LO HACE DIFERENTE ---------- */
   function seccionCompara() {
     if (!p.compara || !p.compara.length) return '';
-    return '<section class="bloque cmp-sec"><h2 class="tit2">' + esc(p.comparaTitulo || '¿Qué lo hace diferente?') + '</h2>'
+    return '<section class="bloque cmp-sec" data-rv><h2 class="tit2">' + esc(p.comparaTitulo || '¿Qué lo hace diferente?') + '</h2>'
       + '<table class="cmp"><thead><tr><th>Característica</th><th class="us">' + esc(p.nombre.split(' ').slice(0, 2).join(' ')) + '</th><th>Otros</th></tr></thead><tbody>'
       + p.compara.map(function (t) {
           return '<tr><td>' + esc(t) + '</td>'
@@ -315,7 +315,7 @@
     }).join('');
   }
   var kSel = p.packs[elegido];
-  var formulario = '<section class="form" id="pedir"><h2>Pide el tuyo</h2>'
+  var formulario = '<section class="form" id="pedir" data-rv><h2>Pide el tuyo</h2>'
     + '<p class="baj">Lo despachamos hoy. Pagas cuando lo recibes.</p>'
     + '<div class="formcard">'
     + '<div class="cod-badge">'
