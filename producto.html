@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=54">
+<link rel="stylesheet" href="tienda.css?v=55">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -522,6 +522,49 @@
 .form .pack .info .s{color:#FF8FA0}
 .form .pack.sel .info .s{color:#FF6B80}
 .summary .desc{color:#FF6B80;font-weight:700}
+
+
+/* --- formulario en blanco --- */
+.form{background:var(--hueso);padding:34px 16px 44px;margin-top:34px}
+.form h2{color:var(--tinta)}
+.form .baj{color:var(--suave)}
+.formcard{background:#fff;border:1px solid var(--linea);
+  box-shadow:0 18px 46px rgba(23,21,15,.13)}
+.formcard:hover{box-shadow:0 26px 60px rgba(23,21,15,.18)}
+.cod-badge{background:#FBF7EC;color:var(--negro);border:1px solid rgba(216,165,46,.55)}
+
+.form .pack{background:#FAF9F7;border-color:var(--linea)}
+.form .pack:hover{border-color:var(--suave)}
+.form .pack .radio{border-color:var(--linea)}
+.form .pack .info .t{color:var(--tinta)}
+.form .pack .info .s{color:var(--rojo)}
+.form .pack .pr .n{color:var(--tinta)}
+.form .pack .pr .w{color:#A29C90}
+.form .pack.sel{border-color:var(--rojo);background:rgba(196,18,47,.05);
+  box-shadow:0 0 0 3px rgba(196,18,47,.13)}
+.form .pack.sel .info .s{color:var(--rojo)}
+
+.summary{background:#FAF9F7;border:1px solid var(--linea);color:var(--suave)}
+.summary .desc{color:var(--rojo);font-weight:700}
+.summary .free{color:var(--oro-osc);font-weight:700}
+.summary .tot{color:var(--tinta);border-top-color:var(--linea)}
+
+.field label{color:var(--suave)}
+.field input,.field select{background:#fff;border-color:var(--linea);color:var(--tinta)}
+.field input::placeholder{color:#A29C90}
+.field input:focus,.field select:focus{border-color:var(--rojo);
+  box-shadow:0 0 0 3px rgba(196,18,47,.13)}
+.field select option{background:#fff;color:var(--tinta)}
+.field .err{color:var(--rojo)}
+.cc-btn{background:#FAF9F7;border-color:var(--linea);color:var(--tinta)}
+.formnote{color:var(--suave)}
+.carriers{border-top-color:var(--linea)}
+.carriers .cl{color:var(--suave)}
+.cbadges{background:transparent;padding:0}
+.form .listo{background:#fff;border-color:var(--oro);color:var(--tinta)}
+.form .listo h3{color:var(--tinta)}
+.form .listo p{color:var(--suave)}
+.form .ctaSub{color:var(--suave) !important}
 
 @media (min-width:860px){
   .arriba2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
