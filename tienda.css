@@ -85,9 +85,12 @@ a{color:inherit;text-decoration:none}
 .logo{font-family:'Inter','Barlow Condensed',sans-serif;font-size:19px;
       text-transform:uppercase;display:inline-flex;align-items:center;
       white-space:nowrap;line-height:1}
-.logo .j{font-weight:800;letter-spacing:-.005em;color:var(--negro);transition:color .28s ease}
-.logo .g{font-weight:300;letter-spacing:.14em;color:var(--negro);transition:color .28s ease}
-.logo .raya{display:inline-block;width:1.5px;height:1.5em;background:var(--oro);
+.logo .j{font-weight:800;font-size:1em;letter-spacing:-.005em;
+         color:var(--negro);transition:color .28s ease}
+/* GROUP es mas chico y mas delgado que JAYE, como en el logo */
+.logo .g{font-weight:300;font-size:.76em;letter-spacing:.15em;
+         color:var(--negro);transition:color .28s ease}
+.logo .raya{display:inline-block;width:1.5px;height:1.45em;background:var(--oro);
             margin:0 11px 0 12px;flex:none}
 /* sobre negro, la marca se lee en blanco; la linea sigue dorada */
 .pegado.bajando .logo .j,.pegado.bajando .logo .g{color:#fff}
