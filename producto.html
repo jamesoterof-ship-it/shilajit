@@ -215,6 +215,71 @@
   text-transform:uppercase;letter-spacing:.02em}
 .form .listo p{color:#B5AE9F;font-size:14px;margin:0;line-height:1.6}
 
+
+/* --- secciones nuevas --- */
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:'Barlow Condensed','Inter',sans-serif;
+  font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro-osc);margin-bottom:10px}
+.eyebrow::before{content:'';width:22px;height:2px;background:var(--oro)}
+.tit2{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(23px,5.2vw,32px);line-height:1.02;letter-spacing:-.01em;color:var(--tinta);margin:0 0 10px;text-wrap:balance}
+.sub2{font-size:15px;line-height:1.65;color:var(--suave);margin:0 0 20px;max-width:60ch}
+
+/* 5 · la formula */
+.ing-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:640px){ .ing-grid{grid-template-columns:1fr 1fr;gap:18px 26px} }
+.ing{display:flex;gap:13px;align-items:flex-start}
+.ing .cir{flex:0 0 46px;width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(140deg,var(--negro),#2b2823);display:grid;place-items:center;
+  box-shadow:0 6px 16px rgba(23,21,15,.22)}
+.ing .cir svg{width:22px;height:22px;stroke:var(--oro);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ing b{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-size:16px;
+  text-transform:uppercase;letter-spacing:.02em;color:var(--tinta);margin-bottom:3px}
+.ing p{font-size:13.5px;color:var(--suave);line-height:1.55;margin:0}
+
+/* 6 · el cambio */
+.ba-img{border:1px solid var(--linea);overflow:hidden;margin-bottom:16px}
+.ba-img img{width:100%;display:block}
+
+/* 7 · resultados */
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(min-width:700px){ .res-grid{grid-template-columns:repeat(4,1fr)} }
+.res{border:1px solid var(--linea);background:var(--surface,#fff);padding:20px 14px;text-align:center}
+.res b{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;
+  font-size:38px;line-height:1;color:var(--oro-osc);font-variant-numeric:tabular-nums}
+.res span{display:block;font-size:12.5px;color:var(--suave);margin-top:7px;line-height:1.45}
+
+/* 8 · comparativa */
+.cmp{width:100%;border-collapse:collapse;background:var(--negro);color:#EDE9E1;font-size:14px}
+.cmp th,.cmp td{padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.10);text-align:left;vertical-align:middle}
+.cmp thead th{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:.05em;font-size:13px;color:#B5AE9F}
+.cmp thead th.us{color:var(--oro)}
+.cmp td:not(:first-child),.cmp th:not(:first-child){text-align:center;width:74px}
+.cmp .si svg{width:20px;height:20px;stroke:#4ADE80;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.cmp .no svg{width:18px;height:18px;stroke:#FF6B80;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.cmp-sec{overflow-x:auto}
+
+/* 10 · garantia */
+.gar-sec{text-align:center}
+.gseal{width:150px;margin:0 auto 16px}
+.gseal svg{width:100%;height:auto;display:block;filter:drop-shadow(0 8px 20px rgba(201,162,39,.30))}
+.gar-sec .tit2,.gar-sec .sub2{text-align:center;margin-left:auto;margin-right:auto}
+.gar-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:16px}
+.gar-chips span{border:1px solid var(--linea);border-radius:999px;padding:8px 15px;
+  font-size:13px;font-weight:600;color:var(--tinta);background:var(--surface,#fff)}
+
+/* boton flotante: aparece al bajar */
+.flota{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;gap:10px;
+  padding:11px 14px calc(11px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top,rgba(15,14,12,.92),rgba(15,14,12,0));
+  transform:translateY(120%);transition:transform .3s ease;pointer-events:none}
+.flota.ver{transform:translateY(0);pointer-events:auto}
+.flota .cta{flex:1;margin:0;font-size:15px;padding:14px 12px}
+.flota .wa{flex:none;width:52px;height:52px;border-radius:50%;background:#25d366;
+  display:grid;place-items:center;box-shadow:0 6px 18px rgba(37,211,102,.4)}
+.flota .wa svg{width:27px;height:27px;fill:#fff}
+@media(min-width:860px){ .flota{max-width:var(--maxw);margin:0 auto} }
+
 @media (min-width:860px){
   .arriba2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
     max-width:var(--maxw);margin:0 auto;padding:20px 16px 0}
@@ -344,10 +409,10 @@
     </div>
   </footer>
 
-<script src="productos.js?v=6"></script>
+<script src="productos.js?v=7"></script>
 <script src="chile-regiones.js?v=1"></script>
 <script src="resenas.js?v=3"></script>
 <script src="efectos.js?v=1"></script>
-<script src="ficha.js?v=5"></script>
+<script src="ficha.js?v=6"></script>
 </body>
 </html>

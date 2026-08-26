@@ -175,7 +175,102 @@
           + '<div class="p">desde ' + pesos(min) + '</div></div></a>';
       }).join('') + '</div></section>' : '';
 
-  /* ---------- 10 · formulario ---------- */
+
+  /* ---------- 5 · LA FORMULA (molde NAD+) ---------- */
+  var ICONOS = {
+    ondas:'<path d="M12 18h.01"/><path d="M8.5 14.5a5 5 0 0 1 7 0"/><path d="M5 11a10 10 0 0 1 14 0"/>',
+    torre:'<path d="M12 21V9"/><path d="M7 21l5-16 5 16"/><circle cx="12" cy="5" r="2"/>',
+    iman:'<path d="M6 4v8a6 6 0 0 0 12 0V4"/><path d="M6 9h4M14 9h4"/>',
+    cable:'<path d="M4 8a4 4 0 0 1 8 0v8a4 4 0 0 0 8 0"/><circle cx="4" cy="8" r="1.6"/>',
+    casa:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+    llave:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l2 2M14 9l2 2"/>',
+    fibra:'<path d="M4 20c3-8 5-12 8-16"/><path d="M9 20c3-8 5-12 8-16"/><path d="M14 20c2-6 3-9 5-13"/>',
+    cepillo:'<rect x="9" y="3" width="6" height="14" rx="3"/><path d="M9 7H6M9 11H6M9 15H6M15 7h3M15 11h3M15 15h3"/><path d="M12 17v4"/>',
+    agua:'<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',
+    ojo:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>',
+    pluma:'<path d="M20 4C11 4 4 11 4 20"/><path d="M4 20c8 0 16-7 16-16"/><path d="M8 16l4-4"/>',
+    libro:'<path d="M4 5a2 2 0 0 1 2-2h6v18H6a2 2 0 0 1-2-2z"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>',
+    auto:'<path d="M4 15h16v-3l-2-5H6l-2 5z"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/>',
+    rayo:'<path d="M13 2 4 14h6l-1 8 9-12h-6z"/>',
+    pantalla:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>',
+    escudo:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+    sol:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+  };
+  function seccionFormula() {
+    if (!p.formula || !p.formula.length) return '';
+    return '<section class="bloque form-sec"><span class="eyebrow">La fórmula</span>'
+      + '<h2 class="tit2">' + esc(p.formulaTitulo || 'Qué trae') + '</h2>'
+      + (p.formulaSub ? '<p class="sub2">' + esc(p.formulaSub) + '</p>' : '')
+      + '<div class="ing-grid">'
+      + p.formula.map(function (x) {
+          return '<div class="ing"><div class="cir"><svg viewBox="0 0 24 24">' + (ICONOS[x[0]] || ICONOS.llave) + '</svg></div>'
+            + '<div><b>' + esc(x[1]) + '</b><p>' + esc(x[2]) + '</p></div></div>';
+        }).join('')
+      + '</div></section>';
+  }
+
+  /* ---------- 6 · EL CAMBIO (solo si hay foto de antes y despues) ---------- */
+  function seccionCambio() {
+    if (!p.antesDespues) return '';
+    return '<section class="bloque ba-sec"><span class="eyebrow">El cambio</span>'
+      + '<h2 class="tit2">El antes y después que se nota</h2>'
+      + (p.antesDespuesSub ? '<p class="sub2">' + esc(p.antesDespuesSub) + '</p>' : '')
+      + '<div class="ba-img"><img src="' + esc(p.antesDespues) + '" alt="Antes y después" loading="lazy" onerror="this.parentNode.remove()"></div>'
+      + '<button class="cta rojo" onclick="document.getElementById(\'pedir\').scrollIntoView({behavior:\'smooth\'})">Quiero ese cambio</button></section>';
+  }
+
+  /* ---------- 7 · RESULTADOS · numeros REALES de la operacion ---------- */
+  function seccionResultados() {
+    var datos = [
+      ['701', 'pedidos entregados en Chile'],
+      ['4,6', 'días promedio hasta tu casa'],
+      ['$0', 'de envío, a todo Chile'],
+      ['30', 'días de garantía'],
+    ];
+    return '<section class="bloque res-sec"><span class="eyebrow">Resultados</span>'
+      + '<h2 class="tit2">Lo que ya pasó, no lo que prometemos</h2>'
+      + '<div class="res-grid">'
+      + datos.map(function (d) { return '<div class="res"><b>' + d[0] + '</b><span>' + d[1] + '</span></div>'; }).join('')
+      + '</div></section>';
+  }
+
+  /* ---------- 8 · QUE LO HACE DIFERENTE ---------- */
+  function seccionCompara() {
+    if (!p.compara || !p.compara.length) return '';
+    return '<section class="bloque cmp-sec"><h2 class="tit2">' + esc(p.comparaTitulo || '¿Qué lo hace diferente?') + '</h2>'
+      + '<table class="cmp"><thead><tr><th>Característica</th><th class="us">' + esc(p.nombre.split(' ').slice(0, 2).join(' ')) + '</th><th>Otros</th></tr></thead><tbody>'
+      + p.compara.map(function (t) {
+          return '<tr><td>' + esc(t) + '</td>'
+            + '<td class="si"><svg viewBox="0 0 24 24"><path d="M4 12l6 6L20 6"/></svg></td>'
+            + '<td class="no"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></td></tr>';
+        }).join('')
+      + '</tbody></table></section>';
+  }
+
+  /* ---------- 10 · GARANTIA 30 DIAS ---------- */
+  function seccionGarantia() {
+    return '<section class="bloque gar-sec">'
+      + '<div class="gseal"><svg viewBox="0 0 220 220" aria-label="Garantía de 30 días">'
+      + '<defs><radialGradient id="gs" cx="0.34" cy="0.28" r="0.95">'
+      + '<stop offset="0" stop-color="#f9ecb8"/><stop offset="0.38" stop-color="#e6c65a"/>'
+      + '<stop offset="0.68" stop-color="#c9a227"/><stop offset="1" stop-color="#8f741c"/></radialGradient>'
+      + '<path id="gt" fill="none" d="M44 110a66 66 0 0 1 132 0"/><path id="gb" fill="none" d="M48 118a62 62 0 0 0 124 0"/></defs>'
+      + '<circle cx="110" cy="110" r="98" fill="url(#gs)" opacity=".16"/>'
+      + '<circle cx="110" cy="110" r="92" fill="url(#gs)" stroke="#8f741c" stroke-width="3"/>'
+      + '<ellipse cx="86" cy="72" rx="46" ry="26" fill="#fff" opacity="0.28"/>'
+      + '<circle cx="110" cy="110" r="84" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-dasharray="1.5 6" stroke-linecap="round"/>'
+      + '<text font-family="Inter,sans-serif" font-weight="700" font-size="14.5" letter-spacing="2.4" fill="#fff"><textPath href="#gt" startOffset="50%" text-anchor="middle">GARANTÍA TOTAL</textPath></text>'
+      + '<text font-family="Inter,sans-serif" font-weight="700" font-size="12.5" letter-spacing="1.8" fill="#fff"><textPath href="#gb" startOffset="50%" text-anchor="middle">DEVOLUCIÓN 100%</textPath></text>'
+      + '<text x="110" y="105" text-anchor="middle" font-family="Barlow Condensed,sans-serif" font-weight="800" font-size="46" fill="#fff">30</text>'
+      + '<text x="110" y="128" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="13" letter-spacing="3" fill="#fff">DÍAS</text>'
+      + '</svg></div>'
+      + '<h2 class="tit2">Garantía de satisfacción</h2>'
+      + '<p class="sub2">Si no quedas conforme, te devolvemos tu dinero dentro de los primeros 30 días. Sin preguntas.</p>'
+      + '<div class="gar-chips"><span>Devolución 100%</span><span>Sin preguntas</span><span>Pago al recibir</span></div>'
+      + '</section>';
+  }
+
+  /* ---------- 14 · formulario ---------- */
   /* el mismo selector de packs de arriba, tambien aca: el cliente elige sin
      tener que volver a subir */
   function packsHTML(sufijo) {
@@ -209,7 +304,21 @@
     + '</form></section>';
 
   cont.innerHTML = '<div class="arriba2">' + galeria + cabecera + '</div>'
-    + promo + desc + resenas + preguntas + sellos + interesar + formulario;
+    + promo
+    + seccionFormula()
+    + seccionCambio()
+    + seccionResultados()
+    + seccionCompara()
+    + desc
+    + resenas
+    + seccionGarantia()
+    + preguntas
+    + sellos
+    + interesar
+    + formulario
+    + '<div class="flota" id="flota"><button class="cta rojo" onclick="document.getElementById(\'pedir\').scrollIntoView({behavior:\'smooth\'})">Pedir ahora — pago contra entrega</button>'
+    + '<a class="wa" href="https://wa.me/56964775539" target="_blank" rel="noopener" aria-label="WhatsApp">'
+    + '<svg viewBox="0 0 24 24"><path d="M20.5 3.5A11 11 0 0 0 3.2 17.1L2 22l5-1.2A11 11 0 1 0 20.5 3.5zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3 .7.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3A3 3 0 0 0 6.9 10a5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4 5.3 5.3 0 0 0 2.4.5 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.6-.3z"/></svg></a></div>';
 
   /* ---------- comportamiento ---------- */
   pintarGaleria();
@@ -335,4 +444,22 @@
     if (ok && !ok.checked) { ok.focus(); return; }
     f.outerHTML = '<p class=gracias>Listo. Te avisamos cuando haya novedades.</p>';
   });
+})();
+
+/* ---------- el boton flotante aparece cuando el cliente ya bajo ----------
+   Se esconde al llegar al formulario, para no tapar el propio boton de pedido. */
+(function () {
+  var fl = document.getElementById('flota'), ped = document.getElementById('pedir');
+  if (!fl) return;
+  var esperando = false;
+  function mirar() {
+    var y = window.scrollY || 0;
+    var enForm = ped && ped.getBoundingClientRect().top < window.innerHeight * 0.9;
+    fl.classList.toggle('ver', y > 420 && !enForm);
+    esperando = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (esperando) return; esperando = true; requestAnimationFrame(mirar);
+  }, { passive: true });
+  mirar();
 })();
