@@ -62,7 +62,28 @@ a{color:inherit;text-decoration:none}
 .pegado.bajando .top{background:var(--negro);border-bottom-color:#262320}
 .top .fila{
   max-width:var(--maxw);margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;
+  display:flex;align-items:center;gap:14px;padding:12px 16px;
+}
+/* el menu va PEGADO a la marca, y los iconos al otro extremo */
+.menu{
+  flex:1;min-width:0;display:flex;gap:16px;overflow-x:auto;scrollbar-width:none;
+  padding:2px 0;
+}
+.menu::-webkit-scrollbar{display:none}
+.menu button{
+  flex:none;background:none;border:0;padding:0 0 3px;cursor:pointer;
+  font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;font-size:14px;
+  text-transform:uppercase;letter-spacing:.05em;color:var(--negro);
+  border-bottom:2px solid transparent;transition:color .28s ease,border-color .28s ease;
+}
+.menu button[aria-pressed="true"]{border-bottom-color:var(--negro)}
+.menu button.oferta{color:var(--oro-osc)}
+.pegado.bajando .menu button{color:#fff}
+.pegado.bajando .menu button[aria-pressed="true"]{border-bottom-color:#fff}
+.pegado.bajando .menu button.oferta{color:var(--oro)}
+@media (max-width:520px){
+  .top .fila{flex-wrap:wrap}
+  .logo{order:1} .icos{order:2;margin-left:auto} .menu{order:3;flex-basis:100%;gap:15px}
 }
 .logo{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:20px;
       letter-spacing:.05em;text-transform:uppercase}
@@ -78,27 +99,6 @@ a{color:inherit;text-decoration:none}
     stroke-linecap:round;stroke-linejoin:round;display:block;color:var(--negro)}
 .hamb{background:none;border:0;padding:0;cursor:pointer;color:var(--negro)}
 
-/* ---------- categorias: acompañan al header ---------- */
-.cats{background:var(--gris);border-bottom:1px solid var(--linea);
-      transition:background .28s ease,border-color .28s ease}
-.pegado.bajando .cats{background:var(--negro);border-bottom-color:#262320}
-.cats button{transition:color .28s ease,border-color .28s ease}
-.pegado.bajando .cats button{color:#fff}
-.pegado.bajando .cats button[aria-pressed="true"]{border-bottom-color:#fff}
-.pegado.bajando .cats button.oferta{color:var(--oro)}
-.cats .fila{
-  max-width:var(--maxw);margin:0 auto;
-  display:flex;gap:20px;overflow-x:auto;padding:10px 16px;scrollbar-width:none;
-}
-.cats .fila::-webkit-scrollbar{display:none}
-.cats button{
-  flex:none;background:none;border:0;padding:0 0 3px;cursor:pointer;
-  font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;font-size:14px;
-  text-transform:uppercase;letter-spacing:.05em;color:var(--negro);
-  border-bottom:2px solid transparent;
-}
-.cats button[aria-pressed="true"]{border-bottom-color:var(--negro)}
-.cats button.oferta{color:var(--oro-osc)}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:430px;display:flex;align-items:flex-end;
