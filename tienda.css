@@ -340,6 +340,106 @@ body{--altoCab:0px}
   .nos-puntos>div::before{display:none}
 }
 
+/* ---------- reseñas: carrusel de tarjetas chicas ----------
+   Va debajo de los productos, sobre hueso para separarse del blanco de la
+   rejilla. Se arrastra con el dedo; en pantalla grande ademas hay flechas. */
+.rese{background:var(--hueso);border-top:1px solid var(--linea);padding:32px 0 38px}
+.rese-cab{max-width:var(--maxw);margin:0 auto;padding:0 16px 18px;
+          display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.rese .ceja{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
+            text-transform:uppercase;font-size:12px;letter-spacing:.22em;color:var(--oro-osc);
+            margin:0 0 6px}
+.rese h2{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
+         font-size:clamp(24px,6.4vw,34px);line-height:1;margin:0;letter-spacing:.01em;color:var(--negro)}
+.rese-nota{display:flex;align-items:baseline;gap:9px;margin-top:9px}
+.rese-nota .num{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:30px;
+                line-height:1;color:var(--negro);font-variant-numeric:tabular-nums}
+.rese-nota .est{color:var(--oro);letter-spacing:.09em;font-size:15px}
+.rese-nota .cuantas{font-size:12.5px;color:var(--suave)}
+.rese-flechas{display:none;gap:8px;flex:none}
+.rese-flechas button{width:38px;height:38px;border:1px solid var(--linea);background:#fff;
+                     cursor:pointer;display:grid;place-items:center;color:var(--negro);
+                     transition:border-color .25s,background .25s,color .25s}
+.rese-flechas button:hover{border-color:var(--negro);background:var(--negro);color:#fff}
+.rese-flechas svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;
+                  stroke-linecap:round;stroke-linejoin:round}
+
+/* ARRIBA: la tira de FOTOS. Siempre se ven y siempre va corriendo sola.
+   Se detiene si el cliente pone el dedo o el mouse encima. */
+.rese-fotos{overflow:hidden;padding:2px 0 16px;
+            -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.rese-fotos .tira{display:flex;gap:10px;width:max-content;
+                  animation:correFotos 64s linear infinite}
+.rese-fotos:hover .tira,.rese-fotos:active .tira{animation-play-state:paused}
+@keyframes correFotos{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){
+  .rese-fotos .tira{animation:none}
+  .rese-fotos{overflow-x:auto;scrollbar-width:none}
+}
+/* redondas a proposito: la tienda entera son rectangulos, y una fila de
+   circulos con caras le quita la dureza sin salirse del molde */
+.rese-fotos .fo{flex:0 0 auto;width:118px;height:118px;border-radius:50%;overflow:hidden;
+                background:#E4E1DB;position:relative;
+                box-shadow:0 0 0 1px var(--linea), 0 8px 20px rgba(15,14,12,.09);
+                transition:box-shadow .35s ease,transform .35s cubic-bezier(.2,.7,.2,1)}
+.rese-fotos .fo img{width:100%;height:100%;object-fit:cover;display:block;
+                    transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.rese-fotos .fo:hover{transform:translateY(-4px);
+                      box-shadow:0 0 0 2px var(--oro), 0 14px 30px rgba(216,165,46,.30)}
+.rese-fotos .fo:hover img{transform:scale(1.07)}
+/* marco vacio mientras no esten las fotos cargadas */
+.rese-fotos .fo.hueco::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,#EAE7E1,#F4F2EE 45%,#E4E1DB)}
+@media (min-width:900px){ .rese-fotos .fo{width:142px;height:142px} }
+
+/* ABAJO: las tarjetas chicas con lo que escribieron. Se arrastran de lado. */
+.rese-pista{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+            padding:4px 16px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.rese-pista::-webkit-scrollbar{display:none}
+@media (min-width:1220px){ .rese-pista{padding-left:calc(50vw - var(--maxw)/2 + 16px)} }
+
+.rsn{flex:0 0 auto;width:min(252px,72vw);scroll-snap-align:start;background:#fff;
+     border:1px solid var(--linea);padding:15px 15px 14px;position:relative;overflow:hidden;
+     display:flex;flex-direction:column;
+     transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s ease,border-color .3s ease,
+                opacity .8s ease var(--d,0s),translate .8s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+/* mismo destello y misma linea dorada que las tarjetas del sello */
+.rsn::before{content:'';position:absolute;top:-12%;bottom:-12%;left:-160%;width:42%;
+  pointer-events:none;z-index:0;transform:skewX(-16deg);
+  background:linear-gradient(100deg,transparent 0%,rgba(216,165,46,.30) 42%,
+             rgba(255,249,229,.66) 52%,rgba(216,165,46,.26) 62%,transparent 100%)}
+.rsn>*{position:relative;z-index:1}
+.rsn::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;z-index:2;
+            background:linear-gradient(90deg,var(--oro-osc),var(--oro),#F0D588);
+            transform:scaleX(0);transform-origin:left;
+            transition:transform .38s cubic-bezier(.2,.7,.2,1)}
+.rsn:hover{transform:translateY(-5px);border-color:var(--oro);
+           box-shadow:0 18px 38px rgba(216,165,46,.24)}
+.rsn:hover::after{transform:scaleX(1)}
+.rsn:hover::before{animation:destello 1s ease-out}
+
+.rsn .quien{display:flex;align-items:center;gap:9px;margin:0 0 9px}
+.rsn .av{width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;
+         background:var(--negro);color:#fff;font-family:'Barlow Condensed','Inter',sans-serif;
+         font-weight:800;font-size:15px}
+.rsn .nom{font-weight:600;font-size:13px;color:var(--negro);line-height:1.25}
+.rsn .lug{font-size:11.5px;color:var(--suave);line-height:1.3}
+.rsn .est{color:var(--oro);font-size:12.5px;letter-spacing:.08em;margin:0 0 6px}
+.rsn .est i{color:#D6D2C8;font-style:normal}
+.rsn p{margin:0;font-size:13px;line-height:1.62;font-weight:300;color:var(--tinta);flex:1}
+.rsn .foto{margin:11px -15px -14px;display:block;width:calc(100% + 30px);aspect-ratio:4/5;
+           object-fit:cover;background:#F2F1EE}
+.rsn .prod{margin:10px 0 0;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;
+           text-transform:uppercase;font-size:11px;letter-spacing:.07em;color:var(--oro-osc)}
+.rsn .fec{font-size:11px;color:#A29C90;margin-top:6px}
+
+@media (min-width:900px){
+  .rese-flechas{display:flex}
+  .rsn{width:268px}
+}
+@media (prefers-reduced-motion:reduce){ .rsn::before{display:none} }
+
 /* ---------- garantia ---------- */
 /* ---------- garantia con el video de la pareja de fondo ----------
    Ocupa TODO el ancho de la pantalla, sin bordes ni lineas. */

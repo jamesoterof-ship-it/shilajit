@@ -243,9 +243,76 @@
   window.addEventListener('resize', barrer, { passive: true });
   window.addEventListener('load', barrer);
 
+  /* ---------- reseñas ----------
+     Arriba una tira de FOTOS redondas que corre sola y siempre se ve.
+     Abajo, tarjetas chicas con lo que escribieron. */
+  function resenas() {
+    var lista = window.RESENAS || [];
+    var sec = document.getElementById('resenas');
+    if (!sec || !lista.length) { if (sec) sec.hidden = true; return; }
+
+    // nota y cuantas
+    var n = document.getElementById('reseNota');
+    var q = document.getElementById('reseCuantas');
+    if (n) n.textContent = window.RESENAS_PROMEDIO || '4.8';
+    if (q) q.textContent = lista.length.toLocaleString('es-CL') + ' reseñas';
+
+    // --- tira de fotos: se duplica para que el giro no tenga costura ---
+    var fotos = [];
+    lista.forEach(function (r) { if (r.foto && fotos.indexOf(r.foto) < 0) fotos.push(r.foto); });
+    var tira = document.getElementById('reseTira');
+    if (tira) {
+      if (!fotos.length) {
+        // sin fotos todavia: se ven los circulos vacios para no dejar un hueco
+        fotos = new Array(12).fill('');
+      }
+      var doble = fotos.concat(fotos);
+      tira.innerHTML = doble.map(function (f) {
+        return f
+          ? '<div class="fo"><img src="' + f + '" alt="Foto de cliente" loading="lazy"'
+            + ' onerror="this.parentNode.classList.add(\'hueco\');this.remove()"></div>'
+          : '<div class="fo hueco"></div>';
+      }).join('');
+      // el giro dura segun cuantas fotos haya, para que no vaya ni lento ni loco
+      tira.style.animationDuration = Math.max(28, fotos.length * 5) + 's';
+    }
+
+    // --- tarjetas de texto ---
+    var estrellas = function (k) {
+      var s = '';
+      for (var i = 1; i <= 5; i++) s += (i <= k ? '★' : '<i>★</i>');
+      return s;
+    };
+    var pista = document.getElementById('resePista');
+    if (pista) {
+      pista.innerHTML = lista.slice(0, 24).map(function (r, i) {
+        return '<article class="rsn" data-rv style="--d:' + Math.min(i, 6) * 0.05 + 's">'
+          + '<div class="quien"><span class="av">' + r.nombre.charAt(0) + '</span>'
+          + '<div><div class="nom">' + r.nombre + '</div>'
+          + '<div class="lug">' + r.comuna + '</div></div></div>'
+          + '<div class="est">' + estrellas(r.estrellas) + '</div>'
+          + '<p>' + r.texto + '</p>'
+          + '<div class="prod">' + r.producto + '</div>'
+          + '<div class="fec">' + r.fecha + '</div>'
+          + '</article>';
+      }).join('');
+    }
+
+    // flechas de la pantalla grande
+    var mover = function (dir) {
+      if (!pista) return;
+      var t = pista.querySelector('.rsn');
+      pista.scrollBy({ left: dir * ((t ? t.offsetWidth : 260) + 12) * 2, behavior: 'smooth' });
+    };
+    var a = document.getElementById('reseIzq'), b = document.getElementById('reseDer');
+    if (a) a.addEventListener('click', function () { mover(-1); });
+    if (b) b.addEventListener('click', function () { mover(1); });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     categorias();
     pintar('Todos');
+    resenas();
     cabecera();
     videoHero();
     letrasDelHero();

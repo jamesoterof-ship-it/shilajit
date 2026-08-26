@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=40">
+<link rel="stylesheet" href="tienda.css?v=41">
 <script>
 /* Evita el parpadeo del logo: se muestra cuando la tipografia ya cargo,
    y si tarda demasiado se muestra igual a los 400 ms. */
@@ -226,6 +226,33 @@
   </div>
   <div class="rejilla" id="rejilla"></div>
 
+  <!-- reseñas: arriba la tira de fotos redondas, abajo las tarjetas chicas -->
+  <section class="rese" id="resenas">
+    <div class="rese-cab">
+      <div>
+        <span class="ceja" data-rv>Reseñas</span>
+        <h2 data-rv style="--d:.06s">Lo que dicen<br>quienes ya compraron</h2>
+        <div class="rese-nota" data-rv style="--d:.12s">
+          <span class="num" id="reseNota">4.8</span>
+          <span class="est">★★★★★</span>
+          <span class="cuantas" id="reseCuantas"></span>
+        </div>
+      </div>
+      <div class="rese-flechas" data-rv style="--d:.18s">
+        <button type="button" id="reseIzq" aria-label="Ver anteriores">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" id="reseDer" aria-label="Ver siguientes">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+
+    <div class="rese-fotos" aria-label="Fotos de clientes">
+      <div class="tira" id="reseTira"></div>
+    </div>
+
+    <div class="rese-pista" id="resePista"></div>
+  </section>
+
   <!-- garantia: aca va el video de la pareja, que es de marca -->
   <section class="gar gar-video">
     <video class="clip-gar" id="clipGar" muted loop playsinline preload="none" aria-hidden="true">
@@ -319,6 +346,7 @@
   </footer>
 
 <script src="productos.js?v=1"></script>
+<script src="resenas.js?v=1"></script>
 <script src="tienda.js?v=35"></script>
 </body>
 </html>
