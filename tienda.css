@@ -229,7 +229,7 @@ body{--altoCab:0px}
            width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);
            border:0;padding:0}
 .gar.gar-video .clip-gar{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-                     object-position:center 30%;opacity:0;transition:opacity .8s ease}
+                     object-position:center 30%;opacity:0;transition:opacity 1.2s ease}
 .gar.gar-video .clip-gar.listo{opacity:.72}
 /* el velo tapa fuerte en el centro: ahi va el texto y tiene que leerse */
 .gar.gar-video .velo{position:absolute;inset:0;background:rgba(15,14,12,.42)}
@@ -241,20 +241,19 @@ body{--altoCab:0px}
                  letter-spacing:.02em;margin:16px auto 0;max-width:40ch;
                  text-shadow:0 2px 14px rgba(0,0,0,.9),0 0 24px rgba(0,0,0,.65)}
 
-/* Entrada distinta a la del hero: el texto se abre desde el centro y sube.
-   Termina SIEMPRE a plena opacidad, sin desenfoque: primero que se lea. */
-.gar.gar-video h2,.gar.gar-video p{opacity:0;transform:translateY(46px)}
-.gar.gar-video.entro h2{animation:abre 1.25s cubic-bezier(.16,1,.3,1) forwards}
-.gar.gar-video.entro p{animation:abre 1.25s cubic-bezier(.16,1,.3,1) .42s forwards}
-@keyframes abre{
-  from{opacity:0;transform:translateY(46px) scale(.92);letter-spacing:.42em}
-  55% {opacity:1}
-  to  {opacity:1;transform:translateY(0) scale(1)}
-}
-.gar.gar-video.entro h2{letter-spacing:.02em}
+/* Entrada: el texto sube y aparece. Nada mas.
+   NO se anima el letter-spacing ni la escala: eso hacia que el titulo cambiara
+   de ancho mientras entraba, se re-partiera en otros renglones y pareciera que
+   parpadeaba. Se anima solo lo que no re-acomoda el texto. */
+.gar.gar-video h2,.gar.gar-video p{
+  opacity:0;transform:translateY(26px);
+  transition:opacity .95s ease,transform .95s cubic-bezier(.16,1,.3,1);
+  will-change:opacity,transform}
+.gar.gar-video.entro h2,.gar.gar-video.entro p{opacity:1;transform:none}
+.gar.gar-video.entro p{transition-delay:.20s}
 @media (prefers-reduced-motion:reduce){
   .gar.gar-video .clip-gar{display:none}
-  .gar.gar-video h2,.gar.gar-video p{opacity:1;transform:none;animation:none;letter-spacing:normal}
+  .gar.gar-video h2,.gar.gar-video p{opacity:1;transform:none;transition:none}
 }
 
 .gar{background:var(--gris);padding:28px 16px;text-align:center}

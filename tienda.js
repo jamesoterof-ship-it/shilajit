@@ -114,10 +114,27 @@
     var sec = document.querySelector('.gar-video');
     if (!sec) return;
     var v = document.getElementById('clipGar');
-    var mostrar = function () { sec.classList.add('entro'); };
+    var yaEsta = false;
+    function mostrar() { if (yaEsta) return; yaEsta = true; sec.classList.add('entro'); }
 
-    // red de seguridad: pase lo que pase, a los 2,5 s el texto se ve
-    setTimeout(mostrar, 2500);
+    /* El video solo se aclara cuando YA hay un cuadro que mostrar. Antes se le
+       subia la opacidad apenas se mandaba play(), asi que el fondo se aclaraba
+       vacio y despues aparecia el video de golpe: eso era medio parpadeo. */
+    if (v) {
+      var encender = function () { v.classList.add('listo'); };
+      v.addEventListener('playing', encender);
+      v.addEventListener('loadeddata', function () { if (v.readyState >= 3) encender(); });
+      v.addEventListener('error', function () { v.classList.remove('listo'); });
+    }
+
+    /* Red de seguridad: el texto NUNCA puede quedar invisible. Pero no se
+       dispara a ciegas a los 2,5 s (asi el efecto se gastaba fuera de pantalla
+       y despues no se veia nada): solo si la seccion ya esta a la vista. */
+    var red = setInterval(function () {
+      if (yaEsta || sec.getBoundingClientRect().top < window.innerHeight * 0.9) {
+        mostrar(); clearInterval(red);
+      }
+    }, 600);
 
     if (!('IntersectionObserver' in window)) { mostrar(); return; }
 
@@ -131,9 +148,8 @@
         if (!v.dataset.cargado) { v.dataset.cargado = '1'; v.load(); }
         var t = v.play();
         if (t && t.catch) t.catch(function () {});
-        v.classList.add('listo');
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.25 });
     ojo.observe(sec);
   }
 
