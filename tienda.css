@@ -281,12 +281,35 @@ body{--altoCab:0px}
    Solo opacidad y desplazamiento. NO se anima el letter-spacing ni el ancho:
    eso re-parte el texto en otros renglones mientras entra y parece parpadeo.
    La clase la pone tienda.js cuando la pieza llega a la pantalla. */
-[data-rv]{opacity:0;transform:translateY(24px);
+/* OJO: la entrada usa `translate` y NO `transform`. Son dos propiedades
+   distintas que se suman, asi que la entrada y el levantar del mouse ya no se
+   pelean por la misma. Con transform, la regla de entrada le ganaba a la del
+   hover y la tarjeta dejaba de levantarse. */
+[data-rv]{opacity:0;translate:0 24px;
           transition:opacity .75s ease var(--d,0s),
-                     transform .75s cubic-bezier(.16,1,.3,1) var(--d,0s)}
-[data-rv].vino{opacity:1;transform:none}
+                     translate .75s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+[data-rv].vino{opacity:1;translate:none}
+/* si el navegador es viejo y no entiende `translate`, nada se esconde */
+@supports not (translate:0 1px){ [data-rv]{opacity:1;translate:none} }
 @media (prefers-reduced-motion:reduce){
-  [data-rv]{opacity:1;transform:none;transition:none}
+  [data-rv]{opacity:1;translate:none;transition:none}
+}
+
+/* Las tarjetas entran con mas recorrido y, al llegar, la linea dorada se
+   dibuja sola de un lado al otro: el mismo gesto del mouse, pero de estreno.
+   Sin `forwards`, para que despues el hover siga mandando sobre la linea. */
+.nos-puntos>div[data-rv]{translate:0 38px}
+.nos-puntos>div[data-rv].vino{translate:none}
+.nos-puntos>div[data-rv].vino::after{
+  animation:barreOro 1.15s cubic-bezier(.2,.7,.2,1) calc(.30s + var(--d,0s)) backwards}
+@keyframes barreOro{
+  0%  {transform:scaleX(0);transform-origin:left}
+  52% {transform:scaleX(1);transform-origin:left}
+  53% {transform:scaleX(1);transform-origin:right}
+  100%{transform:scaleX(0);transform-origin:right}
+}
+@media (prefers-reduced-motion:reduce){
+  .nos-puntos>div[data-rv].vino::after{animation:none}
 }
 
 /* ---------- garantia ---------- */
