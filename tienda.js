@@ -101,10 +101,32 @@
     v.load();
   }
 
+  /* El titulo entra EN CASCADA: letra por letra, cada una asomando desde
+     abajo detras de una mascara, una detras de la otra. */
+  function letrasDelHero() {
+    var h = document.querySelector('.hero h1');
+    if (!h || h.dataset.listo) return;
+    var lineas = h.innerHTML.split(/<br\s*\/?>/i);
+    var n = 0;
+    h.innerHTML = lineas.map(function (linea) {
+      var palabras = linea.replace(/<[^>]+>/g, '').trim().split(/\s+/).filter(Boolean);
+      return '<span class="linea">' + palabras.map(function (pal) {
+        var letras = pal.split('').map(function (ch) {
+          var d = (0.05 + n * 0.035).toFixed(3); n++;
+          return '<span class="ltr" style="animation-delay:' + d + 's">' + ch + '</span>';
+        }).join('');
+        n += 1;   // un respiro entre palabras
+        return '<span class="pal">' + letras + '</span>';
+      }).join(' ') + '</span>';
+    }).join('');
+    h.dataset.listo = '1';
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     categorias();
     pintar('Todos');
     cabecera();
     videoHero();
+    letrasDelHero();
   });
 })();
