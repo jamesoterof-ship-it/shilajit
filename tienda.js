@@ -311,12 +311,24 @@
       k++;
     }
 
-    var pistaT = document.getElementById('reseTiraTxt');
-    if (pistaT) {
-      // se duplica el juego para que el giro no tenga costura
-      pistaT.innerHTML = turnadas.concat(turnadas).map(tarjeta).join('');
-      pistaT.style.animationDuration = Math.max(46, turnadas.length * 3.2) + 's';
+    var pista = document.getElementById('resePista');
+    if (pista) pista.innerHTML = turnadas.map(tarjeta).join('');
+
+    /* Las flechas mueven de a tres tarjetas y dan la vuelta al llegar al final,
+       para que nunca se queden sin nada que mostrar. */
+    function mover(dir) {
+      if (!pista) return;
+      var t = pista.querySelector('.rsn');
+      var paso = ((t ? t.offsetWidth : 190) + 10) * 3;
+      var max = pista.scrollWidth - pista.clientWidth;
+      var destino = pista.scrollLeft + dir * paso;
+      if (destino > max - 4) destino = 0;
+      if (destino < 0) destino = max;
+      pista.scrollTo({ left: destino, behavior: 'smooth' });
     }
+    var a = document.getElementById('reseIzq'), b = document.getElementById('reseDer');
+    if (a) a.addEventListener('click', function () { mover(-1); });
+    if (b) b.addEventListener('click', function () { mover(1); });
   }
 
   document.addEventListener('DOMContentLoaded', function () {

@@ -356,8 +356,8 @@ body{--altoCab:0px}
                 line-height:1;color:var(--negro);font-variant-numeric:tabular-nums}
 .rese-nota .est{color:var(--oro);letter-spacing:.09em;font-size:15px}
 .rese-nota .cuantas{font-size:12.5px;color:var(--suave)}
-.rese-flechas{display:none;gap:8px;flex:none}
-.rese-flechas button{width:38px;height:38px;border:1px solid var(--linea);background:#fff;
+.rese-flechas{display:flex;gap:8px;flex:none}
+.rese-flechas button{width:34px;height:34px;border:1px solid var(--linea);background:#fff;
                      cursor:pointer;display:grid;place-items:center;color:var(--negro);
                      transition:border-color .25s,background .25s,color .25s}
 .rese-flechas button:hover{border-color:var(--negro);background:var(--negro);color:#fff}
@@ -393,20 +393,14 @@ body{--altoCab:0px}
   background:linear-gradient(120deg,#EAE7E1,#F4F2EE 45%,#E4E1DB)}
 @media (min-width:900px){ .rese-fotos .fo{width:142px;height:142px} }
 
-/* ABAJO: las tarjetas con lo que escribieron. Chicas, y corriendo solas hacia
-   el OTRO lado que las fotos: asi la seccion se ve viva sin marear. */
-.rese-pista{overflow:hidden;padding:2px 0 4px;
-            -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
-            mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.rese-pista .tira{display:flex;gap:10px;width:max-content;
-                  animation:correTextos 58s linear infinite}
-.rese-pista:hover .tira,.rese-pista:active .tira{animation-play-state:paused}
-/* arranca corrida y avanza hacia la derecha: al reves que las fotos */
-@keyframes correTextos{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@media (prefers-reduced-motion:reduce){
-  .rese-pista .tira{animation:none}
-  .rese-pista{overflow-x:auto;scrollbar-width:none}
-}
+/* ABAJO: las tarjetas con lo que escribieron. Chicas y QUIETAS: solo se
+   mueven con las flechas o arrastrando. Lo unico que corre solo son las
+   fotos de arriba; dos cosas moviendose a la vez cansa la vista. */
+.rese-pista{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+            padding:2px 16px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+            scroll-behavior:smooth}
+.rese-pista::-webkit-scrollbar{display:none}
+@media (min-width:1220px){ .rese-pista{padding-left:calc(50vw - var(--maxw)/2 + 16px)} }
 
 /* Tarjetas chicas de verdad: son el coro, no el protagonista. Sin destello. */
 .rsn{flex:0 0 auto;width:186px;background:#fff;

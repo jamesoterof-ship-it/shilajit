@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=42">
+<link rel="stylesheet" href="tienda.css?v=43">
 <script>
 /* Evita el parpadeo del logo: se muestra cuando la tipografia ya cargo,
    y si tarda demasiado se muestra igual a los 400 ms. */
@@ -238,15 +238,21 @@
           <span class="cuantas" id="reseCuantas"></span>
         </div>
       </div>
+      <div class="rese-flechas">
+        <button type="button" id="reseIzq" aria-label="Ver reseñas anteriores">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" id="reseDer" aria-label="Ver más reseñas">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
     </div>
 
+    <!-- lo unico que corre solo: las fotos -->
     <div class="rese-fotos" aria-label="Fotos de clientes">
       <div class="tira" id="reseTira"></div>
     </div>
 
-    <div class="rese-pista" aria-label="Reseñas">
-      <div class="tira" id="reseTiraTxt"></div>
-    </div>
+    <!-- las tarjetas quedan quietas: se mueven con las flechas -->
+    <div class="rese-pista" id="resePista" aria-label="Reseñas"></div>
   </section>
 
   <!-- garantia: aca va el video de la pareja, que es de marca -->
@@ -343,6 +349,6 @@
 
 <script src="productos.js?v=1"></script>
 <script src="resenas.js?v=2"></script>
-<script src="tienda.js?v=42"></script>
+<script src="tienda.js?v=43"></script>
 </body>
 </html>
