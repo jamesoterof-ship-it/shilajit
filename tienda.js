@@ -46,22 +46,25 @@
     if (c) c.textContent = lista.length + (lista.length === 1 ? ' producto' : ' productos');
   }
 
+  /* Sin "Todos": al entrar se ven todos los productos y ninguna categoria
+     marcada. Se toca una para filtrar, y la marca de arriba devuelve a todos. */
   function categorias() {
-    var cats = ['Todos'];
+    var cats = [];
     (window.PRODUCTOS || []).forEach(function (p) {
       if (p.categoria && cats.indexOf(p.categoria) < 0) cats.push(p.categoria);
     });
     var cont = document.getElementById('cats');
     if (!cont) return;
-    cont.innerHTML = cats.map(function (c, i) {
-      return '<button type="button" aria-pressed="' + (i === 0) + '" data-cat="' + c + '">' + c + '</button>';
+    cont.innerHTML = cats.map(function (c) {
+      return '<button type="button" aria-pressed="false" data-cat="' + c + '">' + c + '</button>';
     }).join('');
     cont.addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
+      var yaEstaba = b.getAttribute('aria-pressed') === 'true';
       cont.querySelectorAll('button').forEach(function (x) {
-        x.setAttribute('aria-pressed', String(x === b));
+        x.setAttribute('aria-pressed', String(!yaEstaba && x === b));
       });
-      pintar(b.dataset.cat);
+      pintar(yaEstaba ? 'Todos' : b.dataset.cat);   // volver a tocarla muestra todo
     });
   }
 
