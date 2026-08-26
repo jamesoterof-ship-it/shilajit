@@ -107,25 +107,17 @@
     + '</div>';
 
   /* ---------- 4 · promocion ---------- */
-  var promo = '<section class="bloque"><h2>Elige tu pack</h2><div class="packs" id="packs">'
-    + p.packs.map(function (k, i) {
-        var o = k.antes ? Math.round((1 - k.precio / k.antes) * 100) : 0;
-        return '<button type="button" class="pack' + (i === iPop ? ' esPopular' : '') + '" aria-pressed="' + (i === elegido) + '" data-i="' + i + '">'
-          + (i === iPop ? '<span class="cinta">El más pedido</span>' : '')
-          + '<span class="marca"></span>'
-          + '<span class="qt">' + esc(k.texto) + (o ? ' · ' + o + '% menos' : '') + '</span>'
-          + '<span class="pz">' + pesos(k.precio) + '</span>'
-          + (k.antes ? '<span class="an">' + pesos(k.antes) + '</span>' : '')
-          + '</button>';
-      }).join('')
-    + '</div>'
-    + '<button class="cta rojo" style="margin-top:14px" id="btnArriba">Lo quiero, pago al recibir</button>'
+  /* Los packs viven SOLO en el formulario: arriba repetian el precio grande
+     y estorbaban. Aca queda el boton que baja al pedido. */
+  var promo = '<section class="bloque">'
+    + '<button class="cta rojo rebota" id="btnArriba">Lo quiero, pago al recibir</button>'
     + '<p class="ctaSub">Envío gratis · No pagas nada por adelantado</p></section>';
 
+
   /* ---------- 5 · descripcion ---------- */
-  var desc = '<section class="bloque desc"><h2>Qué es y para qué sirve</h2>'
+  var desc = '<section class="bloque desc" data-rv><span class="eyebrow">El producto</span><h2 class="tit2">Qué es y para qué sirve</h2>'
     + (p.desc ? '<p>' + esc(p.desc) + '</p>' : '')
-    + (p.puntos && p.puntos.length ? '<ul>' + p.puntos.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '')
+    + (p.puntos && p.puntos.length ? '<ul>' + p.puntos.map(function (x, i) { return '<li style="--i:' + i + '">' + esc(x) + '</li>'; }).join('') + '</ul>' : '')
     + '</section>';
 
   /* ---------- 6 · resenas ---------- */
@@ -133,16 +125,34 @@
   function tarjetaResena(r) {
     return '<article class="rsc"><div class="arriba">'
       + '<span class="ini">' + esc((r.nombre || '?').charAt(0)) + '</span>'
-      + '<span class="quien">' + esc(r.nombre) + '<small>' + esc(r.comuna || '') + ' · ' + esc(r.fecha || '') + '</small></span>'
+      + '<span class="quien">' + esc(r.nombre)
+      + '<i class="verif">✓ Verificado</i>'
+      + '<small>' + esc(r.comuna || '') + ' · ' + esc(r.fecha || '') + '</small></span>'
       + estrellas(r.estrellas) + '</div>'
-      + '<p>' + esc(r.texto) + '</p></article>';
+      + '<p>' + esc(r.texto) + '</p>'
+      + (r.foto ? '<img class="rfoto" src="' + esc(r.foto) + '" alt="" loading="lazy" onerror="this.remove()">' : '')
+      + '</article>';
   }
-  var resenas = '<section class="bloque" id="resenas"><h2>Lo que dicen quienes lo compraron</h2>'
-    + '<div class="estrellas" style="margin-bottom:14px">' + estrellas(prom)
-    + '<span class="cuantas">' + prom.toFixed(1) + ' de 5 · ' + mias.length + ' reseñas</span></div>'
+  /* Resenas con el molde de NAD+: puntuacion grande, barras por estrella,
+     boton de escribir, sello Verificado y carrusel automatico abajo. */
+  var barras = [5, 4, 3, 2, 1].map(function (e) {
+    var n = mias.filter(function (r) { return r.estrellas === e; }).length;
+    var pc = mias.length ? Math.round(n / mias.length * 100) : 0;
+    return '<div class="bar"><span class="lvl">' + e + ' ★</span>'
+      + '<div class="track"><i style="--w:' + pc + '%"></i></div><b>' + n + '</b></div>';
+  }).join('');
+  var resenas = '<section class="bloque rev-sec" id="resenas" data-rv>'
+    + '<h2 class="rev-title">Experiencias reales <span class="stars">★★★★★</span></h2>'
+    + '<div class="rev-score"><span class="big">' + prom.toFixed(1) + '</span>'
+    + '<span class="cnt">' + mias.length + ' reseñas</span></div>'
+    + '<div class="rev-bars">' + barras + '</div>'
+    + '<button class="btn-write" id="btnWrite">Escribir una reseña</button>'
     + '<div class="rs" id="listaRs"></div>'
     + (mias.length > VER ? '<button class="masRs" id="masRs">Ver más reseñas</button>' : '')
+    + '<p class="rev-auto-label">Más experiencias de nuestros clientes</p>'
+    + '<div class="rev-auto"><div class="rev-auto__track" id="revAuto"></div></div>'
     + '</section>';
+
 
   /* ---------- 7 · preguntas ---------- */
   var preguntas = '<section class="bloque"><h2>Preguntas frecuentes</h2><div class="fq">'
@@ -227,10 +237,10 @@
       ['$0', 'de envío, a todo Chile'],
       ['30', 'días de garantía'],
     ];
-    return '<section class="bloque res-sec"><span class="eyebrow">Resultados</span>'
+    return '<section class="bloque res-sec" data-rv><span class="eyebrow">Resultados</span>'
       + '<h2 class="tit2">Lo que ya pasó, no lo que prometemos</h2>'
       + '<div class="res-grid">'
-      + datos.map(function (d) { return '<div class="res"><b>' + d[0] + '</b><span>' + d[1] + '</span></div>'; }).join('')
+      + datos.map(function (d, i) { return '<div class="res" style="--i:' + i + '"><b data-num="' + d[0] + '">' + d[0] + '</b><span>' + d[1] + '</span></div>'; }).join('')
       + '</div></section>';
   }
 
@@ -286,22 +296,60 @@
     }).join('');
   }
 
+  /* Formulario con el molde de NAD+: una tarjeta que contiene todo, el sello
+     de pago seguro arriba, los packs con la foto del producto, el resumen de
+     cuenta y los logos de las transportadoras al final. */
+  function packsHTML() {
+    return p.packs.map(function (k, i) {
+      var o = k.antes ? Math.round((1 - k.precio / k.antes) * 100) : 0;
+      var etiqueta = i === iPop ? 'Más vendido' : (i === p.packs.length - 1 ? 'Mejor precio' : '');
+      return '<button type="button" class="pack' + (i === elegido ? ' sel' : '') + '" data-i="' + i + '">'
+        + (etiqueta ? '<span class="tag">' + etiqueta + '</span>' : '')
+        + '<span class="radio"></span>'
+        + (p.foto ? '<img class="thumb" src="' + esc(p.foto) + '" alt="" onerror="this.remove()">' : '')
+        + '<span class="info"><span class="t">' + esc(k.texto) + '</span>'
+        + (o ? '<span class="s">Ahorra ' + o + '%</span>' : '') + '</span>'
+        + '<span class="pr"><span class="n">' + pesos(k.precio) + '</span>'
+        + (k.antes ? '<span class="w">' + pesos(k.antes) + '</span>' : '') + '</span>'
+        + '</button>';
+    }).join('');
+  }
+  var kSel = p.packs[elegido];
   var formulario = '<section class="form" id="pedir"><h2>Pide el tuyo</h2>'
     + '<p class="baj">Lo despachamos hoy. Pagas cuando lo recibes.</p>'
-    + '<div class="packs enForm" id="packsForm">' + packsHTML('f') + '</div>'
-    + '<div class="resu"><div class="qq" id="resuTx">' + esc(p.nombre) + '<small id="resuPack">' + esc(kPop.texto) + '</small></div>'
-    + '<div class="pp" id="resuPz">' + pesos(kPop.precio) + '</div></div>'
+    + '<div class="formcard">'
+    + '<div class="cod-badge">'
+    + '<svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg>'
+    + ' Pago 100% seguro contra entrega</div>'
+    + '<div class="packs" id="packsForm">' + packsHTML() + '</div>'
+    + '<div class="summary">'
+    + '<div class="r"><span>Subtotal</span><span id="sumSub">' + pesos(kSel.antes || kSel.precio) + '</span></div>'
+    + '<div class="r"><span>Descuento</span><span id="sumDesc" class="desc">-' + pesos((kSel.antes || kSel.precio) - kSel.precio) + '</span></div>'
+    + '<div class="r"><span>Envío</span><span class="free">Gratis</span></div>'
+    + '<div class="r tot"><span>Total a pagar al recibir</span><span id="sumTot">' + pesos(kSel.precio) + '</span></div>'
+    + '</div>'
     + '<form id="fPedido" novalidate>'
-    + '<label for="fNombre">Nombre y apellido</label><input id="fNombre" autocomplete="name" placeholder="Tu nombre">'
-    + '<div class="dos"><div><label for="fInd">País</label><input id="fInd" value="+56" readonly></div>'
-    + '<div><label for="fTel">WhatsApp</label><input id="fTel" inputmode="numeric" autocomplete="tel" placeholder="9 1234 5678"></div></div>'
-    + '<label for="fRegion">Región</label><select id="fRegion"><option value="">Elige tu región</option></select>'
-    + '<label for="fComuna">Comuna</label><select id="fComuna"><option value="">Elige tu comuna</option></select>'
-    + '<label for="fDir">Dirección de entrega</label><input id="fDir" autocomplete="street-address" placeholder="Calle y número">'
+    + '<div class="field"><label for="fNombre">Nombre completo</label><input id="fNombre" autocomplete="name" placeholder="Ej: María González"><div class="err">Escribe tu nombre.</div></div>'
+    + '<div class="field"><label for="fTel">Celular / WhatsApp</label>'
+    + '<div class="telrow"><span class="cc-btn"><img class="cc-flag" src="https://flagcdn.com/cl.svg" alt=""><span class="cc-code">+56</span></span>'
+    + '<input id="fTel" inputmode="numeric" autocomplete="tel" placeholder="9 1234 5678"></div>'
+    + '<div class="err">Escribe un teléfono válido.</div></div>'
+    + '<div class="field"><label for="fDir">Dirección</label><input id="fDir" autocomplete="street-address" placeholder="Calle y número"><div class="err">Escribe tu dirección con número.</div></div>'
+    + '<div class="field"><label for="fRef">Referencia <span class="opc">(opcional)</span></label><input id="fRef" placeholder="Entre calles, color de casa, etc."></div>'
+    + '<div class="row2">'
+    + '<div class="field"><label for="fRegion">Región</label><select id="fRegion"><option value="">Selecciona…</option></select><div class="err">Selecciona tu región.</div></div>'
+    + '<div class="field"><label for="fComuna">Comuna</label><select id="fComuna"><option value="">Selecciona…</option></select><div class="err">Selecciona tu comuna.</div></div>'
+    + '</div>'
+    + '<div class="field"><label for="fCorreo">Correo <span class="opc">(opcional)</span></label><input id="fCorreo" type="email" inputmode="email" placeholder="Ej: maria@gmail.com"></div>'
     + '<div class="aviso" id="fErr"></div>'
-    + '<button type="submit" class="cta rojo">Confirmar mi pedido</button>'
-    + '<p class="ctaSub" style="color:#B5AE9F">Envío gratis · Pagas al recibir · Garantía de 30 días</p>'
-    + '</form></section>';
+    + '<button type="submit" class="cta rojo rebota">Comprar — pago al recibir</button>'
+    + '<p class="formnote">No pagas nada ahora. Te escribimos por WhatsApp para coordinar la entrega.</p>'
+    + '</form>'
+    + '<div class="carriers"><span class="cl">Despachamos con</span>'
+    + '<div class="cbadges"><img src="img/sello-bluexpress.webp" alt="Blue Express" onerror="this.remove()">'
+    + '<img src="img/sello-starken.webp" alt="Starken" onerror="this.remove()"></div></div>'
+    + '</div></section>';
+
 
   cont.innerHTML = '<div class="arriba2">' + galeria + cabecera + '</div>'
     + promo
@@ -338,17 +386,20 @@
     $('pcAhora').textContent = pesos(k.precio);
     if ($('pcAntes')) $('pcAntes').textContent = k.antes ? pesos(k.antes) : '';
     if ($('pcOff')) $('pcOff').textContent = o ? '-' + o + '%' : '';
-    $('resuPack').textContent = k.texto;
-    $('resuPz').textContent = pesos(k.precio);
+    if ($('sumSub')) $('sumSub').textContent = pesos(k.antes || k.precio);
+    if ($('sumDesc')) $('sumDesc').textContent = '-' + pesos((k.antes || k.precio) - k.precio);
+    if ($('sumTot')) $('sumTot').textContent = pesos(k.precio);
   }
   /* los dos selectores (el de arriba y el del formulario) se mueven juntos:
      si el cliente cambia el pack abajo, arriba tambien cambia */
   function elegirPack(i) {
     elegido = i;
-    ['packs', 'packsForm'].forEach(function (cual) {
+    ['packsForm'].forEach(function (cual) {
       var caja = $(cual); if (!caja) return;
       caja.querySelectorAll('.pack').forEach(function (x) {
-        x.setAttribute('aria-pressed', String(Number(x.dataset.i) === i));
+        var mio = Number(x.dataset.i) === i;
+        x.setAttribute('aria-pressed', String(mio));
+        x.classList.toggle('sel', mio);
       });
     });
     pintarPrecio();
@@ -462,4 +513,32 @@
     if (esperando) return; esperando = true; requestAnimationFrame(mirar);
   }, { passive: true });
   mirar();
+})();
+
+/* ---------- las secciones aparecen al llegar a ellas ----------
+   Mismo comportamiento que la tienda: nada se queda invisible. */
+function revelarFicha() {
+  var partes = document.querySelectorAll('[data-rv]:not(.vino)');
+  if (!partes.length) return;
+  if (!('IntersectionObserver' in window)) { partes.forEach(function (e) { e.classList.add('vino'); }); return; }
+  var ojo = new IntersectionObserver(function (ent) {
+    ent.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('vino'); ojo.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+  partes.forEach(function (e) { ojo.observe(e); });
+  setTimeout(function () { document.querySelectorAll('[data-rv]:not(.vino)').forEach(function (e) {
+    if (e.getBoundingClientRect().top < window.innerHeight) e.classList.add('vino'); }); }, 400);
+}
+revelarFicha();
+
+/* el carrusel de resenas: se duplica la lista para que corra sin cortes */
+(function () {
+  var t = document.getElementById('revAuto');
+  if (!t || !window.RESENAS) return;
+  var lote = window.RESENAS.slice(0, 14);
+  var uno = lote.map(function (r) {
+    return '<article class="rsc"><div class="arriba"><span class="ini">' + (r.nombre || '?').charAt(0) + '</span>'
+      + '<span class="quien">' + r.nombre + '<i class="verif">✓ Verificado</i><small>' + (r.comuna || '') + '</small></span></div>'
+      + '<p>' + r.texto + '</p></article>';
+  }).join('');
+  t.innerHTML = uno + uno;
 })();
