@@ -10,7 +10,7 @@
 (function () {
   'use strict';
 
-  var NOMBRES = [
+  var MUJERES = [
     'Camila Muñoz','Valentina Soto','Francisca Contreras','Catalina Silva','Javiera Sepúlveda',
     'Constanza Rodríguez','Fernanda Fuentes','Antonia Torres','María José Flores','Daniela Valenzuela',
     'Carolina Tapia','Josefa Gutiérrez','Paula Vargas','Andrea Núñez','Marcela Riquelme',
@@ -19,6 +19,9 @@
     'Ximena Vergara','Amanda Cisternas','Gabriela Lagos','Pamela Maturana','Nicole Fuentes',
     'Karina Poblete','Ignacia Espinoza','Alejandra Rojas','Trinidad Castillo','Paulina Herrera',
     'Florencia Reyes','Victoria Morales','Raquel Pérez','Fernanda Díaz','Montserrat Bravo',
+  ];
+
+  var HOMBRES = [
     'Rodrigo Cáceres','Matías Fuentes','Sebastián Rojas','Cristian Muñoz','Felipe Araya',
     'Nicolás Pinto','Diego Salinas','Ignacio Reyes','Gonzalo Tapia','Álvaro Méndez',
     'Patricio Soto','Marcelo Vera','Esteban Cortés','Hernán Lagos','Rubén Castillo',
@@ -149,11 +152,22 @@
       var usaGenerico = pseudo(i + 29, 7) === 0;
       var texto = usaGenerico ? GENERICOS[pseudo(i + 37, GENERICOS.length)]
                               : lista[pseudo(i + 3, lista.length)];
+      // que no salgan dos tarjetas seguidas diciendo lo mismo
+      var vuelta = 0;
+      while (out.length && out[out.length - 1].texto === texto && vuelta < lista.length) {
+        vuelta++;
+        texto = usaGenerico ? GENERICOS[(pseudo(i + 37, GENERICOS.length) + vuelta) % GENERICOS.length]
+                            : lista[(pseudo(i + 3, lista.length) + vuelta) % lista.length];
+      }
       var e = pseudo(i + 5, 22);
       var estrellas = e === 0 ? 3 : (e < 4 ? 4 : 5);
       var dia = pseudo(i + 7, 28) + 1, mes = pseudo(i + 13, 8) + 1;
+      // la mascara de pestanas la resenan mujeres: un hombre diciendo "tengo
+      // pestanas cortas" se ve falso de una
+      var soloMujer = prod.indexOf('Pestañas') >= 0;
+      var pool = soloMujer ? MUJERES : (pseudo(i + 41, 3) === 0 ? HOMBRES : MUJERES);
       out.push({
-        nombre: NOMBRES[pseudo(i + 1, NOMBRES.length)],
+        nombre: pool[pseudo(i + 1, pool.length)],
         comuna: COMUNAS[pseudo(i + 17, COMUNAS.length)],
         producto: prod,
         texto: texto,
