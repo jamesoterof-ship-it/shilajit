@@ -80,6 +80,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     categorias();
     cabecera();
-    revelar();
+    /* la ficha revela lo suyo con revelarFicha(): si revelamos aca tambien,
+       las dos se pisan y las secciones se quedan invisibles. */
   });
 })();

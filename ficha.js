@@ -519,7 +519,9 @@
    Mismo comportamiento que la tienda: nada se queda invisible. */
 function revelarFicha() {
   var partes = document.querySelectorAll('[data-rv]:not(.vino)');
-  if (!partes.length) return;
+  /* si la ficha aun no se pinto, se reintenta: antes salia de aca y las
+     secciones se quedaban invisibles para siempre */
+  if (!partes.length) { setTimeout(revelarFicha, 200); return; }
   if (!('IntersectionObserver' in window)) { partes.forEach(function (e) { e.classList.add('vino'); }); return; }
   var ojo = new IntersectionObserver(function (ent) {
     ent.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('vino'); ojo.unobserve(e.target); } });
