@@ -103,7 +103,7 @@
     + '<div class="precioTop"><span class="ahora" id="pcAhora">' + pesos(kPop.precio) + '</span>'
     + (kPop.antes ? '<span class="antes" id="pcAntes">' + pesos(kPop.antes) + '</span>' : '')
     + (off ? '<span class="off" id="pcOff">-' + off + '%</span>' : '') + '</div>'
-    + (p.nota ? '<p class="nota">' + esc(p.nota) + '</p>' : '<div style="height:10px"></div>')
+    + '<div style="height:10px"></div>'   /* la nota del pack se quito: el pack ya lo dice */
     + '</div>';
 
   /* ---------- 4 · promocion ---------- */
