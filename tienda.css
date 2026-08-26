@@ -195,10 +195,12 @@ body{--altoCab:0px}
 @media (min-width:1000px){.rejilla{grid-template-columns:repeat(4,1fr)}}
 /* opacity y translate van nombrados aca a proposito: esta ficha tambien entra
    con efecto (data-rv) y su propia transicion pisaria la de la entrada. */
-.ficha{background:#fff;padding-bottom:15px;display:flex;flex-direction:column;
-       transition:background .18s,
-                  opacity .8s ease var(--d,0s),
-                  translate .8s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+.ficha{background:#fff;padding-bottom:15px;display:flex;flex-direction:column}
+/* Doble clase a proposito: sin ella gana la regla de [data-rv] (misma fuerza,
+   escrita despues) y se pierde el suavizado del fondo al pasar el mouse. */
+.ficha[data-rv]{transition:background .18s,
+                           opacity .8s ease var(--d,0s),
+                           translate .8s cubic-bezier(.16,1,.3,1) var(--d,0s)}
 .ficha:hover{background:#FCFBFA}
 .ficha .im{aspect-ratio:1/1;background:#F2F1EE;position:relative;overflow:hidden;
            display:flex;align-items:center;justify-content:center}
