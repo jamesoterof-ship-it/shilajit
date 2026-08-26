@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=56">
+<link rel="stylesheet" href="tienda.css?v=57">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -587,6 +587,51 @@
 .res:nth-child(2n) b{background:none;color:var(--tinta)}
 .res::before{background:var(--oro)}
 .res:nth-child(2n)::before{background:var(--rojo)}
+
+
+/* --- formulario estilo Konecta ---
+   Molde: login-fx.css de Konecta. Resplandores de fondo, tarjeta con linea de
+   luz arriba, entrada suave y campos que se encienden. En dorado, no verde. */
+.form{position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 560px at 88% -12%, rgba(216,165,46,.16), transparent 55%),
+    radial-gradient(760px 500px at -8% 112%, rgba(196,18,47,.10), transparent 55%),
+    var(--hueso)}
+.form::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(125% 90% at 50% 34%, transparent 54%, rgba(23,21,15,.07))}
+.form > *{position:relative;z-index:1}
+
+.formcard{position:relative;border-radius:22px;padding:34px 26px 26px;
+  background:linear-gradient(180deg,#ffffff,#FCFAF6);
+  border:1px solid rgba(23,21,15,.08);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 40px 90px -26px rgba(23,21,15,.30),
+    0 0 90px -40px rgba(216,165,46,.55);
+  animation:form-in .55s cubic-bezier(.2,.7,.2,1) both}
+@keyframes form-in{ from{opacity:0;transform:translateY(14px) scale(.985)} to{opacity:1;transform:none} }
+/* la linea de luz de arriba, como la tarjeta de acceso de Konecta */
+.formcard::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;
+  border-radius:22px 22px 0 0;
+  background:linear-gradient(90deg,transparent,rgba(216,165,46,.85),rgba(196,18,47,.55),transparent)}
+.formcard:hover{box-shadow:
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 48px 100px -26px rgba(23,21,15,.34),
+    0 0 110px -36px rgba(216,165,46,.65)}
+
+/* los packs: se encienden como las tarjetas de Konecta */
+.form .pack{border-radius:16px;transition:.2s cubic-bezier(.2,.7,.3,1)}
+.form .pack:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(23,21,15,.22)}
+.form .pack.sel{box-shadow:0 0 0 3px rgba(196,18,47,.13), 0 10px 30px -12px rgba(196,18,47,.35)}
+
+/* los campos: borde de luz al escribir */
+.field input,.field select{border-radius:13px}
+.field input:focus,.field select:focus{border-color:var(--oro);
+  box-shadow:0 0 0 3px rgba(216,165,46,.20), 0 6px 18px -10px rgba(216,165,46,.5)}
+.summary{border-radius:15px}
+.cod-badge{border-radius:13px;
+  box-shadow:0 0 26px -14px rgba(216,165,46,.8)}
+@media (prefers-reduced-motion:reduce){ .formcard{animation:none} }
 
 @media (min-width:860px){
   .arriba2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
