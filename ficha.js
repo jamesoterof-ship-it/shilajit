@@ -46,7 +46,21 @@
   document.title = p.nombre + ' · Jaye Group Chile';
   var meta = document.querySelector('meta[name="description"]');
   if (meta && p.sub) meta.setAttribute('content', p.sub + ' · Envío gratis a todo Chile, pagas al recibir.');
-  if (p.acento) document.documentElement.style.setProperty('--acento', p.acento);
+  /* El color del producto manda en botones y secciones. Si no trae, se queda
+     el rojo de siempre. Tambien se calcula un tono mas oscuro para sombras y
+     degradados. */
+  function oscurece(hex, cuanto) {
+    var n = parseInt(String(hex).replace('#', ''), 16);
+    var r = Math.max(0, ((n >> 16) & 255) - cuanto);
+    var g = Math.max(0, ((n >> 8) & 255) - cuanto);
+    var b = Math.max(0, (n & 255) - cuanto);
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+  if (p.acento) {
+    var raiz = document.documentElement.style;
+    raiz.setProperty('--acento', p.acento);
+    raiz.setProperty('--acento2', oscurece(p.acento, 34));
+  }
 
   /* el pack destacado: el que el dueno marco como popular, o el de mejor precio por unidad */
   var iPop = (typeof p.popular === 'number' && p.packs[p.popular]) ? p.popular
