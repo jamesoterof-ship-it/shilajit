@@ -60,7 +60,14 @@
     var t = (r.producto || '').toLowerCase(), n = p.nombre.toLowerCase();
     return t && (n.indexOf(t.split(' ')[0]) >= 0 || t.indexOf(n.split(' ')[0].toLowerCase()) >= 0);
   });
-  if (mias.length < 8) mias = TODAS.slice(0, 40);          // si no calzan, se usan las generales
+  if (mias.length < 8) mias = TODAS.slice(0, 40);
+  /* sin repetir el mismo texto: salian dos resenas identicas seguidas */
+  var textos = {};
+  mias = mias.filter(function (r) {
+    var k = String(r.texto || '').trim().toLowerCase();
+    if (textos[k]) return false;
+    textos[k] = 1; return true;
+  });          // si no calzan, se usan las generales
   var prom = mias.length ? (mias.reduce(function (a, r) { return a + r.estrellas; }, 0) / mias.length) : 4.8;
   prom = Math.round(prom * 10) / 10;
 
