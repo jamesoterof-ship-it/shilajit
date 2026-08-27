@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=68">
+<link rel="stylesheet" href="tienda.css?v=69">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -597,12 +597,12 @@
 /* --- barra flotante como NAD+ ---
    La barra es TRANSPARENTE: solo flota el boton redondeado. Nada de rectangulo
    negro. El WhatsApp sube cuando la barra esta, para que no se tapen. */
-.stickycta{position:fixed;left:0;right:0;bottom:0;z-index:80;
+.stickycta{position:fixed;left:0;right:88px;bottom:0;z-index:80;
   padding:11px 16px calc(11px + env(safe-area-inset-bottom));
   background:none;pointer-events:none;
   transform:translateY(120%);transition:transform .3s ease}
 .stickycta.show{transform:none}
-.btn-flota{pointer-events:auto;width:calc(100% - 74px);border:0;cursor:pointer;
+.btn-flota{pointer-events:auto;width:100%;border:0;cursor:pointer;
   background:var(--rojo);color:#fff;border-radius:0;padding:16px 20px;
   font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;
   text-transform:uppercase;letter-spacing:.06em;font-size:15px;line-height:1.15;
@@ -610,7 +610,9 @@
 .btn-flota{animation:rebote 2.6s cubic-bezier(.28,.84,.42,1) infinite}
 .btn-flota:hover{animation-play-state:paused;transform:translateY(-2px)}
 @media (prefers-reduced-motion:reduce){ .btn-flota{animation:none} }
-body.con-barra .wa{bottom:22px}
+/* el WhatsApp siempre por encima de la barra */
+body.con-barra .wa{bottom:18px}
+.wa{z-index:120 !important}
 
 @media(min-width:860px){ .stickycta{max-width:var(--maxw);margin:0 auto} }
 
