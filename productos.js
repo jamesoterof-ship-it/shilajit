@@ -44,6 +44,7 @@
 window.PRODUCTOS = [
   {
     id: 'mascara',
+    fotosResenas: ['img/resenas-mascara/rm1.webp?v=1','img/resenas-mascara/rm2.webp?v=1','img/resenas-mascara/rm3.webp?v=1','img/resenas-mascara/rm4.webp?v=1','img/resenas-mascara/rm5.webp?v=1'],
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿Viene una sola o vienen dos?', a: 'Vienen dos. Se vende en pack de 2, no hay unidad suelta: el pedido más chico son 2 máscaras por $23.500.' },
