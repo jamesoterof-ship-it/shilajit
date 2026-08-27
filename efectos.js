@@ -66,13 +66,15 @@
   function categorias() {
     var cont = document.getElementById('cats');
     if (!cont) return;
-    var cats = ['Todos'];
+    /* En la ficha, la primera opcion lleva de vuelta a la tienda. */
+    var cats = ['Inicio', 'Todos'];
     (window.PRODUCTOS || []).forEach(function (p) {
       if (p.categoria && cats.indexOf(p.categoria) < 0) cats.push(p.categoria);
     });
     var mia = (window.PRODUCTO_ACTUAL && window.PRODUCTO_ACTUAL.categoria) || '';
     cont.innerHTML = cats.map(function (c) {
-      return '<a href="/?cat=' + encodeURIComponent(c) + '" role="button" aria-pressed="' +
+      var url = (c === 'Inicio') ? '/' : ('/?cat=' + encodeURIComponent(c));
+      return '<a href="' + url + '" role="button" aria-pressed="' +
              (c === mia) + '" data-cat="' + c + '">' + c + '</a>';
     }).join('');
   }
