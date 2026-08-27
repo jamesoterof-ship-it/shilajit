@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=61">
+<link rel="stylesheet" href="tienda.css?v=62">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -588,6 +588,17 @@
 .cmp tbody tr:hover{background:#FAF9F7}
 .cmp .si svg{stroke:#137a45}
 .cmp .no svg{stroke:#C4122F}
+
+/* --- comparativa: bordes y ultima fila ---
+   La tarjeta se inclina en 3D y al enderezarse la ultima fila quedaba cortada
+   por el overflow del contenedor. Se le da aire abajo y la ultima fila pierde
+   la linea, para que no parezca cortada. */
+.cmp-sec{padding-bottom:26px}
+.cmp{border-radius:16px}
+.cmp tbody tr:last-child td{border-bottom:0}
+.cmp tbody tr:last-child td:first-child{border-bottom-left-radius:16px}
+.cmp tbody tr:last-child td:last-child{border-bottom-right-radius:16px}
+.cmp td,.cmp th{padding:16px 14px}
 
 @media (min-width:860px){
   .arriba2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
