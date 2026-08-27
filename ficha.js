@@ -122,6 +122,13 @@
 
   /* ---------- 6 · resenas ---------- */
   var VER = 4;
+  /* Las fotos de clientes del producto se reparten entre las resenas: una de
+     cada tres lleva foto, para que se vea real y no cargado. */
+  var fotosCli = p.fotosResenas || [];
+  mias = mias.map(function (r, i) {
+    if (!fotosCli.length) return r;
+    return (i % 3 === 1) ? Object.assign({}, r, { foto: fotosCli[Math.floor(i / 3) % fotosCli.length] }) : r;
+  });
   function tarjetaResena(r) {
     return '<article class="rsc"><div class="arriba">'
       + '<span class="ini">' + esc((r.nombre || '?').charAt(0)) + '</span>'

@@ -74,6 +74,7 @@ window.PRODUCTOS = [
   },
   {
     id: 'antena',
+    fotosResenas: ["img/resenas-antena/ra1.webp","img/resenas-antena/ra2.webp","img/resenas-antena/ra3.webp","img/resenas-antena/ra4.webp","img/resenas-antena/ra5.webp","img/resenas-antena/ra6.webp","img/resenas-antena/ra7.webp","img/resenas-antena/ra8.webp","img/resenas-antena/ra9.webp","img/resenas-antena/ra10.webp"],
     formulaTitulo: "Todo lo que trae la antena.",
     formulaSub: "Base magnética, cable de 3 metros y amplificador: lo que las antenas baratas no traen.",
     formula: [["ondas","Alta definición","Capta los canales chilenos en HD, sin borrosidad."],["torre","Señal estable","Frecuencia VHF 174-230 MHz y UHF 470-862 MHz."],["iman","Base magnética","Se afirma sola donde la pongas, no se cae."],["cable","Cable de 3 metros","Llega hasta la ventana sin alargadores."],["casa","Uso interior","Living, pieza, oficina o taller."],["llave","Se instala sola","La conectas al tele, buscas canales y listo."]],
