@@ -364,7 +364,6 @@
     + sellos
     + interesar
     + formulario
-    + '<div class="stickycta" id="flota"><button class="cta rojo" onclick="document.getElementById('pedir').scrollIntoView({behavior:'smooth'})">Pedir ahora — pago contra entrega</button></div>'
     + '<a class="wa" href="https://wa.me/56964775539" target="_blank" rel="noopener" aria-label="WhatsApp">'
     + '<svg viewBox="0 0 24 24"><path d="M20.5 3.5A11 11 0 0 0 3.2 17.1L2 22l5-1.2A11 11 0 1 0 20.5 3.5zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-3 .7.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3A3 3 0 0 0 6.9 10a5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4 5.3 5.3 0 0 0 2.4.5 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.6-.3z"/></svg></a>';
 
@@ -497,23 +496,8 @@
   });
 })();
 
-/* ---------- el boton flotante aparece cuando el cliente ya bajo ----------
-   Se esconde al llegar al formulario, para no tapar el propio boton de pedido. */
-(function () {
-  var fl = document.getElementById('flota'), ped = document.getElementById('pedir');
-  if (!fl) return;
-  var esperando = false;
-  function mirar() {
-    var y = window.scrollY || 0;
-    var enForm = ped && ped.getBoundingClientRect().top < window.innerHeight * 0.9;
-    fl.classList.toggle('show', y > 420 && !enForm);
-    esperando = false;
-  }
-  window.addEventListener('scroll', function () {
-    if (esperando) return; esperando = true; requestAnimationFrame(mirar);
-  }, { passive: true });
-  mirar();
-})();
+/* El WhatsApp queda siempre visible en la esquina, como en NAD+. */
+
 
 /* ---------- las secciones aparecen al llegar a ellas ----------
    Mismo comportamiento que la tienda: nada se queda invisible. */
