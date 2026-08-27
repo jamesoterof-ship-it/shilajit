@@ -64,7 +64,12 @@
   if (p.acento) {
     var raiz = document.documentElement.style;
     raiz.setProperty('--acento', p.acento);
-    raiz.setProperty('--acento2', oscurece(p.acento, 34));
+    /* un producto puede llevar DOS colores: el principal y otro para los
+       avisos (descuento, mas vendido). Si no trae el segundo, se usa el
+       principal mas oscuro. */
+    raiz.setProperty('--acento2', p.acento2Manual || oscurece(p.acento, 34));
+    raiz.setProperty('--aviso', p.acento2Manual || p.acento);
+    raiz.setProperty('--sobreAviso', letraSobre(p.acento2Manual || p.acento));
     /* sobre un color claro (el dorado) la letra blanca no se lee: se pone negra */
     raiz.setProperty('--sobreAcento', letraSobre(p.acento));
   }

@@ -115,7 +115,8 @@ window.PRODUCTOS = [
     categoria: 'Hogar',
     foto: 'img/prod-antena.webp',
     fotos: ['img/prod-antena.webp', 'img/prod-antena-2.webp', 'img/prod-antena-3.webp', 'img/prod-antena-4.webp'],
-    acento: '#0E6B57',
+    acento: '#123C8C',      /* azul, el del creativo de la antena */
+    acento2Manual: '#C4122F',  /* y el rojo para los avisos: descuento, mas vendido */
     desc: 'Antena para televisión digital que capta los canales chilenos en alta definición, sin pagar mensualidad y sin contratos. Viene en pack de dos: una para cada televisor. Se conecta al televisor y se busca canales, sin instalación complicada.',
     puntos: [
       'Canales chilenos en HD, gratis',
