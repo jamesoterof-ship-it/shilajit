@@ -44,6 +44,7 @@
 window.PRODUCTOS = [
   {
     id: 'mascara',
+    botonAlt: '#0F0E0C',   /* dorado y negro: nada de azul */
     antesDespues: 'img/prod-mascara-3.webp?v=3',
     antesDespuesSub: 'La misma persona, el mismo día: pestañas naturales y con dos capas de Flamenco Mega Volume.',
     formulaRotulo: "La fórmula",
