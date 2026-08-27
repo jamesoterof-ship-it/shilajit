@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=67">
+<link rel="stylesheet" href="tienda.css?v=68">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -570,11 +570,9 @@
 /* --- whatsapp, boton fijo ---
    El tamano del icono dependia de '.flota .wa svg', y esa barra ya no existe:
    la regla no aplicaba y el simbolo salia gigante y negro. Aca va solo. */
-.wa{position:fixed;bottom:18px;right:18px;width:54px;height:54px;border-radius:50%;
-  background:#25d366;display:grid;place-items:center;z-index:90;
-  box-shadow:0 10px 26px rgba(37,211,102,.5);transition:transform .2s ease}
+.wa{position:fixed;bottom:18px;right:18px;width:54px;height:54px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 26px rgba(37,211,102,.5);z-index:90}
+.wa svg{width:30px;fill:#fff}
 .wa:hover{transform:scale(1.07)}
-.wa svg{width:28px;height:28px;fill:#fff;display:block}
 
 /* --- comparativa en blanco --- */
 .cmp{background:#fff;color:var(--tinta);border:1px solid var(--linea)}
@@ -613,7 +611,7 @@
 .btn-flota:hover{animation-play-state:paused;transform:translateY(-2px)}
 @media (prefers-reduced-motion:reduce){ .btn-flota{animation:none} }
 body.con-barra .wa{bottom:22px}
-.wa{z-index:95}
+
 @media(min-width:860px){ .stickycta{max-width:var(--maxw);margin:0 auto} }
 
 @media (min-width:860px){
@@ -749,6 +747,6 @@ body.con-barra .wa{bottom:22px}
 <script src="chile-regiones.js?v=1"></script>
 <script src="resenas.js?v=3"></script>
 <script src="efectos.js?v=3"></script>
-<script src="ficha.js?v=19"></script>
+<script src="ficha.js?v=20"></script>
 </body>
 </html>
