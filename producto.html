@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=60">
+<link rel="stylesheet" href="tienda.css?v=61">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -580,6 +580,15 @@
 .wa:hover{transform:scale(1.07)}
 .wa svg{width:28px;height:28px;fill:#fff;display:block}
 
+/* --- comparativa en blanco --- */
+.cmp{background:#fff;color:var(--tinta);border:1px solid var(--linea)}
+.cmp th,.cmp td{border-bottom:1px solid var(--linea)}
+.cmp thead th{color:var(--suave);background:#FAF9F7}
+.cmp thead th.us{color:var(--oro-osc)}
+.cmp tbody tr:hover{background:#FAF9F7}
+.cmp .si svg{stroke:#137a45}
+.cmp .no svg{stroke:#C4122F}
+
 @media (min-width:860px){
   .arriba2{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start;
     max-width:var(--maxw);margin:0 auto;padding:20px 16px 0}
@@ -713,6 +722,6 @@
 <script src="chile-regiones.js?v=1"></script>
 <script src="resenas.js?v=3"></script>
 <script src="efectos.js?v=3"></script>
-<script src="ficha.js?v=16"></script>
+<script src="ficha.js?v=17"></script>
 </body>
 </html>
