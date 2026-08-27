@@ -136,7 +136,7 @@
   mias = mias.map(function (r) { return Object.assign({}, r, { foto: '' }); });
   if (fotosCli.length) {
     var conFoto = mias.slice(0, fotosCli.length).map(function (r, i) {
-      return Object.assign({}, r, { foto: fotosCli[i] });
+      return Object.assign({}, r, { foto: fotosCli[i] });   /* nunca se repite una foto: una por resena, en orden */
     });
     mias = conFoto.concat(mias.slice(fotosCli.length));
   }
