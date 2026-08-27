@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=77">
+<link rel="stylesheet" href="tienda.css?v=78">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -96,9 +96,12 @@
 @media (prefers-reduced-motion:reduce){ .pack.esPopular .pz{animation:none;color:var(--rojo)} }
 
 /* ---- botones que empujan la venta (rojo y azul, solo en esta pagina) ---- */
-.cta{display:block;width:100%;border:0;cursor:pointer;text-align:center;text-decoration:none;
+/* Todos los botones con la MISMA medida que el flotante de abajo:
+   misma letra, mismo espaciado y el mismo ancho maximo. */
+.cta{display:block;width:100%;max-width:520px;margin-left:auto;margin-right:auto;
+  border:0;cursor:pointer;text-align:center;text-decoration:none;
   font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
-  letter-spacing:.08em;font-size:17px;padding:16px;position:relative;overflow:hidden;
+  letter-spacing:.06em;font-size:15px;line-height:1.15;padding:16px 20px;position:relative;overflow:hidden;
   transition:transform .16s ease, box-shadow .16s ease}
 .cta:hover{transform:translateY(-2px)}
 .cta:active{transform:translateY(0)}
