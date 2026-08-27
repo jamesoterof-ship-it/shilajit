@@ -122,13 +122,17 @@
 
   /* ---------- 6 · resenas ---------- */
   var VER = 4;
-  /* Las fotos de clientes del producto se reparten entre las resenas: una de
-     cada tres lleva foto, para que se vea real y no cargado. */
+  /* Las resenas CON FOTO del producto van primero: son las que dan confianza.
+     Se quita la foto generica que traia resenas.js (esas son de la tienda) y
+     se usan solo las del producto. */
   var fotosCli = p.fotosResenas || [];
-  mias = mias.map(function (r, i) {
-    if (!fotosCli.length) return r;
-    return (i % 3 === 1) ? Object.assign({}, r, { foto: fotosCli[Math.floor(i / 3) % fotosCli.length] }) : r;
-  });
+  mias = mias.map(function (r) { return Object.assign({}, r, { foto: '' }); });
+  if (fotosCli.length) {
+    var conFoto = mias.slice(0, fotosCli.length).map(function (r, i) {
+      return Object.assign({}, r, { foto: fotosCli[i] });
+    });
+    mias = conFoto.concat(mias.slice(fotosCli.length));
+  }
   function tarjetaResena(r) {
     return '<article class="rsc"><div class="arriba">'
       + '<span class="ini">' + esc((r.nombre || '?').charAt(0)) + '</span>'
