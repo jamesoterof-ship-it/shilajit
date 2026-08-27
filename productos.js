@@ -44,6 +44,8 @@
 window.PRODUCTOS = [
   {
     id: 'mascara',
+    antesDespues: 'img/prod-mascara-3.webp?v=3',
+    antesDespuesSub: 'La misma persona, el mismo día: pestañas naturales y con dos capas de Flamenco Mega Volume.',
     formulaRotulo: "La fórmula",
     formulaTitulo: "Fibras que construyen volumen real.",
     formulaSub: "Microfibras y cepillo separador: el combo que las máscaras comunes no tienen.",
@@ -55,8 +57,8 @@ window.PRODUCTOS = [
     categoria: 'Belleza',
     etiqueta: 'Más vendido',
     etiquetaOro: true,
-    foto: 'img/prod-mascara.webp',
-    fotos: ['img/prod-mascara.webp', 'img/prod-mascara-2.webp', 'img/prod-mascara-3.webp'],
+    foto: 'img/prod-mascara.webp?v=3',
+    fotos: ['img/prod-mascara.webp?v=3','img/prod-mascara-2.webp?v=3','img/prod-mascara-3.webp?v=3','img/prod-mascara-4.webp?v=3','img/prod-mascara-5.webp?v=3','img/prod-mascara-6.webp?v=3'],
     acento: '#D8A52E',   /* dorado y negro, como la marca de la mascara */
     desc: 'La Máscara Flamenco Mega Volume trae fibras que se pegan a la pestaña y la alargan y engrosan, y el cepillo las separa una por una, así que da volumen real sin grumos ni pestañas pegadas. Es a prueba de agua, o sea que aguanta el día entero sin correrse. Todo eso sin extensiones ni postizas.',
     puntos: [
