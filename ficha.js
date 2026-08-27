@@ -226,7 +226,7 @@
   };
   function seccionFormula() {
     if (!p.formula || !p.formula.length) return '';
-    return '<section class="bloque form-sec"><span class="eyebrow">La fórmula</span>'
+    return '<section class="bloque form-sec" data-rv><span class="eyebrow">' + esc(p.formulaRotulo || 'Qué incluye') + '</span>'
       + '<h2 class="tit2">' + esc(p.formulaTitulo || 'Qué trae') + '</h2>'
       + (p.formulaSub ? '<p class="sub2">' + esc(p.formulaSub) + '</p>' : '')
       + '<div class="ing-grid">'

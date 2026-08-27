@@ -17,6 +17,7 @@
 window.PRODUCTOS = [
   {
     id: 'mascara',
+    formulaRotulo: "La fórmula",
     formulaTitulo: "Fibras que construyen volumen real.",
     formulaSub: "Microfibras y cepillo separador: el combo que las máscaras comunes no tienen.",
     formula: [["fibra","Microfibras de volumen","Se pegan a cada pestaña y la alargan de verdad."],["cepillo","Cepillo separador","Peina pestaña por pestaña, sin grumos."],["agua","A prueba de agua","Aguanta el día entero sin correrse."],["ojo","Negro intenso","Pigmento profundo que engruesa la mirada."],["pluma","Ligera","Da volumen sin apelmazar ni pesar."],["llave","Sale con agua tibia","Sin desmaquillantes especiales."]],
@@ -47,6 +48,7 @@ window.PRODUCTOS = [
   },
   {
     id: 'lentes',
+    formulaRotulo: "La óptica",
     formulaTitulo: "Un solo par para todo el día.",
     formulaSub: "Óptica flexible que se ajusta sola a lo que estés mirando.",
     formula: [["ojo","Óptica flexible","Se ajusta sola a lo que mires, de cerca o de lejos."],["libro","Para leer","El celular, el diario, la receta del remedio."],["auto","Para manejar","La tele y la calle, sin cambiar de anteojos."],["pluma","Armazón liviano","No pesa ni deja marca en la nariz."],["llave","Sin receta médica","Rango de 0,5 a 2,75 aumentos."],["casa","Uno en cada parte","Por eso el pack de 2 es el que más piden."]],
@@ -74,6 +76,7 @@ window.PRODUCTOS = [
   },
   {
     id: 'antena',
+    formulaRotulo: "Qué incluye",
     fotosResenas: ["img/resenas-antena/ra4.webp?v=4","img/resenas-antena/ra6.webp?v=4","img/resenas-antena/ra3.webp?v=4","img/resenas-antena/ra8.webp?v=4","img/resenas-antena/ra7.webp?v=4","img/resenas-antena/ra5.webp?v=4","img/resenas-antena/ra9.webp?v=4","img/resenas-antena/ra10.webp?v=4","img/resenas-antena/ra2.webp?v=4","img/resenas-antena/ra1.webp?v=4"],
     formulaTitulo: "Todo lo que trae la antena.",
     formulaSub: "Base magnética, cable de 3 metros y amplificador: lo que las antenas baratas no traen.",
@@ -103,6 +106,7 @@ window.PRODUCTOS = [
   },
   {
     id: 'cargador',
+    formulaRotulo: "Cómo funciona",
     formulaTitulo: "No solo carga: repara.",
     formulaSub: "Manda pulsos que limpian las placas sulfatadas y devuelven la carga.",
     formula: [["rayo","Repara la batería","Pulsos que limpian las placas sulfatadas."],["auto","Auto, moto y lancha","De 4Ah a 100Ah, camioneta incluida."],["pantalla","Pantalla digital","Ves la carga en todo momento."],["llave","Se apaga solo","Lo dejas conectado tranquilo."],["casa","Enchufe de casa","No necesita taller ni mecánico."],["escudo","Te ahorra la batería nueva","En vez de comprar otra."]],
@@ -131,6 +135,7 @@ window.PRODUCTOS = [
   },
   {
     id: 'foco',
+    formulaRotulo: "Qué incluye",
     formulaTitulo: "Alumbra y espanta.",
     formulaSub: "77 leds con forma de cámara de seguridad, sin cables ni electricista.",
     formula: [["sol","Energía solar","Se carga de día y alumbra de noche."],["ojo","Sensor de movimiento","Se enciende solo cuando alguien pasa."],["escudo","Parece una cámara","Espanta a quien se acerque."],["agua","Resistente al agua","Aguanta la lluvia afuera."],["llave","Control remoto","Incluido, para manejarlo desde adentro."],["casa","10 minutos","Se atornilla a la pared y listo."]],
