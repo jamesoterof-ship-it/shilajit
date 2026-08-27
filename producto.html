@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=86">
+<link rel="stylesheet" href="tienda.css?v=87">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -58,8 +58,17 @@
 .prod .sub{color:var(--suave);font-size:15px;margin:0 0 14px}
 .prod .nota{font-size:13px;color:var(--oro-osc);font-weight:700;margin:0 0 16px}
 .precioTop{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 4px}
+/* el precio late y cambia de color */
 .precioTop .ahora{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;
-  font-size:34px;line-height:1;font-variant-numeric:tabular-nums;color:var(--tinta)}
+  font-size:34px;line-height:1;font-variant-numeric:tabular-nums;color:var(--tinta);
+  display:inline-block;transform-origin:left center;
+  animation:latePrecio 2.2s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes latePrecio{
+  0%,100%{ transform:scale(1);    color:var(--tinta) }
+  45%    { transform:scale(1.09); color:var(--rojo) }
+  60%    { transform:scale(1.02); color:var(--rojo) }
+}
+@media (prefers-reduced-motion:reduce){ .precioTop .ahora{animation:none} }
 .precioTop .antes{font-size:15px;color:#A29C90;text-decoration:line-through}
 .precioTop .off{background:var(--rojo);color:#fff;font-family:'Barlow Condensed','Inter',sans-serif;
   font-weight:700;font-size:12px;letter-spacing:.06em;padding:3px 8px;text-transform:uppercase}
