@@ -42,7 +42,10 @@
     return;
   }
 
-  window.PRODUCTO_ACTUAL = p;   // lo usa efectos.js para marcar la categoria
+  window.PRODUCTO_ACTUAL = p;
+  /* pixel: que Meta sepa que producto se vio y con que precio */
+  if (window.fbq) try { fbq('track','ViewContent',{ content_name:p.nombre, content_type:'product',
+    content_ids:[p.id], value:p.packs[0].precio, currency:'CLP' }); } catch (e) {}   // lo usa efectos.js para marcar la categoria
   document.title = p.nombre + ' · Jaye Group Chile';
   var meta = document.querySelector('meta[name="description"]');
   if (meta && p.sub) meta.setAttribute('content', p.sub + ' · Envío gratis a todo Chile, pagas al recibir.');
@@ -463,6 +466,14 @@
   }
   /* los dos selectores (el de arriba y el del formulario) se mueven juntos:
      si el cliente cambia el pack abajo, arriba tambien cambia */
+  var _ic = false;
+  function _checkout() { if (_ic || !window.fbq) return; _ic = true;
+    try { fbq('track','InitiateCheckout',{ content_name:p.nombre, content_ids:[p.id],
+      value:p.packs[elegido].precio, currency:'CLP' }); } catch (e) {}
+  }
+  var _form = document.getElementById('pedir');
+  if (_form && 'IntersectionObserver' in window)
+    new IntersectionObserver(function (es, o) { if (es.some(function (x) { return x.isIntersecting; })) { _checkout(); o.disconnect(); } }).observe(_form);
   function elegirPack(i) {
     elegido = i;
     ['packsForm'].forEach(function (cual) {
