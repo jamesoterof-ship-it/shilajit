@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=66">
+<link rel="stylesheet" href="tienda.css?v=67">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -291,10 +291,8 @@
 /* alternado: dorado y rojo, para que no sea todo dorado */
 .res::before{content:'';position:absolute;inset:0 0 auto;height:3px;
   background:linear-gradient(90deg,var(--oro),transparent)}
-.res:nth-child(2n)::before{background:linear-gradient(90deg,var(--rojo),transparent)}
 .res b{background:linear-gradient(180deg,var(--oro),var(--oro-osc));-webkit-background-clip:text;
   background-clip:text;color:transparent}
-.res:nth-child(2n) b{background:linear-gradient(180deg,#E23A52,var(--rojo));-webkit-background-clip:text;background-clip:text}
 
 /* 3 · DESCRIPCION: los puntos entran uno tras otro */
 .desc li{opacity:0;transform:translateX(-14px);transition:.5s cubic-bezier(.2,.7,.3,1)}
@@ -564,9 +562,7 @@
 
 /* Resultados: un solo tono para el numero; solo el filete alterna */
 .res b{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--tinta)}
-.res:nth-child(2n) b{background:none;color:var(--tinta)}
 .res::before{background:var(--oro)}
-.res:nth-child(2n)::before{background:var(--rojo)}
 
 
 }
