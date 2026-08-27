@@ -84,7 +84,9 @@
   var iPop = (typeof p.popular === 'number' && p.packs[p.popular]) ? p.popular
     : p.packs.reduce(function (mejor, k, i) {
         return (k.precio / k.cant) < (p.packs[mejor].precio / p.packs[mejor].cant) ? i : mejor; }, 0);
-  var elegido = iPop;
+  /* Arranca elegido el pack de entrada, no el mas pedido: el precio grande
+     de arriba tiene que ser el mas barato, no el mas caro. */
+  var elegido = 0;
 
   /* ---------- resenas de ESTE producto ---------- */
   var TODAS = window.RESENAS || [];
@@ -132,7 +134,7 @@
       : '');
 
   /* ---------- 2 y 3 · estrellas, precio y nombre ---------- */
-  var kPop = p.packs[iPop];
+  var kPop = p.packs[elegido];
   var off = kPop.antes ? Math.round((1 - kPop.precio / kPop.antes) * 100) : 0;
   var cabecera = '<div class="datos">'
     + '<div class="estrellas">' + estrellas(prom)
@@ -206,7 +208,7 @@
 
   /* ---------- 7 · preguntas ---------- */
   var preguntas = '<section class="bloque"><h2>Preguntas frecuentes</h2><div class="fq">'
-    + (window.PREGUNTAS || []).map(function (x) {
+    + (p.preguntas ? p.preguntas.concat((window.PREGUNTAS || []).slice(0, 4)) : (window.PREGUNTAS || [])).map(function (x) {
         return '<details><summary>' + esc(x.q) + '</summary><p>' + esc(x.a) + '</p></details>'; }).join('')
     + '</div>'
     + '<a class="cta azul" href="#pedir" style="margin-top:18px">Pedir el mío ahora</a>'

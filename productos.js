@@ -44,6 +44,14 @@
 window.PRODUCTOS = [
   {
     id: 'mascara',
+    /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
+    preguntas: [
+      { q: '¿Viene una sola o vienen dos?', a: 'Vienen dos. Se vende en pack de 2, no hay unidad suelta: el pedido más chico son 2 máscaras por $23.500.' },
+      { q: '¿Hace grumos?', a: 'No. El cepillo peina pestaña por pestaña, así que no quedan grumos ni pestañas pegadas.' },
+      { q: '¿Se corre si lloro o me mojo?', a: 'No. Es a prueba de agua: aguanta lluvia, lágrimas y el día completo sin correrse.' },
+      { q: '¿Sirve si tengo las pestañas cortas?', a: 'Sí. Las microfibras se pegan a cada pestaña y la alargan y engrosan, sin extensiones ni postizas.' },
+      { q: '¿Cómo se saca?', a: 'Con agua tibia. No necesitas desmaquillante especial.' },
+    ],
     botonAlt: '#0F0E0C',   /* dorado y negro: nada de azul */
     antesDespues: 'img/prod-mascara-3.webp?v=3',
     antesDespuesSub: 'La misma persona, el mismo día: pestañas naturales y con dos capas de Flamenco Mega Volume.',
@@ -78,6 +86,13 @@ window.PRODUCTOS = [
   },
   {
     id: 'lentes',
+    /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
+    preguntas: [
+      { q: '¿Necesito receta médica?', a: 'No. No necesitas receta ni examen: te los pones y ves.' },
+      { q: '¿Con un solo par veo de cerca y de lejos?', a: 'Sí. La óptica flexible se ajusta sola a lo que estés mirando: lees el celular y también ves la tele o manejas con el mismo par.' },
+      { q: '¿Qué aumento traen?', a: 'Van de 0,5 a 2,75 aumentos.' },
+      { q: '¿Pesan o molestan?', a: 'No. El armazón es liviano, se usan todo el día sin molestia.' },
+    ],
     formulaRotulo: "La óptica",
     formulaTitulo: "Un solo par para todo el día.",
     formulaSub: "Óptica flexible que se ajusta sola a lo que estés mirando.",
@@ -106,6 +121,13 @@ window.PRODUCTOS = [
   },
   {
     id: 'antena',
+    /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
+    preguntas: [
+      { q: '¿Hay que pagar mensualidad?', a: 'No. Los canales chilenos se ven gratis, sin mensualidad y sin contrato.' },
+      { q: '¿Viene una o vienen dos?', a: 'Vienen dos, una para cada televisor. Es el pack del proveedor, no hay unidad suelta.' },
+      { q: '¿Es difícil de instalar?', a: 'No. Se conecta al televisor, buscas canales y listo. La base es magnética y se afirma sola.' },
+      { q: '¿Dónde la pongo?', a: 'Donde entre mejor la señal, normalmente cerca de una ventana. Por eso el cable es de 3 metros.' },
+    ],
     formulaRotulo: "Qué incluye",
     fotosResenas: ["img/resenas-antena/ra4.webp?v=4","img/resenas-antena/ra6.webp?v=4","img/resenas-antena/ra3.webp?v=4","img/resenas-antena/ra8.webp?v=4","img/resenas-antena/ra7.webp?v=4","img/resenas-antena/ra5.webp?v=4","img/resenas-antena/ra9.webp?v=4","img/resenas-antena/ra10.webp?v=4","img/resenas-antena/ra2.webp?v=4","img/resenas-antena/ra1.webp?v=4"],
     formulaTitulo: "Todo lo que trae la antena.",
@@ -137,6 +159,13 @@ window.PRODUCTOS = [
   },
   {
     id: 'cargador',
+    /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
+    preguntas: [
+      { q: '¿De verdad repara la batería?', a: 'Sí. Manda pulsos que limpian las placas sulfatadas para que la batería vuelva a tomar carga, así te ahorras comprar una nueva.' },
+      { q: '¿Para qué vehículos sirve?', a: 'Auto, moto, camioneta y lancha, de 4Ah a 100Ah.' },
+      { q: '¿Hay que estar pendiente mientras carga?', a: 'No. Tiene pantalla digital y se apaga solo cuando termina, así que lo dejas conectado tranquilo.' },
+      { q: '¿Es una batería portátil?', a: 'No. Funciona conectado a la corriente.' },
+    ],
     formulaRotulo: "Cómo funciona",
     formulaTitulo: "No solo carga: repara.",
     formulaSub: "Manda pulsos que limpian las placas sulfatadas y devuelven la carga.",
@@ -166,6 +195,13 @@ window.PRODUCTOS = [
   },
   {
     id: 'foco',
+    /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
+    preguntas: [
+      { q: '¿Sube la cuenta de la luz?', a: 'No. Funciona con energía solar: se carga de día y alumbra de noche, sin cables y sin electricista.' },
+      { q: '¿Es una cámara de verdad?', a: 'No. Es un foco con forma de cámara: no graba ni tiene video. Alumbra, y como parece una cámara también sirve para espantar a quien se acerque.' },
+      { q: '¿Aguanta la lluvia?', a: 'Sí. Es resistente al agua, está hecho para usarse afuera.' },
+      { q: '¿Se enciende solo?', a: 'Sí. Tiene sensor de movimiento que lo prende cuando alguien pasa, y además trae control remoto.' },
+    ],
     formulaRotulo: "Qué incluye",
     formulaTitulo: "Alumbra y espanta.",
     formulaSub: "77 leds con forma de cámara de seguridad, sin cables ni electricista.",
