@@ -14,6 +14,33 @@
    fotos: la primera es la de la tarjeta en la tienda; las demas arman la
    galeria de la ficha. Si un archivo no existe, la galeria lo salta sola.
    ============================================================ */
+/* ============================================================
+   REGLA FIJA · ESTA ESTRUCTURA NO SE CAMBIA
+
+   Todos los productos usan el MISMO molde de pagina. Lo unico que se puede
+   cambiar por producto son los COLORES (de botones y secciones) y el
+   contenido de aca abajo. La estructura, el orden de las secciones y el
+   formulario se quedan igual para todos.
+
+   Orden de la ficha, para cualquier producto:
+     galeria · estrellas · precio y nombre · boton
+     que incluye · el cambio · resultados · que lo hace diferente
+     descripcion · resenas · garantia 30 dias · preguntas
+     con quien se despacha · tambien te puede interesar · formulario
+     + boton flotante y WhatsApp
+
+   Para agregar un producto nuevo: se copia un bloque de abajo y se cambian
+   sus datos. Hereda toda la pagina solo.
+
+   Campos por producto:
+     id, nombre, sub, categoria, foto, fotos[]      lo basico
+     acento                                          su color
+     desc, puntos[]                                  descripcion
+     formulaRotulo, formulaTitulo, formulaSub, formula[]
+     comparaTitulo, compara[]                        la tabla
+     fotosResenas[]                                  fotos de clientes
+     packs[], popular                                precios
+   ============================================================ */
 window.PRODUCTOS = [
   {
     id: 'mascara',
