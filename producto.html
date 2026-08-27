@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="tienda.css?v=71">
+<link rel="stylesheet" href="tienda.css?v=75">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -271,8 +271,8 @@
 /* boton flotante: aparece al bajar */
   padding:11px 14px calc(11px + env(safe-area-inset-bottom));
   background:linear-gradient(to top,rgba(15,14,12,.92),rgba(15,14,12,0));
-  transform:translateY(120%);transition:transform .3s ease;pointer-events:none}
-  display:grid;place-items:center;box-shadow:0 6px 18px rgba(37,211,102,.4)}
+  transform:translateY(120%);transition:transform .3s ease;pointer-events:none
+  display:grid;place-items:center;box-shadow:0 6px 18px rgba(37,211,102,.4)
 
 
 /* --- v2 --- */
@@ -423,7 +423,7 @@
 .cbadges img{height:24px;opacity:1;filter:none;object-fit:contain}
 
 /* 8 · el flotante: el WhatsApp separado y alineado */
-  transition:transform .2s ease}
+  transition:transform .2s ease
 
 
 /* --- efectos tabla y formulario --- */
@@ -476,9 +476,9 @@
 /* El WhatsApp seguia pegado al boton rojo y el degradado lo cortaba. Ahora la
    barra tiene fondo propio, el boton no se estira hasta el borde y el
    WhatsApp queda separado y completo. */
-  padding:14px 16px calc(14px + env(safe-area-inset-bottom));gap:14px;align-items:center}
+  padding:14px 16px calc(14px + env(safe-area-inset-bottom));gap:14px;align-items:center
   display:grid;place-items:center;box-shadow:0 6px 20px rgba(37,211,102,.5), 0 0 0 4px rgba(15,14,12,.9);
-  transition:transform .2s ease}
+  transition:transform .2s ease
 
 /* las tarjetas del carrusel: mas chicas y que no se corten */
 .rev-auto{padding:4px 0 10px}
@@ -565,7 +565,7 @@
 .res::before{background:var(--oro)}
 
 
-}
+
 
 /* --- whatsapp, boton fijo ---
    El tamano del icono dependia de '.flota .wa svg', y esa barra ya no existe:
