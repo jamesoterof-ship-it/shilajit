@@ -57,7 +57,7 @@ window.PRODUCTOS = [
     etiquetaOro: true,
     foto: 'img/prod-mascara.webp',
     fotos: ['img/prod-mascara.webp', 'img/prod-mascara-2.webp', 'img/prod-mascara-3.webp'],
-    acento: '#B3123C',
+    acento: '#D8A52E',   /* dorado y negro, como la marca de la mascara */
     desc: 'La Máscara Flamenco Mega Volume trae fibras que se pegan a la pestaña y la alargan y engrosan, y el cepillo las separa una por una, así que da volumen real sin grumos ni pestañas pegadas. Es a prueba de agua, o sea que aguanta el día entero sin correrse. Todo eso sin extensiones ni postizas.',
     puntos: [
       'Fibras que alargan y engrosan la pestaña',

@@ -49,6 +49,11 @@
   /* El color del producto manda en botones y secciones. Si no trae, se queda
      el rojo de siempre. Tambien se calcula un tono mas oscuro para sombras y
      degradados. */
+  function letraSobre(hex) {
+    var n = parseInt(String(hex).replace('#', ''), 16);
+    var luz = (((n >> 16) & 255) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000;
+    return luz > 150 ? '#171510' : '#fff';
+  }
   function oscurece(hex, cuanto) {
     var n = parseInt(String(hex).replace('#', ''), 16);
     var r = Math.max(0, ((n >> 16) & 255) - cuanto);
@@ -60,6 +65,8 @@
     var raiz = document.documentElement.style;
     raiz.setProperty('--acento', p.acento);
     raiz.setProperty('--acento2', oscurece(p.acento, 34));
+    /* sobre un color claro (el dorado) la letra blanca no se lee: se pone negra */
+    raiz.setProperty('--sobreAcento', letraSobre(p.acento));
   }
 
   /* el pack destacado: el que el dueno marco como popular, o el de mejor precio por unidad */
