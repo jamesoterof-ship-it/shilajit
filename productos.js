@@ -130,7 +130,7 @@ window.PRODUCTOS = [
     popular: 1,
   },
   {
-    id: 'antena', unidad: 'una', promo: 2, iconoClaro: true,   /* su azul es muy oscuro: circulo blanco con borde azul */
+    id: 'antena', unidad: 'una', promo: 2,
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿Hay que pagar mensualidad?', a: 'No. Los canales chilenos se ven gratis, sin mensualidad y sin contrato.' },
@@ -208,6 +208,9 @@ window.PRODUCTOS = [
   },
   {
     id: 'foco', unidad: 'uno', promo: 3,
+    fotosResenas: ['img/resenas-foco/rf1.webp?v=1','img/resenas-foco/rf2.webp?v=1','img/resenas-foco/rf3.webp?v=1','img/resenas-foco/rf4.webp?v=1','img/resenas-foco/rf5.webp?v=1','img/resenas-foco/rf6.webp?v=1','img/resenas-foco/rf7.webp?v=1','img/resenas-foco/rf8.webp?v=1','img/resenas-foco/rf9.webp?v=1'],
+    antesDespues: 'img/prod-foco-ba.webp?v=1',
+    antesDespuesSub: 'El mismo camino, la misma noche: a oscuras y con el foco encendido por el sensor.',
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿Sube la cuenta de la luz?', a: 'No. Funciona con energía solar: se carga de día y alumbra de noche, sin cables y sin electricista.' },
@@ -224,9 +227,9 @@ window.PRODUCTOS = [
     nombre: 'Foco Solar Tipo Cámara',
     sub: '77 leds, sensor de movimiento y control remoto',
     categoria: 'Hogar',
-    foto: 'img/prod-foco.webp',
+    foto: 'img/prod-foco.webp?v=1',
     fotos: ['img/prod-foco.webp', 'img/prod-foco-2.webp', 'img/prod-foco-3.webp'],
-    acento: '#C4122F',   /* rojo, como lo pidio el dueno */
+    acento: '#E0734D',   /* salmon, medido de sus propios creativos */
     desc: 'Es un foco solar LED con forma de cámara de seguridad. Tiene 77 leds, sensor de movimiento que lo enciende solo cuando alguien pasa, control remoto incluido, y es resistente al agua para usar afuera. Funciona con energía solar: se carga de día y alumbra de noche, sin cables, sin electricista y sin subir la cuenta de la luz. Como parece una cámara de verdad, también sirve para espantar a quien se acerque. Ideal para patio, entrada, bodega, taller o parcela. Se instala en 10 minutos: se atornilla a la pared y listo.',
     puntos: [
       '77 leds y sensor de movimiento',
