@@ -519,6 +519,13 @@
     + '<div class="aviso" id="fErr"></div>'
     + '<button type="submit" class="cta rojo rebota">Comprar — pago al recibir</button>'
     + '<p class="formnote">No pagas nada ahora. Te escribimos por WhatsApp para coordinar la entrega.</p>'
+    /* Salida para el que se traba llenando el formulario. Hoy 6 personas
+       llegaron hasta aca en la ficha de la ducha y solo 1 lo mando: si algo
+       no les calza —su comuna no aparece, la direccion no se la acepta— no
+       tenian a donde ir y se iban. */
+    + '<p class="formnote ayuda">¿Se te complica llenarlo? '
+    + '<a href="https://wa.me/56964775539?text=' + encodeURIComponent('Hola, quiero pedir ' + p.nombre + ' y se me complica el formulario')
+    + '" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> y te lo tomamos nosotros.</p>'
     + '</form>'
     + '<div class="carriers"><span class="cl">Despachamos con</span>'
     + '<div class="cbadges"><img src="img/sello-bluexpress.webp" alt="Blue Express" onerror="this.remove()">'
@@ -800,6 +807,11 @@
          candado de precios no la podia validar. Se mandan los dos. */
       producto: p.nombre, total: k.precio, precio: k.precio, cantidad: k.cant,
       direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
+      /* La referencia y el correo se le pedian al cliente y se tiraban a la
+         basura: no viajaban en el pedido. La referencia es justo lo que el
+         transportista necesita en direcciones de campo, y el flujo que guarda
+         ya sabe pegarla a la direccion. */
+      referencia: g('fRef'), correo: g('fCorreo'),
       /* el DESPACHO sigue siendo Chile; `pais` es el del numero, para que
          Camila le escriba al indicativo correcto */
       origen: 'ficha', pais: paisCod, pais_despacho: 'CL',

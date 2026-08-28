@@ -522,6 +522,9 @@
 .cc-lista span{flex:1}
 .cc-lista i{font-style:normal;color:var(--suave);font-variant-numeric:tabular-nums}
 .formnote{text-align:center;color:#8A8272;font-size:12.5px;margin-top:11px}
+/* la salida por WhatsApp para el que se traba llenando el formulario */
+.formnote.ayuda{margin-top:6px}
+.formnote.ayuda a{color:var(--acento);font-weight:700;text-decoration:underline;text-underline-offset:2px}
 .carriers{text-align:center;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.10)}
 .carriers .cl{display:block;color:#8A8272;font-size:12.5px;margin-bottom:9px}
 .cbadges{display:flex;gap:16px;justify-content:center;align-items:center}
@@ -968,10 +971,10 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
   </footer>
 
 <script src="productos.js?v=32"></script>
-<script src="chile-regiones.js?v=1"></script>
+<script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=6"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha.js?v=50"></script>
+<script src="ficha.js?v=51"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->
