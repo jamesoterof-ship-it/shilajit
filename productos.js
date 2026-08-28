@@ -43,11 +43,11 @@
    ============================================================ */
 window.PRODUCTOS = [
   {
-    id: 'mascara', unidad: 'una', promo: 4,
+    id: 'mascara', unidad: 'una', promo: 2,
     fotosResenas: ['img/resenas-mascara/rm1.webp?v=1','img/resenas-mascara/rm2.webp?v=1','img/resenas-mascara/rm3.webp?v=1','img/resenas-mascara/rm4.webp?v=1','img/resenas-mascara/rm5.webp?v=1'],
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
-      { q: '¿Viene una sola o vienen dos?', a: 'Vienen dos. Se vende en pack de 2, no hay unidad suelta: el pedido más chico son 2 máscaras por $23.500.' },
+      { q: '¿Puedo llevar una sola?', a: 'Sí. Una máscara sale $18.500. Pero el pack de 2 queda en $23.500, o sea que la segunda te sale por $5.000 más: por eso es el que más piden.' },
       { q: '¿Hace grumos?', a: 'No. El cepillo peina pestaña por pestaña, así que no quedan grumos ni pestañas pegadas.' },
       { q: '¿Se corre si lloro o me mojo?', a: 'No. Es a prueba de agua: aguanta lluvia, lágrimas y el día completo sin correrse.' },
       { q: '¿Sirve si tengo las pestañas cortas?', a: 'Sí. Las microfibras se pegan a cada pestaña y la alargan y engrosan, sin extensiones ni postizas.' },
@@ -78,12 +78,14 @@ window.PRODUCTOS = [
       'Sin extensiones ni postizas',
     ],
     packs: [
+      /* la unidad suelta SI existe: Dropi 156533 (VENTMAR), el mismo proveedor
+         que el pack de 2. Antes creiamos que solo venia en pack. */
+      { cant: 1, precio: 18500, antes: 27000, texto: '1 unidad' },
       { cant: 2, precio: 23500, antes: 35000, texto: '2 unidades' },
       { cant: 4, precio: 34900, antes: 47000, texto: '4 unidades' },
       { cant: 6, precio: 44900, antes: 70500, texto: '6 unidades' },
     ],
     popular: 2,
-    nota: 'Viene en pack de 2. No hay unidad suelta.',
   },
   {
     id: 'lentes', unidad: 'par', promo: 2,
