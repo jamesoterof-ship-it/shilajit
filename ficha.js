@@ -92,12 +92,12 @@
        principal mas oscuro. */
     raiz.setProperty('--acento2', p.acento2Manual || oscurece(p.acento, 34));
     raiz.setProperty('--aviso', p.acento2Manual || p.acento);
-    /* El segundo boton: cada producto puede darle su color. Sin campo,
-       se queda el azul que trae el css. */
-    if (p.botonAlt) {
-      raiz.setProperty('--cta2', p.botonAlt);
-      raiz.setProperty('--sobreCta2', letraSobre(p.botonAlt));
-    }
+    /* El segundo boton. Si el producto no trae color propio se usa EL SUYO,
+       no el azul fijo del css: en el foco (salmon) salia un boton azul que
+       no pintaba nada. La mascara si trae el suyo, negro. */
+    var alt = p.botonAlt || p.acento;
+    raiz.setProperty('--cta2', alt);
+    raiz.setProperty('--sobreCta2', letraSobre(alt));
     raiz.setProperty('--sobreAviso', letraSobre(p.acento2Manual || p.acento));
     /* sobre un color claro (el dorado) la letra blanca no se lee: se pone negra */
     raiz.setProperty('--sobreAcento', letraSobre(p.acento));
