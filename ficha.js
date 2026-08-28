@@ -65,6 +65,25 @@
   }
 
   window.PRODUCTO_ACTUAL = p;
+
+  /* El panel de Jaye (visitas y conversion) lee de Postgres y muestra sola
+     cualquier pagina que reporte. La tienda nueva no reportaba nada, por eso
+     no aparecia. Se reporta igual que las landings viejas, pero con un slug
+     por producto para que cada uno tenga su propia fila. */
+  window.avisarPanel = function (tipo) {
+    try {
+      fetch('https://n8n-production-8a42.up.railway.app/webhook/track-visita', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pagina: 'tienda-' + p.id, producto: p.nombre, tipo: tipo }),
+      }).catch(function () {});
+    } catch (e) {}
+  };
+  /* una visita por sesion y por producto: si recarga, no cuenta de nuevo */
+  try {
+    var clave = 'jaye_vis_' + p.id;
+    if (!sessionStorage.getItem(clave)) { sessionStorage.setItem(clave, '1'); window.avisarPanel('visita'); }
+  } catch (e) { window.avisarPanel('visita'); }
+
   /* pixel: que Meta sepa que producto se vio y con que precio */
   if (window.fbq) try { fbq('track','ViewContent',{ content_name:p.nombre, content_type:'product',
     content_ids:[p.id], value:p.packs[0].precio, currency:'CLP' }); } catch (e) {}   // lo usa efectos.js para marcar la categoria
@@ -615,7 +634,12 @@
   /* los dos selectores (el de arriba y el del formulario) se mueven juntos:
      si el cliente cambia el pack abajo, arriba tambien cambia */
   var _ic = false;
-  function _checkout() { if (_ic || !window.fbq) return; _ic = true;
+  /* El aviso al panel va PRIMERO y aparte del pixel: antes todo esto se cortaba
+     con un `!window.fbq`, asi que a quien tuviera bloqueador de anuncios no se
+     le contaba ni la llegada al formulario. El panel es dato propio, no Meta. */
+  function _checkout() { if (_ic) return; _ic = true;
+    if (window.avisarPanel) window.avisarPanel('visita_form');
+    if (!window.fbq) return;
     try { fbq('track','InitiateCheckout',{ content_name:p.nombre, content_ids:[p.id],
       value:p.packs[elegido].precio, currency:'CLP' }); } catch (e) {}
   }

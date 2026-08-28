@@ -27,6 +27,14 @@
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','1249894010361489');
 fbq('track','PageView');
+/* La portada tambien cuenta en el panel de Jaye, con su propia fila
+   ("tienda-portada"), para saber cuanta gente entra a la tienda y no
+   directo a un producto. Una por sesion, como en las landings viejas. */
+try{ if(!sessionStorage.getItem('jaye_vis_portada')){ sessionStorage.setItem('jaye_vis_portada','1');
+  fetch('https://n8n-production-8a42.up.railway.app/webhook/track-visita',{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({pagina:'tienda-portada',producto:'Tienda Jaye Group',tipo:'visita'})}).catch(function(){});
+}}catch(e){}
 </script>
 </head>
 <body>
