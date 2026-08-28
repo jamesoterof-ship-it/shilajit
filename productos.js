@@ -87,9 +87,13 @@ window.PRODUCTOS = [
   },
   {
     id: 'lentes',
+    fotosResenas: ['img/resenas-lentes/rl1.webp?v=1','img/resenas-lentes/rl2.webp?v=1','img/resenas-lentes/rl3.webp?v=1','img/resenas-lentes/rl4.webp?v=1','img/resenas-lentes/rl5.webp?v=1'],
+    antesDespues: 'img/prod-lentes-ba.webp?v=1',
+    antesDespuesSub: 'La misma persona, el mismo libro: forzando la vista y leyendo tranquilo con los One Power.',
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿Necesito receta médica?', a: 'No. No necesitas receta ni examen: te los pones y ves.' },
+      { q: 'Tengo astigmatismo, ¿me sirven?', a: 'Te lo decimos derecho: no. Son lentes de aumento para vista cansada, no corrigen astigmatismo ni reemplazan unos lentes con fórmula. Si tienes receta médica, lo correcto es mandarla a hacer.' },
       { q: '¿Con un solo par veo de cerca y de lejos?', a: 'Sí. La óptica flexible se ajusta sola a lo que estés mirando: lees el celular y también ves la tele o manejas con el mismo par.' },
       { q: '¿Qué aumento traen?', a: 'Van de 0,5 a 2,75 aumentos.' },
       { q: '¿Pesan o molestan?', a: 'No. El armazón es liviano, se usan todo el día sin molestia.' },
@@ -103,9 +107,12 @@ window.PRODUCTOS = [
     nombre: 'Lentes One Power',
     sub: 'Un solo par para ver de cerca y de lejos',
     categoria: 'Salud',
-    foto: 'img/prod-lentes.webp',
-    fotos: ['img/prod-lentes.webp', 'img/prod-lentes-2.webp', 'img/prod-lentes-3.webp'],
-    acento: '#1B4FA8',
+    foto: 'img/prod-lentes.webp?v=1',
+    fotos: ['img/prod-lentes.webp?v=1','img/prod-lentes-2.webp?v=1','img/prod-lentes-3.webp?v=1','img/prod-lentes-4.webp?v=1','img/prod-lentes-5.webp?v=1'],
+    /* turquesa medido de la caja OnePower (#01B3AC). Solo pinta ESTE producto:
+       los colores base de la landing no se tocan. */
+    acento: '#01B3AC',
+    botonAlt: '#0B3B39',
     desc: 'Los Lentes One Power tienen óptica flexible que se ajusta sola a lo que estés mirando, así que con un solo par ves de cerca para leer o el celular, y de lejos para la tele o manejar. Se acabó el andar con dos anteojos encima. Rango de 0,5 a 2,75 aumentos, armazón liviano y sin receta médica.',
     puntos: [
       'Óptica flexible: se ajusta sola a lo que miras',

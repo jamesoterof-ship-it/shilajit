@@ -274,7 +274,8 @@
       + '</div></section>';
   }
 
-  /* ---------- 6 · EL CAMBIO (solo si hay foto de antes y despues) ---------- */
+  /* ---------- EL CAMBIO · antes y despues (va antes de las preguntas) ----------
+     Solo aparece si el producto tiene foto de antes y despues. */
   function seccionCambio() {
     if (!p.antesDespues) return '';
     return '<section class="bloque ba-sec"><span class="eyebrow">El cambio</span>'
@@ -409,12 +410,14 @@
   cont.innerHTML = '<div class="arriba2">' + galeria + cabecera + '</div>'
     + promo
     + seccionFormula()
-    + seccionCambio()
     + seccionResultados()
     + seccionCompara()
     + desc
     + resenas
     + seccionGarantia()
+    /* El antes y despues va SIEMPRE justo antes de las preguntas frecuentes:
+       el cliente ya leyo las resenas y la garantia, ve el cambio y ahi decide. */
+    + seccionCambio()
     + preguntas
     + sellos
     + interesar
