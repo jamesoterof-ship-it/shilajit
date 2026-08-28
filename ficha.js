@@ -87,9 +87,11 @@
   var iPop = (typeof p.popular === 'number' && p.packs[p.popular]) ? p.popular
     : p.packs.reduce(function (mejor, k, i) {
         return (k.precio / k.cant) < (p.packs[mejor].precio / p.packs[mejor].cant) ? i : mejor; }, 0);
-  /* Arranca elegido el pack de entrada, no el mas pedido: el precio grande
-     de arriba tiene que ser el mas barato, no el mas caro. */
-  var elegido = 0;
+  /* El precio grande de arriba es SIEMPRE el PACK DE 2 (regla del dueno).
+     La unidad suelta no desaparece: sigue estando en el formulario, abajo.
+     Si un producto no tuviera pack de 2, se cae al primero de la escalera. */
+  var iDos = p.packs.findIndex(function (k) { return k.cant === 2; });
+  var elegido = iDos >= 0 ? iDos : 0;
 
   /* ---------- resenas de ESTE producto ---------- */
   var TODAS = window.RESENAS || [];
