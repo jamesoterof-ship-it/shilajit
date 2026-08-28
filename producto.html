@@ -757,6 +757,14 @@ body.con-barra .wa{bottom:72px}
    azul y no se leia. Que siga a --sobreAcento, que ficha.js calcula segun
    si el color es claro u oscuro. */
 .prod .form .pack:last-child .tag{ color:var(--sobreAcento,#fff) }
+/* Los circulos de la formula eran negros con el icono en --oro, que aqui ya
+   es el color del producto: con el dorado se veia, pero con un acento oscuro
+   no. El azul de la antena quedaba en 2.05 de contraste sobre el negro.
+   Ahora el circulo lleva el color del producto (mismo degradado) y el icono
+   va con la letra que contrasta. */
+.prod .ing .cir{
+  background:linear-gradient(140deg,var(--acento),color-mix(in srgb,var(--acento) 74%,#000)) }
+.prod .ing .cir svg{ stroke:var(--sobreAcento,#fff) }
 /* estos traian el dorado escrito a mano (rgba 216,165,46) y no seguian a --oro */
 .prod .packs.enForm .pack[aria-pressed="true"],
 .prod .form .pack.sel{ background:color-mix(in srgb, var(--acento) 10%, transparent) }
