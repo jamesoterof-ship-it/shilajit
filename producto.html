@@ -581,7 +581,9 @@
 
 /* Resultados: un solo tono para el numero; solo el filete alterna */
 .res b{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--tinta)}
-.res::before{background:var(--oro)}
+/* Las 4 tarjetas llevan SIEMPRE el color del boton del producto (--acento).
+   Antes una si y una no salian en dorado fijo y quedaban de dos colores. */
+.res::before{background:var(--acento)}
 
 
 
@@ -663,7 +665,6 @@ body.con-barra .wa{bottom:72px}
 .field input:focus,.field select:focus{border-color:var(--acento);
   box-shadow:0 0 0 3px color-mix(in srgb, var(--acento) 16%, transparent)}
 .formcard::before{background:linear-gradient(90deg,transparent,var(--oro),var(--acento),transparent)}
-.res:nth-child(2n)::before{background:var(--acento)}
 .desc p{border-left-color:var(--acento)}
 .cmp thead th.us{color:var(--acento2)}
 
