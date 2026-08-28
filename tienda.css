@@ -202,7 +202,31 @@ body{--altoCab:0px}
 @media (min-width:1000px){.rejilla{grid-template-columns:repeat(4,1fr)}}
 /* opacity y translate van nombrados aca a proposito: esta ficha tambien entra
    con efecto (data-rv) y su propia transicion pisaria la de la entrada. */
-.ficha{background:#fff;padding-bottom:15px;display:flex;flex-direction:column}
+.ficha{background:#fff;padding-bottom:15px;display:flex;flex-direction:column;
+  position:relative}
+
+/* TODA la tarjeta lleva al producto: un enlace estirado por encima. Va debajo
+   del boton en la pila (z-index) para que el boton siga siendo el boton. */
+.ficha .tapa{position:absolute;inset:0;z-index:1}
+.ficha .btn{position:relative;z-index:2}
+
+/* al pasar por encima la tarjeta se levanta un poco; el dedo en celular
+   dispara :active, asi que ahi se hunde en vez de levantarse */
+.ficha{transition:transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s ease}
+.ficha:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(15,14,12,.10)}
+.ficha:active{transform:translateY(0) scale(.995)}
+
+/* la nota de las resenas dentro de la tarjeta */
+.ficha .nota{display:flex;align-items:center;gap:6px;margin:0 0 9px}
+.ficha .nota .est{display:inline-flex;gap:1px}
+.ficha .nota svg{width:13px;height:13px;fill:#DCD8D0}
+.ficha .nota svg.on{fill:var(--oro)}
+.ficha .nota b{font-size:12.5px;color:var(--negro);font-variant-numeric:tabular-nums}
+.ficha .nota small{font-size:12px;color:var(--suave)}
+
+@media (prefers-reduced-motion:reduce){
+  .ficha:hover,.ficha:active{transform:none}
+}
 /* Doble clase a proposito: sin ella gana la regla de [data-rv] (misma fuerza,
    escrita despues) y se pierde el suavizado del fondo al pasar el mouse. */
 .ficha[data-rv]{transition:background .18s,

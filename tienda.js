@@ -14,19 +14,55 @@
     return (p.packs || []).every(function (k) { return lista.indexOf(k.precio) >= 0; });
   }
 
+  /* La nota y cuantas resenas tiene ESTE producto. Se filtra igual que en la
+     ficha, para que la tienda y la ficha digan el mismo numero: si el cliente
+     ve 4,8 y 163 aca y otra cosa alla, deja de creer en las dos. */
+  function notaDe(p) {
+    var todas = window.RESENAS || [];
+    var mias = todas.filter(function (r) {
+      var t = (r.producto || '').toLowerCase(), n = p.nombre.toLowerCase();
+      return t && (n.indexOf(t.split(' ')[0]) >= 0 || t.indexOf(n.split(' ')[0].toLowerCase()) >= 0);
+    });
+    if (mias.length < 8) return null;
+    var suma = mias.reduce(function (a, r) { return a + (Number(r.estrellas) || 5); }, 0);
+    return { n: mias.length, prom: (suma / mias.length).toFixed(1) };
+  }
+
+  function estrellitas(prom) {
+    var llenas = Math.round(Number(prom));
+    var s = '';
+    for (var i = 1; i <= 5; i++) {
+      s += '<svg viewBox="0 0 24 24" class="' + (i <= llenas ? 'on' : '') + '">'
+        + '<path d="M12 2l2.9 6.2 6.6.9-4.8 4.7 1.2 6.7L12 17.3 6.1 20.5l1.2-6.7L2.5 9.1l6.6-.9z"/></svg>';
+    }
+    return s;
+  }
+
   function tarjeta(p) {
     var barato = p.packs.reduce(function (a, b) { return b.precio < a.precio ? b : a; });
+    var nota = notaDe(p);
+    var estr = nota
+      ? '<div class="nota"><span class="est">' + estrellitas(nota.prom) + '</span>'
+        + '<b>' + nota.prom + '</b><small>' + nota.n + ' reseñas</small></div>'
+      : '';
     var et = p.etiqueta
       ? '<span class="et' + (p.etiquetaOro ? ' oro' : '') + '">' + p.etiqueta + '</span>'
       : '';
     var img = p.foto
       ? '<img src="' + p.foto + '" alt="' + p.nombre + '" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'vacio\',textContent:\'' + p.nombre.charAt(0) + '\'}))">'
       : '<span class="vacio">' + p.nombre.charAt(0) + '</span>';
+    /* TODA la tarjeta lleva al producto, no solo la foto y el boton. Antes, si
+       el cliente tocaba el nombre o el precio, no pasaba nada.
+       Se hace con un enlace estirado por encima (.tapa): asi el area que
+       responde es la tarjeta entera y el boton sigue siendo un boton de
+       verdad para el lector de pantalla. */
     return '<article class="ficha" data-cat="' + p.categoria + '" data-rv>'
-      + '<a class="im" href="producto.html?p=' + p.id + '">' + et + img + '</a>'
+      + '<a class="tapa" href="producto.html?p=' + p.id + '" aria-label="Ver ' + p.nombre + '"></a>'
+      + '<span class="im">' + et + img + '</span>'
       + '<div class="cuerpo">'
       + '<h3>' + p.nombre + '</h3>'
       + '<p class="sub">' + p.sub + '</p>'
+      + estr
       + '<div class="precio"><b>' + pesos(barato.precio) + '</b>'
       + (barato.antes ? '<s>' + pesos(barato.antes) + '</s>' : '') + '</div>'
       + '</div>'
