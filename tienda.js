@@ -61,8 +61,10 @@
       + '<span class="im">' + et + img + '</span>'
       + '<div class="cuerpo">'
       + '<h3>' + p.nombre + '</h3>'
-      + '<p class="sub">' + p.sub + '</p>'
+      /* la nota va pegada al NOMBRE, no debajo de la descripcion: es lo
+         primero que mira el cliente despues de leer que es el producto */
       + estr
+      + '<p class="sub">' + p.sub + '</p>'
       + '<div class="precio"><b>' + pesos(barato.precio) + '</b>'
       + (barato.antes ? '<s>' + pesos(barato.antes) + '</s>' : '') + '</div>'
       + '</div>'
