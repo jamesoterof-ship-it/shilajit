@@ -535,14 +535,25 @@
     var gal = document.querySelector('.gal');
     if (!gal) return;
 
-    var reloj = null, parado = false;
+    var reloj = null, parado = false, siesta = null;
     function arrancar() { if (parado || reloj) return; reloj = setInterval(function () { mover(1); }, 4500); }
     function parar() { if (reloj) { clearInterval(reloj); reloj = null; } }
-    function pararSiempre() { parado = true; parar(); }
 
-    ['click', 'pointerdown', 'touchstart'].forEach(function (ev) {
-      gal.addEventListener(ev, pararSiempre, { passive: true });
+    /* Se para PARA SIEMPRE solo si el cliente usa los controles: flechas,
+       puntos o miniaturas. Ahi esta eligiendo foto y no se le puede quitar.
+       OJO: antes se paraba con cualquier touchstart sobre la galeria, y en
+       celular la gente arrastra el dedo sobre la foto PARA HACER SCROLL —
+       con eso la rotacion se moria al primer deslizamiento. */
+    gal.addEventListener('click', function (e) {
+      if (e.target.closest('.flecha, .puntos button, .miniz button')) { parado = true; parar(); }
     });
+    /* si solo esta tocando la foto, se toma una siesta y vuelve */
+    gal.addEventListener('touchstart', function () {
+      if (parado) return;
+      parar();
+      clearTimeout(siesta);
+      siesta = setTimeout(arrancar, 8000);
+    }, { passive: true });
 
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (ent) {

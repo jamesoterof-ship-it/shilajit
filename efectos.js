@@ -66,8 +66,9 @@
   function categorias() {
     var cont = document.getElementById('cats');
     if (!cont) return;
-    /* En la ficha, la primera opcion lleva de vuelta a la tienda. */
-    var cats = ['Inicio', 'Todos'];
+    /* "Inicio" NO va aca: ya esta abajo, en el encabezado, a la izquierda del
+       logo. Repetirlo ocupa sitio y confunde. */
+    var cats = ['Todos'];
     (window.PRODUCTOS || []).forEach(function (p) {
       if (p.categoria && cats.indexOf(p.categoria) < 0) cats.push(p.categoria);
     });
