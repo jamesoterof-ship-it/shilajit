@@ -47,7 +47,7 @@ window.PRODUCTOS = [
     fotosResenas: ['img/resenas-mascara/rm1.webp?v=1','img/resenas-mascara/rm2.webp?v=1','img/resenas-mascara/rm3.webp?v=1','img/resenas-mascara/rm4.webp?v=1','img/resenas-mascara/rm5.webp?v=1'],
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
-      { q: '¿Viene una sola o vienen dos?', a: 'Vienen dos. El pedido más chico son 2 máscaras por $23.500.' },
+      { q: '¿Puedo llevar una sola?', a: 'Sí, una máscara sale $18.500. Pero el pack de 2 queda en $23.500: la segunda te sale por $5.000 más, por eso es el que más piden.' },
       { q: '¿Hace grumos?', a: 'No. El cepillo peina pestaña por pestaña, así que no quedan grumos ni pestañas pegadas.' },
       { q: '¿Se corre si lloro o me mojo?', a: 'No. Es a prueba de agua: aguanta lluvia, lágrimas y el día completo sin correrse.' },
       { q: '¿Sirve si tengo las pestañas cortas?', a: 'Sí. Las microfibras se pegan a cada pestaña y la alargan y engrosan, sin extensiones ni postizas.' },
@@ -78,10 +78,9 @@ window.PRODUCTOS = [
       'Sin extensiones ni postizas',
     ],
     packs: [
-      /* La unidad suelta existe en Dropi (156533, VENTMAR, $2.500) pero el
-         montaje todavia NO sabe elegirla: manda siempre el pack 149702, asi
-         que un pedido de 1 saldria con DOS mascaras. Se vuelve a poner
-         apenas el montaje elija el id por cantidad. */
+      /* El montaje ya elige el id por cantidad: 1 -> 156533 ($2.500),
+         2/4/6 -> 149702 (pack de 2, $3.500, mas barato que dos sueltas). */
+      { cant: 1, precio: 18500, antes: 27000, texto: '1 unidad' },
       { cant: 2, precio: 23500, antes: 35000, texto: '2 unidades' },
       { cant: 4, precio: 34900, antes: 47000, texto: '4 unidades' },
       { cant: 6, precio: 44900, antes: 70500, texto: '6 unidades' },
@@ -131,11 +130,11 @@ window.PRODUCTOS = [
     popular: 1,
   },
   {
-    id: 'antena', unidad: 'una', promo: 4,
+    id: 'antena', unidad: 'una', promo: 2,
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿Hay que pagar mensualidad?', a: 'No. Los canales chilenos se ven gratis, sin mensualidad y sin contrato.' },
-      { q: '¿Viene una o vienen dos?', a: 'Vienen dos, una para cada televisor. Es el pack del proveedor, no hay unidad suelta.' },
+      { q: '¿Puedo llevar una sola?', a: 'Sí, una antena sale $18.500. El pack de 2 queda en $24.500: la segunda te sale por $6.000 más y dejas una en cada televisor.' },
       { q: '¿Es difícil de instalar?', a: 'No. Se conecta al televisor, buscas canales y listo. La base es magnética y se afirma sola.' },
       { q: '¿Dónde la pongo?', a: 'Donde entre mejor la señal, normalmente cerca de una ventana. Por eso el cable es de 3 metros.' },
     ],
@@ -161,9 +160,12 @@ window.PRODUCTOS = [
       'Se conecta y buscas canales, listo',
     ],
     packs: [
+      /* la antena SI se vende suelta: Dropi 32763 ($2.000), mismo proveedor.
+         Los packs no dan descuento (145445 vale el doble, 86375 el triple),
+         pero se montan igual para que vaya en menos bultos. */
+      { cant: 1, precio: 18500, antes: 27000, texto: '1 antena' },
       { cant: 2, precio: 24500, antes: 39000, texto: '2 antenas' },
-      { cant: 4, precio: 34500, antes: 56000, texto: '4 antenas' },
-      { cant: 6, precio: 44500, antes: 78000, texto: '6 antenas' },
+      { cant: 3, precio: 29500, antes: 48000, texto: '3 antenas' },
     ],
     popular: 0,
     nota: 'Viene en pack del proveedor. No hay unidad suelta.',
