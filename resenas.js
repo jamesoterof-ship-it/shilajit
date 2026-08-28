@@ -283,6 +283,15 @@
   /* Numeros fijos, no al azar: si cambian en cada visita se nota y se ve mal. */
   function pseudo(i, m) { return (i * 2654435761 % 4294967296) % m; }
 
+  /* Fotos de clientes de la PAGINA PRINCIPAL. Son las de img/resenas/ y no
+     tienen nada que ver con las fotos de cada producto (fotosResenas): esas
+     son otras y van en la ficha. Se reparten entre las resenas: no todas
+     llevan foto, igual que en la vida real.
+     Estaban asignadas y se quedaron en blanco al regenerar las resenas; sin
+     una sola foto la tira de la principal pinta 24 circulos vacios. */
+  var FOTOS = ['r1','r2','r3','r4','r5','r6','r7','r8','r9','r10','r11','r12','r13','r14','r15']
+    .map(function (n) { return 'img/resenas/' + n + '.webp'; });
+
   /* Cuantas lleva cada uno y que porcentaje de cuatro estrellas.
      Nunca menos de 150 ni nota bajo 4.8, pero NO todos el mismo numero: cinco
      productos con 150 clavado y la misma nota se ve armado. `cuatros` es
@@ -330,7 +339,7 @@
           texto: texto,
           estrellas: estrellas,
           fecha: String(dia).padStart(2, '0') + '/' + String(mes).padStart(2, '0') + '/2026',
-          foto: ''
+          foto: pseudo(s + 19, 4) === 0 ? FOTOS[pseudo(s + 23, FOTOS.length)] : ''
         });
       }
     });
