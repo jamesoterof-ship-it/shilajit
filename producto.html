@@ -840,8 +840,17 @@ body.con-barra .wa{bottom:72px}
 <!-- Meta Pixel: el mismo de las landings (Jaye Hogar) -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','1249894010361489');
-fbq('track','PageView');
+/* El pixel SOLO en la tienda de verdad. Cuando la pagina se abre desde otro
+   lado —una copia local, una revision, una vista previa— tambien disparaba
+   eventos, y esos entraban a Meta como si fueran clientes: el 28-08 hubo 72
+   eventos desde localhost que ensuciaron el conteo de compras y el
+   aprendizaje de las campañas. */
+if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayegroup.com.co') {
+  fbq('init','1249894010361489');
+  fbq('track','PageView');
+} else {
+  window.fbq = function () {};   // fuera de la tienda no se manda nada
+}
 </script>
 </head>
 <body>
