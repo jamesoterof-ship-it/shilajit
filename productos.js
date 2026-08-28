@@ -78,9 +78,10 @@ window.PRODUCTOS = [
       'Sin extensiones ni postizas',
     ],
     packs: [
-      /* la unidad suelta SI existe: Dropi 156533 (VENTMAR), el mismo proveedor
-         que el pack de 2. Antes creiamos que solo venia en pack. */
-      { cant: 1, precio: 18500, antes: 27000, texto: '1 unidad' },
+      /* La unidad suelta existe en Dropi (156533, VENTMAR, $2.500) pero el
+         montaje todavia NO sabe elegirla: manda siempre el pack 149702, asi
+         que un pedido de 1 saldria con DOS mascaras. Se vuelve a poner
+         apenas el montaje elija el id por cantidad. */
       { cant: 2, precio: 23500, antes: 35000, texto: '2 unidades' },
       { cant: 4, precio: 34900, antes: 47000, texto: '4 unidades' },
       { cant: 6, precio: 44900, antes: 70500, texto: '6 unidades' },
