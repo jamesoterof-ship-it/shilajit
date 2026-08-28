@@ -253,8 +253,9 @@
   var barras = [5, 4, 3, 2, 1].map(function (e) {
     var n = mias.filter(function (r) { return r.estrellas === e; }).length;
     var pc = mias.length ? Math.round(n / mias.length * 100) : 0;
+    /* la barra se llena con scaleX, asi que va la fraccion (0 a 1), no el % */
     return '<div class="bar"><span class="lvl">' + e + ' ★</span>'
-      + '<div class="track"><i style="--w:' + pc + '%"></i></div><b>' + n + '</b></div>';
+      + '<div class="track"><i style="--p:' + (pc / 100) + '"></i></div><b>' + n + '</b></div>';
   }).join('');
   var resenas = '<section class="bloque rev-sec" id="resenas" data-rv>'
     + '<h2 class="rev-title">Experiencias reales <span class="stars">★★★★★</span></h2>'
