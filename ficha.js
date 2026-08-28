@@ -781,6 +781,20 @@
     }).then(gracias).catch(gracias);   // el pedido igual queda: no se le muestra un error al cliente
 
     function gracias() {
+      /* La COMPRA. La pagina disparaba PageView, ViewContent e InitiateCheckout
+         pero nunca Purchase, y las campañas a la web optimizan justo a Purchase:
+         Meta no tenia con que aprender. Se dispara una sola vez, aca, que es el
+         unico punto donde el pedido ya salio. */
+      if (window.fbq && !window._compraEnviada) {
+        window._compraEnviada = true;
+        try {
+          fbq('track', 'Purchase', {
+            value: k.precio, currency: 'CLP',
+            content_name: p.nombre, content_ids: [p.id],
+            content_type: 'product', num_items: k.cant,
+          });
+        } catch (e) { /* que un bloqueador de anuncios no tumbe la confirmacion */ }
+      }
       $('pedir').innerHTML = '<div class="listo"><h3>Pedido recibido</h3>'
         + '<p>Gracias, ' + esc(g('fNombre').split(' ')[0]) + '. Te escribimos por WhatsApp al ' + esc(indic) + ' ' + esc(tel)
         + ' para confirmar el despacho.<br>Pagas cuando lo recibes.</p></div>';
