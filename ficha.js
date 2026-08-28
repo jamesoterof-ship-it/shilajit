@@ -15,6 +15,28 @@
   'use strict';
 
   var $ = function (id) { return document.getElementById(id); };
+
+  /* Paises para el indicativo del WhatsApp. Chile primero porque es donde
+     despachamos, y detras los de la region y los que mas migracion tienen
+     aca: hay clientes que viven en Chile con numero de su pais y antes no
+     podian pedir, porque el +56 estaba pintado y no se podia cambiar.
+       [codigo, indicativo, largo esperado del numero, nombre]
+     El largo se usa para avisar, no para bloquear: los formatos cambian y
+     no se le va a negar una venta a alguien por eso. */
+  var PAISES = [
+    ['CL', '+56',  9, 'Chile'],
+    ['VE', '+58', 10, 'Venezuela'],
+    ['CO', '+57', 10, 'Colombia'],
+    ['PE', '+51',  9, 'Perú'],
+    ['BO', '+591', 8, 'Bolivia'],
+    ['AR', '+54', 10, 'Argentina'],
+    ['EC', '+593', 9, 'Ecuador'],
+    ['BR', '+55', 11, 'Brasil'],
+    ['HT', '+509', 8, 'Haití'],
+    ['MX', '+52', 10, 'México'],
+    ['ES', '+34',  9, 'España'],
+    ['US', '+1',  10, 'Estados Unidos'],
+  ];
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (m) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]; }); };
   var pesos = function (n) { return '$' + Number(n).toLocaleString('es-CL'); };
@@ -447,8 +469,19 @@
     + '</div>'
     + '<form id="fPedido" novalidate>'
     + '<div class="field"><label for="fNombre">Nombre completo</label><input id="fNombre" autocomplete="name" placeholder="Ej: María González"><div class="err">Escribe tu nombre.</div></div>'
+    /* El indicativo era una bandera pintada, no se podia cambiar. Hay clientes
+       que viven en Chile con numero de otro pais, y no podian pedir. Ahora es
+       un selector de verdad; Chile queda elegido por defecto. */
     + '<div class="field"><label for="fTel">Celular / WhatsApp</label>'
-    + '<div class="telrow"><span class="cc-btn"><img class="cc-flag" src="https://flagcdn.com/cl.svg" alt=""><span class="cc-code">+56</span></span>'
+    + '<div class="telrow"><span class="cc-btn">'
+    + '<img class="cc-flag" id="ccFlag" src="https://flagcdn.com/cl.svg" alt="">'
+    + '<span class="cc-code" id="ccCode">+56</span>'
+    + '<select id="fPais" aria-label="País del número">'
+    + PAISES.map(function (x) {
+        return '<option value="' + x[0] + '|' + x[1] + '|' + x[2] + '"' + (x[0] === 'CL' ? ' selected' : '') + '>'
+          + esc(x[3]) + ' (' + x[1] + ')</option>';
+      }).join('')
+    + '</select></span>'
     + '<input id="fTel" inputmode="numeric" autocomplete="tel" placeholder="9 1234 5678"></div>'
     + '<div class="err">Escribe un teléfono válido.</div></div>'
     + '<div class="field"><label for="fDir">Dirección</label><input id="fDir" autocomplete="street-address" placeholder="Calle y número"><div class="err">Escribe tu dirección con número.</div></div>'
@@ -613,6 +646,16 @@
     setInterval(tic, 1000);
   })();
 
+  /* al cambiar de pais: cambia la BANDERA y el indicativo que se ve, y el
+     ejemplo del campo, para que el cliente sepa como escribir su numero */
+  if ($('fPais')) $('fPais').addEventListener('change', function () {
+    var z = this.value.split('|');
+    if ($('ccFlag')) $('ccFlag').src = 'https://flagcdn.com/' + z[0].toLowerCase() + '.svg';
+    if ($('ccCode')) $('ccCode').textContent = z[1];
+    var largo = Number(z[2]) || 9;
+    if ($('fTel')) $('fTel').placeholder = new Array(largo + 1).join('0').replace(/^0/, '9');
+  });
+
   /* el boton de la promocion deja ese pack marcado en el formulario y baja */
   if ($('btnPromo')) $('btnPromo').addEventListener('click', function () {
     elegirPack(Number(this.dataset.i));
@@ -673,12 +716,19 @@
     ev.preventDefault();
     var g = function (x) { return ($(x) && $(x).value || '').trim(); };
     var err = $('fErr');
-    var tel = g('fTel').replace(/\D/g, '').replace(/^56/, '');
+    /* que pais eligio: codigo, indicativo y largo esperado */
+    var pz = (g('fPais') || 'CL|+56|9').split('|');
+    var paisCod = pz[0], indic = pz[1], largo = Number(pz[2]) || 8;
+    /* se quita el indicativo si el cliente lo escribio igual, y los ceros
+       de marcado nacional que la gente pone por costumbre */
+    var tel = g('fTel').replace(/\D/g, '')
+      .replace(new RegExp('^' + indic.replace('+', '')), '')
+      .replace(/^0+/, '');
     var falla = '';
     [['fNombre', 'tu nombre'], ['fTel', 'tu WhatsApp'], ['fRegion', 'tu región'], ['fComuna', 'tu comuna'], ['fDir', 'tu dirección']]
       .forEach(function (c) { if ($(c[0])) $(c[0]).classList.remove('mal'); });
     if (g('fNombre').length < 3) falla = 'Escribe tu nombre y apellido.', $('fNombre').classList.add('mal');
-    else if (tel.length < 8) falla = 'Revisa tu número de WhatsApp.', $('fTel').classList.add('mal');
+    else if (tel.length < Math.min(7, largo)) falla = 'Revisa tu número de WhatsApp.', $('fTel').classList.add('mal');
     else if (!g('fRegion')) falla = 'Elige tu región.', $('fRegion').classList.add('mal');
     else if (!g('fComuna')) falla = 'Elige tu comuna.', $('fComuna').classList.add('mal');
     /* el mismo candado que ya tiene la operacion: sin calle Y numero no se despacha */
@@ -692,16 +742,18 @@
     fetch(window.URL_PEDIDO || 'https://n8n-production-8a42.up.railway.app/webhook/pedido-tienda', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        nombre: g('fNombre'), indicativo: '+56', telefono: tel,
+        nombre: g('fNombre'), indicativo: indic, telefono: tel,
         producto: p.nombre, precio: k.precio, cantidad: k.cant,
         direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
-        origen: 'ficha', pais: 'CL',
+        /* el DESPACHO sigue siendo Chile; `pais` es el del numero, para que
+           Camila le escriba al indicativo correcto */
+        origen: 'ficha', pais: paisCod, pais_despacho: 'CL',
       }),
     }).then(gracias).catch(gracias);   // el pedido igual queda: no se le muestra un error al cliente
 
     function gracias() {
       $('pedir').innerHTML = '<div class="listo"><h3>Pedido recibido</h3>'
-        + '<p>Gracias, ' + esc(g('fNombre').split(' ')[0]) + '. Te escribimos por WhatsApp al +56 ' + esc(tel)
+        + '<p>Gracias, ' + esc(g('fNombre').split(' ')[0]) + '. Te escribimos por WhatsApp al ' + esc(indic) + ' ' + esc(tel)
         + ' para confirmar el despacho.<br>Pagas cuando lo recibes.</p></div>';
       $('pedir').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }

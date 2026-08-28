@@ -501,6 +501,17 @@
   border-radius:12px;padding:0 11px;background:rgba(255,255,255,.05);color:#fff;flex:none}
 .cc-flag{width:22px;border-radius:3px}
 .cc-code{font-weight:600;font-size:14px}
+/* El indicativo ahora es un SELECTOR de verdad, no una bandera pintada:
+   el <select> va invisible encima de la bandera y ocupa toda la caja, asi
+   que al tocar cualquier parte se abre la lista del sistema — que en celular
+   es la rueda de siempre y ya trae buscador. */
+.cc-btn{position:relative;cursor:pointer}
+.cc-btn::after{content:'';width:0;height:0;flex:none;margin-left:1px;
+  border-left:4px solid transparent;border-right:4px solid transparent;
+  border-top:5px solid currentColor;opacity:.65}
+.cc-btn select{position:absolute;inset:0;width:100%;height:100%;
+  opacity:0;cursor:pointer;border:0;-webkit-appearance:none;appearance:none;
+  font-size:16px}   /* 16px o iOS hace zoom solo al abrirlo */
 .formnote{text-align:center;color:#8A8272;font-size:12.5px;margin-top:11px}
 .carriers{text-align:center;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.10)}
 .carriers .cl{display:block;color:#8A8272;font-size:12.5px;margin-bottom:9px}
@@ -942,7 +953,7 @@ fbq('track','PageView');
 <script src="chile-regiones.js?v=1"></script>
 <script src="resenas.js?v=6"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha.js?v=44"></script>
+<script src="ficha.js?v=45"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->
