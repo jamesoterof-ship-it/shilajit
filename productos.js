@@ -172,6 +172,9 @@ window.PRODUCTOS = [
   },
   {
     id: 'cargador', unidad: 'uno', promo: 2,
+    fotosResenas: ['img/resenas-cargador/rc1.webp?v=1','img/resenas-cargador/rc2.webp?v=1','img/resenas-cargador/rc3.webp?v=1','img/resenas-cargador/rc4.webp?v=1','img/resenas-cargador/rc5.webp?v=1','img/resenas-cargador/rc6.webp?v=1','img/resenas-cargador/rc7.webp?v=1','img/resenas-cargador/rc8.webp?v=1','img/resenas-cargador/rc9.webp?v=1'],
+    antesDespues: 'img/prod-cargador-ba.webp?v=1',
+    antesDespuesSub: 'La misma batería y el mismo auto: descargada y sin arrancar, y cargada y lista después del ciclo.',
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿De verdad repara la batería?', a: 'Sí. Manda pulsos que limpian las placas sulfatadas para que la batería vuelva a tomar carga, así te ahorras comprar una nueva.' },
@@ -188,9 +191,9 @@ window.PRODUCTOS = [
     nombre: 'Cargador Reparador 12V',
     sub: 'Revive y repara la batería del auto o la moto',
     categoria: 'Vehículos',
-    foto: 'img/prod-cargador.webp',
-    fotos: ['img/prod-cargador.webp', 'img/prod-cargador-2.webp', 'img/prod-cargador-3.webp'],
-    acento: '#A8480E',
+    foto: 'img/prod-cargador.webp?v=1',
+    fotos: ['img/prod-cargador.webp?v=1','img/prod-cargador-2.webp?v=1','img/prod-cargador-3.webp?v=1'],
+    acento: '#D20603',   /* rojo medido de sus propios creativos */
     desc: 'El Cargador Reparador de Baterías 12V no solo carga, también repara: manda pulsos que limpian las placas sulfatadas y hacen que la batería vuelva a tomar carga, así te ahorras comprar una batería nueva. Sirve para auto, moto, camioneta y lancha, de 4Ah a 100Ah, tiene pantalla digital y se apaga solo cuando termina, así que lo dejas conectado tranquilo.',
     puntos: [
       'No solo carga: repara placas sulfatadas',
