@@ -50,7 +50,7 @@
     }, { threshold: 0.2 });
     ojo.observe(sec);
 
-    /* al pasar por encima: crece y se inclina */
+    /* al pasar por encima: crece y se inclina (esto solo se ve en computador) */
     document.querySelectorAll('.ing').forEach(function (fila) {
       var c = fila.querySelector('.cir');
       if (!c) return;
@@ -60,6 +60,20 @@
       fila.addEventListener('mouseleave', function () {
         gsap.to(c, { scale: 1, rotate: 0, duration: 0.35, ease: 'power2.out' });
       });
+    });
+
+    /* En celular no hay "pasar por encima": si el efecto solo vive en el
+       hover, el cliente no ve NADA. Asi que despues de entrar, los circulos
+       laten solos, uno detras de otro, en una ola que se repite. Es un latido
+       chico (4%) y lento: llama la atencion sin marear ni tapar el texto. */
+    gsap.to(cirs, {
+      scale: 1.04,
+      duration: 0.75,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+      stagger: { each: 0.18, repeat: -1, yoyo: true },
+      delay: 1.2,
     });
     return true;
   }

@@ -521,6 +521,36 @@
     });
   });
 
+  /* ---------- la galeria gira sola ----------
+     Muchos clientes no tocan las flechas y se pierden las otras fotos. Gira
+     cada 4,5 s, pero:
+       - se PARA en cuanto el cliente toca algo: si el la esta manejando, la
+         galeria no le puede quitar la foto de encima. Y no vuelve a arrancar.
+       - solo gira mientras la galeria se ve en pantalla; si el cliente bajo a
+         leer las resenas, no se gasta bateria moviendo algo que nadie mira.
+       - se apaga con el telefono en "menos animacion". */
+  (function girar() {
+    if (fotos.length < 2) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var gal = document.querySelector('.gal');
+    if (!gal) return;
+
+    var reloj = null, parado = false;
+    function arrancar() { if (parado || reloj) return; reloj = setInterval(function () { mover(1); }, 4500); }
+    function parar() { if (reloj) { clearInterval(reloj); reloj = null; } }
+    function pararSiempre() { parado = true; parar(); }
+
+    ['click', 'pointerdown', 'touchstart'].forEach(function (ev) {
+      gal.addEventListener(ev, pararSiempre, { passive: true });
+    });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (ent) {
+        ent.forEach(function (e) { if (e.isIntersecting) arrancar(); else parar(); });
+      }, { threshold: 0.35 }).observe(gal);
+    } else arrancar();
+  })();
+
   function pintarPrecio() {
     var k = p.packs[elegido];
     var o = k.antes ? Math.round((1 - k.precio / k.antes) * 100) : 0;
