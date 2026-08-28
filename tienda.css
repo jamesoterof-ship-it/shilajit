@@ -210,11 +210,15 @@ body{--altoCab:0px}
 .ficha .tapa{position:absolute;inset:0;z-index:1}
 .ficha .btn{position:relative;z-index:2}
 
-/* al pasar por encima la tarjeta se levanta un poco; el dedo en celular
-   dispara :active, asi que ahi se hunde en vez de levantarse */
+/* En computador la tarjeta se levanta al pasar por encima. En CELULAR no
+   existe el hover, asi que lo que se siente es el toque: se hunde y se
+   oscurece. Se marca bien, porque si no el cliente no sabe si le hizo caso. */
 .ficha{transition:transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s ease}
-.ficha:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(15,14,12,.10)}
-.ficha:active{transform:translateY(0) scale(.995)}
+.ficha:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(15,14,12,.16)}
+.ficha:active{transform:scale(.965);box-shadow:0 4px 14px rgba(15,14,12,.18);
+  transition-duration:.1s}
+/* la foto acompaña el toque */
+.ficha:active .im img{transform:scale(1.06)}
 
 /* la nota de las resenas dentro de la tarjeta */
 .ficha .nota{display:flex;align-items:center;gap:6px;margin:0 0 9px}
@@ -228,8 +232,13 @@ body{--altoCab:0px}
   .ficha:hover,.ficha:active{transform:none}
 }
 /* Doble clase a proposito: sin ella gana la regla de [data-rv] (misma fuerza,
-   escrita despues) y se pierde el suavizado del fondo al pasar el mouse. */
+   escrita despues) y se pierde el suavizado del fondo al pasar el mouse.
+   OJO: `transform` TIENE que ir en esta lista. Estaba solo en la regla .ficha
+   de arriba, y como [data-rv] es mas especifica se la comia: la tarjeta se
+   levantaba de golpe, sin animacion, y el efecto no se notaba. */
 .ficha[data-rv]{transition:background .18s,
+                           transform .3s cubic-bezier(.2,.7,.2,1),
+                           box-shadow .3s ease,
                            opacity .8s ease var(--d,0s),
                            translate .8s cubic-bezier(.16,1,.3,1) var(--d,0s)}
 .ficha:hover{background:#FCFBFA}
