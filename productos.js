@@ -43,7 +43,7 @@
    ============================================================ */
 window.PRODUCTOS = [
   {
-    id: 'mascara',
+    id: 'mascara', unidad: 'una', promo: 4,
     fotosResenas: ['img/resenas-mascara/rm1.webp?v=1','img/resenas-mascara/rm2.webp?v=1','img/resenas-mascara/rm3.webp?v=1','img/resenas-mascara/rm4.webp?v=1','img/resenas-mascara/rm5.webp?v=1'],
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
@@ -86,7 +86,7 @@ window.PRODUCTOS = [
     nota: 'Viene en pack de 2. No hay unidad suelta.',
   },
   {
-    id: 'lentes',
+    id: 'lentes', unidad: 'par', promo: 2,
     fotosResenas: ['img/resenas-lentes/rl1.webp?v=1','img/resenas-lentes/rl2.webp?v=1','img/resenas-lentes/rl3.webp?v=1','img/resenas-lentes/rl4.webp?v=1','img/resenas-lentes/rl5.webp?v=1'],
     antesDespues: 'img/prod-lentes-ba.webp?v=1',
     antesDespuesSub: 'La misma persona, el mismo libro: forzando la vista y leyendo tranquilo con los One Power.',
@@ -128,7 +128,7 @@ window.PRODUCTOS = [
     popular: 1,
   },
   {
-    id: 'antena',
+    id: 'antena', unidad: 'una', promo: 4,
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿Hay que pagar mensualidad?', a: 'No. Los canales chilenos se ven gratis, sin mensualidad y sin contrato.' },
@@ -166,7 +166,7 @@ window.PRODUCTOS = [
     nota: 'Viene en pack del proveedor. No hay unidad suelta.',
   },
   {
-    id: 'cargador',
+    id: 'cargador', unidad: 'uno', promo: 2,
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿De verdad repara la batería?', a: 'Sí. Manda pulsos que limpian las placas sulfatadas para que la batería vuelva a tomar carga, así te ahorras comprar una nueva.' },
@@ -202,7 +202,7 @@ window.PRODUCTOS = [
     nota: 'Funciona conectado a la corriente. No es una batería portátil.',
   },
   {
-    id: 'foco',
+    id: 'foco', unidad: 'uno', promo: 3,
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿Sube la cuenta de la luz?', a: 'No. Funciona con energía solar: se carga de día y alumbra de noche, sin cables y sin electricista.' },

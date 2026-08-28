@@ -87,11 +87,11 @@
   var iPop = (typeof p.popular === 'number' && p.packs[p.popular]) ? p.popular
     : p.packs.reduce(function (mejor, k, i) {
         return (k.precio / k.cant) < (p.packs[mejor].precio / p.packs[mejor].cant) ? i : mejor; }, 0);
-  /* El precio grande de arriba es SIEMPRE el PACK DE 2 (regla del dueno).
-     La unidad suelta no desaparece: sigue estando en el formulario, abajo.
-     Si un producto no tuviera pack de 2, se cae al primero de la escalera. */
-  var iDos = p.packs.findIndex(function (k) { return k.cant === 2; });
-  var elegido = iDos >= 0 ? iDos : 0;
+  /* Arriba va el PRECIO DE SALIDA (el primero de la escalera): es el numero
+     mas bajo y es el que no espanta al que recien entra. El pack que se
+     empuja no se pierde: tiene su propia seccion de PROMOCION mas abajo,
+     con contador, y ese pack lo elige el dueno en el campo `promo`. */
+  var elegido = 0;
 
   /* ---------- resenas de ESTE producto ---------- */
   var TODAS = window.RESENAS || [];
@@ -149,7 +149,10 @@
     + '<div class="precioTop"><span class="ahora" id="pcAhora">' + pesos(kPop.precio) + '</span>'
     + (kPop.antes ? '<span class="antes" id="pcAntes">' + pesos(kPop.antes) + '</span>' : '')
     + (off ? '<span class="off" id="pcOff">-' + off + '%</span>' : '') + '</div>'
-    + '<div style="height:10px"></div>'   /* la nota del pack se quito: el pack ya lo dice */
+    /* El precio grande es el del PACK DE 2. Hay que decirlo debajo o el cliente
+       cree que ese valor es por una sola unidad. Se muestra tambien cuanto le
+       sale cada una, que es el argumento que cierra el pack. */
+    + (kPop.cant > 1 ? '<p class="packDe" id="pcPack">' + esc(kPop.texto) + ' · ' + pesos(Math.round(kPop.precio / kPop.cant)) + ' cada ' + (p.unidad || 'una') + '</p>' : '<div style="height:10px"></div>')
     + '</div>';
 
   /* ---------- 4 · promocion ---------- */
@@ -158,6 +161,36 @@
   var promo = '<section class="bloque">'
     + '<button class="cta rojo rebota" id="btnArriba">Lo quiero, pago al recibir</button>'
     + '<p class="ctaSub">Envío gratis · No pagas nada por adelantado</p></section>';
+
+  /* ---------- PROMOCION · el pack que se empuja, con contador ----------
+     Arriba el cliente ve el precio de salida. Aca ve la oferta de verdad:
+     que pack conviene, cuanto sale cada unidad y cuanto se ahorra.
+     El pack lo elige el dueno producto por producto, en el campo `promo`:
+       mascara 4 · lentes 2 · antena 4 · cargador 2 · foco 3
+     Si el producto no trae `promo`, la seccion no aparece. */
+  function seccionPromo() {
+    if (typeof p.promo !== 'number') return '';
+    var iP = p.packs.findIndex(function (k) { return k.cant === p.promo; });
+    if (iP < 0 || iP === elegido) return '';
+    var k = p.packs[iP], base = p.packs[elegido];
+    /* el ahorro se mide contra comprar esa misma cantidad al precio de salida */
+    var suelto = Math.round(base.precio / base.cant) * k.cant;
+    var ahorro = suelto - k.precio;
+    return '<section class="bloque promo-sec" data-rv>'
+      + '<span class="eyebrow">Promoción</span>'
+      + '<h2 class="tit2">' + esc(k.texto) + ' al precio de hoy</h2>'
+      + '<div class="promo-card">'
+      + '<div class="promo-fila"><b class="promo-qt">' + esc(k.texto) + '</b>'
+      + '<span class="promo-precio">' + pesos(k.precio) + '</span></div>'
+      + '<p class="promo-uni">' + pesos(Math.round(k.precio / k.cant)) + ' cada ' + (p.unidad || 'una')
+      + (ahorro > 0 ? ' · <b>ahorras ' + pesos(ahorro) + '</b>' : '') + '</p>'
+      + '<div class="cuenta"><div><b id="cH">--</b><span>horas</span></div>'
+      + '<div><b id="cM">--</b><span>min</span></div>'
+      + '<div><b id="cS">--</b><span>seg</span></div></div>'
+      + '<p class="promo-pie">Este precio es el de hoy</p>'
+      + '<button class="cta rojo" id="btnPromo" data-i="' + iP + '">Quiero ' + esc(k.texto) + '</button>'
+      + '</div></section>';
+  }
 
 
   /* ---------- 5 · descripcion ---------- */
@@ -411,6 +444,7 @@
 
   cont.innerHTML = '<div class="arriba2">' + galeria + cabecera + '</div>'
     + promo
+    + seccionPromo()
     + seccionFormula()
     + seccionResultados()
     + seccionCompara()
@@ -465,6 +499,7 @@
     $('pcAhora').textContent = pesos(k.precio);
     if ($('pcAntes')) $('pcAntes').textContent = k.antes ? pesos(k.antes) : '';
     if ($('pcOff')) $('pcOff').textContent = o ? '-' + o + '%' : '';
+    if ($('pcPack')) $('pcPack').textContent = k.texto + ' · ' + pesos(Math.round(k.precio / k.cant)) + ' cada ' + (p.unidad || 'una');
     if ($('sumSub')) $('sumSub').textContent = pesos(k.antes || k.precio);
     if ($('sumDesc')) $('sumDesc').textContent = '-' + pesos((k.antes || k.precio) - k.precio);
     if ($('sumTot')) $('sumTot').textContent = pesos(k.precio);
@@ -479,6 +514,38 @@
   var _form = document.getElementById('pedir');
   if (_form && 'IntersectionObserver' in window)
     new IntersectionObserver(function (es, o) { if (es.some(function (x) { return x.isIntersecting; })) { _checkout(); o.disconnect(); } }).observe(_form);
+  /* Contador de la promocion. Baja hasta la medianoche EN CHILE y vuelve a
+     arrancar: no inventa una fecha falsa, el precio es el de hoy.
+     La hora de Chile se pide con Intl para no hacer cuentas de huso a mano,
+     que es donde siempre se mete el error. */
+  (function contador() {
+    if (!$('cH')) return;
+    var fmt;
+    try {
+      fmt = new Intl.DateTimeFormat('es-CL', { timeZone: 'America/Santiago',
+        hourCycle: 'h23', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch (e) { return; }
+    function dosDig(n) { return (n < 10 ? '0' : '') + n; }
+    function tic() {
+      var t = {};
+      fmt.formatToParts(new Date()).forEach(function (x) { if (x.type !== 'literal') t[x.type] = Number(x.value); });
+      var faltan = 86400 - ((t.hour || 0) * 3600 + (t.minute || 0) * 60 + (t.second || 0));
+      if (faltan < 0) faltan = 0;
+      if ($('cH')) $('cH').textContent = dosDig(Math.floor(faltan / 3600));
+      if ($('cM')) $('cM').textContent = dosDig(Math.floor(faltan % 3600 / 60));
+      if ($('cS')) $('cS').textContent = dosDig(faltan % 60);
+    }
+    tic();
+    setInterval(tic, 1000);
+  })();
+
+  /* el boton de la promocion deja ese pack marcado en el formulario y baja */
+  if ($('btnPromo')) $('btnPromo').addEventListener('click', function () {
+    elegirPack(Number(this.dataset.i));
+    var f = document.getElementById('pedir');
+    if (f) f.scrollIntoView({ behavior: 'smooth' });
+  });
+
   function elegirPack(i) {
     elegido = i;
     ['packsForm'].forEach(function (cual) {
