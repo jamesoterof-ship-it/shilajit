@@ -221,6 +221,23 @@
       'Después de tres cargas la batería quedó como nueva',
       'Ya no me quedo botado en las mañanas frías',
     ],
+    'Cabezal de Ducha Masajeadora Spa': [
+      'La diferencia de presión se nota al tiro, otra cosa',
+      'Vivo en un tercer piso y el agua llegaba floja, esto lo arregló',
+      'El modo masaje en el cuello después del trabajo, impagable',
+      'Lo enrosqué yo en dos minutos, ni herramienta ocupé',
+      'Se enjuaga el shampoo mucho más rápido ahora',
+      'Pedí dos, uno para cada baño, y quedaron perfectos',
+      'El filtro se nota, salía harto sarro de la cañería vieja',
+      'Calidad mejor de la que esperaba por el precio',
+      'Los tres modos sirven, no son de adorno',
+      'Se ve firme, no se siente plástico barato',
+      'Mi señora quedó feliz, dice que parece ducha de hotel',
+      'Llegó en tres días a Temuco y pagué al recibir',
+      'Le puse el mío y le regalé otro a mi mamá',
+      'Gasta menos agua y sale con más fuerza, raro pero cierto',
+      'La perilla del lado cambia el chorro con una mano',
+    ],
     'Foco Solar Tipo Cámara': [
       'Se carga de día y alumbra toda la noche',
       'Lo puse en la entrada y prende solo cuando pasa alguien',
@@ -302,6 +319,7 @@
     'Antena TV Digital HD':         { n: 214, cuatros: 16 },
     'Cargador Reparador 12V':       { n: 152, cuatros: 12 },
     'Foco Solar Tipo Cámara':       { n: 176, cuatros: 11 },
+    'Cabezal de Ducha Masajeadora Spa': { n: 168, cuatros: 14 },
   };
 
   function generar() {

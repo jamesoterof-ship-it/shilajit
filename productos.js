@@ -248,6 +248,45 @@ window.PRODUCTOS = [
     ],
     popular: 2,
   },
+  {
+    id: 'ducha', unidad: 'uno', promo: 2,
+    fotosResenas: ['img/resenas-ducha/rd1.webp?v=1','img/resenas-ducha/rd2.webp?v=1','img/resenas-ducha/rd3.webp?v=1','img/resenas-ducha/rd4.webp?v=1'],
+    antesDespues: 'img/prod-ducha-ba.webp?v=1',
+    antesDespuesSub: 'La misma ducha y la misma cañería: el hilo de agua de antes, y el chorro con el cabezal puesto.',
+    /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
+    preguntas: [
+      { q: '¿Sirve para mi ducha?', a: 'Sí. La rosca es la universal de media pulgada, la misma que traen casi todas las duchas de mano en Chile. Se enrosca a mano, sin herramientas ni gásfiter.' },
+      { q: '¿De verdad sube la presión?', a: 'Sí, y te decimos cómo: las microboquillas achican la salida, así que el agua sale con más fuerza aunque venga igual de la cañería. Lo que no hace es arreglar un problema de presión de la casa entera.' },
+      { q: '¿Qué son los 3 modos?', a: 'Lluvia para el día a día, masaje para el cuello y la espalda, y mixto que junta los dos. Se cambian con la perilla del costado, con una mano.' },
+      { q: '¿El filtro se cambia?', a: 'El filtro va adentro del cabezal y retiene el sarro y el sedimento. Se enjuaga con agua cuando lo notes cargado.' },
+      { q: '¿Viene la manguera?', a: 'No. Viene el cabezal, que es lo que se cambia. Se conecta a la manguera que ya tienes.' },
+    ],
+    formulaRotulo: "Qué trae",
+    formulaTitulo: "Más presión sin tocar la cañería.",
+    formulaSub: "Microboquillas, tres modos y filtro adentro: lo que un cabezal común no tiene.",
+    formula: [["agua","Alta presión","Las microboquillas concentran el chorro."],["pluma","Masaje relajante","Para el cuello y la espalda al final del día."],["llave","3 modos de agua","Lluvia, masaje y mixto, con la perilla."],["ojo","Filtro incorporado","Retiene el sarro y el sedimento del agua."],["casa","Se instala a mano","Rosca universal, en dos minutos, sin gásfiter."],["fibra","Menos consumo","Más fuerza gastando menos agua."]],
+    comparaTitulo: "¿Qué lo hace diferente?",
+    compara: ["Sube la presión sin tocar la cañería ni llamar a un gásfiter.","Tres modos de verdad: lluvia, masaje y mixto.","Trae filtro adentro: el agua sale más limpia."],
+    nombre: 'Cabezal de Ducha Masajeadora Spa',
+    sub: 'Más presión con la misma cañería',
+    categoria: 'Hogar',
+    foto: 'img/prod-ducha.webp?v=1',
+    fotos: ['img/prod-ducha.webp?v=1','img/prod-ducha-2.webp?v=1','img/prod-ducha-3.webp?v=1','img/prod-ducha-4.webp?v=1'],
+    acento: '#0F4293',   /* azul medido de sus propios creativos */
+    desc: 'El Cabezal de Ducha Masajeadora Spa trae microboquillas que concentran el chorro, así que el agua sale con mucha más fuerza aunque tu cañería siga igual. Tiene tres modos, lluvia, masaje y mixto, y un filtro adentro que retiene el sarro y el sedimento. Se enrosca a mano en dos minutos con la rosca universal: no necesitas gásfiter ni remodelar nada.',
+    puntos: [
+      'Mucha más presión, con la misma cañería',
+      'Tres modos: lluvia, masaje y mixto',
+      'Filtro adentro: retiene sarro y sedimento',
+      'Se enrosca a mano, sin gásfiter',
+    ],
+    packs: [
+      { cant: 1, precio: 22990, antes: 41400, texto: '1 unidad' },
+      { cant: 2, precio: 29990, antes: 54000, texto: '2 unidades' },
+      { cant: 3, precio: 36990, antes: 66600, texto: '3 unidades' },
+    ],
+    popular: 1,
+  },
 ];
 
 /* Preguntas frecuentes. Salen de lo que los clientes preguntan DE VERDAD por
@@ -275,4 +314,5 @@ window.PRECIOS_APROBADOS = [
   24500, 34500, 44500,
   28500, 38500, 49500,
   22500, 24500, 29990,
+  22990, 29990, 36990,   /* cabezal de ducha */
 ];
