@@ -52,10 +52,25 @@
   /* El color del producto manda en botones y secciones. Si no trae, se queda
      el rojo de siempre. Tambien se calcula un tono mas oscuro para sombras y
      degradados. */
-  function letraSobre(hex) {
+  /* Elige letra clara u oscura segun cual se LEA mejor sobre el color.
+     Antes se usaba la formula vieja (YIQ, corte en 150) y se equivocaba con
+     los colores saturados: al turquesa de los lentes le ponia letra blanca
+     y quedaba en 2.6 de contraste. Ahora se mide el contraste real de las
+     dos opciones y gana la mayor, que nunca falla. */
+  function luminancia(hex) {
     var n = parseInt(String(hex).replace('#', ''), 16);
-    var luz = (((n >> 16) & 255) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000;
-    return luz > 150 ? '#171510' : '#fff';
+    var c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) {
+      v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function letraSobre(hex) {
+    var L = luminancia(hex);
+    var contraste = function (otra) {
+      var a = Math.max(L, otra), b = Math.min(L, otra);
+      return (a + 0.05) / (b + 0.05);
+    };
+    return contraste(luminancia('#171510')) >= contraste(luminancia('#ffffff')) ? '#171510' : '#fff';
   }
   function oscurece(hex, cuanto) {
     var n = parseInt(String(hex).replace('#', ''), 16);
