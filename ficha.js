@@ -79,6 +79,11 @@
     var b = Math.max(0, (n & 255) - cuanto);
     return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
   }
+  /* Los circulos de los iconos van negros con el icono del color del producto.
+     Si el color es muy oscuro no se ve encima del negro (le pasa al azul de la
+     antena), y entonces ese producto los lleva blancos con borde de su color.
+     Se pide con iconoClaro: true en productos.js. */
+  if (p.iconoClaro) document.documentElement.classList.add('ico-claro');
   if (p.acento) {
     var raiz = document.documentElement.style;
     raiz.setProperty('--acento', p.acento);

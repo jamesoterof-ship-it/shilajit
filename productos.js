@@ -130,7 +130,7 @@ window.PRODUCTOS = [
     popular: 1,
   },
   {
-    id: 'antena', unidad: 'una', promo: 2,
+    id: 'antena', unidad: 'una', promo: 2, iconoClaro: true,   /* su azul es muy oscuro: circulo blanco con borde azul */
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
       { q: '¿Hay que pagar mensualidad?', a: 'No. Los canales chilenos se ven gratis, sin mensualidad y sin contrato.' },
