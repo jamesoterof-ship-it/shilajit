@@ -792,21 +792,50 @@
     var k = p.packs[elegido];
     var btn = this.querySelector('button[type="submit"]');
     btn.disabled = true; btn.textContent = 'Enviando…';
-    fetch(window.URL_PEDIDO || 'https://n8n-production-8a42.up.railway.app/webhook/pedido-tienda', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nombre: g('fNombre'), indicativo: indic, telefono: tel,
-        /* `total` es el nombre que espera el webhook: es el que manda la
-           landing vieja y el que lee el flujo. Mandando solo `precio`, la
-           venta entraba con precio 0 (paso el 28-08 con la ducha) y el
-           candado de precios no la podia validar. Se mandan los dos. */
-        producto: p.nombre, total: k.precio, precio: k.precio, cantidad: k.cant,
-        direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
-        /* el DESPACHO sigue siendo Chile; `pais` es el del numero, para que
-           Camila le escriba al indicativo correcto */
-        origen: 'ficha', pais: paisCod, pais_despacho: 'CL',
-      }),
-    }).then(gracias).catch(gracias);   // el pedido igual queda: no se le muestra un error al cliente
+    var _pedido = {
+      nombre: g('fNombre'), indicativo: indic, telefono: tel,
+      /* `total` es el nombre que espera el webhook: es el que manda la
+         landing vieja y el que lee el flujo. Mandando solo `precio`, la
+         venta entraba con precio 0 (paso el 28-08 con la ducha) y el
+         candado de precios no la podia validar. Se mandan los dos. */
+      producto: p.nombre, total: k.precio, precio: k.precio, cantidad: k.cant,
+      direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
+      /* el DESPACHO sigue siendo Chile; `pais` es el del numero, para que
+         Camila le escriba al indicativo correcto */
+      origen: 'ficha', pais: paisCod, pais_despacho: 'CL',
+    };
+    /* ANTES decia `.then(gracias).catch(gracias)`, o sea: pasara lo que
+       pasara, al cliente se le daba las gracias Y se le avisaba la compra a
+       Meta. Si el webhook estaba caido, el pedido se perdia igual: el cliente
+       creia que habia comprado y Meta contaba una venta que no existia.
+       El 28-08 pasaron dos asi — Meta reportaba 2 compras y en el panel no
+       habia ninguna.
+       Ahora: solo se agradece y se avisa a Meta si el pedido ENTRO de verdad.
+       Si no entro, se guarda y se reintenta. */
+    function mandar(datos, intento) {
+      return fetch(window.URL_PEDIDO || 'https://n8n-production-8a42.up.railway.app/webhook/pedido-tienda', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(datos),
+      }).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return true;
+      }).catch(function (e) {
+        /* tres intentos, separados, por si fue un tropiezo de red */
+        if (intento < 3) {
+          return new Promise(function (ok) { setTimeout(ok, 1500 * intento); })
+            .then(function () { return mandar(datos, intento + 1); });
+        }
+        throw e;
+      });
+    }
+
+    mandar(_pedido, 1).then(function () {
+      gracias();
+    }).catch(function () {
+      /* el pedido NO entro: se guarda para reintentarlo al volver a abrir la
+         pagina, y se le dice la verdad al cliente en vez de un falso exito */
+      try { localStorage.setItem('jaye_pedido_pendiente', JSON.stringify(_pedido)); } catch (e) {}
+      noEntro();
+    });
 
     function gracias() {
       /* La COMPRA. La pagina disparaba PageView, ViewContent e InitiateCheckout
@@ -827,8 +856,38 @@
         + '<p>Gracias, ' + esc(g('fNombre').split(' ')[0]) + '. Te escribimos por WhatsApp al ' + esc(indic) + ' ' + esc(tel)
         + ' para confirmar el despacho.<br>Pagas cuando lo recibes.</p></div>';
       $('pedir').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      try { localStorage.removeItem('jaye_pedido_pendiente'); } catch (e) {}
+    }
+
+    /* El pedido NO entro. Antes se le mostraba "Pedido recibido" igual y se le
+       avisaba la compra a Meta: el cliente se quedaba esperando algo que nadie
+       iba a despachar. Ahora se le dice la verdad y se le da una salida. */
+    function noEntro() {
+      var wa = 'https://wa.me/56964775539?text=' + encodeURIComponent(
+        'Hola, hice mi pedido de ' + p.nombre + ' en la pagina y no me confirmo. Mi nombre es ' + g('fNombre'));
+      $('pedir').innerHTML = '<div class="listo"><h3>No pudimos registrar tu pedido</h3>'
+        + '<p>Se cayo la conexion justo al enviarlo, y no queremos decirte que quedo si no es cierto.'
+        + '<br>Tus datos quedaron guardados: vuelve a intentarlo en un momento, o escribenos y lo tomamos nosotros.</p>'
+        + '<a class="cta negro" href="' + wa + '" style="width:auto;display:inline-block;padding:14px 26px;margin-top:6px">Escribir por WhatsApp</a>'
+        + '</div>';
+      $('pedir').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
+
+  /* Si un pedido quedo sin entrar, se reintenta solo al volver a abrir la
+     pagina. Asi no se pierde aunque el cliente cierre y vuelva. */
+  (function reintentar() {
+    var crudo;
+    try { crudo = localStorage.getItem('jaye_pedido_pendiente'); } catch (e) { return; }
+    if (!crudo) return;
+    var datos;
+    try { datos = JSON.parse(crudo); } catch (e) { try { localStorage.removeItem('jaye_pedido_pendiente'); } catch (x) {} return; }
+    fetch(window.URL_PEDIDO || 'https://n8n-production-8a42.up.railway.app/webhook/pedido-tienda', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(datos),
+    }).then(function (r) {
+      if (r.ok) { try { localStorage.removeItem('jaye_pedido_pendiente'); } catch (e) {} }
+    }).catch(function () { /* se queda guardado para la proxima */ });
+  })();
 })();
 
 /* ---------- el boletin del pie ----------

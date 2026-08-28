@@ -178,19 +178,37 @@
     var btn = e.target.querySelector('.enviar');
     btn.disabled = true; btn.textContent = 'Enviando…';
 
+    var _pedido = {
+      nombre: g('nombre'), indicativo: '+56', telefono: tel,
+      /* `total` es el campo que lee el flujo; mandando solo `precio` la
+         venta entraba en 0. Se mandan los dos, por si acaso. */
+      producto: p.nombre, total: pack.precio, precio: pack.precio, cantidad: pack.cant,
+      direccion: dir, comuna: g('comuna'), region: g('region'),
+      origen: 'tienda', pais: 'CL',
+    };
     fetch(URL_PEDIDO, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nombre: g('nombre'), indicativo: '+56', telefono: tel,
-        /* `total` es el campo que lee el flujo; mandando solo `precio` la
-           venta entraba en 0. Se mandan los dos, por si acaso. */
-        producto: p.nombre, total: pack.precio, precio: pack.precio, cantidad: pack.cant,
-        direccion: dir, comuna: g('comuna'), region: g('region'),
-        origen: 'tienda', pais: 'CL',
-      }),
-    }).then(function () { gracias(); })
-      .catch(function () { gracias(); });   // el pedido igual queda: no se le muestra un error al cliente
+      body: JSON.stringify(_pedido),
+    /* Antes agradecia pasara lo que pasara: si el webhook estaba caido, el
+       cliente veia "Pedido confirmado" y el pedido no existia. Ahora solo se
+       confirma si entro de verdad; si no, se guarda y se le dice la verdad. */
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      try { localStorage.removeItem('jaye_pedido_pendiente'); } catch (x) {}
+      gracias();
+    }).catch(function () {
+      try { localStorage.setItem('jaye_pedido_pendiente', JSON.stringify(_pedido)); } catch (x) {}
+      noEntro();
+    });
   });
+
+  function noEntro() {
+    var wa = 'https://wa.me/56964775539?text=' + encodeURIComponent('Hola, hice mi pedido en la pagina y no me confirmo');
+    caja.innerHTML = '<div class="listo"><h1>No pudimos registrar tu pedido</h1>'
+      + '<p>Se cayo la conexion justo al enviarlo. Tus datos quedaron guardados: vuelve a intentarlo '
+      + 'en un momento, o escribenos y lo tomamos nosotros.</p>'
+      + '<a class="enviar" href="' + wa + '" style="display:inline-block;text-decoration:none;text-align:center">Escribir por WhatsApp</a></div>';
+  }
 
   function gracias() {
     caja.innerHTML =
