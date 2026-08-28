@@ -182,7 +182,9 @@
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         nombre: g('nombre'), indicativo: '+56', telefono: tel,
-        producto: p.nombre, precio: pack.precio, cantidad: pack.cant,
+        /* `total` es el campo que lee el flujo; mandando solo `precio` la
+           venta entraba en 0. Se mandan los dos, por si acaso. */
+        producto: p.nombre, total: pack.precio, precio: pack.precio, cantidad: pack.cant,
         direccion: dir, comuna: g('comuna'), region: g('region'),
         origen: 'tienda', pais: 'CL',
       }),

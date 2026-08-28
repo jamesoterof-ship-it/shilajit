@@ -796,7 +796,11 @@
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         nombre: g('fNombre'), indicativo: indic, telefono: tel,
-        producto: p.nombre, precio: k.precio, cantidad: k.cant,
+        /* `total` es el nombre que espera el webhook: es el que manda la
+           landing vieja y el que lee el flujo. Mandando solo `precio`, la
+           venta entraba con precio 0 (paso el 28-08 con la ducha) y el
+           candado de precios no la podia validar. Se mandan los dos. */
+        producto: p.nombre, total: k.precio, precio: k.precio, cantidad: k.cant,
         direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
         /* el DESPACHO sigue siendo Chile; `pais` es el del numero, para que
            Camila le escriba al indicativo correcto */
