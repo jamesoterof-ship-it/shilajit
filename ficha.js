@@ -473,15 +473,21 @@
        que viven en Chile con numero de otro pais, y no podian pedir. Ahora es
        un selector de verdad; Chile queda elegido por defecto. */
     + '<div class="field"><label for="fTel">Celular / WhatsApp</label>'
-    + '<div class="telrow"><span class="cc-btn">'
+    /* Lista PROPIA, no un <select>: el desplegable del sistema solo pinta
+       texto y las banderas no se ven. Aca cada opcion lleva su imagen. */
+    + '<div class="telrow"><span class="cc-wrap">'
+    + '<button type="button" class="cc-btn" id="ccBtn" aria-haspopup="listbox" aria-expanded="false">'
     + '<img class="cc-flag" id="ccFlag" src="https://flagcdn.com/cl.svg" alt="">'
-    + '<span class="cc-code" id="ccCode">+56</span>'
-    + '<select id="fPais" aria-label="País del número">'
+    + '<span class="cc-code" id="ccCode">+56</span></button>'
+    + '<div class="cc-lista" id="ccLista" role="listbox" hidden>'
     + PAISES.map(function (x) {
-        return '<option value="' + x[0] + '|' + x[1] + '|' + x[2] + '"' + (x[0] === 'CL' ? ' selected' : '') + '>'
-          + esc(x[3]) + ' (' + x[1] + ')</option>';
+        return '<button type="button" role="option" data-v="' + x[0] + '|' + x[1] + '|' + x[2] + '"'
+          + (x[0] === 'CL' ? ' aria-selected="true"' : '') + '>'
+          + '<img src="https://flagcdn.com/' + x[0].toLowerCase() + '.svg" alt="" loading="lazy">'
+          + '<span>' + esc(x[3]) + '</span><i>' + x[1] + '</i></button>';
       }).join('')
-    + '</select></span>'
+    + '</div>'
+    + '<input type="hidden" id="fPais" value="CL|+56|9"></span>'
     + '<input id="fTel" inputmode="numeric" autocomplete="tel" placeholder="9 1234 5678"></div>'
     + '<div class="err">Escribe un teléfono válido.</div></div>'
     + '<div class="field"><label for="fDir">Dirección</label><input id="fDir" autocomplete="street-address" placeholder="Calle y número"><div class="err">Escribe tu dirección con número.</div></div>'
@@ -646,15 +652,38 @@
     setInterval(tic, 1000);
   })();
 
-  /* al cambiar de pais: cambia la BANDERA y el indicativo que se ve, y el
-     ejemplo del campo, para que el cliente sepa como escribir su numero */
-  if ($('fPais')) $('fPais').addEventListener('change', function () {
-    var z = this.value.split('|');
-    if ($('ccFlag')) $('ccFlag').src = 'https://flagcdn.com/' + z[0].toLowerCase() + '.svg';
-    if ($('ccCode')) $('ccCode').textContent = z[1];
-    var largo = Number(z[2]) || 9;
-    if ($('fTel')) $('fTel').placeholder = new Array(largo + 1).join('0').replace(/^0/, '9');
-  });
+  /* La lista de paises: se abre al tocar la bandera, y al elegir cambia la
+     bandera, el indicativo y el ejemplo del campo. */
+  (function paises() {
+    var btn = $('ccBtn'), lista = $('ccLista');
+    if (!btn || !lista) return;
+
+    function abrir(si) {
+      lista.hidden = !si;
+      btn.setAttribute('aria-expanded', String(si));
+    }
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      abrir(lista.hidden);
+    });
+    lista.addEventListener('click', function (e) {
+      var o = e.target.closest('[data-v]');
+      if (!o) return;
+      var z = o.dataset.v.split('|');
+      if ($('fPais')) $('fPais').value = o.dataset.v;
+      $('ccFlag').src = 'https://flagcdn.com/' + z[0].toLowerCase() + '.svg';
+      $('ccCode').textContent = z[1];
+      var largo = Number(z[2]) || 9;
+      if ($('fTel')) $('fTel').placeholder = new Array(largo + 1).join('0').replace(/^0/, '9');
+      lista.querySelectorAll('[data-v]').forEach(function (x) {
+        x.setAttribute('aria-selected', String(x === o));
+      });
+      abrir(false);
+    });
+    /* se cierra al tocar fuera o con Escape */
+    document.addEventListener('click', function () { abrir(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') abrir(false); });
+  })();
 
   /* el boton de la promocion deja ese pack marcado en el formulario y baja */
   if ($('btnPromo')) $('btnPromo').addEventListener('click', function () {
