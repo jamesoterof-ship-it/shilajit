@@ -57,13 +57,20 @@ body{--altoCab:0px}
   transition:max-height .28s ease,padding .28s ease,opacity .2s ease;
 }
 .barra::-webkit-scrollbar{display:none}
-.barra button{
+/* La tienda arma esta barra con <button> y la ficha de producto con <a>
+   (porque alli cada categoria LLEVA a la tienda ya filtrada). El estilo tiene
+   que valer para los dos o la ficha muestra enlaces sueltos, grandes y en
+   minuscula, con un encabezado que no se parece al de la tienda. */
+.barra button,
+.barra a{
   flex:none;background:none;border:0;padding:0 0 3px;cursor:pointer;
   font-family:'Barlow Condensed','Inter',sans-serif;font-weight:700;font-size:14px;
   text-transform:uppercase;letter-spacing:.05em;color:var(--negro);
+  text-decoration:none;line-height:1.2;
   border-bottom:2px solid transparent;
 }
-.barra button[aria-pressed="true"]{border-bottom-color:var(--negro)}
+.barra button[aria-pressed="true"],
+.barra a[aria-pressed="true"]{border-bottom-color:var(--negro)}
 .pegado.bajando .barra{max-height:0;padding-top:0;padding-bottom:0;opacity:0;border-bottom-color:transparent}
 
 /* ---------- header: gris arriba, NEGRO al bajar ---------- */
