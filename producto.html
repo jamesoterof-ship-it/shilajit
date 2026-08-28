@@ -70,22 +70,50 @@
 
 /* ---- promocion: el pack que se empuja, con contador ----
    Arriba se ve el precio de salida; aca la oferta de verdad. */
-.promo-card{border:1.5px solid var(--acento);border-radius:16px;padding:18px 16px 16px;
-  background:color-mix(in srgb, var(--acento) 5%, var(--surface,#fff));position:relative;overflow:hidden}
-.promo-card::before{content:'';position:absolute;inset:0 0 auto;height:4px;background:var(--acento)}
-.promo-fila{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.promo-qt{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;text-transform:uppercase;
-  font-size:20px;letter-spacing:.02em;color:var(--tinta)}
-.promo-precio{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:32px;
-  line-height:1;color:var(--acento);font-variant-numeric:tabular-nums}
-.promo-uni{margin:6px 0 0;font-size:13.5px;color:var(--suave);font-variant-numeric:tabular-nums}
-.promo-uni b{color:var(--acento)}
-.cuenta{display:flex;gap:8px;justify-content:center;margin:16px 0 10px}
-.cuenta > div{min-width:64px;background:var(--tinta);color:#fff;border-radius:10px;padding:8px 6px;text-align:center}
+/* La promocion es lo que engancha: tiene que ser lo mas llamativo de la
+   pagina. Por eso NO lleva titulo afuera (asi no se notaba): el rotulo va
+   dentro, en una franja de color arriba de la caja. */
+.promo-card{border:2px solid var(--acento);border-radius:18px;overflow:hidden;
+  background:var(--surface,#fff);position:relative;
+  box-shadow:0 14px 34px color-mix(in srgb, var(--acento) 24%, transparent)}
+.promo-banner{background:var(--acento);color:#fff;display:flex;align-items:center;gap:9px;
+  padding:11px 16px;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;
+  text-transform:uppercase;letter-spacing:.10em;font-size:17px}
+.promo-banner .chispa{font-size:14px;line-height:1}
+.promo-banner-sub{margin-left:auto;font-size:11.5px;letter-spacing:.08em;opacity:.9;font-weight:700}
+.promo-cuerpo{padding:16px 16px 16px}
+.promo-qt{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;
+  text-transform:uppercase;font-size:22px;letter-spacing:.02em;color:var(--tinta);margin-bottom:2px}
+/* el precio de antes tachado al lado del de hoy: sin eso no se nota la rebaja */
+.promo-precios{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.promo-antes{font-size:17px;color:#A29C90;text-decoration:line-through;
+  font-variant-numeric:tabular-nums}
+.promo-off{background:var(--acento);color:#fff;font-family:'Barlow Condensed','Inter',sans-serif;
+  font-weight:800;font-size:13px;letter-spacing:.05em;padding:3px 9px;border-radius:6px}
+/* el precio queda FIJO, sin latido: solo mas grande. Lo pidio asi el dueno. */
+.promo-precio{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:42px;
+  line-height:.95;color:var(--acento);font-variant-numeric:tabular-nums}
+/* el precio por unidad va pegado al del pack y se lee, no en letra chica */
+.promo-uni{margin:4px 0 0;font-size:15px;font-weight:600;color:var(--tinta);
+  font-variant-numeric:tabular-nums}
+.promo-uni b{color:var(--acento);font-weight:800}
+
+/* ---- contador: cajas BLANCAS con borde de color, no negras ---- */
+.cuenta{display:flex;gap:9px;justify-content:center;margin:16px 0 10px}
+.cuenta > div{min-width:72px;background:var(--surface,#fff);border:2px solid var(--acento);
+  border-radius:12px;padding:9px 6px;text-align:center}
 .cuenta b{display:block;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;
-  font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+  font-size:28px;line-height:1;font-variant-numeric:tabular-nums;color:var(--acento)}
 .cuenta span{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
-  color:#C9C4B8;margin-top:3px}
+  color:var(--suave);margin-top:3px}
+/* SOLO el cuadrito de los segundos late con la cuenta: si laten los tres, marea */
+.cuenta .seg.late{animation:segCaja .92s ease-out}
+.cuenta .seg.late b,.cuenta .seg.late span{animation:segTexto .92s ease-out}
+@keyframes segCaja{ 0%{background:var(--acento)} 100%{background:var(--surface,#fff)} }
+@keyframes segTexto{ 0%{color:#fff} 100%{color:inherit} }
+@media (prefers-reduced-motion:reduce){
+  .cuenta .seg.late,.cuenta .seg.late b,.cuenta .seg.late span{animation:none}
+}
 .promo-pie{text-align:center;font-size:12.5px;color:var(--suave);margin:0 0 14px}
 .promo-card .cta{max-width:none}
 
@@ -700,6 +728,28 @@ body.con-barra .wa{bottom:72px}
   .bloque,.form{max-width:var(--maxw);margin-left:auto;margin-right:auto}
   .sellos{grid-template-columns:repeat(4,1fr)}
 }
+
+/* ============================================================
+   EL DORADO DE LA FICHA PASA A SER EL COLOR DEL PRODUCTO
+
+   Lo pidio el dueno: botones, viñetas, estrellas, barras, lineas de los
+   titulos y el formulario van con el color de cada producto. El ENCABEZADO
+   y el PIE se quedan con el dorado de la marca.
+
+   Se puede hacer limpio porque el encabezado y el pie estan FUERA de
+   <main class="prod">: basta redefinir --oro adentro y todo lo que ya
+   usaba var(--oro) cambia solo, sin tocar regla por regla.
+   Va al final del bloque para ganarle a las reglas de mas arriba.
+   ============================================================ */
+.prod{
+  --oro: var(--acento);
+  --oro-osc: color-mix(in srgb, var(--acento) 72%, #000);
+}
+/* estos traian el dorado escrito a mano (rgba 216,165,46) y no seguian a --oro */
+.prod .packs.enForm .pack[aria-pressed="true"],
+.prod .form .pack.sel{ background:color-mix(in srgb, var(--acento) 10%, transparent) }
+.prod .field input:focus,
+.prod .field select:focus{ box-shadow:0 0 0 3px color-mix(in srgb, var(--acento) 18%, transparent) }
 </style>
 <script>
 (function(){var d=document.documentElement;
@@ -832,7 +882,7 @@ fbq('track','PageView');
 <script src="chile-regiones.js?v=1"></script>
 <script src="resenas.js?v=4"></script>
 <script src="efectos.js?v=3"></script>
-<script src="ficha.js?v=35"></script>
+<script src="ficha.js?v=36"></script>
 
 <a class="wa" href="https://wa.me/56964775539" aria-label="WhatsApp" target="_blank" rel="noopener">
   <svg viewBox="0 0 32 32"><path d="M16 .4C7.4.4.5 7.3.5 15.9c0 2.8.7 5.4 2.1 7.8L.3 31.6l8.1-2.1c2.3 1.3 4.9 1.9 7.6 1.9 8.6 0 15.5-6.9 15.5-15.5S24.6.4 16 .4zm0 28.3c-2.4 0-4.7-.6-6.7-1.9l-.5-.3-4.8 1.3 1.3-4.7-.3-.5c-1.4-2.1-2.1-4.6-2.1-7 0-7.1 5.8-12.9 12.9-12.9S28.9 8.8 28.9 15.9 23.1 28.7 16 28.7zm7.1-9.6c-.4-.2-2.3-1.1-2.6-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.2 1.5-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3.1-1.9-1.1-1-1.9-2.3-2.1-2.7-.2-.4 0-.6.2-.8.2-.2.4-.4.6-.7.2-.2.3-.4.4-.7.1-.3 0-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.8-.6-.7-.9-.7h-.8c-.2 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.8c.2.2 2.6 4 6.3 5.6.9.4 1.6.6 2.1.8.9.3 1.7.2 2.3.1.7-.1 2.3-.9 2.6-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.7-.5z"/></svg>

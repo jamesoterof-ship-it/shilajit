@@ -172,24 +172,29 @@
     if (typeof p.promo !== 'number') return '';
     var iP = p.packs.findIndex(function (k) { return k.cant === p.promo; });
     if (iP < 0 || iP === elegido) return '';
-    var k = p.packs[iP], base = p.packs[elegido];
-    /* el ahorro se mide contra comprar esa misma cantidad al precio de salida */
-    var suelto = Math.round(base.precio / base.cant) * k.cant;
-    var ahorro = suelto - k.precio;
+    var k = p.packs[iP];
+    /* Precio de antes: el dueno lo quiere alrededor de un 80% por encima del
+       de hoy, para que la diferencia se note. Se redondea a la centena. */
+    var antes = Math.round(k.precio * 1.8 / 100) * 100;
+    var off = Math.round((1 - k.precio / antes) * 100);
+    var ahorra = antes - k.precio;
+    /* Todo va DENTRO de la caja: afuera no se notaba. */
     return '<section class="bloque promo-sec" data-rv>'
-      + '<span class="eyebrow">Promoción</span>'
-      + '<h2 class="tit2">' + esc(k.texto) + ' al precio de hoy</h2>'
       + '<div class="promo-card">'
-      + '<div class="promo-fila"><b class="promo-qt">' + esc(k.texto) + '</b>'
-      + '<span class="promo-precio">' + pesos(k.precio) + '</span></div>'
+      + '<div class="promo-banner"><span class="chispa">★</span>Promoción<span class="promo-banner-sub">termina hoy</span></div>'
+      + '<div class="promo-cuerpo">'
+      + '<b class="promo-qt">' + esc(k.texto) + '</b>'
+      + '<div class="promo-precios">'
+      + '<span class="promo-antes">' + pesos(antes) + '</span>'
+      + '<span class="promo-precio">' + pesos(k.precio) + '</span>'
+      + '<span class="promo-off">-' + off + '%</span></div>'
       + '<p class="promo-uni">' + pesos(Math.round(k.precio / k.cant)) + ' cada ' + (p.unidad || 'una')
-      + (ahorro > 0 ? ' · <b>ahorras ' + pesos(ahorro) + '</b>' : '') + '</p>'
+      + ' · <b>ahorras ' + pesos(ahorra) + '</b></p>'
       + '<div class="cuenta"><div><b id="cH">--</b><span>horas</span></div>'
       + '<div><b id="cM">--</b><span>min</span></div>'
-      + '<div><b id="cS">--</b><span>seg</span></div></div>'
-      + '<p class="promo-pie">Este precio es el de hoy</p>'
-      + '<button class="cta rojo" id="btnPromo" data-i="' + iP + '">Quiero ' + esc(k.texto) + '</button>'
-      + '</div></section>';
+      + '<div class="seg" id="cajaS"><b id="cS">--</b><span>seg</span></div></div>'
+      + '<button class="cta rojo" id="btnPromo" data-i="' + iP + '">Quiero la promoción</button>'
+      + '</div></div></section>';
   }
 
 
@@ -444,11 +449,13 @@
 
   cont.innerHTML = '<div class="arriba2">' + galeria + cabecera + '</div>'
     + promo
+    /* La descripcion va pegada al precio: el cliente que acaba de entrar
+       primero quiere saber QUE ES, y despues le hablamos de la oferta. */
+    + desc
     + seccionPromo()
     + seccionFormula()
     + seccionResultados()
     + seccionCompara()
-    + desc
     + resenas
     + seccionGarantia()
     /* El antes y despues va SIEMPRE justo antes de las preguntas frecuentes:
@@ -534,6 +541,11 @@
       if ($('cH')) $('cH').textContent = dosDig(Math.floor(faltan / 3600));
       if ($('cM')) $('cM').textContent = dosDig(Math.floor(faltan % 3600 / 60));
       if ($('cS')) $('cS').textContent = dosDig(faltan % 60);
+      /* el cuadrito de los segundos se enciende con cada segundo. Se quita y se
+         vuelve a poner la clase (leyendo offsetWidth en medio) porque si no, el
+         navegador no reinicia la animacion y solo late la primera vez. */
+      var cja = $('cajaS');
+      if (cja) { cja.classList.remove('late'); void cja.offsetWidth; cja.classList.add('late'); }
     }
     tic();
     setInterval(tic, 1000);
