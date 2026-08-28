@@ -41,9 +41,14 @@
   function tarjeta(p) {
     var barato = p.packs.reduce(function (a, b) { return b.precio < a.precio ? b : a; });
     var nota = notaDe(p);
+    /* dos renglones: arriba las estrellas con la nota, abajo cuantas son.
+       En una sola linea el "187 reseñas" se partia en dos y quedaba feo. */
     var estr = nota
-      ? '<div class="nota"><span class="est">' + estrellitas(nota.prom) + '</span>'
-        + '<b>' + nota.prom + '</b><small>' + nota.n + ' reseñas</small></div>'
+      ? '<div class="nota">'
+        + '<div class="linea1"><span class="est">' + estrellitas(nota.prom) + '</span>'
+        + '<b>' + nota.prom + '</b></div>'
+        + '<small>' + nota.n + ' reseñas</small>'
+        + '</div>'
       : '';
     var et = p.etiqueta
       ? '<span class="et' + (p.etiquetaOro ? ' oro' : '') + '">' + p.etiqueta + '</span>'
