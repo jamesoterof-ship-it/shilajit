@@ -316,8 +316,8 @@ window.PRODUCTOS = [
       'No deja cerdas de alambre en la comida',
     ],
     packs: [
-      { cant: 1, precio: 37990, antes: 49990, texto: '1 unidad' },
-      { cant: 2, precio: 54990, antes: 99980, texto: '2 unidades' },
+      { cant: 1, precio: 37500, antes: 49990, texto: '1 unidad' },
+      { cant: 2, precio: 54500, antes: 75000, texto: '2 unidades' },
     ],
     popular: 1,
   },
@@ -349,5 +349,5 @@ window.PRECIOS_APROBADOS = [
   28500, 38500, 49500,
   22500, 24500, 29990,
   22990, 29990, 36990,   /* cabezal de ducha */
-  37990, 54990,          /* cepillo electrico parrilla */
+  37500, 54500,          /* cepillo electrico parrilla */
 ];
