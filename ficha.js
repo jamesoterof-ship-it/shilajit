@@ -1217,7 +1217,11 @@ function abrirUpsell(nombre, telWA) {
   function val(id) { var e = document.getElementById(id); return e ? String(e.value || '').trim() : ''; }
   function datos() {
     var tel = val('fTel').replace(/\D/g, '');
-    if (tel.length < 8) return null;
+    var cor = val('fCorreo');
+    /* sirve con el telefono O con el correo: hay gente que deja uno y no el
+       otro, y si exigimos los dos se pierden igual que antes */
+    var hayCorreo = cor.indexOf('@') > 0 && cor.indexOf('.') > cor.indexOf('@');
+    if (tel.length < 8 && !hayCorreo) return null;
     var pack = (window.PACK_ELEGIDO || {});
     /* los nombres van completos: son los que lee el flujo Abandonado -> PG */
     return {
@@ -1225,7 +1229,7 @@ function abrirUpsell(nombre, telWA) {
       nombre: val('fNombre'), producto: (window.PRODUCTO_NOMBRE || document.title || ''),
       cantidad: String(pack.cant || ''), total: String(pack.precio || ''),
       direccion: val('fDir'), comuna: val('fComuna'), region: val('fRegion'),
-      referencia: val('fRef'), correo: val('fCorreo'),
+      referencia: val('fRef'), correo: cor,
       fecha: new Date().toLocaleString('es-CL'), estado: 'INCOMPLETO',
     };
   }
