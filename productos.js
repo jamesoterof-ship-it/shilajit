@@ -289,6 +289,7 @@ window.PRODUCTOS = [
   },
   {
     id: 'cepillo', unidad: 'uno', promo: 2,
+    fotosResenas: ['img/resenas-cepillo/rc1.webp?v=1','img/resenas-cepillo/rc2.webp?v=1','img/resenas-cepillo/rc3.webp?v=1','img/resenas-cepillo/rc4.webp?v=1','img/resenas-cepillo/rc5.webp?v=1','img/resenas-cepillo/rc6.webp?v=1'],
     preguntas: [
       { q: '¿Sirve para cualquier parrilla?', a: 'Sí: rejilla de fierro, acero inoxidable y plancha. Trae tres cabezales que se cambian con un clic, uno para cada superficie, y el ángulo del mango se ajusta.' },
       { q: '¿De verdad saca la grasa quemada?', a: 'Saca la grasa y la costra del uso normal: el rodillo gira con motor de 25W y hace la fuerza que tú harías restregando. Lo que no hace milagros es con óxido profundo de años: eso ya es cambio de rejilla.' },
