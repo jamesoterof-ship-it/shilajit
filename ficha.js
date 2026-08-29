@@ -156,11 +156,13 @@
   /* Upsell del Gel Sellador (Dropi 144587). Viaja en la MISMA guia, asi que no
      paga flete aparte: 6.000 la unidad, 9.990 las dos. Si el cliente no marca
      nada, upsell queda en 0 y todo se comporta igual que antes.            */
-  var UPSELL = { nombre: 'Gel Sellador Invisible 300g', opciones: [
-    { cant: 0, precio: 0,    texto: 'No, gracias' },
-    { cant: 1, precio: 6000, texto: '1 sellador' },
-    { cant: 2, precio: 9990, texto: '2 selladores' } ] };
-  var upsell = 0;
+  var UPSELL = { nombre: 'Gel Sellador Invisible 300g',
+    webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-sellador',
+    beneficios: ['Sella filtraciones y humedad', 'Queda invisible: no cambia el color',
+      'Sirve en concreto, ladrillo, ceramica y madera', 'Se aplica con brocha, listo para usar'],
+    opciones: [{ cant: 1, precio: 6000 }, { cant: 2, precio: 9990 }] };
+  /* la ventana post-compra vive fuera de este bloque, por eso se expone */
+  window.UPSELL_SELLADOR = UPSELL;
 
   /* ---------- resenas de ESTE producto ---------- */
   var TODAS = window.RESENAS || [];
@@ -481,23 +483,6 @@
     }).join('');
   }
   /* el bloque del sellador: mismo aspecto de los packs, pero aparte */
-  function upsellHTML() {
-    /* el sellador solo se ofrece con la ducha: producto.html sirve todos los
-       productos por el parametro ?p=, y no tiene sentido ofrecerlo con los
-       lentes o la antena */
-    if (String(p.id) !== 'ducha') return '';
-    return '<div class="upsell" id="upsell">'
-      + '<div class="up-tit">¿Le agregas el ' + esc(UPSELL.nombre) + '?</div>'
-      + '<div class="up-sub">Sella filtraciones y humedad. Va en el mismo envío, sin costo extra de despacho.</div>'
-      + UPSELL.opciones.map(function (o, i) {
-        return '<button type="button" class="up-op' + (i === upsell ? ' sel' : '') + '" data-u="' + i + '">'
-          + '<span class="radio"></span><span class="t">' + esc(o.texto) + '</span>'
-          + '<span class="p">' + (o.precio ? '+ ' + pesos(o.precio) : '') + '</span>'
-          + (o.cant === 2 ? '<span class="ah">ahorra ' + pesos(6000 * 2 - 9990) + '</span>' : '')
-          + '</button>';
-      }).join('')
-      + '</div>';
-  }
   var kSel = p.packs[elegido];
   var formulario = '<section class="form" id="pedir" data-rv><h2>Pide el tuyo</h2>'
     + '<p class="baj">Lo despachamos hoy. Pagas cuando lo recibes.</p>'
@@ -506,7 +491,6 @@
     + '<svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg>'
     + ' Pago 100% seguro contra entrega</div>'
     + '<div class="packs" id="packsForm">' + packsHTML() + '</div>'
-    + upsellHTML()
     + '<div class="summary">'
     + '<div class="r"><span>Subtotal</span><span id="sumSub">' + pesos(kSel.antes || kSel.precio) + '</span></div>'
     + '<div class="r"><span>Descuento</span><span id="sumDesc" class="desc">-' + pesos((kSel.antes || kSel.precio) - kSel.precio) + '</span></div>'
@@ -663,12 +647,7 @@
     if ($('pcPack')) $('pcPack').textContent = k.texto + ' · ' + pesos(Math.round(k.precio / k.cant)) + ' cada ' + (p.unidad || 'una');
     if ($('sumSub')) $('sumSub').textContent = pesos(k.antes || k.precio);
     if ($('sumDesc')) $('sumDesc').textContent = '-' + pesos((k.antes || k.precio) - k.precio);
-    var extra = UPSELL.opciones[upsell].precio;
-    if ($('sumTot')) $('sumTot').textContent = pesos(k.precio + extra);
-    if (extra && $('pcAhora')) $('pcAhora').textContent = pesos(k.precio + extra);
-    /* la linea del sellador dentro del resumen, solo si lo eligio */
-    var lin = $('sumUp');
-    if (lin) lin.textContent = extra ? ('+ ' + UPSELL.opciones[upsell].texto + ' ' + pesos(extra)) : '';
+    if ($('sumTot')) $('sumTot').textContent = pesos(k.precio);
   }
   /* los dos selectores (el de arriba y el del formulario) se mueven juntos:
      si el cliente cambia el pack abajo, arriba tambien cambia */
@@ -774,18 +753,6 @@
       elegirPack(Number(b.dataset.i));
     });
   });
-  /* el selector del sellador: mismo patron que los packs */
-  (function () {
-    var caja = $('upsell'); if (!caja) return;
-    caja.addEventListener('click', function (e) {
-      var b = e.target.closest('.up-op'); if (!b) return;
-      upsell = Number(b.dataset.u) || 0;
-      caja.querySelectorAll('.up-op').forEach(function (x) {
-        x.classList.toggle('sel', Number(x.dataset.u) === upsell);
-      });
-      pintarPrecio();
-    });
-  })();
   $('btnArriba').addEventListener('click', function () {
     $('pedir').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
@@ -849,14 +816,7 @@
          landing vieja y el que lee el flujo. Mandando solo `precio`, la
          venta entraba con precio 0 (paso el 28-08 con la ducha) y el
          candado de precios no la podia validar. Se mandan los dos. */
-      /* el sellador viaja pegado al nombre del producto, con su precio, igual
-         que el parche adelgazante. El montador lo separa y arma la orden con
-         los dos productos en la misma guia. Si no lo eligio, no se agrega
-         nada y el pedido queda identico a como era antes. */
-      producto: p.nombre + (upsell ? (' + Gel Sellador ' + UPSELL.opciones[upsell].precio) : ''),
-      total: k.precio + UPSELL.opciones[upsell].precio,
-      precio: k.precio + UPSELL.opciones[upsell].precio,
-      cantidad: k.cant,
+      producto: p.nombre, total: k.precio, precio: k.precio, cantidad: k.cant,
       direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
       /* La referencia y el correo se le pedian al cliente y se tiraban a la
          basura: no viajaban en el pedido. La referencia es justo lo que el
@@ -919,6 +879,15 @@
         + '<p>Gracias, ' + esc(g('fNombre').split(' ')[0]) + '. Te escribimos por WhatsApp al ' + esc(indic) + ' ' + esc(tel)
         + ' para confirmar el despacho.<br>Pagas cuando lo recibes.</p></div>';
       $('pedir').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    /* VENTANA POST-COMPRA: el Gel Sellador.
+       Copiada de la que ya corre con el Parche Adelgazante en app.js. Sale
+       DESPUES de que el pedido entro, nunca antes: el cliente ya compro y se
+       le ofrece agregarlo con un toque, sin volver a llenar nada. Va en la
+       misma guia, asi que no paga flete aparte.
+       Solo en la ducha; en los demas productos no se ofrece.            */
+    if (String(p.id) === 'ducha') abrirUpsell(g('fNombre').split(' ')[0], indic + tel);
+
       try { localStorage.removeItem('jaye_pedido_pendiente'); } catch (e) {}
     }
 
@@ -1130,3 +1099,61 @@ contarNumeros();
     });
   } catch (e) {}
 })();
+
+/* ====== VENTANA POST-COMPRA: oferta del Gel Sellador ======
+   Mismo molde que la del Parche Adelgazante (app.js): tarjeta centrada, la
+   foto, los beneficios, el precio y dos botones. Al aceptar se le pega el
+   agregado al pedido que ya entro, llamando al flujo upsell-sellador.    */
+function abrirUpsell(nombre, telWA) {
+  var U = window.UPSELL_SELLADOR; if (!U) return;
+  var money = function (n) { return '$' + Math.round(n).toLocaleString('es-CL'); };
+  var fb = function (ev, obj) { try { if (window.fbq) window.fbq('track', ev, obj); } catch (e) {} };
+  var st = document.createElement('style');
+  st.textContent =
+    '.upov{position:fixed;inset:0;background:rgba(6,9,18,.6);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}'
+    + '.upcard{background:#fff;border:2px solid #1E4A8C;border-radius:18px;max-width:340px;width:94%;padding:18px;text-align:center;color:#22303f;box-shadow:0 24px 70px rgba(0,0,0,.45)}'
+    + '.upcard .tag{display:inline-block;background:linear-gradient(135deg,#10265A,#1E4A8C);color:#fff;font-weight:800;border-radius:999px;padding:6px 14px;font-size:11.5px;letter-spacing:.3px}'
+    + '.upcard h3{font-size:19px;margin:11px 0 2px;color:#10265A;font-weight:800}'
+    + '.upcard .sub{font-size:12.5px;color:#6b7a90;margin-bottom:10px;line-height:1.45}'
+    + '.upcard ul{list-style:none;padding:0;margin:0 0 12px;text-align:left;display:inline-block}'
+    + '.upcard li{font-size:12.5px;margin:5px 0;padding-left:20px;position:relative}'
+    + '.upcard li::before{content:"\2713";position:absolute;left:0;color:#2e9e4f;font-weight:800}'
+    + '.upcard .precio{font-size:25px;font-weight:800;color:#1E4A8C;margin:2px 0 4px}'
+    + '.upcard .precio small{font-size:12.5px;color:#6b7a90;font-weight:400;display:block;margin-top:3px}'
+    + '.upsi{width:100%;border:0;border-radius:999px;padding:13px;font-weight:800;font-size:14.5px;background:linear-gradient(135deg,#10265A,#1E4A8C);color:#fff;cursor:pointer;margin-top:8px}'
+    + '.updos{width:100%;border:2px solid #1E4A8C;border-radius:999px;padding:11px;font-weight:800;font-size:13.5px;background:#fff;color:#1E4A8C;cursor:pointer;margin-top:8px}'
+    + '.upno{width:100%;border:0;background:none;color:#8b97a8;margin-top:10px;font-size:13px;cursor:pointer;text-decoration:underline}';
+  document.head.appendChild(st);
+  var uno = U.opciones[0].precio, dos = U.opciones[1].precio;
+  var ov = document.createElement('div'); ov.className = 'upov';
+  ov.innerHTML = '<div class="upcard">'
+    + '<span class="tag">\uD83C\uDF81 SOLO PARA TI, ' + String(nombre).toUpperCase() + '</span>'
+    + '<h3>' + U.nombre + '</h3>'
+    + '<p class="sub">Antes de despachar tu paquete, agr\u00e9galo con un toque. Va en el mismo env\u00edo, sin costo extra de despacho.</p>'
+    + '<ul>' + U.beneficios.map(function (b) { return '<li>' + b + '</li>'; }).join('') + '</ul>'
+    + '<div class="precio">+' + money(uno) + '<small>lo pagas al recibir, junto con tu pedido</small></div>'
+    + '<button class="upsi" id="upSi">S\u00cd, AGREGAR UNO</button>'
+    + '<button class="updos" id="upDos">Mejor dos por ' + money(dos) + ' \u00b7 ahorra ' + money(uno * 2 - dos) + '</button>'
+    + '<button class="upno" id="upNo">No gracias, solo mi pedido</button>'
+    + '</div>';
+  document.body.appendChild(ov);
+  fb('ViewContent', { content_name: U.nombre, content_type: 'product', value: uno, currency: 'CLP' });
+
+  function agregar(cant, precio, boton) {
+    boton.disabled = true; boton.textContent = 'Agregando\u2026';
+    fetch(U.webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ telefono: telWA, cantidad: String(cant) }) })
+      .catch(function () { /* si falla el aviso, el pedido base ya esta a salvo */ })
+      .then(function () {
+        fb('Purchase', { content_name: U.nombre, value: precio, currency: 'CLP' });
+        ov.querySelector('.upcard').innerHTML =
+          '<h3 style="margin:18px 0 8px;color:#2e9e4f">\u2705 Agregado a tu pedido</h3>'
+          + '<p class="sub">Tu ' + U.nombre + ' va en el mismo env\u00edo. Lo pagas al recibir, junto con lo dem\u00e1s.</p>'
+          + '<button class="upsi" id="upOk">Listo</button>';
+        ov.querySelector('#upOk').addEventListener('click', function () { ov.remove(); });
+      });
+  }
+  ov.querySelector('#upNo').addEventListener('click', function () { ov.remove(); });
+  ov.querySelector('#upSi').addEventListener('click', function () { agregar(1, uno, this); });
+  ov.querySelector('#upDos').addEventListener('click', function () { agregar(2, dos, this); });
+}
