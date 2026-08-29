@@ -305,10 +305,10 @@ window.PRODUCTOS = [
     nombre: 'Cepillo Eléctrico para Parrilla 2 en 1',
     sub: 'La parrilla como nueva, sin restregar',
     categoria: 'Hogar',
-    foto: 'img/prod-cepillo.webp?v=3',
-    antesDespues: 'img/prod-cepillo-ba.webp?v=1',
+    foto: 'img/prod-cepillo.webp?v=4',
+    antesDespues: 'img/prod-cepillo-ba.webp?v=2',
     antesDespuesSub: 'La misma rejilla: la costra del asado pasado, y como queda después de pasarle el cepillo.',
-    fotos: ['img/prod-cepillo.webp?v=3','img/prod-cepillo-2.webp?v=3','img/prod-cepillo-3.webp?v=3','img/prod-cepillo-4.webp?v=3'],
+    fotos: ['img/prod-cepillo.webp?v=4','img/prod-cepillo-2.webp?v=4'],
     acento: '#C2510A',   /* naranja fuego quemado: asado y brasa, propio del cepillo */
     desc: 'El Cepillo Eléctrico para Parrilla 2 en 1 limpia la rejilla y la plancha con motor: el rodillo gira solo y levanta la grasa y la costra del asado sin que tengas que restregar. Trae tres cabezales intercambiables, es inalámbrico con carga USB-C, y no suelta cerdas metálicas en la comida como el cepillo de alambre. Llega antes del 18 con envío gratis.',
     puntos: [
