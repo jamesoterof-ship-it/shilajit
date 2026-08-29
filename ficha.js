@@ -153,6 +153,14 @@
      empuja no se pierde: tiene su propia seccion de PROMOCION mas abajo,
      con contador, y ese pack lo elige el dueno en el campo `promo`. */
   var elegido = 0;
+  /* Upsell del Gel Sellador (Dropi 144587). Viaja en la MISMA guia, asi que no
+     paga flete aparte: 6.000 la unidad, 9.990 las dos. Si el cliente no marca
+     nada, upsell queda en 0 y todo se comporta igual que antes.            */
+  var UPSELL = { nombre: 'Gel Sellador Invisible 300g', opciones: [
+    { cant: 0, precio: 0,    texto: 'No, gracias' },
+    { cant: 1, precio: 6000, texto: '1 sellador' },
+    { cant: 2, precio: 9990, texto: '2 selladores' } ] };
+  var upsell = 0;
 
   /* ---------- resenas de ESTE producto ---------- */
   var TODAS = window.RESENAS || [];
@@ -472,6 +480,24 @@
         + '</button>';
     }).join('');
   }
+  /* el bloque del sellador: mismo aspecto de los packs, pero aparte */
+  function upsellHTML() {
+    /* el sellador solo se ofrece con la ducha: producto.html sirve todos los
+       productos por el parametro ?p=, y no tiene sentido ofrecerlo con los
+       lentes o la antena */
+    if (String(p.id) !== 'ducha') return '';
+    return '<div class="upsell" id="upsell">'
+      + '<div class="up-tit">¿Le agregas el ' + esc(UPSELL.nombre) + '?</div>'
+      + '<div class="up-sub">Sella filtraciones y humedad. Va en el mismo envío, sin costo extra de despacho.</div>'
+      + UPSELL.opciones.map(function (o, i) {
+        return '<button type="button" class="up-op' + (i === upsell ? ' sel' : '') + '" data-u="' + i + '">'
+          + '<span class="radio"></span><span class="t">' + esc(o.texto) + '</span>'
+          + '<span class="p">' + (o.precio ? '+ ' + pesos(o.precio) : '') + '</span>'
+          + (o.cant === 2 ? '<span class="ah">ahorra ' + pesos(6000 * 2 - 9990) + '</span>' : '')
+          + '</button>';
+      }).join('')
+      + '</div>';
+  }
   var kSel = p.packs[elegido];
   var formulario = '<section class="form" id="pedir" data-rv><h2>Pide el tuyo</h2>'
     + '<p class="baj">Lo despachamos hoy. Pagas cuando lo recibes.</p>'
@@ -480,6 +506,7 @@
     + '<svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg>'
     + ' Pago 100% seguro contra entrega</div>'
     + '<div class="packs" id="packsForm">' + packsHTML() + '</div>'
+    + upsellHTML()
     + '<div class="summary">'
     + '<div class="r"><span>Subtotal</span><span id="sumSub">' + pesos(kSel.antes || kSel.precio) + '</span></div>'
     + '<div class="r"><span>Descuento</span><span id="sumDesc" class="desc">-' + pesos((kSel.antes || kSel.precio) - kSel.precio) + '</span></div>'
@@ -636,7 +663,12 @@
     if ($('pcPack')) $('pcPack').textContent = k.texto + ' · ' + pesos(Math.round(k.precio / k.cant)) + ' cada ' + (p.unidad || 'una');
     if ($('sumSub')) $('sumSub').textContent = pesos(k.antes || k.precio);
     if ($('sumDesc')) $('sumDesc').textContent = '-' + pesos((k.antes || k.precio) - k.precio);
-    if ($('sumTot')) $('sumTot').textContent = pesos(k.precio);
+    var extra = UPSELL.opciones[upsell].precio;
+    if ($('sumTot')) $('sumTot').textContent = pesos(k.precio + extra);
+    if (extra && $('pcAhora')) $('pcAhora').textContent = pesos(k.precio + extra);
+    /* la linea del sellador dentro del resumen, solo si lo eligio */
+    var lin = $('sumUp');
+    if (lin) lin.textContent = extra ? ('+ ' + UPSELL.opciones[upsell].texto + ' ' + pesos(extra)) : '';
   }
   /* los dos selectores (el de arriba y el del formulario) se mueven juntos:
      si el cliente cambia el pack abajo, arriba tambien cambia */
@@ -742,6 +774,18 @@
       elegirPack(Number(b.dataset.i));
     });
   });
+  /* el selector del sellador: mismo patron que los packs */
+  (function () {
+    var caja = $('upsell'); if (!caja) return;
+    caja.addEventListener('click', function (e) {
+      var b = e.target.closest('.up-op'); if (!b) return;
+      upsell = Number(b.dataset.u) || 0;
+      caja.querySelectorAll('.up-op').forEach(function (x) {
+        x.classList.toggle('sel', Number(x.dataset.u) === upsell);
+      });
+      pintarPrecio();
+    });
+  })();
   $('btnArriba').addEventListener('click', function () {
     $('pedir').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
@@ -805,7 +849,14 @@
          landing vieja y el que lee el flujo. Mandando solo `precio`, la
          venta entraba con precio 0 (paso el 28-08 con la ducha) y el
          candado de precios no la podia validar. Se mandan los dos. */
-      producto: p.nombre, total: k.precio, precio: k.precio, cantidad: k.cant,
+      /* el sellador viaja pegado al nombre del producto, con su precio, igual
+         que el parche adelgazante. El montador lo separa y arma la orden con
+         los dos productos en la misma guia. Si no lo eligio, no se agrega
+         nada y el pedido queda identico a como era antes. */
+      producto: p.nombre + (upsell ? (' + Gel Sellador ' + UPSELL.opciones[upsell].precio) : ''),
+      total: k.precio + UPSELL.opciones[upsell].precio,
+      precio: k.precio + UPSELL.opciones[upsell].precio,
+      cantidad: k.cant,
       direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
       /* La referencia y el correo se le pedian al cliente y se tiraban a la
          basura: no viajaban en el pedido. La referencia es justo lo que el
@@ -1009,4 +1060,73 @@ contarNumeros();
     if (esperando) return; esperando = true; requestAnimationFrame(mirar);
   }, { passive: true });
   mirar();
+})();
+
+/* ====== Aviso al salir (exit-intent) — una sola vez por sesion ======
+
+   Copiado del que ya corre en la pagina de pestañas, que es el que James
+   aprobo. Salta en dos momentos: cuando el mouse se va por arriba de la
+   ventana (el gesto de cerrar la pestaña) y cuando le dan al boton de atras.
+
+   No aparece si el cliente ya hizo el pedido: en ese caso el bloque #pedir
+   queda reemplazado por el mensaje "Pedido recibido", y eso es lo que se
+   mira para no molestar a quien ya compro.                                */
+(function () {
+  var WA = 'https://wa.me/' + ((window.CONFIG && CONFIG.whatsapp) || '56964775539');
+  var st = document.createElement('style');
+  st.textContent =
+    '.exit-ov{position:fixed;inset:0;background:rgba(6,9,18,.7);display:grid;place-items:center;z-index:99999;padding:18px;animation:exitfade .2s ease}'
+    + '@keyframes exitfade{from{opacity:0}to{opacity:1}}'
+    + '.exit-card{background:#fff;border-radius:22px;max-width:380px;width:100%;padding:30px 24px 26px;text-align:center;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.45)}'
+    + '.exit-x{position:absolute;top:10px;right:15px;border:0;background:none;font-size:27px;cursor:pointer;color:#aaa;line-height:1}'
+    + '.exit-card .em{font-size:46px;line-height:1}'
+    + '.exit-card h3{font-size:22px;margin:8px 0 10px;color:#0c1526;font-weight:800}'
+    + '.exit-card p{font-size:15px;color:#555;line-height:1.55;margin-bottom:18px}'
+    + '.exit-card p b{color:#0c1526}'
+    + '.exit-cta{width:100%;border:0;border-radius:14px;padding:15px 18px;font-size:16px;font-weight:800;cursor:pointer;background:#e1283c;color:#fff}'
+    + '.exit-wa{display:block;margin-top:13px;color:#16a34a;font-weight:700;text-decoration:none;font-size:14px}';
+  document.head.appendChild(st);
+
+  var mostrado = false;
+  function yaCompro() {
+    var p = document.getElementById('pedir');
+    return !!(p && p.querySelector('.listo'));
+  }
+  function mostrar() {
+    if (mostrado || yaCompro()) return;
+    try {
+      if (sessionStorage.getItem('jaye_exit')) return;
+      sessionStorage.setItem('jaye_exit', '1');
+    } catch (e) { /* navegacion privada: se muestra igual, una vez */ }
+    mostrado = true;
+    var ov = document.createElement('div');
+    ov.className = 'exit-ov';
+    ov.innerHTML = '<div class="exit-card"><button class="exit-x" aria-label="Cerrar">&times;</button>'
+      + '<div class="em">🎁</div><h3>¡Espera! No te vayas todavía</h3>'
+      + '<p>Esta promoción con <b>envío gratis</b> es <b>solo por hoy</b>. '
+      + 'No pagas nada ahora: <b>pagas al recibir</b> en tu casa.</p>'
+      + '<button class="exit-cta">Quiero completar mi pedido</button>'
+      + '<a class="exit-wa" href="' + WA + '" target="_blank" rel="noopener">o escríbenos por WhatsApp</a></div>';
+    document.body.appendChild(ov);
+    function cerrar() { if (ov.parentNode) ov.parentNode.removeChild(ov); }
+    ov.querySelector('.exit-x').onclick = cerrar;
+    ov.addEventListener('click', function (e) { if (e.target === ov) cerrar(); });
+    ov.querySelector('.exit-cta').onclick = function () {
+      cerrar();
+      var p = document.getElementById('pedir');
+      if (p) p.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+  }
+
+  document.addEventListener('mouseout', function (e) {
+    if (e.clientY <= 0 && !e.relatedTarget) mostrar();
+  });
+  /* el boton de atras: se deja una entrada extra en el historial para poder
+     atraparlo sin sacar al cliente de la pagina */
+  try {
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', function () {
+      if (!mostrado) { mostrar(); history.pushState(null, '', location.href); }
+    });
+  } catch (e) {}
 })();
