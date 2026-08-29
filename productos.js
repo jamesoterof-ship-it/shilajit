@@ -287,6 +287,40 @@ window.PRODUCTOS = [
     ],
     popular: 1,
   },
+  {
+    id: 'cepillo', unidad: 'uno', promo: 2,
+    preguntas: [
+      { q: '¿Sirve para cualquier parrilla?', a: 'Sí: rejilla de fierro, acero inoxidable y plancha. Trae tres cabezales que se cambian con un clic, uno para cada superficie, y el ángulo del mango se ajusta.' },
+      { q: '¿De verdad saca la grasa quemada?', a: 'Saca la grasa y la costra del uso normal: el rodillo gira con motor de 25W y hace la fuerza que tú harías restregando. Lo que no hace milagros es con óxido profundo de años: eso ya es cambio de rejilla.' },
+      { q: '¿No raya la parrilla?', a: 'No. Las cerdas son firmes pero no son alambre suelto, así que no rayan el esmalte ni dejan cerdas metálicas en la comida como el cepillo de alambre de siempre.' },
+      { q: '¿Cuánto dura la batería?', a: 'Se carga por USB tipo C en 3 a 4 horas y aguanta varias limpiezas. Para el uso típico de asados, semanas por carga.' },
+      { q: '¿Se puede mojar?', a: 'Aguanta salpicaduras y limpieza con paño húmedo (IPX6). Los cabezales se desmontan y esos sí se lavan con agua directa.' },
+    ],
+    formulaRotulo: 'Qué trae',
+    formulaTitulo: 'El motor hace la fuerza, tú solo lo pasas.',
+    formulaSub: 'Cepillo eléctrico 2 en 1 con tres cabezales, inalámbrico y recargable.',
+    formula: [["rayo","Motor de 25W","El rodillo gira solo y levanta la grasa quemada."],["llave","3 cabezales","Rodillo de cerdas, rodillo de puntas y esponja."],["agua","Aguanta agua","IPX6: cabezales lavables y cuerpo a prueba de salpicaduras."],["casa","Sin cables","Recargable USB-C, carga en 3-4 horas."],["ojo","No deja cerdas","Nada de alambres sueltos en la comida."],["fibra","Ángulo ajustable","El mango se quiebra para llegar a los rincones."]],
+    comparaTitulo: '¿Qué lo hace diferente?',
+    compara: ['El motor restriega por ti: la parrilla queda lista en minutos.','No suelta cerdas de alambre en la comida.','Tres cabezales para rejilla, plancha y rincones.'],
+    nombre: 'Cepillo Eléctrico para Parrilla 2 en 1',
+    sub: 'La parrilla como nueva, sin restregar',
+    categoria: 'Hogar',
+    foto: 'img/prod-cepillo.webp?v=1',
+    fotos: ['img/prod-cepillo.webp?v=1','img/prod-cepillo-2.webp?v=1','img/prod-cepillo-3.webp?v=1','img/prod-cepillo-4.webp?v=1'],
+    acento: '#C2510A',   /* naranja fuego quemado: asado y brasa, propio del cepillo */
+    desc: 'El Cepillo Eléctrico para Parrilla 2 en 1 limpia la rejilla y la plancha con motor: el rodillo gira solo y levanta la grasa y la costra del asado sin que tengas que restregar. Trae tres cabezales intercambiables, es inalámbrico con carga USB-C, y no suelta cerdas metálicas en la comida como el cepillo de alambre. Llega antes del 18 con envío gratis.',
+    puntos: [
+      'El motor hace la fuerza: lista en minutos',
+      'Tres cabezales: rejilla, plancha y rincones',
+      'Sin cables, recargable USB-C',
+      'No deja cerdas de alambre en la comida',
+    ],
+    packs: [
+      { cant: 1, precio: 37990, antes: 49990, texto: '1 unidad' },
+      { cant: 2, precio: 54990, antes: 99980, texto: '2 unidades' },
+    ],
+    popular: 1,
+  },
 ];
 
 /* Preguntas frecuentes. Salen de lo que los clientes preguntan DE VERDAD por
@@ -315,4 +349,5 @@ window.PRECIOS_APROBADOS = [
   28500, 38500, 49500,
   22500, 24500, 29990,
   22990, 29990, 36990,   /* cabezal de ducha */
+  37990, 54990,          /* cepillo electrico parrilla */
 ];
