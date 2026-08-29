@@ -641,6 +641,8 @@
 
   function pintarPrecio() {
     var k = p.packs[elegido];
+    window.PACK_ELEGIDO = { cant: k.cant, precio: k.precio };
+    window.PRODUCTO_NOMBRE = p.nombre;
     var o = k.antes ? Math.round((1 - k.precio / k.antes) * 100) : 0;
     $('pcAhora').textContent = pesos(k.precio);
     if ($('pcAntes')) $('pcAntes').textContent = k.antes ? pesos(k.antes) : '';
@@ -1195,3 +1197,60 @@ function abrirUpsell(nombre, telWA) {
   ov.querySelector('#upSi').addEventListener('click', function () { agregar(1, uno, this); });
   ov.querySelector('#upDos').addEventListener('click', function () { agregar(2, dos, this); });
 }
+
+/* ====== CARRITO ABANDONADO ======
+   Esto no existia en la ficha. El app.js viejo si lo tenia, y por eso el
+   ultimo carrito guardado es del 29 de junio: justo cuando se migro a esta
+   pagina. Desde entonces, toda la gente que dejo su telefono y se fue sin
+   comprar se perdio. Hoy fueron 18 personas al formulario y cero guardadas.
+
+   Se manda cuando el cliente ya escribio un telefono con 8 digitos o mas y
+   una de dos: cambia de campo despues de escribirlo, o se va de la pagina.
+   Se reenvia si completa mas datos, y el mismo sid actualiza la misma fila
+   en vez de duplicarla.
+
+   Si alcanza a comprar, no se manda nada: para eso esta la marca de compra. */
+(function () {
+  var URL = 'https://n8n-production-8a42.up.railway.app/webhook/abandonado';
+  var SID = 'AB' + Date.now() + Math.floor(Math.random() * 1e6);
+  var yaCompro = false, ultimo = '';
+  function val(id) { var e = document.getElementById(id); return e ? String(e.value || '').trim() : ''; }
+  function datos() {
+    var tel = val('fTel').replace(/\D/g, '');
+    if (tel.length < 8) return null;
+    var pack = (window.PACK_ELEGIDO || {});
+    /* los nombres van completos: son los que lee el flujo Abandonado -> PG */
+    return {
+      sid: SID, telefono: tel, indicativo: val('fCod') || '+56',
+      nombre: val('fNombre'), producto: (window.PRODUCTO_NOMBRE || document.title || ''),
+      cantidad: String(pack.cant || ''), total: String(pack.precio || ''),
+      direccion: val('fDir'), comuna: val('fComuna'), region: val('fRegion'),
+      referencia: val('fRef'), correo: val('fCorreo'),
+      fecha: new Date().toLocaleString('es-CL'), estado: 'INCOMPLETO',
+    };
+  }
+  function mandar() {
+    if (yaCompro) return;
+    var d = datos(); if (!d) return;
+    var firma = JSON.stringify(d).replace(/"fecha":"[^"]*"/, '');
+    if (firma === ultimo) return;          /* nada nuevo que contar */
+    ultimo = firma;
+    try {
+      var cuerpo = JSON.stringify(d);
+      /* sendBeacon sobrevive al cierre de la pestaña; el fetch es el respaldo */
+      if (navigator.sendBeacon) navigator.sendBeacon(URL, new Blob([cuerpo], { type: 'application/json' }));
+      else fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: cuerpo, keepalive: true });
+    } catch (e) {}
+  }
+  ['fTel', 'fNombre', 'fDir', 'fComuna', 'fRegion', 'fRef', 'fCorreo'].forEach(function (id) {
+    document.addEventListener('blur', function (e) {
+      if (e.target && e.target.id === id) mandar();
+    }, true);
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') mandar();
+  });
+  window.addEventListener('pagehide', mandar);
+  /* si compro, esto deja de mandarse */
+  window.marcarCompra = function () { yaCompro = true; };
+})();
