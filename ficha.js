@@ -158,6 +158,7 @@
      nada, upsell queda en 0 y todo se comporta igual que antes.            */
   var UPSELL = { nombre: 'Gel Sellador Invisible 300g',
     webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-sellador',
+    foto: 'img/sellador.webp',
     beneficios: ['Sella filtraciones y humedad', 'Queda invisible: no cambia el color',
       'Sirve en concreto, ladrillo, ceramica y madera', 'Se aplica con brocha, listo para usar'],
     opciones: [{ cant: 1, precio: 6000 }, { cant: 2, precio: 9990 }] };
@@ -1101,44 +1102,78 @@ contarNumeros();
 })();
 
 /* ====== VENTANA POST-COMPRA: oferta del Gel Sellador ======
-   Mismo molde que la del Parche Adelgazante (app.js): tarjeta centrada, la
-   foto, los beneficios, el precio y dos botones. Al aceptar se le pega el
-   agregado al pedido que ya entro, llamando al flujo upsell-sellador.    */
+   Sale DESPUES de que el pedido entro, igual que la del Parche Adelgazante.
+   El cliente ya compro: aqui solo se le ofrece agregarlo con un toque, sin
+   volver a llenar nada. Va en el mismo envio, asi que no paga flete aparte. */
 function abrirUpsell(nombre, telWA) {
   var U = window.UPSELL_SELLADOR; if (!U) return;
   var money = function (n) { return '$' + Math.round(n).toLocaleString('es-CL'); };
   var fb = function (ev, obj) { try { if (window.fbq) window.fbq('track', ev, obj); } catch (e) {} };
+
   var st = document.createElement('style');
   st.textContent =
-    '.upov{position:fixed;inset:0;background:rgba(6,9,18,.6);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}'
-    + '.upcard{background:#fff;border:2px solid #1E4A8C;border-radius:18px;max-width:340px;width:94%;padding:18px;text-align:center;color:#22303f;box-shadow:0 24px 70px rgba(0,0,0,.45)}'
-    + '.upcard .tag{display:inline-block;background:linear-gradient(135deg,#10265A,#1E4A8C);color:#fff;font-weight:800;border-radius:999px;padding:6px 14px;font-size:11.5px;letter-spacing:.3px}'
-    + '.upcard h3{font-size:19px;margin:11px 0 2px;color:#10265A;font-weight:800}'
-    + '.upcard .sub{font-size:12.5px;color:#6b7a90;margin-bottom:10px;line-height:1.45}'
-    + '.upcard ul{list-style:none;padding:0;margin:0 0 12px;text-align:left;display:inline-block}'
-    + '.upcard li{font-size:12.5px;margin:5px 0;padding-left:20px;position:relative}'
-    + '.upcard li::before{content:"\2713";position:absolute;left:0;color:#2e9e4f;font-weight:800}'
-    + '.upcard .precio{font-size:25px;font-weight:800;color:#1E4A8C;margin:2px 0 4px}'
-    + '.upcard .precio small{font-size:12.5px;color:#6b7a90;font-weight:400;display:block;margin-top:3px}'
-    + '.upsi{width:100%;border:0;border-radius:999px;padding:13px;font-weight:800;font-size:14.5px;background:linear-gradient(135deg,#10265A,#1E4A8C);color:#fff;cursor:pointer;margin-top:8px}'
-    + '.updos{width:100%;border:2px solid #1E4A8C;border-radius:999px;padding:11px;font-weight:800;font-size:13.5px;background:#fff;color:#1E4A8C;cursor:pointer;margin-top:8px}'
-    + '.upno{width:100%;border:0;background:none;color:#8b97a8;margin-top:10px;font-size:13px;cursor:pointer;text-decoration:underline}';
+    '@keyframes upIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}'
+  + '@keyframes upFade{from{opacity:0}to{opacity:1}}'
+  + '.upov{position:fixed;inset:0;background:rgba(4,10,24,.74);z-index:99999;display:flex;'
+  + 'align-items:center;justify-content:center;padding:14px;overflow:auto;animation:upFade .18s ease}'
+  + '.upcard{position:relative;background:#fff;border-radius:24px;max-width:360px;width:100%;'
+  + 'padding:0 0 20px;text-align:center;color:#1b2432;overflow:hidden;'
+  + 'box-shadow:0 30px 80px rgba(4,10,24,.55);animation:upIn .26s cubic-bezier(.2,.9,.3,1.15)}'
+  + '.upcard .cab{background:linear-gradient(135deg,#0B1A3F,#1E4A8C);padding:16px 18px 14px}'
+  + '.upcard .tag{display:inline-block;background:#fff;color:#10265A;font-weight:800;'
+  + 'border-radius:999px;padding:6px 15px;font-size:11.5px;letter-spacing:.5px}'
+  + '.upcard h3{font-size:19px;margin:9px 0 0;font-weight:800;line-height:1.25;color:#fff}'
+  + '.upcard .foto{display:block;width:100%;height:auto;margin:0}'
+  + '.upcard .sub{font-size:13px;color:#68788e;margin:14px 22px 12px;line-height:1.5}'
+  + '.upcard .precio{font-size:33px;font-weight:800;color:#10265A;letter-spacing:-.6px;margin:2px 0 0}'
+  + '.upcard .precio small{font-size:12.5px;color:#68788e;font-weight:500;display:block;'
+  + 'margin-top:5px;letter-spacing:0}'
+  + '.upbtns{margin:16px 22px 0}'
+  + '.upsi,.updos{width:100%;border:0;border-radius:15px;font-weight:800;cursor:pointer;'
+  + 'transition:transform .14s ease,box-shadow .22s ease,filter .22s ease,border-color .22s ease}'
+  + '.upsi{padding:16px;font-size:15px;background:linear-gradient(135deg,#12306E,#2563C7);'
+  + 'color:#fff;box-shadow:0 10px 24px rgba(18,48,110,.38)}'
+  + '.upsi:hover{filter:brightness(1.09);box-shadow:0 14px 30px rgba(18,48,110,.46)}'
+  + '.upsi:active{transform:translateY(2px);box-shadow:0 5px 12px rgba(18,48,110,.34)}'
+  + '.updos{margin-top:10px;padding:14px;font-size:13.5px;background:#fff;color:#12306E;'
+  + 'border:2px solid #cfdcf2;display:flex;align-items:center;justify-content:center;gap:9px}'
+  + '.updos:hover{border-color:#2563C7;background:#f6f9ff}'
+  + '.updos:active{transform:translateY(2px)}'
+  + '.updos .ah{background:#e8f7ee;color:#1c7a3e;font-size:11.5px;font-weight:800;'
+  + 'border-radius:999px;padding:4px 9px}'
+  + '.upno{width:100%;border:0;background:none;color:#93a1b5;margin-top:13px;font-size:13px;cursor:pointer}'
+  + '.upno:hover{color:#68788e;text-decoration:underline}'
+  + '.upx{position:absolute;top:11px;right:13px;border:0;background:rgba(255,255,255,.2);color:#fff;'
+  + 'width:29px;height:29px;border-radius:50%;font-size:18px;line-height:1;cursor:pointer;z-index:2}'
+  + '.upx:hover{background:rgba(255,255,255,.34)}'
+  + '@media (prefers-reduced-motion:reduce){.upcard,.upov{animation:none}'
+  + '.upsi,.updos{transition:none}}';
   document.head.appendChild(st);
+
   var uno = U.opciones[0].precio, dos = U.opciones[1].precio;
   var ov = document.createElement('div'); ov.className = 'upov';
   ov.innerHTML = '<div class="upcard">'
-    + '<span class="tag">\uD83C\uDF81 SOLO PARA TI, ' + String(nombre).toUpperCase() + '</span>'
-    + '<h3>' + U.nombre + '</h3>'
-    + '<p class="sub">Antes de despachar tu paquete, agr\u00e9galo con un toque. Va en el mismo env\u00edo, sin costo extra de despacho.</p>'
-    + '<ul>' + U.beneficios.map(function (b) { return '<li>' + b + '</li>'; }).join('') + '</ul>'
-    + '<div class="precio">+' + money(uno) + '<small>lo pagas al recibir, junto con tu pedido</small></div>'
-    + '<button class="upsi" id="upSi">S\u00cd, AGREGAR UNO</button>'
-    + '<button class="updos" id="upDos">Mejor dos por ' + money(dos) + ' \u00b7 ahorra ' + money(uno * 2 - dos) + '</button>'
-    + '<button class="upno" id="upNo">No gracias, solo mi pedido</button>'
+    + '<button class="upx" id="upX" aria-label="Cerrar">&times;</button>'
+    + '<div class="cab">'
+    +   '<span class="tag">PROMOCI\u00d3N POR TU COMPRA</span>'
+    +   '<h3>' + U.nombre + '</h3>'
+    + '</div>'
+    + (U.foto ? '<img class="foto" src="' + U.foto + '" alt="' + U.nombre + '" onerror="this.remove()">' : '')
+    + '<p class="sub">Antes de despachar tu paquete, agr\u00e9galo con un toque. '
+    +   'Va en el mismo env\u00edo, sin costo extra de despacho.</p>'
+    + '<div class="precio">+' + money(uno)
+    +   '<small>lo pagas al recibir, junto con tu pedido</small></div>'
+    + '<div class="upbtns">'
+    +   '<button class="upsi" id="upSi">S\u00cd, AGREGARLO A MI PEDIDO</button>'
+    +   '<button class="updos" id="upDos">Mejor dos por ' + money(dos)
+    +     '<span class="ah">ahorra ' + money(uno * 2 - dos) + '</span></button>'
+    +   '<button class="upno" id="upNo">No gracias, solo mi pedido</button>'
+    + '</div>'
     + '</div>';
   document.body.appendChild(ov);
   fb('ViewContent', { content_name: U.nombre, content_type: 'product', value: uno, currency: 'CLP' });
 
+  function cerrar() { if (ov.parentNode) ov.parentNode.removeChild(ov); }
   function agregar(cant, precio, boton) {
     boton.disabled = true; boton.textContent = 'Agregando\u2026';
     fetch(U.webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -1147,13 +1182,16 @@ function abrirUpsell(nombre, telWA) {
       .then(function () {
         fb('Purchase', { content_name: U.nombre, value: precio, currency: 'CLP' });
         ov.querySelector('.upcard').innerHTML =
-          '<h3 style="margin:18px 0 8px;color:#2e9e4f">\u2705 Agregado a tu pedido</h3>'
-          + '<p class="sub">Tu ' + U.nombre + ' va en el mismo env\u00edo. Lo pagas al recibir, junto con lo dem\u00e1s.</p>'
-          + '<button class="upsi" id="upOk">Listo</button>';
-        ov.querySelector('#upOk').addEventListener('click', function () { ov.remove(); });
+          '<div class="cab"><h3>\u00a1Agregado a tu pedido!</h3></div>'
+          + '<p class="sub">Tu ' + U.nombre + ' va en el mismo env\u00edo. '
+          + 'Lo pagas al recibir, junto con lo dem\u00e1s.</p>'
+          + '<div class="upbtns"><button class="upsi" id="upOk">Listo</button></div>';
+        ov.querySelector('#upOk').addEventListener('click', cerrar);
       });
   }
-  ov.querySelector('#upNo').addEventListener('click', function () { ov.remove(); });
+  ov.querySelector('#upNo').addEventListener('click', cerrar);
+  ov.querySelector('#upX').addEventListener('click', cerrar);
+  ov.addEventListener('click', function (e) { if (e.target === ov) cerrar(); });
   ov.querySelector('#upSi').addEventListener('click', function () { agregar(1, uno, this); });
   ov.querySelector('#upDos').addEventListener('click', function () { agregar(2, dos, this); });
 }
