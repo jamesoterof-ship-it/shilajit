@@ -813,6 +813,17 @@ body.con-barra .wa{bottom:72px}
    ============================================================ */
 @media (min-width:1024px){
 
+  /* 0 · la portada del producto: foto y miniaturas a la izquierda, y el
+     nombre, la nota y el precio a la derecha.
+     La rejilla tiene dos columnas y tres bloques que se acomodaban solos:
+     las miniaturas (70px de alto) se quedaban con TODA la columna derecha
+     y dejaban 506px de vacio, y los datos del producto se iban a la fila de
+     abajo. En un computador se veia media pantalla en blanco. */
+  .prod .arriba2{ grid-template-columns:557px 1fr; align-items:start }
+  .prod .arriba2 > .gal  { grid-column:1; grid-row:1 }
+  .prod .arriba2 > .miniz{ grid-column:1; grid-row:2 }
+  .prod .arriba2 > .datos{ grid-column:2; grid-row:1 / span 2 }
+
   /* 1 · ancho de lectura: ningun parrafo pasa de ~70 letras */
   .prod .desc p,
   .prod .sub2,
