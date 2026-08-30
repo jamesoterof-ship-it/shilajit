@@ -819,10 +819,15 @@ body.con-barra .wa{bottom:72px}
      las miniaturas (70px de alto) se quedaban con TODA la columna derecha
      y dejaban 506px de vacio, y los datos del producto se iban a la fila de
      abajo. En un computador se veia media pantalla en blanco. */
-  .prod .arriba2{ grid-template-columns:557px 1fr; align-items:start }
-  .prod .arriba2 > .gal  { grid-column:1; grid-row:1 }
-  .prod .arriba2 > .miniz{ grid-column:1; grid-row:2 }
-  .prod .arriba2 > .datos{ grid-column:2; grid-row:1 / span 2 }
+  /* la primera fila mide lo que mide el bloque de datos, no lo que mide la
+     foto: si no, quedaba un hueco de 171px entre el precio y las miniaturas */
+  .prod .arriba2{ grid-template-columns:557px 1fr;
+    grid-template-rows:max-content 1fr; align-items:start }
+  .prod .arriba2 > .gal  { grid-column:1; grid-row:1 / span 2 }
+  .prod .arriba2 > .datos{ grid-column:2; grid-row:1 }
+  /* las miniaturas van a la derecha, DEBAJO del precio: asi lo pidio el
+     dueno. Antes colgaban de la foto y dejaban la columna derecha a medias. */
+  .prod .arriba2 > .miniz{ grid-column:2; grid-row:2; margin-top:4px }
 
   /* 1 · ancho de lectura: ningun parrafo pasa de ~70 letras */
   .prod .desc p,
