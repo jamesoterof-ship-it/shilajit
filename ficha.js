@@ -761,6 +761,13 @@
     });
     pintarPrecio();
   }
+  /* Se pinta una vez al cargar. pintarPrecio() es la que deja PACK_ELEGIDO y
+     PRODUCTO_NOMBRE en window, y solo se llamaba al CAMBIAR de pack: si el
+     cliente entraba y llenaba el formulario sin tocar los packs, el carrito
+     abandonado se guardaba sin producto, sin cantidad y sin total, y asi no
+     hay con que escribirle despues. */
+  pintarPrecio();
+
   ['packs', 'packsForm'].forEach(function (cual) {
     var caja = $(cual); if (!caja) return;
     caja.addEventListener('click', function (e) {
@@ -1165,10 +1172,18 @@ function abrirUpsell(nombre, telWA, upsell) {
   + '.updos:active{transform:translateY(2px)}'
   + '.updos .ah{background:#e8f7ee;color:#1c7a3e;font-size:11.5px;font-weight:800;'
   + 'border-radius:999px;padding:4px 9px}'
-  + '.upno{width:100%;border:0;background:none;color:#93a1b5;margin-top:13px;font-size:13px;cursor:pointer}'
-  + '.upno:hover{color:#68788e;text-decoration:underline}'
-  + '.upx{position:absolute;top:11px;right:13px;border:0;background:rgba(255,255,255,.2);color:#fff;'
-  + 'width:29px;height:29px;border-radius:50%;font-size:18px;line-height:1;cursor:pointer;z-index:2}'
+  /* El NO tiene que verse y poder tocarse. Estaba en gris #93a1b5 (contraste
+     2.6 sobre blanco: casi invisible) y con 16px de alto, imposible de
+     acertar con el dedo. Ahora llega a 4.9 de contraste y a 46px de alto,
+     que es el minimo para tocar. Sigue siendo el boton secundario: no
+     compite con el de comprar, pero el que no lo quiere puede salir. */
+  + '.upno{width:100%;border:0;background:none;color:#5a6a80;margin-top:10px;'
+  + 'font-size:14px;font-weight:600;padding:13px 8px;min-height:46px;cursor:pointer;'
+  + 'border-radius:12px;text-decoration:underline;text-underline-offset:3px}'
+  + '.upno:hover{color:#3d4a5c;background:#f3f5f8}'
+  /* la X pasa de 29 a 42px: 29 no se acierta con el dedo */
+  + '.upx{position:absolute;top:9px;right:10px;border:0;background:rgba(255,255,255,.24);color:#fff;'
+  + 'width:44px;height:44px;min-width:44px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer;z-index:2}'
   + '.upx:hover{background:rgba(255,255,255,.34)}'
   + '@media (prefers-reduced-motion:reduce){.upcard,.upov{animation:none}'
   + '.upsi,.updos{transition:none}}';
@@ -1282,6 +1297,23 @@ function abrirUpsell(nombre, telWA, upsell) {
       if (e.target && e.target.id === id) mandar();
     }, true);
   });
+
+  /* EL TELEFONO SE CAPTURA APENAS LO ESCRIBE, sin esperar a que cambie de
+     campo ni a que se vaya. Antes, si escribia el numero y se quedaba ahi
+     pensando —o cerraba de golpe en un celular, donde el pagehide no siempre
+     alcanza a salir—, no quedaba NADA y ese cliente se perdia entero.
+     Se espera 1,2 s desde la ultima tecla para no mandar un envio por
+     digito, y solo cuando ya hay 8 numeros o mas. */
+  (function () {
+    var tel = document.getElementById('fTel');
+    if (!tel) return;
+    var t;
+    tel.addEventListener('input', function () {
+      clearTimeout(t);
+      if (tel.value.replace(/\D/g, '').length < 8) return;
+      t = setTimeout(mandar, 1200);
+    });
+  })();
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'hidden') mandar();
   });
