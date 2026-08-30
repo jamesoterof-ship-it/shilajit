@@ -691,10 +691,17 @@ body.legal{background:var(--hueso)}
    van pegados a la ventana, no a la caja.
    Por debajo de 1500px NO cambia nada.
    ============================================================ */
-@media (min-width:1500px){
+@media (min-width:1360px){
   body{ background:#E6E3DE }
-  body > *:not(.wa):not(.stickycta):not(script):not(style){
-    max-width:1500px; margin-left:auto; margin-right:auto }
+  /* 1.300px: el contenido de adentro va en 1.180, asi queda 60px de aire a
+     cada lado. Mas angosto que esto y el contenido toca los bordes. */
+  /* la rejilla queda FUERA de esta regla: cuelga directo del body y no tiene
+     relleno propio, asi que con el ancho de la caja las tarjetas tocarian el
+     borde. Se excluye aqui y se le pone su ancho aparte; si solo se intentara
+     sobrescribir despues no serviria, porque este selector pesa mas. */
+  body > *:not(.wa):not(.stickycta):not(.rejilla):not(script):not(style){
+    max-width:1300px; margin-left:auto; margin-right:auto }
+  body > .rejilla{ max-width:1180px; margin-left:auto; margin-right:auto }
   /* la caja se despega del gris con una sombra suave */
   body > .pegado{ box-shadow:0 1px 0 rgba(0,0,0,.06) }
 }
