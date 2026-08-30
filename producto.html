@@ -827,7 +827,11 @@ body.con-barra .wa{bottom:72px}
   .prod .arriba2 > .datos{ grid-column:2; grid-row:1 }
   /* las miniaturas van a la derecha, DEBAJO del precio: asi lo pidio el
      dueno. Antes colgaban de la foto y dejaban la columna derecha a medias. */
-  .prod .arriba2 > .miniz{ grid-column:2; grid-row:2; margin-top:4px }
+  .prod .arriba2 > .miniz{ grid-column:2; grid-row:2; margin-top:4px; height:auto }
+  /* en el celular miden 58px y ahi estan bien; en un computador se veian
+     como estampillas. La columna tiene 557px, asi que caben holgadas. */
+  .prod .arriba2 > .miniz > *{ width:120px; height:120px; flex:0 0 120px }
+  .prod .arriba2 > .miniz img{ width:100%; height:100%; object-fit:cover }
 
   /* 1 · ancho de lectura: ningun parrafo pasa de ~70 letras */
   .prod .desc p,
