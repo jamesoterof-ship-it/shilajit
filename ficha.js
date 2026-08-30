@@ -153,17 +153,29 @@
      empuja no se pierde: tiene su propia seccion de PROMOCION mas abajo,
      con contador, y ese pack lo elige el dueno en el campo `promo`. */
   var elegido = 0;
-  /* Upsell del Gel Sellador (Dropi 144587). Viaja en la MISMA guia, asi que no
-     paga flete aparte: 6.000 la unidad, 9.990 las dos. Si el cliente no marca
-     nada, upsell queda en 0 y todo se comporta igual que antes.            */
-  var UPSELL = { nombre: 'Gel Sellador Invisible 300g',
-    webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-sellador',
-    foto: 'img/sellador.webp',
-    beneficios: ['Sella filtraciones y humedad', 'Queda invisible: no cambia el color',
-      'Sirve en concreto, ladrillo, ceramica y madera', 'Se aplica con brocha, listo para usar'],
-    opciones: [{ cant: 1, precio: 6000 }, { cant: 2, precio: 9990 }] };
-  /* la ventana post-compra vive fuera de este bloque, por eso se expone */
-  window.UPSELL_SELLADOR = UPSELL;
+  /* Upsells post-compra, uno por producto. Todos viajan en la MISMA guia que
+     el pedido, asi que no pagan flete aparte: por eso el extra tiene que ser
+     del MISMO proveedor. Si un producto no esta en esta lista, no se le
+     ofrece nada y todo se comporta igual que antes.                        */
+  var UPSELLS = {
+    /* Cabezal de ducha -> Gel Sellador (Dropi 144587) */
+    ducha: { nombre: 'Gel Sellador Invisible 300g',
+      webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-sellador',
+      foto: 'img/sellador.webp',
+      beneficios: ['Sella filtraciones y humedad', 'Queda invisible: no cambia el color',
+        'Sirve en concreto, ladrillo, ceramica y madera', 'Se aplica con brocha, listo para usar'],
+      opciones: [{ cant: 1, precio: 6000 }, { cant: 2, precio: 9990 }] },
+    /* Cepillo de parrilla -> Encendedor de arco (Dropi 91919) */
+    cepillo: { nombre: 'Encendedor Eléctrico de Arco',
+      webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-encendedor',
+      foto: 'img/encendedor.webp',
+      beneficios: ['Enciende la parrilla sin fósforos ni gas', 'Recargable por USB: no se acaba',
+        'Cuello largo y flexible: no te quemas', 'Doble seguro para que no prenda solo'],
+      opciones: [{ cant: 1, precio: 4950 }, { cant: 2, precio: 7950 }] }
+  };
+  /* la ventana post-compra vive fuera de este bloque, por eso se exponen */
+  window.UPSELLS = UPSELLS;
+  window.UPSELL_SELLADOR = UPSELLS.ducha;   /* se deja por si algo viejo lo llama */
 
   /* ---------- resenas de ESTE producto ---------- */
   var TODAS = window.RESENAS || [];
@@ -888,8 +900,9 @@
        DESPUES de que el pedido entro, nunca antes: el cliente ya compro y se
        le ofrece agregarlo con un toque, sin volver a llenar nada. Va en la
        misma guia, asi que no paga flete aparte.
-       Solo en la ducha; en los demas productos no se ofrece.            */
-    if (String(p.id) === 'ducha') abrirUpsell(g('fNombre').split(' ')[0], indic + tel);
+       Solo en los productos que tienen upsell; en los demas no se ofrece. */
+    var extra = (window.UPSELLS || {})[String(p.id)];
+    if (extra) abrirUpsell(g('fNombre').split(' ')[0], indic + tel, extra);
 
       try { localStorage.removeItem('jaye_pedido_pendiente'); } catch (e) {}
     }
@@ -1107,8 +1120,10 @@ contarNumeros();
    Sale DESPUES de que el pedido entro, igual que la del Parche Adelgazante.
    El cliente ya compro: aqui solo se le ofrece agregarlo con un toque, sin
    volver a llenar nada. Va en el mismo envio, asi que no paga flete aparte. */
-function abrirUpsell(nombre, telWA) {
-  var U = window.UPSELL_SELLADOR; if (!U) return;
+function abrirUpsell(nombre, telWA, upsell) {
+  /* el upsell llega desde la ficha segun el producto; si no viene, se cae al
+     del sellador para no romper nada que lo llamara con dos argumentos */
+  var U = upsell || window.UPSELL_SELLADOR; if (!U) return;
   var money = function (n) { return '$' + Math.round(n).toLocaleString('es-CL'); };
   var fb = function (ev, obj) { try { if (window.fbq) window.fbq('track', ev, obj); } catch (e) {} };
 
@@ -1122,10 +1137,17 @@ function abrirUpsell(nombre, telWA) {
   + 'padding:0 0 20px;text-align:center;color:#1b2432;overflow:hidden;'
   + 'box-shadow:0 30px 80px rgba(4,10,24,.55);animation:upIn .26s cubic-bezier(.2,.9,.3,1.15)}'
   + '.upcard .cab{background:linear-gradient(135deg,#0B1A3F,#1E4A8C);padding:16px 18px 14px}'
+  /* el texto es largo: con radio de capsula y 3 lineas se veia mal. Radio
+     mediano, letra un punto menor y menos espaciado para que entre en dos. */
   + '.upcard .tag{display:inline-block;background:#fff;color:#10265A;font-weight:800;'
-  + 'border-radius:999px;padding:6px 15px;font-size:11.5px;letter-spacing:.5px}'
+  + 'border-radius:13px;padding:7px 14px;font-size:11px;letter-spacing:.3px;'
+  + 'line-height:1.4;max-width:100%;text-wrap:balance}'
   + '.upcard h3{font-size:19px;margin:9px 0 0;font-weight:800;line-height:1.25;color:#fff}'
-  + '.upcard .foto{display:block;width:100%;height:auto;margin:0}'
+  /* La foto se limita en alto: a tamano completo empujaba la opcion de dos
+     unidades debajo del pliegue en celular, y ahi esta el margen. Con
+     'contain' la placa se ve entera, solo mas chica. */
+  + '.upcard .foto{display:block;width:100%;height:auto;max-height:240px;'
+  + 'object-fit:contain;background:#0a1020;margin:0}'
   + '.upcard .sub{font-size:13px;color:#68788e;margin:14px 22px 12px;line-height:1.5}'
   + '.upcard .precio{font-size:33px;font-weight:800;color:#10265A;letter-spacing:-.6px;margin:2px 0 0}'
   + '.upcard .precio small{font-size:12.5px;color:#68788e;font-weight:500;display:block;'
@@ -1157,7 +1179,7 @@ function abrirUpsell(nombre, telWA) {
   ov.innerHTML = '<div class="upcard">'
     + '<button class="upx" id="upX" aria-label="Cerrar">&times;</button>'
     + '<div class="cab">'
-    +   '<span class="tag">PROMOCI\u00d3N POR TU COMPRA</span>'
+    +   '<span class="tag">TE GANASTE ESTA PROMOCI\u00d3N POR TU COMPRA</span>'
     +   '<h3>' + U.nombre + '</h3>'
     + '</div>'
     + (U.foto ? '<img class="foto" src="' + U.foto + '" alt="' + U.nombre + '" onerror="this.remove()">' : '')
@@ -1241,9 +1263,18 @@ function abrirUpsell(nombre, telWA) {
     ultimo = firma;
     try {
       var cuerpo = JSON.stringify(d);
-      /* sendBeacon sobrevive al cierre de la pestaña; el fetch es el respaldo */
-      if (navigator.sendBeacon) navigator.sendBeacon(URL, new Blob([cuerpo], { type: 'application/json' }));
-      else fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: cuerpo, keepalive: true });
+      /* OJO, esto tenia el orden al reves y por eso no entraba UN SOLO carrito
+         desde el 28-jul: sendBeacon con un Blob 'application/json' obliga al
+         navegador a pedir permiso CORS antes, y sendBeacon no sabe hacer eso,
+         asi que descarta el envio SIN avisar. Ni error en consola, ni
+         ejecucion en n8n. Ahora manda fetch con keepalive, que tambien
+         sobrevive al cierre de la pestana y si hace el permiso; sendBeacon
+         queda de respaldo y con 'text/plain', que es de los que no lo piden. */
+      fetch(URL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                   body: cuerpo, keepalive: true })
+        .catch(function () {
+          try { if (navigator.sendBeacon) navigator.sendBeacon(URL, new Blob([cuerpo], { type: 'text/plain' })); } catch (e) {}
+        });
     } catch (e) {}
   }
   ['fTel', 'fNombre', 'fDir', 'fComuna', 'fRegion', 'fRef', 'fCorreo'].forEach(function (id) {
