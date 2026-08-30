@@ -799,6 +799,51 @@ body.con-barra .wa{bottom:72px}
 .prod .ing .cir{
   background:linear-gradient(140deg,var(--acento),color-mix(in srgb,var(--acento) 74%,#000)) }
 .prod .ing .cir svg{ stroke:var(--sobreAcento,#fff) }
+
+/* ============================================================
+   PANTALLA GRANDE (computador) — desde 1024px
+   La pagina se hizo para celular y ahi se ve bien: ESTO NO TOCA
+   NADA por debajo de 1024px. Lo unico que hace es aprovechar el
+   ancho que sobra en un computador, donde antes todo salia en
+   una sola columna estirada:
+     - los parrafos llegaban a 148 letras por linea (se lee mal
+       de 75 para arriba: el ojo pierde el renglon al saltar)
+     - las preguntas y las resenas iban una debajo de otra y la
+       pagina medida 8.467px de alto
+   ============================================================ */
+@media (min-width:1024px){
+
+  /* 1 · ancho de lectura: ningun parrafo pasa de ~70 letras */
+  .prod .desc p,
+  .prod .sub2,
+  .prod .fq details p{ max-width:70ch }
+
+  /* 2 · preguntas frecuentes en dos columnas.
+     Se usa columnas de texto (no grid) para que cada pregunta
+     se quede entera y no se parta a la mitad al abrirla. */
+  .prod .fq{ column-count:2; column-gap:38px }
+  .prod .fq details{ break-inside:avoid; -webkit-column-break-inside:avoid }
+
+  /* 3 · el listado de resenas, en dos columnas.
+     Es el bloque mas alto de la pagina: 903px en una sola fila. */
+  .prod .rev-sec .rs{
+    grid-template-columns:1fr 1fr; gap:14px 30px; align-items:start }
+
+  /* 4 · el formulario de pedido, en dos columnas.
+     Iba todo apilado y medida 1.189px: el cliente tenia que bajar
+     para ver el precio y volver a subir. Ahora a la izquierda lo
+     que ELIGE (pack y resumen) y a la derecha lo que LLENA, con
+     las dos cosas a la vista al mismo tiempo. */
+  .prod .form .formcard{
+    max-width:980px;
+    display:grid; grid-template-columns:392px 1fr; gap:16px 34px;
+    align-items:start }
+  .prod .form .formcard > .cod-badge{ grid-column:1 / -1; justify-self:start }
+  .prod .form .formcard > .packs,
+  .prod .form .formcard > .summary,
+  .prod .form .formcard > .carriers{ grid-column:1 }
+  .prod .form .formcard > form{ grid-column:2; grid-row:2 / span 3 }
+}
 /* estos traian el dorado escrito a mano (rgba 216,165,46) y no seguian a --oro */
 .prod .packs.enForm .pack[aria-pressed="true"],
 .prod .form .pack.sel{ background:color-mix(in srgb, var(--acento) 10%, transparent) }
