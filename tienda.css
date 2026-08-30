@@ -659,3 +659,42 @@ body.legal{background:var(--hueso)}
 .upsell-tit{margin:22px 0 2px;font-weight:800;font-size:16px;color:#0c1526}
 .upsell-sub{font-size:13px;color:#6b7280;line-height:1.45;margin-bottom:10px}
 #upsell{margin-bottom:6px}
+
+/* ============================================================
+   PANTALLA GRANDE (computador) — desde 1024px
+   La portada ya se adapta bien: los productos salen en cuatro
+   columnas y el texto no pasa de 54 letras por linea. Lo unico
+   desproporcionado era el PIE: media 796px de alto, mas que el
+   hero, porque el boletin y las columnas de enlaces iban uno
+   debajo del otro ocupando los 1180px cada uno.
+   Esto NO toca nada por debajo de 1024px.
+   ============================================================ */
+@media (min-width:1024px){
+  .pie .envoltorio{
+    display:grid; grid-template-columns:1fr 360px; gap:6px 46px;
+    align-items:start }
+  .pie .envoltorio > .cols{ grid-column:1; grid-row:1 }
+  .pie .envoltorio > .boletin{ grid-column:2; grid-row:1; margin:0 }
+  .pie .envoltorio > .redes,
+  .pie .envoltorio > .marca-grande,
+  .pie .envoltorio > .abajo{ grid-column:1 / -1 }
+}
+
+/* ============================================================
+   SITIO ENCAJONADO EN PANTALLA GRANDE — desde 1500px
+   Lo pidio el dueno: en un monitor grande la foto del hero y las
+   franjas cruzaban los 1.900px de lado a lado y se veia estirado.
+   El contenido ya iba centrado en 1.180px; lo que sobraba eran
+   los FONDOS. Ahora todo el sitio, fondos incluidos, se queda en
+   1.500px centrados, con el margen a los lados en gris claro.
+   Los flotantes (WhatsApp y la barra de comprar) se dejan fuera:
+   van pegados a la ventana, no a la caja.
+   Por debajo de 1500px NO cambia nada.
+   ============================================================ */
+@media (min-width:1500px){
+  body{ background:#E6E3DE }
+  body > *:not(.wa):not(.stickycta):not(script):not(style){
+    max-width:1500px; margin-left:auto; margin-right:auto }
+  /* la caja se despega del gris con una sombra suave */
+  body > .pegado{ box-shadow:0 1px 0 rgba(0,0,0,.06) }
+}

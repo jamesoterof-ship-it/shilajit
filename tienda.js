@@ -114,6 +114,40 @@
     });
   }
 
+  /* La cinta de avisos de arriba se mueve de 0 a -50%, asi que la MITAD del
+     contenido tiene que alcanzar a cubrir el ancho visible. En celular sobra,
+     pero en un computador de 1.900px la mitad eran 627px: quedaba un vacio
+     detras y el texto parecia aparecer desde el medio. Aqui se repite el
+     grupo las veces que haga falta hasta cubrir, y se recalcula si cambian
+     el tamano de la ventana. Se clona SIEMPRE el grupo entero para que las
+     dos mitades queden iguales; si no, el salto del bucle se nota. */
+  function cintaAvisos() {
+    var marq = document.querySelector('.marq');
+    var pista = marq && marq.querySelector('.pista');
+    if (!marq || !pista) return;
+    var base = Array.prototype.slice.call(pista.children)
+      .map(function (n) { return n.cloneNode(true); });
+    if (!base.length) return;
+    function poner() { base.forEach(function (n) { pista.appendChild(n.cloneNode(true)); }); }
+    function ajustar() {
+      pista.innerHTML = '';
+      poner();
+      var vueltas = 0;
+      /* se pide 1,15 veces el ancho, no justo el ancho: si queda pegado al
+         limite, un ajuste de fuente o de zoom vuelve a abrir el hueco */
+      while (pista.scrollWidth / 2 < marq.clientWidth * 1.15 && vueltas < 14) { poner(); vueltas++; }
+    }
+    ajustar();
+    /* se repite cuando la pagina termina de cargar: al primer intento las
+       tipografias todavia no estaban listas y el ancho medido salia corto */
+    window.addEventListener('load', function () { requestAnimationFrame(ajustar); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar);
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t); t = setTimeout(ajustar, 200);
+    });
+  }
+
   /* Al bajar: se esconde la barra blanca y el header gris se pone negro.
      Al volver arriba del todo, vuelve como estaba. */
   function cabecera() {
@@ -393,6 +427,7 @@
     });
     pintar(pedida);
     resenas();
+    cintaAvisos();
     cabecera();
     videoHero();
     letrasDelHero();
