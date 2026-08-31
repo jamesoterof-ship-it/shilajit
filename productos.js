@@ -110,7 +110,7 @@ window.PRODUCTOS = [
     sub: 'Un solo par para ver de cerca y de lejos',
     categoria: 'Salud',
     foto: 'img/prod-lentes.webp?v=1',
-    fotos: ['img/prod-lentes.webp?v=1','img/prod-lentes-6.webp?v=1','img/prod-lentes-2.webp?v=1','img/prod-lentes-3.webp?v=1','img/prod-lentes-4.webp?v=1','img/prod-lentes-5.webp?v=1'],
+    fotos: ['img/prod-lentes.webp?v=1','img/prod-lentes-2.webp?v=1','img/prod-lentes-3.webp?v=1','img/prod-lentes-4.webp?v=1','img/prod-lentes-5.webp?v=1'],
     /* turquesa medido de la caja OnePower (#01B3AC). Solo pinta ESTE producto:
        los colores base de la landing no se tocan. */
     acento: '#01B3AC',
