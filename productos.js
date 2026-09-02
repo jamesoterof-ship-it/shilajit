@@ -325,7 +325,9 @@ window.PRODUCTOS = [
     popular: 1,
   },
   {
-    id: 'kinoki', unidad: 'caja de 10', promo: 2,
+    /* promo = el `cant` del pack que se destaca, NO la posicion.
+       Aqui cant va en CAJAS de 10, asi que el pack de 60 parches es cant 6. */
+    id: 'kinoki', unidad: 'caja de 10', promo: 6,
     fotosResenas: ['img/resenas-kinoki/rk1.webp?v=1','img/resenas-kinoki/rk2.webp?v=1','img/resenas-kinoki/rk3.webp?v=1','img/resenas-kinoki/rk4.webp?v=1','img/resenas-kinoki/rk5.webp?v=1','img/resenas-kinoki/rk6.webp?v=1','img/resenas-kinoki/rk7.webp?v=1','img/resenas-kinoki/rk8.webp?v=1','img/resenas-kinoki/rk9.webp?v=1'],
     antesDespues: 'img/prod-kinoki-ba.webp?v=1',
     antesDespuesSub: 'El mismo día largo de pie: cómo terminas la jornada y cómo amaneces después de usarlos.',
