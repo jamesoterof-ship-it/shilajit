@@ -324,6 +324,46 @@ window.PRODUCTOS = [
     ],
     popular: 1,
   },
+  {
+    id: 'kinoki', unidad: 'una caja', promo: 2,
+    fotosResenas: ['img/resenas-kinoki/rk1.webp?v=1','img/resenas-kinoki/rk2.webp?v=1','img/resenas-kinoki/rk3.webp?v=1','img/resenas-kinoki/rk4.webp?v=1','img/resenas-kinoki/rk5.webp?v=1','img/resenas-kinoki/rk6.webp?v=1','img/resenas-kinoki/rk7.webp?v=1','img/resenas-kinoki/rk8.webp?v=1','img/resenas-kinoki/rk9.webp?v=1'],
+    antesDespues: 'img/prod-kinoki-ba.webp?v=1',
+    antesDespuesSub: 'El mismo día largo de pie: cómo terminas la jornada y cómo amaneces después de usarlos.',
+    /* OJO con el lenguaje: nada de curar ni de limpiar la sangre. Los que llevan
+       95-98 dias pauteando esto en Chile venden por descanso y pies ligeros. */
+    preguntas: [
+      { q: '¿Cómo se usan?', a: 'Sobre la piel limpia y seca, pegas un parche en la planta de cada pie antes de dormir y lo dejas toda la noche. En la mañana lo retiras y lo botas.' },
+      { q: '¿Cuántos trae cada caja?', a: '10 parches por caja, o sea cinco noches completas para los dos pies. Cada parche viene sellado por separado.' },
+      { q: '¿Por qué amanece oscuro?', a: 'Es la reacción de los extractos de bambú y hierbas con la humedad y el calor del pie durante la noche. Que cambie de color es señal de que estuvo bien puesto.' },
+      { q: '¿Se pueden usar todas las noches?', a: 'Sí. La mayoría los usa dos o tres veces por semana, sobre todo los días en que estuvo mucho rato de pie.' },
+    ],
+    formulaRotulo: "Qué llevan dentro",
+    formulaTitulo: "Se pegan solos y actúan de noche.",
+    formulaSub: "Vinagre de bambú y hierbas prensadas en una almohadilla sellada. Uso externo: no se toma nada.",
+    formula: [["hoja","Vinagre de bambú","El ingrediente base, usado hace siglos en Asia."],["hoja","Polvo de bambú","Absorbe la humedad del pie durante la noche."],["sol","Tourmalina","Aporta la sensación de calor suave en la planta."],["hoja","Loquat y hierbas","Extractos vegetales de aroma herbal."],["llave","Adhesivo en todo el borde","Se queda firme aunque te muevas durmiendo."],["escudo","Sellado uno por uno","Cada parche en su sobre: no se humedece antes de usarlo."]],
+    comparaTitulo: "¿Qué los hace diferentes?",
+    compara: ["Adhesivo en todo el borde: no se sueltan a media noche.","Vienen sellados uno por uno, así no pierden fuerza en la caja.","Uso externo y directo: no hay que tomar nada ni mojar el pie."],
+    nombre: 'Parches Kinoki para Pies',
+    sub: 'Te los pones al dormir y amaneces con los pies ligeros',
+    categoria: 'Bienestar',
+    foto: 'img/prod-kinoki.webp?v=1',
+    fotos: ['img/prod-kinoki.webp', 'img/prod-kinoki-2.webp', 'img/prod-kinoki-3.webp'],
+    acento: '#1F7A3D',   /* el verde de la caja Kinoki */
+    desc: 'Son parches de uso nocturno con vinagre de bambú, polvo de bambú, tourmalina y extractos de hierbas. Se pegan en la planta de cada pie antes de dormir y se dejan toda la noche: no hay que mojarlos, ni untar nada, ni esperar. En la mañana los retiras y los botas. Cada caja trae 10 parches, o sea cinco noches para los dos pies, y cada uno viene sellado por separado. Pensados para quien pasa el día de pie y termina la jornada con los pies pesados y calientes. Son de uso externo: se aplican sobre la piel, no se ingiere nada.',
+    puntos: [
+      'Un parche en cada planta, antes de dormir',
+      '10 parches por caja: cinco noches para los dos pies',
+      'Se pegan solos, sin mojar ni untar nada',
+      'Vinagre de bambú, tourmalina y extractos de hierbas',
+      'Uso externo: no se ingiere nada',
+    ],
+    packs: [
+      { cant: 3, precio: 19500, antes: 29900, texto: '30 parches' },
+      { cant: 6, precio: 25500, antes: 45900, texto: '60 parches' },
+      { cant: 9, precio: 32500, antes: 62900, texto: '90 parches' },
+    ],
+    popular: 2,
+  },
 ];
 
 /* Preguntas frecuentes. Salen de lo que los clientes preguntan DE VERDAD por
@@ -353,4 +393,5 @@ window.PRECIOS_APROBADOS = [
   22500, 24500, 29990,
   22990, 29990, 36990,   /* cabezal de ducha */
   37500, 54500,          /* cepillo electrico parrilla */
+  19500, 25500, 32500,   /* parches kinoki: 30 · 60 · 90 parches */
 ];
