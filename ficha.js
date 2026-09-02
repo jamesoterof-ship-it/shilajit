@@ -353,7 +353,21 @@
     + '</div></section>';
 
   /* ---------- 9 · te puede interesar ---------- */
-  var otros = TODOS.filter(function (x) { return x.id !== p.id; });
+  /* Solo los 4 que MAS VENDEN (14 dias al 01-09: lentes 104, antena 51, foco 51,
+     cargador 46). Antes salian los 6 y ahi iban la ducha y el cepillo, que casi no
+     rotan: ocupaban el espacio de los que si venden. En la pagina PRINCIPAL siguen
+     saliendo todos — este recorte es solo en la ficha del producto. */
+  var MAS_VENDIDOS = ['lentes', 'antena', 'foco', 'cargador'];
+  var otros = TODOS
+    .filter(function (x) { return x.id !== p.id && MAS_VENDIDOS.indexOf(x.id) >= 0; })
+    .sort(function (a, b) { return MAS_VENDIDOS.indexOf(a.id) - MAS_VENDIDOS.indexOf(b.id); })
+    .slice(0, 4);
+  /* si el producto que se ve ES uno de los 4, se completa con el siguiente que mas vende */
+  if (otros.length < 4) {
+    TODOS.forEach(function (x) {
+      if (otros.length < 4 && x.id !== p.id && MAS_VENDIDOS.indexOf(x.id) < 0) otros.push(x);
+    });
+  }
   var interesar = otros.length ? '<section class="bloque"><h2>También te puede interesar</h2><div class="otros">'
     + otros.map(function (x) {
         var min = x.packs.reduce(function (a, b) { return b.precio < a ? b.precio : a; }, Infinity);
