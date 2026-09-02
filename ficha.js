@@ -339,8 +339,28 @@
     + (p.preguntas ? p.preguntas.concat((window.PREGUNTAS || []).slice(0, 4)) : (window.PREGUNTAS || [])).map(function (x) {
         return '<details><summary>' + esc(x.q) + '</summary><p>' + esc(x.a) + '</p></details>'; }).join('')
     + '</div>'
-    + '<a class="cta azul" href="#pedir" style="margin-top:18px">Pedir el mío ahora</a>'
     + '</section>';
+
+  /* ---------- 7b · cierre: los beneficios y el llamado ----------
+     Va justo despues de las preguntas. El cliente ya resolvio sus dudas ahi,
+     asi que aqui se le recuerda POR QUE lo quiere y se le pone el boton.
+     Antes las preguntas terminaban con un boton suelto sin contexto.
+     Ojo: el boton va SOLO aqui, para no dejar dos CTA seguidos. */
+  function seccionCierre() {
+    var min = p.packs.reduce(function (a, b) { return b.precio < a.precio ? b : a; }, p.packs[0]);
+    var pun = (p.puntos || []).slice(0, 5);
+    /* usa las clases que ya existen (.desc trae la lista con palomita):
+       asi no se agrega CSS y queda identico al resto de la pagina */
+    return '<section class="bloque desc" data-rv>'
+      + '<span class="eyebrow">Por qué lo quieres</span>'
+      + '<h2 class="tit2">' + esc(p.nombre) + '</h2>'
+      + (p.sub ? '<p>' + esc(p.sub) + '</p>' : '')
+      + (pun.length ? '<ul>' + pun.map(function (x, i) {
+          return '<li style="--i:' + i + '">' + esc(x) + '</li>'; }).join('') + '</ul>' : '')
+      + '<p style="margin-top:16px">Desde <b>' + pesos(min.precio) + '</b> · envío gratis y pagas cuando lo recibes en tu casa.</p>'
+      + '<a class="cta azul" href="#pedir" style="margin-top:14px">Pedir el mío ahora</a>'
+      + '</section>';
+  }
 
   /* ---------- 8 · sellos de las transportadoras ---------- */
   var sellos = '<section class="bloque"><h2>Con quién se despacha</h2><div class="sellos">'
@@ -586,6 +606,7 @@
        el cliente ya leyo las resenas y la garantia, ve el cambio y ahi decide. */
     + seccionCambio()
     + preguntas
+    + seccionCierre()
     + sellos
     + interesar
     + formulario
