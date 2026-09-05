@@ -118,3 +118,33 @@
     }
   }
 })();
+
+/* ---- Bloque de escasez: el número sube y la barra se llena cuando entra en
+   pantalla. Usa CountUp, que ya estaba descargado en lib/ y no se usaba.
+   Si CountUp no cargó, el número se pone directo: nunca queda en cero. ---- */
+(function () {
+  'use strict';
+  function animar(caja) {
+    var n = caja.querySelector('.cnt-hoy');
+    var barra = caja.querySelector('.esc-barra');
+    if (n) {
+      var meta = parseInt(n.getAttribute('data-n'), 10) || 0;
+      var CU = window.countUp && (window.countUp.CountUp || window.countUp);
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (CU && !reduce) { try { new CU(n, meta, { duration: 1.3 }).start(); } catch (e) { n.textContent = meta; } }
+      else n.textContent = meta;
+    }
+    if (barra) setTimeout(function () { barra.style.width = (barra.getAttribute('data-w') || 0) + '%'; }, 120);
+  }
+  function arranca() {
+    var caja = document.querySelector('.esc-sec');
+    if (!caja) return;
+    if (!('IntersectionObserver' in window)) return animar(caja);
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { animar(caja); io.disconnect(); } });
+    }, { threshold: 0.35 });
+    io.observe(caja);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(arranca, 600); });
+  else setTimeout(arranca, 600);
+})();

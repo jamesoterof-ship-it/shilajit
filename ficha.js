@@ -591,13 +591,80 @@
     + '</div></section>';
 
 
+
+  /* ---------- ESCASEZ · solo si el producto trae el campo ----------
+     Los numeros salen del radar (stock real del proveedor y unidades que
+     salieron hoy). No se inventan: si no hay dato, la seccion no aparece. */
+  function seccionEscasez() {
+    if (!p.escasez) return '';
+    var e = p.escasez;
+    /* La barra NO es de stock: con 1.000 unidades en bodega, decir "quedan
+       pocas" seria mentira y se nota. Muestra el MOVIMIENTO del dia contra el
+       mejor dia registrado, que es un dato real del radar y comunica lo mismo:
+       que el producto se esta moviendo ahora. */
+    var pct = Math.max(8, Math.min(100, Math.round((e.hoy / e.mejorDia) * 100)));
+    return '<section class="bloque esc-sec" data-rv style="padding:16px">'
+      + '<div style="border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:16px 16px 18px;background:#fff">'
+      + '<div style="display:flex;align-items:center;gap:9px;margin-bottom:11px">'
+      + '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--acento)" stroke-width="2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7h-5V2"/></svg>'
+      + '<b style="font-size:15.5px;color:var(--acento)"><span class="cnt-hoy" data-n="' + e.hoy + '">0</span> salieron hoy</b></div>'
+      + '<div style="height:9px;border-radius:9px;background:rgba(0,0,0,.09);overflow:hidden">'
+      + '<div class="esc-barra" style="height:100%;width:0;border-radius:9px;background:var(--acento);transition:width 1.1s cubic-bezier(.2,.8,.2,1)" data-w="' + pct + '"></div></div>'
+      + '<p style="margin:11px 0 0;font-size:13.5px;line-height:1.5;color:#4a4a4a">'
+      + esc(e.nota || 'Se despacha por orden de pedido y pagas cuando la recibes.') + '</p>'
+      + '</div></section>';
+  }
+
+  /* ---------- LAS ZONAS · la foto marcada con su explicacion ----------
+     Sirve para el producto que se ve raro en la foto y hay que explicar como
+     se usa. Sin esto, el cliente ve una almohada deforme y se va. */
+  function seccionZonas() {
+    if (!p.zonas || !p.zonas.img) return '';
+    var z = p.zonas;
+    return '<section class="bloque zon-sec" data-rv>'
+      + '<span class="eyebrow">' + esc(z.rotulo || 'Cómo se usa') + '</span>'
+      + '<h2 class="tit2">' + esc(z.titulo || 'Una zona para cada postura') + '</h2>'
+      + (z.sub ? '<p class="sub2">' + esc(z.sub) + '</p>' : '')
+      + '<div style="border-radius:16px;overflow:hidden;margin:14px 0 4px">'
+      + '<img src="' + esc(z.img) + '" alt="' + esc(z.titulo || '') + '" loading="lazy" style="width:100%;display:block">'
+      + '</div>'
+      + (z.pies || []).map(function (t) {
+          return '<div style="display:flex;gap:10px;align-items:flex-start;margin-top:12px">'
+            + '<span style="flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--acento);margin-top:6px"></span>'
+            + '<p style="margin:0;font-size:15px;line-height:1.5;color:#333">' + esc(t) + '</p></div>';
+        }).join('')
+      + '</section>';
+  }
+
+  /* ---------- LA MEDIDA · la duda que mas frena la compra ----------
+     Con su boton, porque es el punto donde el cliente ya resolvio lo suyo. */
+  function seccionMedida() {
+    if (!p.medida) return '';
+    var m = p.medida;
+    return '<section class="bloque med-sec" data-rv>'
+      + '<h2 class="tit2">' + esc(m.titulo || '¿Le sirve tu funda?') + '</h2>'
+      + '<div style="display:flex;gap:12px;margin:16px 0 6px;flex-wrap:wrap">'
+      + (m.filas || []).map(function (f) {
+          return '<div style="flex:1 1 140px;border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:14px;background:#fff;text-align:center">'
+            + '<div style="font-size:26px;font-weight:800;color:var(--acento);line-height:1.1">' + esc(f[0]) + '</div>'
+            + '<div style="font-size:13.5px;color:#5a5a5a;margin-top:5px">' + esc(f[1]) + '</div></div>';
+        }).join('')
+      + '</div>'
+      + '<p style="margin:12px 0 16px;font-size:15.5px;line-height:1.55;color:#333">' + esc(m.texto || '') + '</p>'
+      + '<a class="cta" href="#pedir" style="display:block;text-align:center">' + esc(m.boton || 'Lo quiero, pago al recibir') + '</a>'
+      + '</section>';
+  }
+
   cont.innerHTML = '<div class="arriba2">' + galeria + cabecera + '</div>'
     + promo
     /* La descripcion va pegada al precio: el cliente que acaba de entrar
        primero quiere saber QUE ES, y despues le hablamos de la oferta. */
+    + seccionEscasez()
     + desc
+    + seccionZonas()
     + seccionPromo()
     + seccionFormula()
+    + seccionMedida()
     + seccionResultados()
     + seccionCompara()
     + resenas

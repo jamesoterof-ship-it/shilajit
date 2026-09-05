@@ -44,6 +44,25 @@
 window.PRODUCTOS = [
   {
     id: 'almohada', unidad: 'una', promo: 2,
+    escasez: { hoy: 50, mejorDia: 173, quedan: 1054,
+      nota: 'Es de las que más rota en bodega. Se despacha por orden de pedido y pagas recién cuando la tienes en la mano.' },
+    zonas: {
+      img: 'img/prod-almohada.webp?v=1',
+      rotulo: 'Cómo se usa',
+      titulo: 'Una zona para cada postura',
+      sub: 'No es una almohada deforme: cada parte tiene una función distinta.',
+      pies: [
+        'Los dos costados son los más altos. Ahí apoyas cuando duermes de lado: ese alto extra cubre el ancho del hombro y el cuello queda derecho, no doblado hacia abajo.',
+        'El centro es más bajo. Ahí apoyas cuando duermes boca arriba, para que la cabeza no quede empujada hacia adelante.',
+        'El panel gris del frente es el soporte cervical. Apoya la curva del cuello en vez de dejarla colgando en el aire, que es lo que hace que amanezcas tieso.',
+      ],
+    },
+    medida: {
+      titulo: '¿Le sirve tu funda de siempre?',
+      filas: [['60 cm','de largo'],['40 cm','de ancho'],['10-13 cm','de alto según la zona']],
+      texto: 'Sí. Mide 60 x 40, que es la medida estándar de almohada en Chile, así que le entra cualquier funda que ya tengas en la casa. No tienes que comprar nada aparte.',
+      boton: 'Lo quiero, pago al recibir',
+    },
     fotosResenas: ['img/resenas-almohada/ra1.webp?v=1','img/resenas-almohada/ra2.webp?v=1','img/resenas-almohada/ra3.webp?v=1','img/resenas-almohada/ra4.webp?v=1','img/resenas-almohada/ra5.webp?v=1','img/resenas-almohada/ra6.webp?v=1','img/resenas-almohada/ra7.webp?v=1','img/resenas-almohada/ra8.webp?v=1','img/resenas-almohada/ra9.webp?v=1','img/resenas-almohada/ra10.webp?v=1'],
     antesDespues: 'img/prod-almohada-ba.webp?v=1',
     antesDespuesSub: 'Despertar con el cuello tieso, o despertar con el cuello apoyado toda la noche.',
