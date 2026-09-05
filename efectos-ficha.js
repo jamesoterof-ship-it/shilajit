@@ -262,3 +262,25 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(arranca, 420); });
   else setTimeout(arranca, 420);
 })();
+
+/* ---- Video del producto: solo corre mientras se ve ---- */
+(function () {
+  'use strict';
+  function arranca() {
+    var v = document.querySelector('.vid-prod');
+    if (!v) return;
+
+    /* no gasta datos ni bateria si el cliente ya paso de largo */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (x) {
+          if (x.isIntersecting) { var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }
+          else v.pause();
+        });
+      }, { threshold: 0.25 }).observe(v);
+    } else { var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }
+
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(arranca, 500); });
+  else setTimeout(arranca, 500);
+})();
