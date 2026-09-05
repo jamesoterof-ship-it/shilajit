@@ -44,7 +44,7 @@
 window.PRODUCTOS = [
   {
     id: 'almohada', unidad: 'una', promo: 2,
-    video: 'img/almohada.mp4?v=2',
+    video: 'img/almohada.mp4?v=3',
     heroEfecto: true,
     escasez: { hoy: 50, mejorDia: 173, quedan: 1054,
       nota: 'Es de las que más rota en bodega. Se despacha por orden de pedido y pagas recién cuando la tienes en la mano.' },
@@ -66,7 +66,7 @@ window.PRODUCTOS = [
       boton: 'Lo quiero, pago al recibir',
     },
     fotosResenas: ['img/resenas-almohada/ra1.webp?v=1','img/resenas-almohada/ra2.webp?v=1','img/resenas-almohada/ra3.webp?v=1','img/resenas-almohada/ra4.webp?v=1','img/resenas-almohada/ra5.webp?v=1','img/resenas-almohada/ra6.webp?v=1','img/resenas-almohada/ra7.webp?v=1','img/resenas-almohada/ra8.webp?v=1','img/resenas-almohada/ra9.webp?v=1','img/resenas-almohada/ra10.webp?v=1'],
-    antesDespues: 'img/prod-almohada-ba.webp?v=1',
+    antesDespues: 'img/prod-almohada-ba.webp?v=2',
     antesDespuesSub: 'Despertar con el cuello tieso, o despertar con el cuello apoyado toda la noche.',
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
