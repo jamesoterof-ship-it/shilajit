@@ -149,40 +149,52 @@
   else setTimeout(arranca, 600);
 })();
 
-/* ---- HERO con volumen: el marco se inclina, la foto respira ---- */
+
+/* ---- HERO: movimiento ligado al scroll, sin brillos ni inclinaciones ---- */
 (function () {
   'use strict';
   function arranca() {
     var p = window.PRODUCTO_ACTUAL;
     if (!p || !p.heroEfecto) return;
     var marco = document.querySelector('.gal .marco');
-    if (!marco) return;
+    var img = marco && marco.querySelector('img');
+    if (!marco || !img) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) return;
 
-    /* 1 · zoom lento y continuo de la foto (elemento: la img) */
     var st = document.createElement('style');
-    st.textContent = '.gal .marco{transform-style:preserve-3d}'
-      + '.gal .marco img{will-change:transform;animation:respira 14s ease-in-out infinite}'
-      + '@keyframes respira{0%{transform:scale(1)}50%{transform:scale(1.055)}100%{transform:scale(1)}}'
-      + '.gal .marco .js-tilt-glare{border-radius:inherit}';
+    st.textContent = '.gal .marco{overflow:hidden}'
+      + '.gal .marco img{will-change:transform,opacity;backface-visibility:hidden}';
     document.head.appendChild(st);
 
-    /* 2 · inclinacion 3D del marco (elemento: el marco) */
-    if (window.VanillaTilt) {
-      window.VanillaTilt.init(marco, {
-        max: 7, speed: 550, scale: 1.015,
-        glare: true, 'max-glare': 0.16,
-        gyroscope: true, gyroscopeMinAngleX: -12, gyroscopeMaxAngleX: 12,
-        gyroscopeMinAngleY: -12, gyroscopeMaxAngleY: 12,
+    var g = window.gsap;
+    if (!g) return;
+    if (window.ScrollTrigger) g.registerPlugin(window.ScrollTrigger);
+
+    /* 1 · REVEAL de entrada: se descubre de abajo hacia arriba y el zoom asienta */
+    g.fromTo(img,
+      { scale: 1.14, yPercent: 3, clipPath: 'inset(14% 0% 0% 0%)' },
+      { scale: 1, yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)', duration: 1.15, ease: 'power3.out' });
+
+    /* 2 · PARALLAX: la foto va mas lenta que la pagina. Es el detalle que
+       separa una pagina hecha de una plantilla, y casi no se nota. */
+    if (window.ScrollTrigger) {
+      g.to(img, {
+        yPercent: -9, ease: 'none',
+        scrollTrigger: { trigger: marco, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
       });
     }
 
-    /* 3 · entrada: sube y aparece la primera vez que se ve */
-    if (window.gsap) {
-      window.gsap.from(marco, { y: 26, opacity: 0, duration: .7, ease: 'power2.out' });
-    }
+    /* 3 · CRUCE entre fotos: la galeria cambia el src de golpe; se le pone un
+       fundido corto con un zoom minimo para que no sea un corte seco. */
+    var obs = new MutationObserver(function (ms) {
+      ms.forEach(function (m) {
+        if (m.attributeName !== 'src') return;
+        g.fromTo(img, { opacity: 0, scale: 1.05 }, { opacity: 1, scale: 1, duration: .5, ease: 'power2.out' });
+      });
+    });
+    obs.observe(img, { attributes: true, attributeFilter: ['src'] });
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(arranca, 500); });
-  else setTimeout(arranca, 500);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(arranca, 420); });
+  else setTimeout(arranca, 420);
 })();
