@@ -148,3 +148,41 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(arranca, 600); });
   else setTimeout(arranca, 600);
 })();
+
+/* ---- HERO con volumen: el marco se inclina, la foto respira ---- */
+(function () {
+  'use strict';
+  function arranca() {
+    var p = window.PRODUCTO_ACTUAL;
+    if (!p || !p.heroEfecto) return;
+    var marco = document.querySelector('.gal .marco');
+    if (!marco) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    /* 1 · zoom lento y continuo de la foto (elemento: la img) */
+    var st = document.createElement('style');
+    st.textContent = '.gal .marco{transform-style:preserve-3d}'
+      + '.gal .marco img{will-change:transform;animation:respira 14s ease-in-out infinite}'
+      + '@keyframes respira{0%{transform:scale(1)}50%{transform:scale(1.055)}100%{transform:scale(1)}}'
+      + '.gal .marco .js-tilt-glare{border-radius:inherit}';
+    document.head.appendChild(st);
+
+    /* 2 · inclinacion 3D del marco (elemento: el marco) */
+    if (window.VanillaTilt) {
+      window.VanillaTilt.init(marco, {
+        max: 7, speed: 550, scale: 1.015,
+        glare: true, 'max-glare': 0.16,
+        gyroscope: true, gyroscopeMinAngleX: -12, gyroscopeMaxAngleX: 12,
+        gyroscopeMinAngleY: -12, gyroscopeMaxAngleY: 12,
+      });
+    }
+
+    /* 3 · entrada: sube y aparece la primera vez que se ve */
+    if (window.gsap) {
+      window.gsap.from(marco, { y: 26, opacity: 0, duration: .7, ease: 'power2.out' });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(arranca, 500); });
+  else setTimeout(arranca, 500);
+})();

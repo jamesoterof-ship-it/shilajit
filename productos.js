@@ -44,6 +44,7 @@
 window.PRODUCTOS = [
   {
     id: 'almohada', unidad: 'una', promo: 2,
+    heroEfecto: true,
     escasez: { hoy: 50, mejorDia: 173, quedan: 1054,
       nota: 'Es de las que más rota en bodega. Se despacha por orden de pedido y pagas recién cuando la tienes en la mano.' },
     zonas: {
