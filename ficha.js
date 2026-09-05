@@ -662,9 +662,9 @@
   function bloqueVideo() {
     if (!p.video) return '';
     var poster = (p.fotos && p.fotos[0]) || '';
-    return '<section class="bloque vid-wrap" style="position:relative;overflow:hidden;background:#000;padding:0;margin:0">'
+    return '<section class="bloque vid-wrap" style="position:relative;overflow:hidden;padding:36px 0;margin:0">'
       + '<video class="vid-prod" playsinline autoplay muted loop preload="auto" '
-      +   'poster="' + esc(poster) + '" style="width:100%;display:block;aspect-ratio:4/5;object-fit:cover" '
+      +   'poster="' + esc(poster) + '" style="width:100%;display:block;aspect-ratio:4/5;object-fit:cover;background:#000" '
       +   'onerror="this.closest(\'.vid-wrap\').style.display=\'none\'">'
       + '<source src="' + esc(p.video) + '" type="video/mp4"></video>'
       + '</section>';
