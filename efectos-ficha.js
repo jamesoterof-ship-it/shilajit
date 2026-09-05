@@ -150,7 +150,8 @@
 })();
 
 
-/* ---- HERO: movimiento ligado al scroll, sin brillos ni inclinaciones ---- */
+
+/* ---- HERO: mirar el producto de cerca. El movimiento sirve, no adorna. ---- */
 (function () {
   'use strict';
   function arranca() {
@@ -159,41 +160,104 @@
     var marco = document.querySelector('.gal .marco');
     var img = marco && marco.querySelector('img');
     if (!marco || !img) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
 
     var st = document.createElement('style');
-    st.textContent = '.gal .marco{overflow:hidden}'
-      + '.gal .marco img{will-change:transform,opacity;backface-visibility:hidden}';
+    st.textContent =
+      '.gal .marco{position:relative;cursor:zoom-in}'
+      + '.gal .marco img{transition:transform .28s cubic-bezier(.2,.8,.2,1)}'
+      + '.lupa{position:absolute;right:12px;bottom:12px;z-index:4;width:42px;height:42px;border-radius:50%;'
+        + 'background:rgba(255,255,255,.94);box-shadow:0 3px 14px rgba(0,0,0,.22);display:flex;align-items:center;'
+        + 'justify-content:center;pointer-events:none}'
+      + '.lupa svg{width:21px;height:21px;stroke:#1a1a1a;fill:none;stroke-width:2.1;stroke-linecap:round}'
+      + '.zoomcapa{position:fixed;inset:0;z-index:9999;background:rgba(10,12,16,.94);display:flex;'
+        + 'align-items:center;justify-content:center;opacity:0;transition:opacity .22s ease;touch-action:none}'
+      + '.zoomcapa.on{opacity:1}'
+      + '.zoomcapa img{max-width:none;width:170%;transform:translate(0,0);will-change:transform;user-select:none;-webkit-user-drag:none}'
+      + '.zoomsalir{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:0;'
+        + 'background:rgba(255,255,255,.94);font-size:24px;line-height:1;cursor:pointer;color:#111}'
+      + '.zoompista{position:absolute;bottom:26px;left:0;right:0;text-align:center;color:#fff;font-size:14px;opacity:.85}';
     document.head.appendChild(st);
 
-    var g = window.gsap;
-    if (!g) return;
-    if (window.ScrollTrigger) g.registerPlugin(window.ScrollTrigger);
+    /* la lupa avisa que se puede mirar de cerca */
+    var lupa = document.createElement('div');
+    lupa.className = 'lupa';
+    lupa.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6M11 8v6M8 11h6"/></svg>';
+    marco.appendChild(lupa);
+    /* la galeria se redibuja al cambiar de foto y se lleva la lupa: se repone */
+    setInterval(function () {
+      var m = document.querySelector('.gal .marco');
+      if (m && !m.querySelector('.lupa')) m.appendChild(lupa.cloneNode(true));
+    }, 1200);
 
-    /* 1 · REVEAL de entrada: se descubre de abajo hacia arriba y el zoom asienta */
-    g.fromTo(img,
-      { scale: 1.14, yPercent: 3, clipPath: 'inset(14% 0% 0% 0%)' },
-      { scale: 1, yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)', duration: 1.15, ease: 'power3.out' });
+    /* ---- abrir a pantalla completa ---- */
+    function abrir() {
+      var capa = document.createElement('div');
+      capa.className = 'zoomcapa';
+      var g = document.createElement('img');
+      g.src = img.currentSrc || img.src;
+      g.alt = img.alt || '';
+      var x = document.createElement('button');
+      x.className = 'zoomsalir'; x.type = 'button'; x.setAttribute('aria-label', 'Cerrar'); x.textContent = '×';
+      var pista = document.createElement('div');
+      pista.className = 'zoompista'; pista.textContent = 'Arrastra para recorrer la foto';
+      capa.appendChild(g); capa.appendChild(x); capa.appendChild(pista);
+      document.body.appendChild(capa);
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () { capa.classList.add('on'); }, 25);
 
-    /* 2 · PARALLAX: la foto va mas lenta que la pagina. Es el detalle que
-       separa una pagina hecha de una plantilla, y casi no se nota. */
-    if (window.ScrollTrigger) {
-      g.to(img, {
-        yPercent: -9, ease: 'none',
-        scrollTrigger: { trigger: marco, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
+      /* arrastrar para recorrer */
+      var ax = 0, ay = 0, px = 0, py = 0, activo = false;
+      function punto(e) { var t = e.touches ? e.touches[0] : e; return { x: t.clientX, y: t.clientY }; }
+      function ini(e) { activo = true; var q = punto(e); px = q.x - ax; py = q.y - ay; }
+      function mov(e) {
+        if (!activo) return;
+        var q = punto(e);
+        ax = q.x - px; ay = q.y - py;
+        var lx = Math.max(0, (g.offsetWidth - window.innerWidth) / 2);
+        var ly = Math.max(0, (g.offsetHeight - window.innerHeight) / 2);
+        ax = Math.max(-lx, Math.min(lx, ax)); ay = Math.max(-ly, Math.min(ly, ay));
+        g.style.transform = 'translate(' + ax + 'px,' + ay + 'px)';
+        if (e.cancelable) e.preventDefault();
+      }
+      function fin() { activo = false; }
+      capa.addEventListener('mousedown', ini); capa.addEventListener('touchstart', ini, { passive: true });
+      window.addEventListener('mousemove', mov); capa.addEventListener('touchmove', mov, { passive: false });
+      window.addEventListener('mouseup', fin); capa.addEventListener('touchend', fin);
+
+      function cerrar() {
+        capa.classList.remove('on');
+        document.body.style.overflow = '';
+        window.removeEventListener('mousemove', mov); window.removeEventListener('mouseup', fin);
+        setTimeout(function () { capa.remove(); }, 220);
+      }
+      x.addEventListener('click', cerrar);
+      capa.addEventListener('click', function (e) { if (e.target === capa) cerrar(); });
+      document.addEventListener('keydown', function esc(e) {
+        if (e.key === 'Escape') { cerrar(); document.removeEventListener('keydown', esc); }
       });
     }
-
-    /* 3 · CRUCE entre fotos: la galeria cambia el src de golpe; se le pone un
-       fundido corto con un zoom minimo para que no sea un corte seco. */
-    var obs = new MutationObserver(function (ms) {
-      ms.forEach(function (m) {
-        if (m.attributeName !== 'src') return;
-        g.fromTo(img, { opacity: 0, scale: 1.05 }, { opacity: 1, scale: 1, duration: .5, ease: 'power2.out' });
-      });
+    marco.addEventListener('click', function (e) {
+      if (e.target.closest('.flecha')) return;   /* las flechas siguen pasando fotos */
+      abrir();
     });
-    obs.observe(img, { attributes: true, attributeFilter: ['src'] });
+
+    /* ---- continuidad al cambiar de foto: la nueva crece hasta su sitio ---- */
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) {
+      new MutationObserver(function (ms) {
+        ms.forEach(function (m) {
+          if (m.attributeName !== 'src') return;
+          img.style.transition = 'none';
+          img.style.transform = 'scale(.92)';
+          img.style.opacity = '.35';
+          requestAnimationFrame(function () {
+            img.style.transition = 'transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s ease';
+            img.style.transform = 'scale(1)';
+            img.style.opacity = '1';
+          });
+        });
+      }).observe(img, { attributes: true, attributeFilter: ['src'] });
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(arranca, 420); });
   else setTimeout(arranca, 420);
