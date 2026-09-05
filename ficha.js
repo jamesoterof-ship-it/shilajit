@@ -662,15 +662,15 @@
   function bloqueVideo() {
     if (!p.video) return '';
     var poster = (p.fotos && p.fotos[0]) || '';
-    return '<div class="vid-wrap" style="position:relative;border-radius:14px;overflow:hidden;background:#000;margin:0 0 10px">'
+    return '<section class="bloque vid-wrap" style="position:relative;overflow:hidden;background:#000;padding:0;margin:0">'
       + '<video class="vid-prod" playsinline autoplay muted loop preload="auto" '
       +   'poster="' + esc(poster) + '" style="width:100%;display:block;aspect-ratio:4/5;object-fit:cover" '
       +   'onerror="this.closest(\'.vid-wrap\').style.display=\'none\'">'
       + '<source src="' + esc(p.video) + '" type="video/mp4"></video>'
-      + '</div>';
+      + '</section>';
   }
 
-  cont.innerHTML = '<div class="arriba2">' + bloqueVideo() + galeria + cabecera + '</div>'
+  cont.innerHTML = '<div class="arriba2">' + galeria + cabecera + '</div>'
     + promo
     /* La descripcion va pegada al precio: el cliente que acaba de entrar
        primero quiere saber QUE ES, y despues le hablamos de la oferta. */
@@ -678,6 +678,7 @@
     + desc
     + seccionZonas()
     + seccionPromo()
+    + bloqueVideo()
     + seccionFormula()
     + seccionMedida()
     + seccionResultados()
