@@ -43,6 +43,46 @@
    ============================================================ */
 window.PRODUCTOS = [
   {
+    id: 'almohada', unidad: 'una', promo: 2,
+    fotosResenas: ['img/resenas-almohada/ra1.webp?v=1','img/resenas-almohada/ra2.webp?v=1','img/resenas-almohada/ra3.webp?v=1','img/resenas-almohada/ra4.webp?v=1','img/resenas-almohada/ra5.webp?v=1','img/resenas-almohada/ra6.webp?v=1','img/resenas-almohada/ra7.webp?v=1','img/resenas-almohada/ra8.webp?v=1','img/resenas-almohada/ra9.webp?v=1','img/resenas-almohada/ra10.webp?v=1'],
+    antesDespues: 'img/prod-almohada-ba.webp?v=1',
+    antesDespuesSub: 'Despertar con el cuello tieso, o despertar con el cuello apoyado toda la noche.',
+    /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
+    preguntas: [
+      { q: '¿Qué mide? ¿Le sirve mi funda?', a: 'Mide 60 cm de largo por 40 de ancho, la medida estándar de almohada, así que le entra cualquier funda que ya tengas en casa. El alto va de 10 cm en el centro a 13 cm en los costados.' },
+      { q: 'Duermo de lado, ¿me sirve igual?', a: 'Sí, para eso están los costados más altos: cubren el ancho del hombro y dejan el cuello derecho. El centro, más bajo, es para cuando duermes boca arriba.' },
+      { q: '¿Es dura o blanda?', a: 'Es de espuma viscoelástica: firme al tocarla, pero se amolda con el calor del cuerpo en un par de minutos y vuelve a su forma cuando te levantas. No se aplasta como las de relleno suelto.' },
+      { q: '¿Se puede lavar?', a: 'La funda se saca y se lava normal. La espuma no se lava ni se mete a la lavadora: se airea y listo.' },
+      { q: '¿Me va a quitar el dolor de cuello?', a: 'Mantiene la cabeza y el cuello alineados con la columna mientras duermes, que es lo que evita levantarse con el cuello tieso. Pero es una almohada, no un tratamiento: si tienes un problema médico, eso lo ve un doctor.' },
+    ],
+    formulaRotulo: "Qué incluye",
+    formulaTitulo: "Tres alturas en una sola almohada.",
+    formulaSub: "Una zona para dormir de lado, otra para boca arriba y el soporte del cuello al frente.",
+    formula: [["ondas","Centro más bajo","Para dormir boca arriba sin que la cabeza quede empujada."],["escudo","Costados más altos","Cubren el ancho del hombro cuando te giras de lado."],["pluma","Soporte cervical","El panel gris apoya la curva del cuello en vez de dejarla en el aire."],["fibra","Espuma viscoelástica","Se amolda con el calor del cuerpo y vuelve a su forma."],["agua","Funda lavable","Se saca y se lava normal."],["casa","Mide 60 x 40","La medida estándar: le sirve tu funda de siempre."]],
+    comparaTitulo: "¿Qué la hace diferente?",
+    compara: ["Tres alturas en la misma almohada: no eliges entre dormir de lado o boca arriba.","La espuma viscoelástica vuelve a su forma — no se aplasta como las de relleno suelto.","Mide 60 x 40, la medida estándar: le entra cualquier funda que ya tengas."],
+    nombre: 'Almohada Cervical Ergonómica',
+    sub: 'Espuma viscoelástica con tres zonas · 60 x 40 cm',
+    categoria: 'Hogar',
+    foto: 'img/prod-almohada.webp?v=1',
+    fotos: ['img/prod-almohada.webp', 'img/prod-almohada-2.webp', 'img/prod-almohada-3.webp'],
+    acento: '#1B6FD6',   /* azul de sus propias placas */
+    desc: 'Es una almohada cervical ergonómica de espuma viscoelástica, con tres zonas de distinta altura. El centro es más bajo, para cuando duermes boca arriba, y los costados son más altos, para cuando te giras de lado: ese alto extra cubre el ancho del hombro y deja el cuello derecho. Al frente tiene la zona de soporte cervical, el panel gris de malla transpirable, que apoya la curva del cuello en vez de dejarla colgando. Mide 60 x 40 cm, la medida estándar, así que le sirve cualquier funda que ya tengas en la casa. La funda se saca y se lava.',
+    puntos: [
+      'Tres zonas: de lado, boca arriba y soporte de cuello',
+      'Espuma viscoelástica: se amolda y vuelve a su forma',
+      'Mide 60 x 40 — le sirve tu funda de siempre',
+      'Panel de malla transpirable en la zona del cuello',
+      'Funda que se saca y se lava',
+    ],
+    packs: [
+      { cant: 1, precio: 29500, antes: 44900, texto: '1 unidad' },
+      { cant: 2, precio: 39500, antes: 59000, texto: '2 unidades' },
+      { cant: 3, precio: 49500, antes: 88500, texto: '3 unidades' },
+    ],
+    popular: 2,
+  },
+  {
     id: 'mascara', unidad: 'una', promo: 2,
     fotosResenas: ['img/resenas-mascara/rm1.webp?v=1','img/resenas-mascara/rm2.webp?v=1','img/resenas-mascara/rm3.webp?v=1','img/resenas-mascara/rm4.webp?v=1','img/resenas-mascara/rm5.webp?v=1'],
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
@@ -386,7 +426,7 @@ window.PREGUNTAS = [
    ninguna parte y el candado nunca sirvio.
    Máscara 23.500 / 34.900 / 44.900 · Lentes 18.500 / 24.500 / 29.500
    Antena 24.500 / 34.500 / 44.500 · Cargador 28.500 / 38.500 / 49.500
-   Foco 22.500 / 24.500 / 29.990 */
+   Foco 22.500 / 24.500 / 29.990 · Almohada 29.500 / 39.500 / 49.500 */
 window.PRECIOS_APROBADOS = [
   23500, 34900, 44900,
   18500, 24500, 29500,
@@ -396,4 +436,5 @@ window.PRECIOS_APROBADOS = [
   22990, 29990, 36990,   /* cabezal de ducha */
   37500, 54500,          /* cepillo electrico parrilla */
   19500, 25500, 32500,   /* parches kinoki: 30 · 60 · 90 parches */
+  29500, 39500, 49500,   /* almohada cervical: 1 · 2 · 3 unidades */
 ];
