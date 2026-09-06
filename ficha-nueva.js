@@ -462,11 +462,15 @@
      texto. El icono sale del mismo set que ya usa "Que incluye". */
   function iconoDe(txt) {
     var t = String(txt).toLowerCase();
-    if (/zona|altura|postura|de lado|boca arriba/.test(t)) return 'ondas';
+    /* Lo mas especifico va PRIMERO. Con "zona" arriba, "Panel de malla
+       transpirable en la zona del cuello" caia en ondas y repetia el mismo
+       icono que "Tres zonas". */
+    if (/malla|transpir|ventil|fresco/.test(t)) return 'pluma';
+    if (/lava|se saca|limpia/.test(t)) return 'agua';
     if (/espuma|viscoel|material|relleno|fibra/.test(t)) return 'fibra';
     if (/mide|medida| cm|tama|60 x 40/.test(t)) return 'casa';
-    if (/malla|transpir|aire|ventil|fresco/.test(t)) return 'pluma';
-    if (/lava|funda|agua|limpia/.test(t)) return 'agua';
+    if (/zona|altura|postura|de lado|boca arriba/.test(t)) return 'ondas';
+    if (/funda|agua/.test(t)) return 'agua';
     if (/garant|segur|protec/.test(t)) return 'escudo';
     if (/solar|luz/.test(t)) return 'sol';
     if (/bater|carga|energ/.test(t)) return 'rayo';
@@ -1592,5 +1596,100 @@ window.addEventListener('resize', zdInicio);
     barra.classList.toggle('en-form', e[0].isIntersecting);
   }, { threshold: 0.08 }).observe(form);
 })();
+
+
+/* ============================================================
+   CHISPAS QUE SUBEN SOBRE LA FOTO DEL HERO
+   Es el mismo motor del hero de NAD+ (nadplus/motors.js): puntitos dorados
+   que suben despacio, titilan, se enlazan con hilos finos y sueltan un
+   destello en cruz cuando brillan fuerte. Alla el fondo es oscuro; aca la
+   foto es clara, asi que el dorado va mas saturado y con menos halo.
+   Se apaga solo cuando el hero sale de pantalla, para no gastar bateria.
+   ============================================================ */
+(function () {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var gal = document.querySelector('.prod .gal'); if (!gal) return;
+  var cv = document.createElement('canvas');
+  cv.className = 'hero-fx'; cv.setAttribute('aria-hidden', 'true');
+  gal.appendChild(cv);
+  var ctx = cv.getContext('2d'), W = 0, H = 0, P = [], raf = 0, on = false;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function size() {
+    var r = gal.getBoundingClientRect(); W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function mk() {
+    return { x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + .7,
+      vy: -(Math.random() * .45 + .14), vx: (Math.random() - .5) * .22,
+      a: Math.random() * .45 + .35, tw: Math.random() * 6.28,
+      ts: Math.random() * .05 + .025, big: Math.random() < .18 };
+  }
+  function poblar() { P = []; var n = Math.min(42, Math.round(W / 10)); for (var i = 0; i < n; i++) P.push(mk()); }
+  size(); poblar();
+  window.addEventListener('resize', function () { size(); poblar(); });
+  var fr = 0;
+  function loop() {
+    if (!on) return;
+    fr++;
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineWidth = 1;
+    for (var a = 0; a < P.length; a++) for (var b = a + 1; b < P.length; b++) {
+      var dx = P[a].x - P[b].x, dy = P[a].y - P[b].y, d = dx * dx + dy * dy;
+      if (d < 5200) {
+        ctx.strokeStyle = 'rgba(154,116,21,' + (0.13 * (1 - d / 5200)) + ')';
+        ctx.beginPath(); ctx.moveTo(P[a].x, P[a].y); ctx.lineTo(P[b].x, P[b].y); ctx.stroke();
+      }
+    }
+    for (var i = 0; i < P.length; i++) {
+      var p = P[i]; p.y += p.vy; p.x += p.vx;
+      if (p.y < -6) { p.y = H + 6; p.x = Math.random() * W; }
+      var tw = 0.45 + 0.55 * Math.abs(Math.sin(fr * p.ts + p.tw));
+      var al = p.a * tw;
+      ctx.shadowColor = 'rgba(184,140,47,.85)'; ctx.shadowBlur = (p.big ? 8 : 4) * tw;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (p.big ? 1.25 : 1), 0, 6.2832);
+      ctx.fillStyle = 'rgba(190,143,42,' + al + ')'; ctx.fill();
+      if (p.big && tw > .85) {
+        ctx.strokeStyle = 'rgba(154,116,21,' + (al * .8) + ')';
+        ctx.beginPath();
+        var g = p.r * 4 * tw;
+        ctx.moveTo(p.x - g, p.y); ctx.lineTo(p.x + g, p.y);
+        ctx.moveTo(p.x, p.y - g); ctx.lineTo(p.x, p.y + g);
+        ctx.stroke();
+      }
+    }
+    ctx.shadowBlur = 0;
+    raf = requestAnimationFrame(loop);
+  }
+  /* solo corre mientras el hero se ve */
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (e) {
+      var v = e[0].isIntersecting;
+      if (v && !on) { on = true; loop(); }
+      else if (!v && on) { on = false; cancelAnimationFrame(raf); }
+    }, { threshold: 0.05 }).observe(gal);
+  } else { on = true; loop(); }
+})();
+
+
+/* ---- al tocar una caja: onda desde el dedo + el icono salta ----
+   Hundirse sola no se notaba: el dedo tapa la caja justo cuando pasa. La
+   onda sigue viendose alrededor y el salto del icono queda DESPUES de
+   levantar el dedo, que es cuando el cliente vuelve a mirar. */
+document.addEventListener('pointerdown', function (ev) {
+  var c = ev.target.closest && ev.target.closest('.prod .pt, .prod .gar-chips span, .prod .med-col');
+  if (!c) return;
+  var r = c.getBoundingClientRect();
+  var o = document.createElement('span');
+  o.className = 'onda';
+  var d = Math.max(r.width, r.height) * 2.1;
+  o.style.width = o.style.height = d + 'px';
+  o.style.left = (ev.clientX - r.left - d / 2) + 'px';
+  o.style.top = (ev.clientY - r.top - d / 2) + 'px';
+  if (getComputedStyle(c).position === 'static') c.style.position = 'relative';
+  c.appendChild(o);
+  setTimeout(function () { o.remove(); }, 620);
+  var ico = c.querySelector('.pt-i');
+  if (ico) { ico.classList.remove('salta'); void ico.offsetWidth; ico.classList.add('salta'); }
+});
 
 })();
