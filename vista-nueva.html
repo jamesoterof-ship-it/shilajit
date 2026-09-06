@@ -1014,8 +1014,12 @@ body.con-barra .wa{bottom:72px}
 .prod .med-sec div > div > div:first-child{
   color:var(--tinta) !important}
 
-/* ---- 8. el boton flotante ya no tapa la ultima linea ---- */
-.prod{padding-bottom:96px}
+/* ---- 8. el final de la pagina ----
+   El boton flotante se esconde al llegar al formulario, asi que ya no hay
+   que reservarle 96px al final: eso era el hueco blanco antes del pie. */
+.prod{padding-bottom:20px}
+.stickycta.en-form{transform:translateY(115%); pointer-events:none;
+  transition:transform .28s ease-out}
 
 /* ============================================================
    EL DIAGRAMA DE LAS ZONAS
@@ -1045,14 +1049,129 @@ body.con-barra .wa{bottom:72px}
   line-height:1.15; letter-spacing:-.01em; margin:0 0 8px; color:var(--tinta)}
 .prod .zd-item p{font-size:16.5px; line-height:1.62; color:#4A453C; margin:0}
 
-.prod .zd-tabs{display:flex; gap:8px; margin-top:20px}
+/* Las pestañas: en vez de que cada boton se encienda por su cuenta, hay UNA
+   pildora que se desliza hasta el elegido. El movimiento dice de donde
+   vienes y a donde vas; encendidos sueltos no dicen nada. La curva lleva un
+   rebote corto al final para que se sienta vivo y no mecanico. */
+.prod .zd-tabs{display:flex; gap:8px; margin-top:20px; position:relative}
+.prod .zd-glide{position:absolute; top:0; left:0; height:100%; border-radius:11px;
+  background:#fff; border:1.5px solid var(--tinta); z-index:0; pointer-events:none;
+  opacity:0; box-shadow:0 2px 10px rgba(0,0,0,.07);
+  transition:transform .34s cubic-bezier(.34,1.32,.5,1),
+             width .34s cubic-bezier(.34,1.32,.5,1), opacity .2s ease-out}
+.prod .zd-glide.listo{opacity:1}
 .prod .zd-tabs button{flex:1; min-height:48px; border-radius:11px; cursor:pointer;
-  border:1.5px solid rgba(0,0,0,.13); background:transparent; color:#5F5A50;
+  position:relative; z-index:1; -webkit-tap-highlight-color:transparent;
+  border:1.5px solid rgba(0,0,0,.13); background:transparent; color:#7A7469;
   font-family:'Public Sans','Inter',sans-serif; font-size:14px; font-weight:600;
   line-height:1.25; padding:8px 6px;
-  transition:border-color .18s, color .18s, background-color .18s}
-.prod .zd-tabs button[aria-selected="true"]{border-color:var(--tinta);
-  color:var(--tinta); background:#fff}
+  transition:color .2s ease-out, border-color .2s ease-out, transform .14s ease-out}
+/* el borde propio se apaga en el elegido: el que se ve es el de la pildora */
+.prod .zd-tabs button[aria-selected="true"]{color:var(--tinta); font-weight:700;
+  border-color:transparent}
+.prod .zd-tabs button:active{transform:scale(.96)}
+.prod .zd-tabs button:hover{color:var(--tinta)}
+
+/* el punto que se toca tambien responde: se hunde un poco */
+.prod .zd-punto:active::before{transform:scale(.92)}
+.prod .zd-punto[aria-selected="true"]:active::before{transform:scale(1.05)}
+
+/* ============================================================
+   LOS PUNTOS, EN CAJAS
+   Eran una lista con la misma palomita azul cinco veces, repetida igual en
+   dos secciones. Ahora cada uno es una caja con su icono: se distinguen
+   entre si y el ojo puede saltar al que le interesa.
+   ============================================================ */
+.prod .pt-grid{display:grid; gap:10px; margin:20px 0 4px}
+.prod .pt{display:flex; align-items:center; gap:14px;
+  padding:15px 16px; border:1px solid rgba(0,0,0,.11); border-radius:13px;
+  background:#fff; transition:border-color .2s ease-out, transform .2s ease-out}
+.prod .pt:hover{border-color:rgba(0,0,0,.24); transform:translateY(-1px)}
+.prod .pt-i{flex:0 0 auto; width:42px; height:42px; border-radius:11px;
+  background:#FAF7F0; display:grid; place-items:center}
+.prod .pt-i svg{width:21px; height:21px; fill:none; stroke:var(--marca-oro-osc);
+  stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+.prod .pt p{margin:0; font-size:15.5px; line-height:1.45; color:var(--tinta); font-weight:500}
+/* entran escalonadas, una detras de otra, no todas de golpe */
+.prod .pt{opacity:0; transform:translateY(10px); animation:ptEntra .42s ease-out forwards;
+  animation-delay:calc(var(--i) * 70ms)}
+@keyframes ptEntra{to{opacity:1; transform:none}}
+@media (min-width:560px){ .prod .pt-grid{grid-template-columns:1fr 1fr} }
+
+/* ============================================================
+   EL HERO ENTRA EN ORDEN
+   Nombre, precio y boton aparecen uno detras de otro, de abajo hacia
+   arriba. La foto arranca un pelo mas grande y se asienta: da la sensacion
+   de que la pagina se acomoda, no de que aparece de un golpe.
+   ============================================================ */
+.prod .gal .marco img{animation:heroFoto 1.1s cubic-bezier(.22,.9,.3,1) both}
+@keyframes heroFoto{from{transform:scale(1.06); opacity:.55} to{transform:none; opacity:1}}
+.prod .datos > *{opacity:0; transform:translateY(12px);
+  animation:heroSube .5s cubic-bezier(.22,.9,.3,1) forwards}
+.prod .datos > .estrellas{animation-delay:.10s}
+.prod .datos > h1{animation-delay:.17s}
+.prod .datos > .sub{animation-delay:.24s}
+.prod .datos > .precioTop{animation-delay:.30s}
+.prod .datos > .packDe,
+.prod .datos > .nota{animation-delay:.35s}
+@keyframes heroSube{to{opacity:1; transform:none}}
+/* si el telefono pide menos movimiento, todo aparece quieto y ya */
+@media (prefers-reduced-motion:reduce){
+  .prod .gal .marco img, .prod .datos > *, .prod .pt{animation:none; opacity:1; transform:none}
+}
+
+/* ============================================================
+   PREGUNTAS FRECUENTES
+   Fondo propio para que se note que cambio de tema, y cada pregunta en su
+   tarjeta numerada. La primera llega abierta: asi nadie tiene que adivinar
+   que las demas tambien se abren.
+   ============================================================ */
+.prod .fq-sec{background:#F4F1EB; margin-top:52px;
+  padding:52px 20px 56px; border-radius:0}
+.prod .fq{display:grid; gap:10px; margin-top:22px}
+.prod .fq details{background:#fff; border:1px solid rgba(0,0,0,.09);
+  border-radius:14px; overflow:hidden;
+  transition:border-color .22s ease-out, box-shadow .22s ease-out;
+  opacity:0; transform:translateY(10px);
+  animation:fqEntra .42s ease-out forwards; animation-delay:calc(var(--i) * 55ms)}
+@keyframes fqEntra{to{opacity:1; transform:none}}
+.prod .fq details[open]{border-color:var(--marca-oro); box-shadow:0 3px 16px rgba(0,0,0,.06)}
+
+.prod .fq summary{display:flex; align-items:center; gap:13px; cursor:pointer;
+  list-style:none; padding:16px 16px; min-height:56px;
+  -webkit-tap-highlight-color:transparent}
+.prod .fq summary::-webkit-details-marker{display:none}
+/* el acordeon ya traia su propia flechita en ::after; con la nueva salian DOS */
+.prod .fq summary::after{content:none}
+.prod .fq summary > span{flex:1; font-family:'Public Sans','Inter',sans-serif;
+  font-size:15.5px; font-weight:600; line-height:1.35; color:var(--tinta)}
+
+/* el numero: gris cuando esta cerrada, dorado y lleno cuando se abre */
+.prod .fq .fq-n{flex:0 0 auto; width:30px; height:30px; border-radius:9px;
+  display:grid; place-items:center; font-style:normal;
+  font-family:'Fraunces',Georgia,serif; font-size:14px; font-weight:700;
+  background:#F1EEE7; color:#8A8478; font-variant-numeric:tabular-nums;
+  transition:background-color .22s ease-out, color .22s ease-out}
+.prod .fq details[open] .fq-n{background:var(--marca-oro); color:#fff}
+
+/* la flecha gira al abrir: dice que la tarjeta se desplego */
+.prod .fq .fq-f{flex:0 0 auto; width:26px; height:26px; display:grid; place-items:center;
+  transition:transform .26s cubic-bezier(.34,1.28,.5,1)}
+.prod .fq .fq-f svg{width:19px; height:19px; fill:none; stroke:#8A8478;
+  stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.prod .fq details[open] .fq-f{transform:rotate(180deg)}
+.prod .fq details[open] .fq-f svg{stroke:var(--marca-oro-osc)}
+
+.prod .fq details p{margin:0; padding:0 16px 18px 59px; font-size:15.5px;
+  line-height:1.62; color:#4A453C}
+/* la respuesta baja en vez de aparecer de golpe */
+.prod .fq details[open] p{animation:fqBaja .28s ease-out}
+@keyframes fqBaja{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .prod .fq details, .prod .fq details[open] p{animation:none; opacity:1; transform:none}
+  .prod .fq .fq-f{transition:none}
+}
 
 /* ---- la ficha de medidas: UNA caja de tres columnas ---- */
 .prod .med-ficha{display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
@@ -1219,7 +1338,7 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
 <script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=6"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha-nueva.js?v=3"></script>
+<script src="ficha-nueva.js?v=7"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->

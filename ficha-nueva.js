@@ -291,6 +291,25 @@
   }
 
 
+  var ICONOS = {
+    ondas:'<path d="M12 18h.01"/><path d="M8.5 14.5a5 5 0 0 1 7 0"/><path d="M5 11a10 10 0 0 1 14 0"/>',
+    torre:'<path d="M12 21V9"/><path d="M7 21l5-16 5 16"/><circle cx="12" cy="5" r="2"/>',
+    iman:'<path d="M6 4v8a6 6 0 0 0 12 0V4"/><path d="M6 9h4M14 9h4"/>',
+    cable:'<path d="M4 8a4 4 0 0 1 8 0v8a4 4 0 0 0 8 0"/><circle cx="4" cy="8" r="1.6"/>',
+    casa:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+    llave:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l2 2M14 9l2 2"/>',
+    fibra:'<path d="M4 20c3-8 5-12 8-16"/><path d="M9 20c3-8 5-12 8-16"/><path d="M14 20c2-6 3-9 5-13"/>',
+    cepillo:'<rect x="9" y="3" width="6" height="14" rx="3"/><path d="M9 7H6M9 11H6M9 15H6M15 7h3M15 11h3M15 15h3"/><path d="M12 17v4"/>',
+    agua:'<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',
+    ojo:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>',
+    pluma:'<path d="M20 4C11 4 4 11 4 20"/><path d="M4 20c8 0 16-7 16-16"/><path d="M8 16l4-4"/>',
+    libro:'<path d="M4 5a2 2 0 0 1 2-2h6v18H6a2 2 0 0 1-2-2z"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>',
+    auto:'<path d="M4 15h16v-3l-2-5H6l-2 5z"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/>',
+    rayo:'<path d="M13 2 4 14h6l-1 8 9-12h-6z"/>',
+    pantalla:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>',
+    escudo:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+    sol:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+  };
   /* ---------- 5 · descripcion ---------- */
   /* El texto es el MISMO, no se le quita ni se le agrega una palabra: lo unico
      que cambia es que la primera frase sale destacada y el resto va aparte.
@@ -311,7 +330,7 @@
   }
   var desc = '<section class="bloque desc" data-rv><span class="eyebrow">El producto</span><h2 class="tit2">Qué es y para qué sirve</h2>'
     + descHtml
-    + (p.puntos && p.puntos.length ? '<ul>' + p.puntos.map(function (x, i) { return '<li style="--i:' + i + '">' + esc(x) + '</li>'; }).join('') + '</ul>' : '')
+    + puntosEnCajas(p.puntos, p.puntosIconos)
     + '</section>';
 
   /* ---------- 6 · resenas ---------- */
@@ -361,9 +380,19 @@
 
 
   /* ---------- 7 · preguntas ---------- */
-  var preguntas = '<section class="bloque"><h2>Preguntas frecuentes</h2><div class="fq">'
-    + (p.preguntas ? p.preguntas.concat((window.PREGUNTAS || []).slice(0, 4)) : (window.PREGUNTAS || [])).map(function (x) {
-        return '<details><summary>' + esc(x.q) + '</summary><p>' + esc(x.a) + '</p></details>'; }).join('')
+  /* La seccion iba como una lista de renglones con una rayita debajo: era la
+     parte mas apagada de la pagina, justo donde el cliente viene con la duda
+     que lo frena. Ahora cada pregunta es una tarjeta numerada, la primera
+     llega abierta (nadie tiene que adivinar que se toca) y la seccion tiene
+     su propio fondo para que se note que cambio de tema. */
+  var preguntas = '<section class="bloque fq-sec" data-rv>'
+    + '<span class="eyebrow">Las dudas de siempre</span>'
+    + '<h2 class="tit2">Preguntas frecuentes</h2><div class="fq">'
+    + (p.preguntas ? p.preguntas.concat((window.PREGUNTAS || []).slice(0, 4)) : (window.PREGUNTAS || [])).map(function (x, i) {
+        return '<details style="--i:' + i + '"' + (i === 0 ? ' open' : '') + '>'
+          + '<summary><i class="fq-n">' + (i + 1) + '</i><span>' + esc(x.q) + '</span>'
+          + '<em class="fq-f"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></em></summary>'
+          + '<p>' + esc(x.a) + '</p></details>'; }).join('')
     + '</div>'
     + '</section>';
 
@@ -381,8 +410,7 @@
       + '<span class="eyebrow">Por qué lo quieres</span>'
       + '<h2 class="tit2">' + esc(p.nombre) + '</h2>'
       + (p.sub ? '<p>' + esc(p.sub) + '</p>' : '')
-      + (pun.length ? '<ul>' + pun.map(function (x, i) {
-          return '<li style="--i:' + i + '">' + esc(x) + '</li>'; }).join('') + '</ul>' : '')
+      + puntosEnCajas(pun, p.puntosIconos)
       + '<p style="margin-top:16px">Desde <b>' + pesos(min.precio) + '</b> · envío gratis y pagas cuando lo recibes en tu casa.</p>'
       + '<a class="cta azul" href="#pedir" style="margin-top:14px">Pedir el mío ahora</a>'
       + '</section>';
@@ -427,25 +455,34 @@
 
 
   /* ---------- 5 · LA FORMULA (molde NAD+) ---------- */
-  var ICONOS = {
-    ondas:'<path d="M12 18h.01"/><path d="M8.5 14.5a5 5 0 0 1 7 0"/><path d="M5 11a10 10 0 0 1 14 0"/>',
-    torre:'<path d="M12 21V9"/><path d="M7 21l5-16 5 16"/><circle cx="12" cy="5" r="2"/>',
-    iman:'<path d="M6 4v8a6 6 0 0 0 12 0V4"/><path d="M6 9h4M14 9h4"/>',
-    cable:'<path d="M4 8a4 4 0 0 1 8 0v8a4 4 0 0 0 8 0"/><circle cx="4" cy="8" r="1.6"/>',
-    casa:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
-    llave:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l2 2M14 9l2 2"/>',
-    fibra:'<path d="M4 20c3-8 5-12 8-16"/><path d="M9 20c3-8 5-12 8-16"/><path d="M14 20c2-6 3-9 5-13"/>',
-    cepillo:'<rect x="9" y="3" width="6" height="14" rx="3"/><path d="M9 7H6M9 11H6M9 15H6M15 7h3M15 11h3M15 15h3"/><path d="M12 17v4"/>',
-    agua:'<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',
-    ojo:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>',
-    pluma:'<path d="M20 4C11 4 4 11 4 20"/><path d="M4 20c8 0 16-7 16-16"/><path d="M8 16l4-4"/>',
-    libro:'<path d="M4 5a2 2 0 0 1 2-2h6v18H6a2 2 0 0 1-2-2z"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>',
-    auto:'<path d="M4 15h16v-3l-2-5H6l-2 5z"/><circle cx="7.5" cy="17" r="1.6"/><circle cx="16.5" cy="17" r="1.6"/>',
-    rayo:'<path d="M13 2 4 14h6l-1 8 9-12h-6z"/>',
-    pantalla:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>',
-    escudo:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
-    sol:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
-  };
+
+  /* Los puntos eran una lista con la MISMA palomita azul cinco veces seguidas,
+     y ademas repetida igual en dos secciones distintas de la pagina. Ahora
+     cada punto es una caja con su propio icono, elegido por lo que dice el
+     texto. El icono sale del mismo set que ya usa "Que incluye". */
+  function iconoDe(txt) {
+    var t = String(txt).toLowerCase();
+    if (/zona|altura|postura|de lado|boca arriba/.test(t)) return 'ondas';
+    if (/espuma|viscoel|material|relleno|fibra/.test(t)) return 'fibra';
+    if (/mide|medida| cm|tama|60 x 40/.test(t)) return 'casa';
+    if (/malla|transpir|aire|ventil|fresco/.test(t)) return 'pluma';
+    if (/lava|funda|agua|limpia/.test(t)) return 'agua';
+    if (/garant|segur|protec/.test(t)) return 'escudo';
+    if (/solar|luz/.test(t)) return 'sol';
+    if (/bater|carga|energ/.test(t)) return 'rayo';
+    if (/vista|lente/.test(t)) return 'ojo';
+    return 'escudo';
+  }
+  function puntosEnCajas(pun, iconos) {
+    if (!pun || !pun.length) return '';
+    return '<div class="pt-grid">' + pun.map(function (x, i) {
+      var k = (iconos && iconos[i]) || iconoDe(x);
+      return '<div class="pt" style="--i:' + i + '">'
+        + '<span class="pt-i"><svg viewBox="0 0 24 24">' + (ICONOS[k] || ICONOS.escudo) + '</svg></span>'
+        + '<p>' + esc(x) + '</p></div>';
+    }).join('') + '</div>';
+  }
+
   function seccionFormula() {
     if (!p.formula || !p.formula.length) return '';
     return '<section class="bloque form-sec" data-rv><span class="eyebrow">' + esc(p.formulaRotulo || 'Qué incluye') + '</span>'
@@ -1516,6 +1553,44 @@ document.addEventListener('click', function (ev) {
   sec.querySelectorAll('.zd-item').forEach(function (el, n) { el.classList.toggle('on', n === i); });
   sec.querySelectorAll('.zd-punto').forEach(function (el, n) { el.setAttribute('aria-selected', n === i ? 'true' : 'false'); });
   sec.querySelectorAll('.zd-tabs button').forEach(function (el, n) { el.setAttribute('aria-selected', n === i ? 'true' : 'false'); });
+  zdMover(sec, i);
 });
+
+
+/* la pildora blanca que se desliza hasta la pestaña elegida */
+function zdMover(sec, i) {
+  var tabs = sec.querySelector('.zd-tabs'); if (!tabs) return;
+  var b = tabs.querySelectorAll('button')[i]; if (!b) return;
+  var g = tabs.querySelector('.zd-glide');
+  if (!g) { g = document.createElement('span'); g.className = 'zd-glide'; tabs.insertBefore(g, tabs.firstChild); }
+  g.style.width = b.offsetWidth + 'px';
+  g.style.transform = 'translateX(' + b.offsetLeft + 'px)';
+  requestAnimationFrame(function () { g.classList.add('listo'); });
+}
+/* al cargar y al girar el telefono se recoloca sola */
+function zdInicio() {
+  document.querySelectorAll('.zon-diagrama').forEach(function (sec) {
+    var bs = [].slice.call(sec.querySelectorAll('.zd-tabs button'));
+    var sel = sec.querySelector('.zd-tabs button[aria-selected="true"]');
+    zdMover(sec, Math.max(0, bs.indexOf(sel)));
+  });
+}
+if (document.readyState === 'complete') setTimeout(zdInicio, 80);
+else window.addEventListener('load', function () { setTimeout(zdInicio, 80); });
+window.addEventListener('resize', zdInicio);
+
+
+/* El boton flotante se escondia solo cuando ya estabas DENTRO del formulario:
+   ahi sobra -el cliente ya llego a donde el boton lo mandaba- y encima
+   obligaba a dejar un hueco blanco al final de la pagina para que no tapara
+   nada. Se esconde al entrar el formulario y vuelve si te devuelves. */
+(function () {
+  var form = document.querySelector('.prod .form, #pedir');
+  var barra = document.querySelector('.stickycta');
+  if (!form || !barra || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function (e) {
+    barra.classList.toggle('en-form', e[0].isIntersecting);
+  }, { threshold: 0.08 }).observe(form);
+})();
 
 })();
