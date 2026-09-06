@@ -43,6 +43,15 @@
   var ESTRELLA = '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.6.7-4.9 4.5 1.4 6.5L12 16.7 6 20l1.4-6.5L2.5 9l6.6-.7z"/></svg>';
   var estrellas = function (n) { var s = ''; for (var i = 0; i < 5; i++) s += ESTRELLA; return '<span class="est">' + s + '</span>'; };
 
+  /* de que anuncio vino: el ?cmp se guarda para poder atribuir la venta.
+     Vivia solo en app.js (landings viejas) y la tienda no lo cargaba. */
+  try {
+    var _q = new URLSearchParams(location.search);
+    var _c = _q.get('cmp') || _q.get('utm_campaign') || '';
+    if (_c) { try { localStorage.setItem('_cmp', _c); } catch (e) {} window._CMP = _c; }
+    else { try { window._CMP = localStorage.getItem('_cmp') || ''; } catch (e) { window._CMP = ''; } }
+  } catch (e) { window._CMP = ''; }
+
   var id = new URLSearchParams(location.search).get('p');
   var TODOS = window.PRODUCTOS || [];
   var p = TODOS.find(function (x) { return x.id === id; });
@@ -957,6 +966,7 @@
          venta entraba con precio 0 (paso el 28-08 con la ducha) y el
          candado de precios no la podia validar. Se mandan los dos. */
       producto: p.nombre, total: k.precio, precio: k.precio, cantidad: k.cant,
+      cmp: window._CMP || '',   /* el anuncio del que vino */
       direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
       /* La referencia y el correo se le pedian al cliente y se tiraban a la
          basura: no viajaban en el pedido. La referencia es justo lo que el
