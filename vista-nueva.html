@@ -1115,12 +1115,11 @@ body.con-barra .wa{bottom:72px}
 .prod .zd-punto, .prod .fq summary{
   -webkit-user-select:none; user-select:none; -webkit-touch-callout:none}
 .prod .pt, .prod .gar-chips span, .prod .med-col{position:relative; overflow:hidden}
-.prod .onda{position:absolute; border-radius:50%; pointer-events:none; z-index:0;
-  background:radial-gradient(circle, rgba(184,140,47,.34) 0%, rgba(184,140,47,.14) 45%, transparent 70%);
-  transform:scale(0); opacity:.9; animation:ondaSale .58s cubic-bezier(.2,.7,.3,1) forwards}
-@keyframes ondaSale{to{transform:scale(1); opacity:0}}
-/* el contenido va encima de la onda */
+/* la onda que salia del dedo se quito: ensanchaba la caja y sacaba la barra
+   de scroll de lado. El aviso queda solo en el borde. */
 .prod .pt > *, .prod .med-col > *{position:relative; z-index:1}
+/* candado: nada dentro de la ficha puede sacar scroll de lado */
+.prod, .prod .bloque{max-width:100%; overflow-x:clip}
 /* El icono saltaba y crecia: se salia de su cuadrito y quedaba feo. Nada se
    mueve ni cambia de tamaño. El aviso queda EN EL BORDE: se enciende dorado
    y una barrita recorre el canto izquierdo. Se ve, y no descuadra nada. */
@@ -1419,7 +1418,7 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
 <script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=6"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha-nueva.js?v=9"></script>
+<script src="ficha-nueva.js?v=10"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->

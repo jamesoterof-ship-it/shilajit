@@ -1652,7 +1652,10 @@ window.addEventListener('resize', zdInicio);
     /* la mayoria son motas chicas; las estrellas, lunas y zetas son las que
        cuentan de que va el producto, por eso son pocas y grandes */
     var d = Math.random();
-    var tipo = d < .06 ? 'zeta' : d < .13 ? 'luna' : d < .42 ? 'estrella' : 'punto';
+    /* varias Z a la vez, no una sola perdida: son las que dicen "sueño" de
+       una. Las lunas siguen siendo pocas — una luna cada tanto se ve, varias
+       lunas juntas ya no significan nada. */
+    var tipo = d < .20 ? 'zeta' : d < .26 ? 'luna' : d < .55 ? 'estrella' : 'punto';
     return { x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.7 + .7,
       /* mas lento que en NAD+: aca tiene que dar calma, no energia */
       vy: -(Math.random() * .28 + .09), vx: (Math.random() - .5) * .16,
@@ -1679,7 +1682,9 @@ window.addEventListener('resize', zdInicio);
       ctx.fillStyle = 'rgba(190,143,42,' + al + ')';
       ctx.strokeStyle = 'rgba(190,143,42,' + al + ')';
       if (p.tipo === 'luna') luna(p.x, p.y, p.r * 3.1);
-      else if (p.tipo === 'zeta') zeta(p.x, p.y, p.r * 3.4, al);
+      /* las Z van mas grandes: chiquitas no se leen como Z, se ven como una
+         rayita cualquiera y se pierde el chiste */
+      else if (p.tipo === 'zeta') zeta(p.x, p.y, p.r * 5.2, al);
       else if (p.tipo === 'estrella') estrella(p.x, p.y, p.r * 3.2);
       else { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
     }
@@ -1701,21 +1706,14 @@ window.addEventListener('resize', zdInicio);
    Hundirse sola no se notaba: el dedo tapa la caja justo cuando pasa. La
    onda sigue viendose alrededor y el salto del icono queda DESPUES de
    levantar el dedo, que es cuando el cliente vuelve a mirar. */
-document.addEventListener('pointerdown', function (ev) {
+/* Va en CLICK, no en pointerdown. Con pointerdown el efecto saltaba tambien
+   al deslizar el dedo para bajar por la pagina: cada scroll encendia cajas
+   al azar. La onda que salia del dedo se quito entera — era la que ensanchaba
+   la caja y sacaba la barra de scroll de lado. Queda solo la marca del borde:
+   nada crece, nada se sale, nada mueve la pantalla. */
+document.addEventListener('click', function (ev) {
   var c = ev.target.closest && ev.target.closest('.prod .pt, .prod .gar-chips span, .prod .med-col');
   if (!c) return;
-  var r = c.getBoundingClientRect();
-  var o = document.createElement('span');
-  o.className = 'onda';
-  var d = Math.max(r.width, r.height) * 2.1;
-  o.style.width = o.style.height = d + 'px';
-  o.style.left = (ev.clientX - r.left - d / 2) + 'px';
-  o.style.top = (ev.clientY - r.top - d / 2) + 'px';
-  if (getComputedStyle(c).position === 'static') c.style.position = 'relative';
-  c.appendChild(o);
-  setTimeout(function () { o.remove(); }, 620);
-  /* La marca queda en el BORDE de la caja, no en el icono: el icono saltaba,
-     crecia y se salia de su cuadrito. Nada cambia de tamaño. */
   c.classList.remove('tocada'); void c.offsetWidth; c.classList.add('tocada');
   clearTimeout(c._t);
   c._t = setTimeout(function () { c.classList.remove('tocada'); }, 700);
