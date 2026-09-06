@@ -1059,22 +1059,53 @@ body.con-barra .wa{bottom:72px}
   opacity:0; box-shadow:0 2px 10px rgba(0,0,0,.07);
   transition:transform .34s cubic-bezier(.34,1.32,.5,1),
              width .34s cubic-bezier(.34,1.32,.5,1), opacity .2s ease-out}
-.prod .zd-glide.listo{opacity:1}
-.prod .zd-tabs button{flex:1; min-height:48px; border-radius:11px; cursor:pointer;
+.prod .zd-glide{display:none}   /* la pildora se cambio por teclas con volumen */
+
+/* ============================================================
+   TECLAS CON RELIEVE
+   Cada boton lleva su canto inferior solido, como una tecla de verdad: en
+   reposo esta levantado, al presionarlo baja los 4px del canto y el canto
+   desaparece. Se SIENTE que se hunde, no solo se ve que cambia de color.
+   ============================================================ */
+.prod .zd-tabs button{flex:1; min-height:50px; border-radius:12px; cursor:pointer;
   position:relative; z-index:1; -webkit-tap-highlight-color:transparent;
-  border:1.5px solid rgba(0,0,0,.13); background:transparent; color:#7A7469;
+  border:1px solid rgba(0,0,0,.10); background:#fff; color:#6E6759;
   font-family:'Public Sans','Inter',sans-serif; font-size:14px; font-weight:600;
   line-height:1.25; padding:8px 6px;
-  transition:color .2s ease-out, border-color .2s ease-out, transform .14s ease-out}
-/* el borde propio se apaga en el elegido: el que se ve es el de la pildora */
-.prod .zd-tabs button[aria-selected="true"]{color:var(--tinta); font-weight:700;
-  border-color:transparent}
-.prod .zd-tabs button:active{transform:scale(.96)}
+  box-shadow:0 4px 0 rgba(23,21,15,.13), 0 6px 14px rgba(23,21,15,.09);
+  transform:translateY(-2px);
+  transition:transform .16s cubic-bezier(.3,1.25,.5,1), box-shadow .16s ease-out,
+             background-color .22s ease-out, color .22s ease-out, border-color .22s ease-out}
+.prod .zd-tabs button:active{transform:translateY(2px);
+  box-shadow:0 0 0 rgba(0,0,0,0), 0 1px 3px rgba(23,21,15,.14)}
+/* la elegida: oscura, mas levantada y con el canto mas marcado */
+.prod .zd-tabs button[aria-selected="true"]{background:var(--tinta); color:#fff;
+  border-color:var(--tinta); font-weight:700; transform:translateY(-4px);
+  box-shadow:0 6px 0 rgba(23,21,15,.34), 0 12px 22px rgba(23,21,15,.20)}
+.prod .zd-tabs button[aria-selected="true"]:active{transform:translateY(0);
+  box-shadow:0 2px 0 rgba(23,21,15,.34), 0 3px 8px rgba(23,21,15,.18)}
 .prod .zd-tabs button:hover{color:var(--tinta)}
+.prod .zd-tabs button[aria-selected="true"]:hover{color:#fff}
 
-/* el punto que se toca tambien responde: se hunde un poco */
-.prod .zd-punto:active::before{transform:scale(.92)}
-.prod .zd-punto[aria-selected="true"]:active::before{transform:scale(1.05)}
+/* los puntos sobre la foto, a juego: canto propio y hundido al tocar */
+.prod .zd-punto::before{box-shadow:0 3px 0 rgba(23,21,15,.32), 0 5px 14px rgba(0,0,0,.30)}
+.prod .zd-punto:active::before{transform:translateY(3px);
+  box-shadow:0 0 0 rgba(0,0,0,0), 0 2px 5px rgba(0,0,0,.25)}
+.prod .zd-punto[aria-selected="true"]:active::before{transform:translateY(3px) scale(1.12)}
+
+/* ---- el mismo relieve en TODAS las cajas de la ficha ---- */
+.prod .pt,
+.prod .fq details,
+.prod .med-ficha,
+.prod .gar-chips span{
+  box-shadow:0 3px 0 rgba(23,21,15,.09), 0 6px 16px rgba(23,21,15,.07)}
+.prod .pt:active,
+.prod .gar-chips span:active{transform:translateY(3px);
+  box-shadow:0 0 0 rgba(0,0,0,0), 0 1px 4px rgba(23,21,15,.12)}
+.prod .fq details[open]{box-shadow:0 4px 0 rgba(184,140,47,.34), 0 10px 24px rgba(23,21,15,.10)}
+.prod .pt{transition:transform .16s cubic-bezier(.3,1.25,.5,1), box-shadow .16s ease-out,
+  border-color .2s ease-out}
+.prod .gar-chips span{transition:transform .16s cubic-bezier(.3,1.25,.5,1), box-shadow .16s ease-out}
 
 /* ============================================================
    LOS PUNTOS, EN CAJAS
@@ -1106,6 +1137,24 @@ body.con-barra .wa{bottom:72px}
    ============================================================ */
 .prod .gal .marco img{animation:heroFoto 1.1s cubic-bezier(.22,.9,.3,1) both}
 @keyframes heroFoto{from{transform:scale(1.06); opacity:.55} to{transform:none; opacity:1}}
+
+/* Un brillo cruza la foto cada tantos segundos, como la luz sobre algo que
+   esta ahi de verdad. La entrada de arriba solo se ve una vez, al cargar;
+   esto se sigue viendo cada vez que el cliente vuelve al hero. */
+.prod .gal .marco{position:relative; overflow:hidden}
+.prod .gal .marco::after{content:''; position:absolute; inset:0; z-index:3;
+  pointer-events:none; transform:translateX(-130%);
+  background:linear-gradient(105deg, transparent 36%, rgba(255,255,255,.62) 48%,
+    rgba(255,255,255,.28) 54%, transparent 64%);
+  animation:heroBrillo 6s cubic-bezier(.4,0,.3,1) 1.4s infinite}
+@keyframes heroBrillo{0%{transform:translateX(-130%)} 22%,100%{transform:translateX(130%)}}
+
+/* la galeria se levanta del fondo en vez de quedar pegada al blanco */
+.prod .gal{box-shadow:0 14px 34px rgba(23,21,15,.11)}
+/* Fuera las flechas y los puntitos: hacian lo mismo que las miniaturas de
+   abajo, tres controles para una sola cosa. Se elige por miniatura y se
+   desliza con el dedo; la foto queda limpia. */
+.prod .gal .flecha, .prod .gal .puntos{display:none}
 .prod .datos > *{opacity:0; transform:translateY(12px);
   animation:heroSube .5s cubic-bezier(.22,.9,.3,1) forwards}
 .prod .datos > .estrellas{animation-delay:.10s}
