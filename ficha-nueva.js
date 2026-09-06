@@ -445,9 +445,12 @@
   var interesar = otros.length ? '<section class="bloque"><h2>También te puede interesar</h2><div class="otros">'
     + otros.map(function (x) {
         var min = x.packs.reduce(function (a, b) { return b.precio < a ? b.precio : a; }, Infinity);
-        return '<a class="oc" href="producto.html?p=' + esc(x.id) + '">'
+        return '<a class="oc" href="/' + esc(x.id) + '/">'
           + '<div class="im">' + (x.foto
-              ? '<img src="' + esc(x.foto) + '" alt="' + esc(x.nombre) + '" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{textContent:\'' + esc(x.nombre.charAt(0)) + '\'}))">'
+              /* lazy + link corto: estas seis fotos de OTROS productos pesaban
+                 550 KB que se bajaban al abrir, sin que el cliente llegara nunca
+                 hasta abajo. Ahora se traen solo si baja. */
+              ? '<img src="' + esc(x.foto) + '" alt="' + esc(x.nombre) + '" loading="lazy" decoding="async" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{textContent:\'' + esc(x.nombre.charAt(0)) + '\'}))">'
               : '<span>' + esc(x.nombre.charAt(0)) + '</span>') + '</div>'
           + '<div class="tx"><div class="n">' + esc(x.nombre) + '</div>'
           + '<div class="p">desde ' + pesos(min) + '</div></div></a>';
@@ -771,10 +774,12 @@
     if (!p.video) return '';
     var poster = (p.fotos && p.fotos[0]) || '';
     return '<section class="bloque vid-wrap" style="position:relative;overflow:hidden;padding:36px 0;margin:0">'
-      + '<video class="vid-prod" playsinline autoplay muted loop preload="auto" '
+      /* El video NO se baja al abrir la pagina: pesaba 2,1 MB de los 2,3 MB
+         que cargaba la ficha. Se pone la fuente cuando entra en pantalla. */
+      + '<video class="vid-prod" playsinline autoplay muted loop preload="none" '
+      +   'data-src="' + esc(p.video) + '" '
       +   'poster="' + esc(poster) + '" style="width:100%;display:block;aspect-ratio:1080/1920;object-fit:cover;background:#000" '
-      +   'onerror="this.closest(\'.vid-wrap\').style.display=\'none\'">'
-      + '<source src="' + esc(p.video) + '" type="video/mp4"></video>'
+      +   'onerror="this.closest(\'.vid-wrap\').style.display=\'none\'"></video>'
       + '</section>';
   }
 
@@ -1720,5 +1725,8 @@ document.addEventListener('click', function (ev) {
   clearTimeout(c._t);
   c._t = setTimeout(function () { c.classList.remove('tocada'); }, 700);
 });
+
+
+
 
 })();
