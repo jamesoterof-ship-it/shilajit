@@ -1638,7 +1638,8 @@ window.addEventListener('resize', zdInicio);
   }
   function zeta(x, y, s, al) {      /* la Z de dormir, en tres trazos */
     ctx.save();
-    ctx.lineWidth = Math.max(1, s * .17);
+    /* trazo fino: grueso se veia como un garabato, no como una Z de dormir */
+    ctx.lineWidth = Math.max(.9, s * .13);
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     ctx.strokeStyle = 'rgba(190,143,42,' + al + ')';
     var h = s * .62;
@@ -1682,9 +1683,10 @@ window.addEventListener('resize', zdInicio);
       ctx.fillStyle = 'rgba(190,143,42,' + al + ')';
       ctx.strokeStyle = 'rgba(190,143,42,' + al + ')';
       if (p.tipo === 'luna') luna(p.x, p.y, p.r * 3.1);
-      /* las Z van mas grandes: chiquitas no se leen como Z, se ven como una
-         rayita cualquiera y se pierde el chiste */
-      else if (p.tipo === 'zeta') zeta(p.x, p.y, p.r * 5.2, al);
+      /* a 5.2 quedaban toscas, como garabatos encima de la foto. A 3.2 se
+         leen como Z pero no pesan mas que la almohada, que es lo que se
+         tiene que ver. */
+      else if (p.tipo === 'zeta') zeta(p.x, p.y, p.r * 3.2, al);
       else if (p.tipo === 'estrella') estrella(p.x, p.y, p.r * 3.2);
       else { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
     }
