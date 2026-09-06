@@ -920,6 +920,15 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
   window.fbq = function () {};   // fuera de la tienda no se manda nada
 }
 </script>
+  <style>
+    /* SOLO en la ficha de producto: al bajar se esconde la barra de anuncios
+       y queda unicamente la de JAYE GROUP, para que el producto se lleve la
+       pantalla. En la portada no se toca: ahi la marquesina si tiene sentido.
+       La logica de .bajando ya existia en efectos.js (se activa pasados 90px). */
+    .pegado .marq{transition:max-height .28s cubic-bezier(.2,.8,.2,1),padding .28s ease,opacity .22s ease;max-height:60px;overflow:hidden}
+    .pegado.bajando .marq{max-height:0;padding-top:0;padding-bottom:0;opacity:0}
+    @media (prefers-reduced-motion:reduce){.pegado .marq{transition:none}}
+  </style>
 </head>
 <body>
 
