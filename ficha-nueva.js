@@ -1618,11 +1618,46 @@ window.addEventListener('resize', zdInicio);
     var r = gal.getBoundingClientRect(); W = r.width; H = r.height;
     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
+  /* ---- las formas: todo lo que se ve arriba habla de dormir ---- */
+  function estrella(x, y, r) {      /* destello de cuatro puntas */
+    ctx.beginPath();
+    ctx.moveTo(x, y - r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.quadraticCurveTo(x, y, x, y + r);
+    ctx.quadraticCurveTo(x, y, x - r, y);
+    ctx.quadraticCurveTo(x, y, x, y - r);
+    ctx.fill();
+  }
+  function luna(x, y, r) {          /* la luna en cuarto, recortada con otro circulo */
+    ctx.save();
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.clip();
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fill();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath(); ctx.arc(x + r * .52, y - r * .30, r * .92, 0, 6.2832); ctx.fill();
+    ctx.restore();
+  }
+  function zeta(x, y, s, al) {      /* la Z de dormir, en tres trazos */
+    ctx.save();
+    ctx.lineWidth = Math.max(1, s * .17);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = 'rgba(190,143,42,' + al + ')';
+    var h = s * .62;
+    ctx.beginPath();
+    ctx.moveTo(x - h, y - h); ctx.lineTo(x + h, y - h);
+    ctx.lineTo(x - h, y + h); ctx.lineTo(x + h, y + h);
+    ctx.stroke();
+    ctx.restore();
+  }
   function mk() {
-    return { x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.8 + .7,
-      vy: -(Math.random() * .45 + .14), vx: (Math.random() - .5) * .22,
-      a: Math.random() * .45 + .35, tw: Math.random() * 6.28,
-      ts: Math.random() * .05 + .025, big: Math.random() < .18 };
+    /* la mayoria son motas chicas; las estrellas, lunas y zetas son las que
+       cuentan de que va el producto, por eso son pocas y grandes */
+    var d = Math.random();
+    var tipo = d < .06 ? 'zeta' : d < .13 ? 'luna' : d < .42 ? 'estrella' : 'punto';
+    return { x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.7 + .7,
+      /* mas lento que en NAD+: aca tiene que dar calma, no energia */
+      vy: -(Math.random() * .28 + .09), vx: (Math.random() - .5) * .16,
+      a: Math.random() * .42 + .32, tw: Math.random() * 6.28,
+      ts: Math.random() * .035 + .016, tipo: tipo };
   }
   function poblar() { P = []; var n = Math.min(42, Math.round(W / 10)); for (var i = 0; i < n; i++) P.push(mk()); }
   size(); poblar();
@@ -1632,30 +1667,21 @@ window.addEventListener('resize', zdInicio);
     if (!on) return;
     fr++;
     ctx.clearRect(0, 0, W, H);
-    ctx.lineWidth = 1;
-    for (var a = 0; a < P.length; a++) for (var b = a + 1; b < P.length; b++) {
-      var dx = P[a].x - P[b].x, dy = P[a].y - P[b].y, d = dx * dx + dy * dy;
-      if (d < 5200) {
-        ctx.strokeStyle = 'rgba(154,116,21,' + (0.13 * (1 - d / 5200)) + ')';
-        ctx.beginPath(); ctx.moveTo(P[a].x, P[a].y); ctx.lineTo(P[b].x, P[b].y); ctx.stroke();
-      }
-    }
+    /* Los hilos que unian los puntos se quitaron: en NAD+ decian "molecula",
+       aca solo hacian ver una red y no tenian nada que ver con dormir. */
     for (var i = 0; i < P.length; i++) {
       var p = P[i]; p.y += p.vy; p.x += p.vx;
-      if (p.y < -6) { p.y = H + 6; p.x = Math.random() * W; }
+      if (p.y < -14) { p.y = H + 10; p.x = Math.random() * W; }
       var tw = 0.45 + 0.55 * Math.abs(Math.sin(fr * p.ts + p.tw));
       var al = p.a * tw;
-      ctx.shadowColor = 'rgba(184,140,47,.85)'; ctx.shadowBlur = (p.big ? 8 : 4) * tw;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (p.big ? 1.25 : 1), 0, 6.2832);
-      ctx.fillStyle = 'rgba(190,143,42,' + al + ')'; ctx.fill();
-      if (p.big && tw > .85) {
-        ctx.strokeStyle = 'rgba(154,116,21,' + (al * .8) + ')';
-        ctx.beginPath();
-        var g = p.r * 4 * tw;
-        ctx.moveTo(p.x - g, p.y); ctx.lineTo(p.x + g, p.y);
-        ctx.moveTo(p.x, p.y - g); ctx.lineTo(p.x, p.y + g);
-        ctx.stroke();
-      }
+      ctx.shadowColor = 'rgba(184,140,47,.85)';
+      ctx.shadowBlur = (p.tipo === 'punto' ? 4 : 8) * tw;
+      ctx.fillStyle = 'rgba(190,143,42,' + al + ')';
+      ctx.strokeStyle = 'rgba(190,143,42,' + al + ')';
+      if (p.tipo === 'luna') luna(p.x, p.y, p.r * 3.1);
+      else if (p.tipo === 'zeta') zeta(p.x, p.y, p.r * 3.4, al);
+      else if (p.tipo === 'estrella') estrella(p.x, p.y, p.r * 3.2);
+      else { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.2832); ctx.fill(); }
     }
     ctx.shadowBlur = 0;
     raf = requestAnimationFrame(loop);
@@ -1688,8 +1714,11 @@ document.addEventListener('pointerdown', function (ev) {
   if (getComputedStyle(c).position === 'static') c.style.position = 'relative';
   c.appendChild(o);
   setTimeout(function () { o.remove(); }, 620);
-  var ico = c.querySelector('.pt-i');
-  if (ico) { ico.classList.remove('salta'); void ico.offsetWidth; ico.classList.add('salta'); }
+  /* La marca queda en el BORDE de la caja, no en el icono: el icono saltaba,
+     crecia y se salia de su cuadrito. Nada cambia de tamaño. */
+  c.classList.remove('tocada'); void c.offsetWidth; c.classList.add('tocada');
+  clearTimeout(c._t);
+  c._t = setTimeout(function () { c.classList.remove('tocada'); }, 700);
 });
 
 })();
