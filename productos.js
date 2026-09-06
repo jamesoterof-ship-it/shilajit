@@ -50,6 +50,12 @@ window.PRODUCTOS = [
       nota: 'Es de las que más rota en bodega. Se despacha por orden de pedido y pagas recién cuando la tienes en la mano.' },
     zonas: {
       img: 'img/prod-almohada.webp?v=1',
+      /* foto SIN los rotulos del proveedor: sobre ella van los puntos que se
+         tocan. Campos nuevos, la ficha vieja los ignora sin romperse. */
+      imgZonas: 'img/almohada-zonas.webp?v=1',
+      puntos: [[13, 47], [46, 30], [70, 48]],
+      etiquetas: ['De lado', 'Boca arriba', 'El cuello'],
+      titulos: ['Los costados, más altos', 'El centro, más bajo', 'El soporte cervical'],
       rotulo: 'Cómo se usa',
       titulo: 'Una zona para cada postura',
       sub: 'No es una almohada deforme: cada parte tiene una función distinta.',

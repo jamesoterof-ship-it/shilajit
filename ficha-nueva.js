@@ -647,18 +647,58 @@
   function seccionZonas() {
     if (!p.zonas || !p.zonas.img) return '';
     var z = p.zonas;
-    return '<section class="bloque zon-sec" data-rv>'
+    /* Antes esto eran tres parrafos largos con un punto de color al lado: el
+       cliente tenia que leerse los tres de corrido para entender la almohada.
+       Ahora es un diagrama: se toca el punto sobre la foto (o la pestaña de
+       abajo) y sale SOLO esa explicacion. Mismo texto, de a uno. */
+    var pies = z.pies || [];
+    /* el titulo de cada zona sale de su propia primera frase, sin inventar
+       texto nuevo: "Los dos costados son los mas altos." -> ese es el titulo */
+    var tits = z.titulos || [];
+    var partes = pies.map(function (t, i) {
+      var s = String(t).trim();
+      /* si el producto trae titulo corto escrito, ese manda: los derivados
+         salian larguisimos ("El panel gris del frente es el soporte cervical") */
+      if (tits[i]) {
+        var c0 = s.indexOf('. ');
+        return { tit: tits[i], txt: (c0 > 12 && c0 < s.length - 15) ? s.slice(c0 + 2) : s };
+      }
+      var c = s.indexOf('. ');
+      if (c > 12 && c < s.length - 15) return { tit: s.slice(0, c), txt: s.slice(c + 2) };
+      return { tit: '', txt: s };
+    });
+    /* donde cae cada punto sobre la foto. Si el producto no trae puntos
+       propios, se reparten a lo ancho y la seccion igual funciona. */
+    var pos = z.puntos || [[22, 62], [48, 33], [72, 55]];
+    var eti = z.etiquetas || [];
+
+    return '<section class="bloque zon-sec zon-diagrama" data-rv>'
       + '<span class="eyebrow">' + esc(z.rotulo || 'Cómo se usa') + '</span>'
       + '<h2 class="tit2">' + esc(z.titulo || 'Una zona para cada postura') + '</h2>'
-      + (z.sub ? '<p class="sub2">' + esc(z.sub) + '</p>' : '')
-      + '<div style="border-radius:16px;overflow:hidden;margin:14px 0 4px">'
-      + '<img src="' + esc(z.img) + '" alt="' + esc(z.titulo || '') + '" loading="lazy" style="width:100%;display:block">'
-      + '</div>'
-      + (z.pies || []).map(function (t) {
-          return '<div style="display:flex;gap:10px;align-items:flex-start;margin-top:12px">'
-            + '<span style="flex:0 0 auto;width:9px;height:9px;border-radius:50%;background:var(--acento);margin-top:6px"></span>'
-            + '<p style="margin:0;font-size:15px;line-height:1.5;color:#333">' + esc(t) + '</p></div>';
+      + '<p class="sub2">' + esc(z.sub || '') + ' Toca cada punto y mira para qué sirve.</p>'
+      + '<div class="zd-foto">'
+      + '<img src="' + esc(z.imgZonas || z.img) + '" alt="' + esc(z.titulo || '') + '" loading="lazy">'
+      + partes.map(function (_, i) {
+          var q = pos[i] || [20 + i * 26, 50];
+          return '<button type="button" class="zd-punto" data-z="' + i + '"'
+            + ' aria-selected="' + (i === 0 ? 'true' : 'false') + '"'
+            + ' aria-label="Ver la zona ' + (i + 1) + '"'
+            + ' style="left:' + q[0] + '%;top:' + q[1] + '%"><span>' + (i + 1) + '</span></button>';
         }).join('')
+      + '</div>'
+      + '<div class="zd-txt">'
+      + partes.map(function (x, i) {
+          return '<div class="zd-item' + (i === 0 ? ' on' : '') + '">'
+            + (x.tit ? '<h3>' + esc(x.tit) + '</h3>' : '')
+            + '<p>' + esc(x.txt) + '</p></div>';
+        }).join('')
+      + '</div>'
+      + '<div class="zd-tabs">'
+      + partes.map(function (x, i) {
+          return '<button type="button" data-z="' + i + '" aria-selected="' + (i === 0 ? 'true' : 'false') + '">'
+            + esc(eti[i] || ('Zona ' + (i + 1))) + '</button>';
+        }).join('')
+      + '</div>'
       + '</section>';
   }
 
@@ -669,11 +709,12 @@
     var m = p.medida;
     return '<section class="bloque med-sec" data-rv>'
       + '<h2 class="tit2">' + esc(m.titulo || '¿Le sirve tu funda?') + '</h2>'
-      + '<div style="display:flex;gap:12px;margin:16px 0 6px;flex-wrap:wrap">'
+      /* Antes eran tres tarjetas sueltas que se acomodaban de a dos y una,
+         segun el ancho del telefono. Ahora es UNA ficha de tres columnas:
+         se lee de un vistazo como lo que es, una tabla de medidas. */
+      + '<div class="med-ficha">'
       + (m.filas || []).map(function (f) {
-          return '<div style="flex:1 1 140px;border:1px solid rgba(0,0,0,.10);border-radius:14px;padding:14px;background:#fff;text-align:center">'
-            + '<div style="font-size:26px;font-weight:800;color:var(--acento);line-height:1.1">' + esc(f[0]) + '</div>'
-            + '<div style="font-size:13.5px;color:#5a5a5a;margin-top:5px">' + esc(f[1]) + '</div></div>';
+          return '<div class="med-col"><b>' + esc(f[0]) + '</b><span>' + esc(f[1]) + '</span></div>';
         }).join('')
       + '</div>'
       + '<p style="margin:12px 0 16px;font-size:15.5px;line-height:1.55;color:#333">' + esc(m.texto || '') + '</p>'
@@ -1465,4 +1506,16 @@ function abrirUpsell(nombre, telWA, upsell) {
   window.addEventListener('pagehide', mandar);
   /* si compro, esto deja de mandarse */
   window.marcarCompra = function () { yaCompro = true; };
+
+/* ---- diagrama de zonas: los puntos y las pestanas mueven lo mismo ---- */
+document.addEventListener('click', function (ev) {
+  var b = ev.target.closest && ev.target.closest('.zd-punto, .zd-tabs button');
+  if (!b) return;
+  var sec = b.closest('.zon-diagrama'); if (!sec) return;
+  var i = Number(b.dataset.z) || 0;
+  sec.querySelectorAll('.zd-item').forEach(function (el, n) { el.classList.toggle('on', n === i); });
+  sec.querySelectorAll('.zd-punto').forEach(function (el, n) { el.setAttribute('aria-selected', n === i ? 'true' : 'false'); });
+  sec.querySelectorAll('.zd-tabs button').forEach(function (el, n) { el.setAttribute('aria-selected', n === i ? 'true' : 'false'); });
+});
+
 })();

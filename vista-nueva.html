@@ -1016,6 +1016,58 @@ body.con-barra .wa{bottom:72px}
 
 /* ---- 8. el boton flotante ya no tapa la ultima linea ---- */
 .prod{padding-bottom:96px}
+
+/* ============================================================
+   EL DIAGRAMA DE LAS ZONAS
+   Se toca el punto sobre la foto y sale esa explicacion sola.
+   ============================================================ */
+.prod .zd-foto{position:relative; border-radius:16px; overflow:hidden;
+  margin:18px 0 0; background:var(--gris)}
+.prod .zd-foto img{width:100%; display:block; aspect-ratio:1000/534; object-fit:cover; height:auto}
+/* el boton mide 44 (minimo para el dedo); el circulo que se ve es el ::before */
+.prod .zd-punto{position:absolute; width:44px; height:44px; margin:-22px 0 0 -22px;
+  padding:0; border:0; background:transparent; cursor:pointer; color:#fff;
+  font-family:'Public Sans','Inter',sans-serif; font-size:14px; font-weight:700;
+  display:grid; place-items:center}
+.prod .zd-punto::before{content:''; position:absolute; width:34px; height:34px;
+  border-radius:50%; border:2px solid #fff; background:var(--marca-oro-osc);
+  box-shadow:0 2px 12px rgba(0,0,0,.35);
+  transition:transform .2s ease-out, background-color .2s ease-out}
+.prod .zd-punto span{position:relative}
+.prod .zd-punto[aria-selected="true"]::before{background:var(--tinta); transform:scale(1.15)}
+
+.prod .zd-txt{margin-top:22px; min-height:150px}
+.prod .zd-item{display:none}
+.prod .zd-item.on{display:block; animation:zdEntra .22s ease-out}
+@keyframes zdEntra{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+.prod .zd-item h3{font-family:'Fraunces','Iowan Old Style',Georgia,serif !important;
+  font-weight:600 !important; text-transform:none !important; font-size:22px;
+  line-height:1.15; letter-spacing:-.01em; margin:0 0 8px; color:var(--tinta)}
+.prod .zd-item p{font-size:16.5px; line-height:1.62; color:#4A453C; margin:0}
+
+.prod .zd-tabs{display:flex; gap:8px; margin-top:20px}
+.prod .zd-tabs button{flex:1; min-height:48px; border-radius:11px; cursor:pointer;
+  border:1.5px solid rgba(0,0,0,.13); background:transparent; color:#5F5A50;
+  font-family:'Public Sans','Inter',sans-serif; font-size:14px; font-weight:600;
+  line-height:1.25; padding:8px 6px;
+  transition:border-color .18s, color .18s, background-color .18s}
+.prod .zd-tabs button[aria-selected="true"]{border-color:var(--tinta);
+  color:var(--tinta); background:#fff}
+
+/* ---- la ficha de medidas: UNA caja de tres columnas ---- */
+.prod .med-ficha{display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+  margin:20px 0 6px; background:rgba(0,0,0,.11);
+  border:1px solid rgba(0,0,0,.11); border-radius:14px; overflow:hidden}
+.prod .med-col{background:#fff; padding:22px 8px; text-align:center}
+.prod .med-col b{display:block; font-family:'Fraunces',Georgia,serif; font-weight:700;
+  font-size:clamp(23px,6.4vw,28px); line-height:1.05; color:var(--tinta);
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.prod .med-col span{display:block; font-size:12.5px; color:#6B665C; margin-top:6px; line-height:1.35}
+
+@media (prefers-reduced-motion:reduce){
+  .prod .zd-item.on{animation:none}
+  .prod .zd-punto::before{transition:none}
+}
 </style>
 <script>
 (function(){var d=document.documentElement;
@@ -1163,11 +1215,11 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
     </div>
   </footer>
 
-<script src="productos.js?v=42"></script>
+<script src="productos.js?v=44"></script>
 <script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=6"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha-nueva.js?v=1"></script>
+<script src="ficha-nueva.js?v=3"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->
