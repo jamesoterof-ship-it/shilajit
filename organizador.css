@@ -1,0 +1,95 @@
+/* ============================================================
+   DISEÑO PROPIO DEL ORGANIZADOR
+   Todo cuelga de body.p-organizador, que lo pone organizador.js
+   solo cuando el producto es ese. Los otros 9 productos no se
+   enteran de que este archivo existe.
+
+   El encabezado (.top) y el pie (.pie) NO se tocan: viven fuera
+   de #prod y aca no se los nombra ni una vez.
+   ============================================================ */
+body.p-organizador{
+  --og-carbon:#191C1E;
+  --og-carbon2:#22272A;
+  --og-hueso:#EFEDE8;
+  --og-humo:#9AA0A4;
+  --og-cal:#F2542D;
+  --og-linea:#33393D;
+}
+body.p-organizador #prod{background:var(--og-carbon);color:var(--og-hueso)}
+
+/* ---------- una sola foto, con el texto cayendo arriba ---------- */
+.og-hero{position:relative;line-height:0;background:#0D0F10;overflow:hidden}
+.og-hero>img{display:block;width:100%;height:auto}
+/* el velo se apaga antes de llegar a las cajas: el producto queda limpio */
+.og-sobre{position:absolute;left:0;right:0;top:0;padding:26px 22px 74px;line-height:1.5;
+  background:linear-gradient(180deg,rgba(13,15,16,.9) 0%,rgba(13,15,16,.72) 40%,
+    rgba(13,15,16,.28) 74%,rgba(13,15,16,0) 100%)}
+.og-rot{display:block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:#B6BCC0;font-weight:600;font-family:'Inter',sans-serif}
+.og-h1{font-family:'Barlow Condensed','Archivo Black',Impact,sans-serif;font-weight:800;
+  font-size:clamp(42px,12vw,58px);line-height:.94;letter-spacing:-.01em;margin:12px 0 0;color:#fff;
+  text-shadow:0 2px 20px rgba(0,0,0,.6);text-transform:uppercase}
+.og-h1 span,.og-h1 em{display:block;font-style:normal}
+.og-h1 em{color:var(--og-cal)}
+.og-sobre p{color:#C9CDD0;font-size:15px;margin:14px 0 0;max-width:28ch;font-family:'Inter',sans-serif}
+
+/* cascada: cada linea entra un pelo despues que la anterior */
+.og-cae{opacity:0;transform:translateY(18px);animation:og-caer .66s cubic-bezier(.2,.7,.3,1) forwards;
+  animation-delay:calc(var(--i) * .12s)}
+@keyframes og-caer{to{opacity:1;transform:translateY(0)}}
+
+.og-sello{position:absolute;right:18px;bottom:18px;background:var(--og-cal);color:#fff;
+  width:104px;height:104px;border-radius:50%;display:grid;place-items:center;text-align:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;line-height:.95;
+  box-shadow:0 14px 38px rgba(0,0,0,.55);opacity:0;
+  animation:og-caer .7s cubic-bezier(.2,.7,.3,1) .64s forwards}
+.og-sello b{font-size:36px;display:block}
+.og-sello i{font-style:normal;font-size:10px;letter-spacing:.14em;display:block;margin-top:2px}
+
+/* ---------- medidas bajo la foto ---------- */
+.og-med{display:flex;border-bottom:1px solid var(--og-linea);background:var(--og-carbon)}
+.og-med div{flex:1;padding:14px 8px;text-align:center;border-right:1px solid var(--og-linea)}
+.og-med div:last-child{border-right:0}
+.og-med b{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;color:#fff;
+  font-variant-numeric:tabular-nums}
+.og-med span{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--og-humo)}
+
+/* ---------- los numeros mandan ---------- */
+.og-blq{padding:42px 22px;max-width:560px;margin:0 auto}
+.og-linea{border-top:1px solid var(--og-linea)}
+.og-gigante{font-family:'Barlow Condensed',sans-serif;font-weight:800;
+  font-size:clamp(104px,33vw,168px);color:#fff;line-height:.78;font-variant-numeric:tabular-nums;
+  letter-spacing:-.04em;margin-top:18px}
+.og-gigante small{font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--og-cal);
+  letter-spacing:.16em;text-transform:uppercase;display:block;margin-top:16px}
+.og-cabe{margin-top:28px;border-top:1px solid var(--og-linea)}
+.og-cabe div{display:flex;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--og-linea)}
+.og-cabe b{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:34px;color:var(--og-cal);
+  width:54px;font-variant-numeric:tabular-nums;flex:none}
+.og-cabe span{font-size:15px;color:var(--og-hueso)}
+
+/* ---------- la comparacion ---------- */
+.og-h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(30px,8vw,40px);
+  line-height:.98;color:#fff;margin:14px 0 0;text-transform:uppercase;letter-spacing:-.01em}
+.og-vs{margin-top:26px}
+.og-vs__f{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;padding:16px 0;
+  border-bottom:1px solid var(--og-linea)}
+.og-vs__f b{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;color:var(--og-humo);
+  font-variant-numeric:tabular-nums}
+.og-vs__f.n b{color:var(--og-cal);font-size:34px}
+.og-vs__b{height:10px;background:var(--og-carbon2)}
+.og-vs__b i{display:block;height:100%;background:var(--og-humo)}
+.og-vs__f.n .og-vs__b i{background:var(--og-cal)}
+.og-vs__f small{display:block;color:var(--og-humo);font-size:11.5px;margin-top:7px;letter-spacing:.04em}
+.og-sub{color:var(--og-humo);font-size:15px;margin:16px 0 0}
+
+/* ---------- el resto de la ficha, sobre el fondo oscuro ---------- */
+body.p-organizador #prod .bloque{background:transparent}
+body.p-organizador #prod h2,
+body.p-organizador #prod h3{color:#fff}
+body.p-organizador #prod p,
+body.p-organizador #prod li{color:#C9CDD0}
+
+@media (prefers-reduced-motion:reduce){
+  .og-cae,.og-sello{animation:none;opacity:1;transform:none}
+}
