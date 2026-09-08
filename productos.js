@@ -392,6 +392,61 @@ window.PRODUCTOS = [
     popular: 1,
   },
   {
+    /* Organizador de Ropa Plegable — Dropi 56932 · MEIBO.CL
+       Medidas de la ficha del proveedor: 60 x 43 x 38 cm, unos 98 litros.
+       El competidor que pautea en Chile vende 4 cajas de 26 L por $19.990:
+       la nuestra es casi cuatro veces mas grande, y ese es el argumento. */
+    id: 'organizador', unidad: 'caja', promo: 6,
+    video: 'img/organizador.mp4?v=1',
+    antesDespues: 'img/prod-organizador-ba.webp?v=1',
+    antesDespuesSub: 'La misma pieza: la ropa de invierno amontonada sobre la cama, y despues guardada y apilada.',
+    preguntas: [
+      { q: '¿De qué tamaño es cada caja?', a: '60 cm de largo, 43 de ancho y 38 de alto: unos 98 litros. Le entra un plumón king completo, seis frazadas gruesas o dieciséis prendas dobladas.' },
+      { q: '¿Se aplastan cuando las apilo?', a: 'No. Llevan varillas en las paredes que las mantienen firmes, así que puedes ponerlas una sobre otra sin que se hundan. Quedan paradas incluso vacías.' },
+      { q: '¿Qué colores llegan?', a: 'Vienen en gris, celeste y rosado. Si tienes preferencia nos la dices al confirmar el pedido y la tomamos en cuenta según lo que haya en bodega.' },
+      { q: '¿Sirven para guardar debajo de la cama?', a: 'Sí, siempre que tu cama tenga al menos 40 cm libres de alto. Si es más baja, quedan mejor arriba del clóset o en el altillo.' },
+      { q: '¿La ropa no queda con olor a encierro?', a: 'No, porque la tela no es plástico: es tela no tejida que deja pasar el aire. Por eso sirve para guardar de una temporada a la otra.' },
+    ],
+    formulaRotulo: 'Por dentro',
+    formulaTitulo: 'Hecha para aguantar, no para durar un mes.',
+    formulaSub: 'Tela no tejida con estructura interna. Ni plástico que se quiebra ni cartón que se hunde con la humedad.',
+    formula: [
+      ['casa', 'Estructura interna', 'Varillas en las paredes: queda parada aunque esté vacía y no cede con el peso de la de arriba.'],
+      ['ojo', 'Ventana transparente', 'Ves qué guardaste sin abrir y desarmar todo para encontrar una sola prenda.'],
+      ['llave', 'Cierre por tres lados', 'La tapa se abre entera, no por una ranura. El plumón entra de una.'],
+      ['escudo', 'Asas reforzadas', 'Dos por caja, cosidas al armazón. La bajas del clóset cargada sin que se rasgue.'],
+      ['fibra', 'Tela que respira', 'No es plástico: la ropa no queda con olor a encierro ni agarra humedad.'],
+      ['pluma', 'Se pliega', 'Cuando no la usas, la doblas y queda del grosor de un cuaderno.'],
+    ],
+    comparaTitulo: 'No todas las cajas son del mismo porte',
+    compara: [
+      '98 litros por caja. Las que se ven por ahí traen 26: casi cuatro veces menos.',
+      'Estructura interna que la mantiene firme aunque la llenes hasta arriba.',
+      'Ventana transparente y asas cosidas al armazón, no pegadas a la tela.',
+    ],
+    nombre: 'Organizador de Ropa Plegable',
+    sub: 'Cabe un plumón king completo, y se apilan',
+    categoria: 'Hogar',
+    foto: 'img/prod-organizador.webp?v=1',
+    fotos: ['img/prod-organizador.webp?v=1', 'img/prod-organizador-2.webp?v=1', 'img/prod-organizador-3.webp?v=1'],
+    acento: '#3C4A57',   /* el gris pizarra de la caja */
+    desc: 'Son cajas plegables para guardar la ropa que no estás usando: los plumones, las frazadas y la ropa de invierno cuando cambia la temporada. Cada una mide 60 x 43 x 38 cm, unos 98 litros, y le entra un plumón king completo, seis frazadas gruesas o dieciséis prendas dobladas. Van con varillas en las paredes, así que quedan paradas solas y se apilan una encima de otra sin hundirse. La ventana transparente del frente te deja ver qué guardaste sin tener que abrirlas, y el cierre corre por tres lados de la tapa, que se abre entera. La tela no es plástico: deja pasar el aire, así que la ropa no queda con olor a encierro. Cuando no las uses, se pliegan y quedan del grosor de un cuaderno.',
+    puntos: [
+      'Cada caja mide 60 x 43 x 38 cm: unos 98 litros',
+      'Cabe un plumón king completo, o 16 prendas dobladas',
+      'Se apilan sin hundirse: aprovechas el alto del clóset',
+      'Ventana transparente para ver qué hay sin abrirla',
+      'Tela que respira: la ropa no agarra olor a encierro',
+      'Se pliega cuando no la usas',
+    ],
+    packs: [
+      { cant: 3, precio: 19500, antes: 0,     texto: '3 cajas · 294 litros' },
+      { cant: 6, precio: 24500, antes: 39000, texto: '6 cajas · 588 litros' },
+      { cant: 9, precio: 34500, antes: 58500, texto: '9 cajas · 882 litros' },
+    ],
+    popular: 2,
+  },
+  {
     /* promo = el `cant` del pack que se destaca, NO la posicion.
        Aqui cant va en CAJAS de 10, asi que el pack de 60 parches es cant 6. */
     id: 'kinoki', unidad: 'caja de 10', promo: 6,
