@@ -196,7 +196,15 @@
     var t = (r.producto || '').toLowerCase(), n = p.nombre.toLowerCase();
     return t && (n.indexOf(t.split(' ')[0]) >= 0 || t.indexOf(n.split(' ')[0].toLowerCase()) >= 0);
   });
-  if (mias.length < 8) mias = TODAS.slice(0, 40);
+  /* Si un producto NUEVO no tiene textos propios en resenas.js cae aca, y esta
+     tajada empieza por la Almohada: al Organizador le salian reseñas de
+     "duermo de lado". El aviso deja el problema a la vista en la consola en
+     vez de que se descubra mirando la pagina. */
+  if (mias.length < 8) {
+    try { console.warn('[resenas] "' + p.nombre + '" no tiene textos propios en resenas.js: '
+      + 'esta mostrando las de otro producto. Agregalos ahi.'); } catch (e) {}
+    mias = TODAS.slice(0, 40);
+  }
   /* sin repetir el mismo texto: salian dos resenas identicas seguidas */
   var textos = {};
   mias = mias.filter(function (r) {
@@ -204,6 +212,9 @@
     if (textos[k]) return false;
     textos[k] = 1; return true;
   });          // si no calzan, se usan las generales
+  /* el carrusel de mas abajo tambien las necesita: sin esto tomaba
+     window.RESENAS crudo y pintaba las de la Almohada */
+  window.RESENAS_MIAS = mias;
   var prom = mias.length ? (mias.reduce(function (a, r) { return a + r.estrellas; }, 0) / mias.length) : 4.8;
   prom = Math.round(prom * 10) / 10;
 
@@ -1169,7 +1180,11 @@ revelarFicha();
 (function () {
   var t = document.getElementById('revAuto');
   if (!t || !window.RESENAS) return;
-  var lote = window.RESENAS.slice(0, 14);
+  /* las de ESTE producto, no window.RESENAS crudo: esa lista empieza por la
+     Almohada y en la ficha del Organizador salia "duermo mejor y mi senora
+     tambien" */
+  var lote = (window.RESENAS_MIAS && window.RESENAS_MIAS.length
+                ? window.RESENAS_MIAS : window.RESENAS).slice(0, 14);
   var uno = lote.map(function (r) {
     return '<article class="rsc"><div class="arriba"><span class="ini">' + (r.nombre || '?').charAt(0) + '</span>'
       + '<span class="quien">' + r.nombre + '<i class="verif">✓ Verificado</i><small>' + (r.comuna || '') + '</small></span></div>'
