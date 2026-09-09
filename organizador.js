@@ -124,8 +124,17 @@
   function contraste(cont) {
     var arreglados = 0;
     cont.querySelectorAll('*').forEach(function (el) {
-      if (el.children.length || !el.textContent.trim()) return;
       if (el.dataset.ogFix) return;
+      /* Sirve cualquier elemento con texto PROPIO, aunque lleve hijos.
+         Antes se saltaban los que tenian hijos y por eso los puntos de la
+         descripcion seguian negros: cada uno lleva un svg de visto bueno
+         adentro, asi que contaban como "con hijos". */
+      var propio = false;
+      for (var i = 0; i < el.childNodes.length; i++) {
+        var n = el.childNodes[i];
+        if (n.nodeType === 3 && n.nodeValue.trim()) { propio = true; break; }
+      }
+      if (!propio) return;
       var cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden') return;
       var fondo = fondoDe(el);
