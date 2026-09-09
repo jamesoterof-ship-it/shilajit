@@ -322,6 +322,54 @@
       'Lo puse mirando la reja y se ve bien puesto',
       'Después de tres meses sigue igual de bueno',
     ],
+
+    /* El Organizador no tenia textos propios: la ficha caia en el respaldo
+       `TODAS.slice(0, 40)`, que empieza por la Almohada, y le mostraba
+       resenas de "duermo de lado" y "textura de burbujas". Estas hablan de
+       lo que la ficha del proveedor SI dice: visor al frente, asas
+       reforzadas, plegable y capacidad. Ni una menciona varillas. */
+    'Organizador de Ropa Plegable': [
+      'Guardé el plumón de dos plazas y todavía quedó espacio',
+      'Por la ventana veo qué hay adentro sin tener que abrirla',
+      'Se pliega y la guardo detrás del clóset, no estorba nada',
+      'Pedí las tres y usé una para cada temporada',
+      'Las asas aguantan bien, la bajo del clóset llena y no pasa nada',
+      'Recuperé todo el espacio de arriba del clóset',
+      'Es más grande de lo que pensaba, le cabe harto',
+      'Le puse las frazadas de invierno y quedaron todas en una',
+      'El cierre abre la tapa entera, el plumón entra de una',
+      'Llegaron las tres y se ven bien hechas',
+      'Compré seis, tres para la ropa y tres para la cama',
+      'Se ven ordenadas arriba del clóset, no como las bolsas que tenía antes',
+      'La ropa sale igual a como la guardé',
+      'Me sirvió para la mudanza y después la seguí usando',
+      'Guardé toda la ropa de invierno de los niños en dos',
+      'El color gris queda bien, no desentona con la pieza',
+      'Por fin dejé de meter todo en bolsas de basura',
+      'Cabe más de lo que uno cree mirando la foto',
+      'Las apilé una sobre otra y quedó todo aprovechado',
+      'Buena para guardar los edredones que no uso en verano',
+      'Se ve mucho mejor que las cajas de cartón que tenía',
+      'La tela se siente firme, no es una bolsa cualquiera',
+      'Pedí tres para probar y terminé pidiendo seis más',
+      'La ventana es lo mejor, ya no abro cuatro cajas buscando una cosa',
+      'Guardé los suéteres y los saqué en invierno sin problema',
+      'Llegaron sin problema y pagué cuando las recibí',
+      'Se la regalé a mi hermana y me pidió que le pidiera más',
+      'Ordené el clóset completo en una tarde',
+      'Cuando la vacío la doblo y no ocupa nada',
+      'Buen tamaño, entra debajo de la cama si tienes altura',
+      'La calidad está bien para lo que cuesta',
+      'Le entra un plumón king completo, tal cual dice',
+      'Compré nueve y ordené las tres piezas de la casa',
+      'Se ve elegante, no parece caja de guardar',
+      'Me llegaron los tres colores y todos se ven bien',
+      'La uso para la ropa que le queda chica a los niños',
+      'Llegaron bien empaquetadas y sin olor',
+      'Lo que más me gustó es que se ve qué hay adentro',
+      'Ya no tengo ropa amontonada arriba del clóset',
+      'Sirve igual para juguetes, no solo para ropa',
+    ],
   };
 
   /* Coletillas: la mitad de la gente cierra hablando del despacho o del pago.
@@ -363,6 +411,7 @@
     'Foco Solar Tipo Cámara':       { n: 176, cuatros: 11 },
     'Cabezal de Ducha Masajeadora Spa': { n: 168, cuatros: 14 },
     'Almohada Cervical Ergonómica':      { n: 171, cuatros: 13 },
+    'Organizador de Ropa Plegable':      { n: 198, cuatros: 13 },
   };
 
   function generar() {
