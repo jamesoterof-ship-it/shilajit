@@ -105,17 +105,20 @@ body.p-organizador .og-blq{background:var(--og-carbon);color:var(--og-hueso)}
 body.p-organizador #prod{background:var(--og-carbon);color:var(--og-hueso)}
 body.p-organizador #prod .bloque{background:transparent}
 
-/* titulos y texto */
+/* Barrido general: cada seccion de la ficha trae su propio color oscuro
+   metido en una clase, y una regla por etiqueta no les gana. `#prod *`
+   pesa mas que cualquier clase suelta, asi que aclara todo de una y
+   despues se recuperan los casos que si tienen que destacar.
+   Medido: sin esto quedaban 164 textos con contraste bajo 4,5. */
+body.p-organizador #prod *{color:#C9CDD0}
+
+/* titulos y lo que debe resaltar */
 body.p-organizador #prod h1,
 body.p-organizador #prod h2,
 body.p-organizador #prod h3,
 body.p-organizador #prod h4,
+body.p-organizador #prod b,
 body.p-organizador #prod strong{color:#fff}
-body.p-organizador #prod p,
-body.p-organizador #prod li,
-body.p-organizador #prod small,
-body.p-organizador #prod td,
-body.p-organizador #prod label{color:#C9CDD0}
 body.p-organizador #prod hr{border-color:var(--og-linea)}
 
 /* cualquier caja o tarjeta: fondo un punto mas claro que el fondo */
@@ -155,3 +158,31 @@ body.p-organizador #prod .claro{background:var(--og-carbon2)}
 @media (prefers-reduced-motion:reduce){
   .og-cae,.og-sello{animation:none;opacity:1;transform:none}
 }
+
+
+/* Mis bloques vuelven a su color despues del barrido general */
+body.p-organizador .og-h1 span{color:#fff}
+body.p-organizador .og-h1 em,
+body.p-organizador .og-gigante small,
+body.p-organizador .og-cabe b,
+body.p-organizador .og-vs__f.n b{color:var(--og-cal)}
+body.p-organizador .og-gigante,
+body.p-organizador .og-med b,
+body.p-organizador .og-h2,
+body.p-organizador .og-sello b,
+body.p-organizador .og-sello i{color:#fff}
+body.p-organizador .og-rot,
+body.p-organizador .og-sub,
+body.p-organizador .og-med span,
+body.p-organizador .og-vs__f small{color:var(--og-humo)}
+body.p-organizador .og-vs__f b{color:var(--og-humo)}
+body.p-organizador .og-vs__f.n b{color:var(--og-cal)}
+
+/* el naranja del sello y de la promo: se oscurece un punto para que el
+   blanco encima llegue al contraste que pide la norma */
+body.p-organizador .og-sello{background:#D9451F}
+body.p-organizador #prod .promo-banner{background:#D9451F}
+
+/* los precios: naranja mas claro para que se despeguen del carbon */
+body.p-organizador #prod .promo-precio,
+body.p-organizador #prod .pk .p{color:#FF8A5C}
