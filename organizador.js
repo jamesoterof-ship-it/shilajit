@@ -82,6 +82,16 @@
           '</h1>' +
           '<p class="og-cae" style="--i:4">Y todavía sobra sitio para las frazadas.</p>' +
         '</div>' +
+        /* los destellos: van en la franja de arriba, donde esta el velo y
+           no hay cajas. Cada uno con su sitio y su tiempo, para que no
+           titilen todos a la vez. */
+        '<div class="og-estrellas">' +
+          '<i style="left:6%;top:16%;animation-delay:0s"></i>' +
+          '<i style="left:47%;top:9%;animation-delay:.9s;width:10px;height:10px"></i>' +
+          '<i style="left:72%;top:27%;animation-delay:1.7s"></i>' +
+          '<i style="left:88%;top:11%;animation-delay:2.5s;width:9px;height:9px"></i>' +
+          '<i style="left:28%;top:36%;animation-delay:3.1s;width:11px;height:11px"></i>' +
+        '</div>' +
         '<div class="og-sello"><div><b>98</b><i>LITROS</i></div></div>' +
       '</div>' +
       /* el 98 sale UNA vez, en el sello sobre la foto. Aca van las medidas,
@@ -158,6 +168,8 @@
       }
     }
 
+    efectos(cont);
+
     /* Se repasa varias veces: efectos-ficha.js anima con GSAP y hay
        bloques que todavia no estan pintados -o estan ocultos- cuando
        corre la primera pasada. Los puntos de la descripcion quedaban
@@ -167,6 +179,83 @@
       setTimeout(function () { contraste(cont); }, t);
     });
     return true;
+  }
+
+  /* ---- efectos ----
+     Lo que no se puede hacer solo con la hoja de estilo: que las cosas
+     entren cuando el cliente llega a ellas, y que la primera pregunta
+     abra sola.
+
+     OJO con el sentido: lo que se marca es el estado ESCONDIDO
+     (`og-entra`), y una IntersectionObserver quita esa marca cuando el
+     cliente llega. Si el navegador no la tiene, o no llega a avisar,
+     la marca se quita igual y todo se ve: nunca puede quedar contenido
+     escondido por culpa de un efecto. */
+  function efectos(cont) {
+    var quieto = false;
+    try { quieto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    /* la primera pregunta, abierta. James la quiere asi: el que llega ve
+       de una que ahi hay respuestas y abre las demas. */
+    var primera = cont.querySelector('details');
+    if (primera) primera.open = true;
+
+    var piezas = [];
+    cont.querySelectorAll('.og-fi').forEach(function (el) { piezas.push([el, 'og-fi']); });
+    /* SOLO mis bloques. Las secciones de la tienda -promocion, reseñas,
+       formulario, antes y despues- ya las anima efectos-ficha.js con GSAP
+       y les pone la opacidad en el propio elemento. Si les metiera encima
+       mi clase, dos sistemas peleando por lo mismo, y el dia que uno
+       falle la seccion se queda invisible. */
+    ['.og-med', '.og-blq'].forEach(function (s) {
+      cont.querySelectorAll(s).forEach(function (el) {
+        if (el.style.display !== 'none') piezas.push([el, 'sec']);
+      });
+    });
+    if (!piezas.length) return;
+
+    if (quieto || !('IntersectionObserver' in window)) return;
+
+    piezas.forEach(function (p) {
+      p[0].classList.add(p[1] === 'og-fi' ? 'og-entra' : 'og-sec-entra');
+    });
+
+    /* encender = quitar la marca de escondido. No se añade nada: el estado
+       normal del elemento YA es visible, asi que aunque la transicion no
+       llegue a correr, la seccion se ve. */
+    function encender(el) { el.classList.remove('og-entra', 'og-sec-entra'); }
+
+    var ojo = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        /* las tarjetas entran una detras de otra, no las tres de golpe */
+        var i = [].indexOf.call(el.parentNode.children, el);
+        var espera = el.classList.contains('og-fi') ? Math.min(i, 3) * 110 : 0;
+        setTimeout(function () { encender(el); }, espera);
+        ojo.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+    piezas.forEach(function (p) {
+      /* lo que YA se ve al abrir la pagina no espera al observador: se
+         enciende de una. Asi la primera pantalla nunca depende de que el
+         navegador dispare el aviso, que es justo lo que puede no pasar. */
+      var r = p[0].getBoundingClientRect();
+      if (r.top < innerHeight && r.bottom > 0) {
+        setTimeout(function () { encender(p[0]); }, 60);
+      } else {
+        ojo.observe(p[0]);
+      }
+    });
+
+    /* Red de seguridad. El aviso de "ya se ve" lo da el navegador cuando
+       pinta, y hay situaciones en que no pinta -pestaña de fondo, ventana
+       tapada- y entonces no avisa nunca. A los 2,5 segundos se muestra
+       todo igual: mejor sin animacion que con contenido invisible. */
+    setTimeout(function () {
+      cont.querySelectorAll('.og-entra, .og-sec-entra').forEach(encender);
+    }, 2500);
   }
 
   /* ---- contraste, medido y corregido uno por uno ----

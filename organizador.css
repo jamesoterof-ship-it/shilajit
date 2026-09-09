@@ -205,8 +205,85 @@ body.p-organizador #prod .form strong{color:var(--tinta)}
 body.p-organizador #prod .light,
 body.p-organizador #prod .claro{background:var(--og-carbon2)}
 
+/* ============================================================
+   EFECTOS
+   Todo cuelga de body.p-organizador y vive dentro de #prod: el
+   encabezado y el pie no se enteran. Al final del archivo esta el
+   apagador para quien pide menos movimiento.
+   ============================================================ */
+
+/* ---- estrellas sobre la foto de arriba ----
+   Destellos dorados que aparecen y se van, cada uno con su tiempo.
+   Van sobre el velo, nunca sobre las cajas: se quedan en la franja
+   de arriba, que es donde no hay producto. */
+.og-estrellas{position:absolute;inset:0 0 auto 0;height:56%;pointer-events:none;overflow:hidden}
+.og-estrellas i{position:absolute;display:block;width:14px;height:14px;opacity:0;
+  background:radial-gradient(circle,rgba(255,255,255,.95) 0 18%,rgba(216,165,46,.55) 30%,transparent 62%);
+  animation:og-brillo 3.4s ease-in-out infinite}
+.og-estrellas i::before,.og-estrellas i::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to right,transparent 46%,rgba(255,255,255,.9) 50%,transparent 54%)}
+.og-estrellas i::after{transform:rotate(90deg)}
+@keyframes og-brillo{
+  0%,72%,100%{opacity:0;transform:scale(.4) rotate(0deg)}
+  84%{opacity:.95;transform:scale(1) rotate(18deg)}
+}
+
+/* ---- las tarjetas: entran de a una y responden al dedo ----
+   OJO con el sentido de la regla: el estado NORMAL es visible, y lo que
+   se marca con una clase es el estado ESCONDIDO. Al reves -esconder por
+   defecto y encender con otra clase- basta con que el navegador no pinte
+   (pestaña de fondo, ventana tapada) para que el efecto se quede a medias
+   y el cliente vea la seccion en blanco. Asi no: si algo falla, se ve. */
+.og-fi{transition:transform .45s cubic-bezier(.2,.7,.3,1),border-color .45s,box-shadow .45s,
+  opacity .7s cubic-bezier(.2,.7,.3,1)}
+.og-fi img{transition:transform .7s cubic-bezier(.2,.7,.3,1)}
+.og-fi:hover{transform:translateY(-4px);border-color:#4A5257;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.og-fi:hover img{transform:scale(1.035)}
+.og-fi.og-entra{opacity:0;transform:translateY(26px)}
+/* el rotulo se subraya al entrar la tarjeta */
+.og-fi figcaption .og-rot{position:relative;display:inline-block;padding-bottom:7px}
+.og-fi figcaption .og-rot::after{content:'';position:absolute;left:0;bottom:0;height:2px;width:34px;
+  background:var(--og-cal);transition:width .6s .25s cubic-bezier(.2,.7,.3,1)}
+.og-fi.og-entra figcaption .og-rot::after{width:0;transition:none}
+
+/* ---- las secciones entran al llegar a ellas ---- */
+body.p-organizador #prod .og-med,
+body.p-organizador #prod .og-blq{transition:opacity .65s cubic-bezier(.2,.7,.3,1),
+  transform .65s cubic-bezier(.2,.7,.3,1)}
+body.p-organizador #prod .og-sec-entra{opacity:0;transform:translateY(22px)}
+
+/* ---- los botones: brillo que barre y hundido al tocar ---- */
+body.p-organizador #prod .cta,
+body.p-organizador #prod .btn-write{position:relative;overflow:hidden;
+  transition:transform .18s cubic-bezier(.2,.7,.3,1),box-shadow .3s,filter .3s}
+body.p-organizador #prod .cta::after,
+body.p-organizador #prod .btn-write::after{content:'';position:absolute;top:0;bottom:0;width:42%;
+  left:-60%;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.34),transparent);
+  animation:og-barrido 3.6s ease-in-out infinite}
+body.p-organizador #prod .cta:hover,
+body.p-organizador #prod .btn-write:hover{transform:translateY(-2px);
+  box-shadow:0 12px 26px rgba(0,0,0,.35);filter:brightness(1.06)}
+body.p-organizador #prod .cta:active,
+body.p-organizador #prod .btn-write:active{transform:translateY(0) scale(.985)}
+@keyframes og-barrido{0%{left:-60%}38%,100%{left:120%}}
+
+/* ---- preguntas frecuentes ---- */
+body.p-organizador #prod details{transition:border-color .3s,background .3s}
+body.p-organizador #prod details[open]{border-color:#4A5257}
+body.p-organizador #prod details summary{cursor:pointer;transition:color .25s}
+body.p-organizador #prod details summary:hover{color:var(--og-cal) !important}
+/* la respuesta se despliega en vez de aparecer de golpe */
+body.p-organizador #prod details[open] p{animation:og-abre .38s cubic-bezier(.2,.7,.3,1)}
+@keyframes og-abre{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
+
 @media (prefers-reduced-motion:reduce){
-  .og-cae,.og-sello{animation:none;opacity:1;transform:none}
+  .og-cae,.og-sello,.og-estrellas i,
+  body.p-organizador #prod .cta::after,
+  body.p-organizador #prod .btn-write::after,
+  body.p-organizador #prod details[open] p{animation:none;opacity:1;transform:none}
+  .og-fi,.og-fi img,.og-fi.og-entra,
+  body.p-organizador #prod .og-sec-entra{transition:none;opacity:1;transform:none}
 }
 
 

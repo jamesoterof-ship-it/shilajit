@@ -440,7 +440,10 @@ window.PRODUCTOS = [
       'Se pliega cuando no la usas',
     ],
     packs: [
-      { cant: 3, precio: 19500, antes: 0,     texto: '3 cajas · 294 litros' },
+      /* el "antes" del pack de 3 lo autorizo James el 8-sep: un 30% sobre
+         el precio de venta (19.500 x 1.3 = 25.350). Sin el, la cabecera
+         salia sin tachado ni descuento. */
+      { cant: 3, precio: 19500, antes: 25350, texto: '3 cajas · 294 litros' },
       { cant: 6, precio: 24500, antes: 39000, texto: '6 cajas · 588 litros' },
       { cant: 9, precio: 34500, antes: 58500, texto: '9 cajas · 882 litros' },
     ],
