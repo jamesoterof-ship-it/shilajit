@@ -85,7 +85,14 @@
       if (el) el.style.display = 'none';
     });
 
+    /* Se repasa varias veces: efectos-ficha.js anima con GSAP y hay
+       bloques que todavia no estan pintados -o estan ocultos- cuando
+       corre la primera pasada. Los puntos de la descripcion quedaban
+       negros justo por eso. */
     contraste(cont);
+    [400, 1200, 2500, 4500].forEach(function (t) {
+      setTimeout(function () { contraste(cont); }, t);
+    });
     return true;
   }
 
@@ -118,6 +125,7 @@
     var arreglados = 0;
     cont.querySelectorAll('*').forEach(function (el) {
       if (el.children.length || !el.textContent.trim()) return;
+      if (el.dataset.ogFix) return;
       var cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden') return;
       var fondo = fondoDe(el);
@@ -128,6 +136,7 @@
       if (razon >= (grande ? 3 : 4.5)) return;
       /* sobre fondo claro va texto oscuro; sobre oscuro, texto claro */
       el.style.setProperty('color', lb > 0.35 ? '#141A20' : '#DDE1E4', 'important');
+      el.dataset.ogFix = '1';
       arreglados++;
     });
     if (window.console && arreglados) console.log('[organizador] contraste corregido en ' + arreglados + ' textos');
