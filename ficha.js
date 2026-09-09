@@ -21,8 +21,8 @@
      aca: hay clientes que viven en Chile con numero de su pais y antes no
      podian pedir, porque el +56 estaba pintado y no se podia cambiar.
        [codigo, indicativo, largo esperado del numero, nombre]
-     El largo se usa para avisar, no para bloquear: los formatos cambian y
-     no se le va a negar una venta a alguien por eso. */
+     El largo se usa para avisar en los demas paises; en CHILE si bloquea
+     (9 digitos, empieza por 9): un numero incompleto es una venta perdida. */
   var PAISES = [
     ['CL', '+56',  9, 'Chile'],
     ['VE', '+58', 10, 'Venezuela'],
@@ -994,7 +994,12 @@
     [['fNombre', 'tu nombre'], ['fTel', 'tu WhatsApp'], ['fRegion', 'tu región'], ['fComuna', 'tu comuna'], ['fDir', 'tu dirección']]
       .forEach(function (c) { if ($(c[0])) $(c[0]).classList.remove('mal'); });
     if (g('fNombre').length < 3) falla = 'Escribe tu nombre y apellido.', $('fNombre').classList.add('mal');
-    else if (tel.length < Math.min(7, largo)) falla = 'Revisa tu número de WhatsApp.', $('fTel').classList.add('mal');
+    /* Chile es estricto otra vez: 9 digitos y empieza por 9. El 28-08 se aflojo
+       a "7 o mas" al poner el selector de pais, y el 09-09 entro una venta con
+       8 digitos (Zita, Iquique): la confirmacion no llego y la venta se perdio,
+       porque a un numero incompleto no hay como escribirle ni llamarlo. Para los
+       demas paises se mantiene la tolerancia, que sus formatos si varian. */
+    else if (paisCod === 'CL' ? !/^9\d{8}$/.test(tel) : tel.length < Math.min(7, largo)) falla = (paisCod === 'CL' ? 'Revisa tu WhatsApp: en Chile son 9 números y empieza por 9.' : 'Revisa tu número de WhatsApp.'), $('fTel').classList.add('mal');
     else if (!g('fRegion')) falla = 'Elige tu región.', $('fRegion').classList.add('mal');
     else if (!g('fComuna')) falla = 'Elige tu comuna.', $('fComuna').classList.add('mal');
     /* el mismo candado que ya tiene la operacion: sin calle Y numero no se despacha */
