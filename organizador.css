@@ -110,7 +110,7 @@ body.p-organizador #prod .bloque{background:transparent}
    pesa mas que cualquier clase suelta, asi que aclara todo de una y
    despues se recuperan los casos que si tienen que destacar.
    Medido: sin esto quedaban 164 textos con contraste bajo 4,5. */
-body.p-organizador #prod *{color:#C9CDD0}
+/* (el barrido de brocha gorda se quito: apagaba tambien los botones) */
 
 /* titulos y lo que debe resaltar */
 body.p-organizador #prod h1,
@@ -186,3 +186,40 @@ body.p-organizador #prod .promo-banner{background:#D9451F}
 /* los precios: naranja mas claro para que se despeguen del carbon */
 body.p-organizador #prod .promo-precio,
 body.p-organizador #prod .pk .p{color:#FF8A5C}
+
+
+/* ============================================================
+   CONTRASTE, APUNTANDO FINO
+
+   producto.html trae un <style> propio con reglas como
+    que le ganan a esta hoja por venir
+   despues. Se va con !important, pero SOLO en el texto corrido de las
+   secciones heredadas: los botones, las etiquetas y todo lo que tiene
+   fondo de color se dejan fuera, porque ahi el blanco ya contrasta.
+   ============================================================ */
+body.p-organizador #prod .bloque p,
+body.p-organizador #prod .bloque li,
+body.p-organizador #prod .bloque td,
+body.p-organizador #prod .bloque dd,
+body.p-organizador #prod .bloque span:not([class*=btn]):not([class*=tag]):not([class*=et]),
+body.p-organizador #prod .bloque small{color:#C9CDD0 !important}
+
+body.p-organizador #prod .bloque h1,
+body.p-organizador #prod .bloque h2,
+body.p-organizador #prod .bloque h3,
+body.p-organizador #prod .bloque h4,
+body.p-organizador #prod .bloque summary{color:#fff !important}
+
+/* lo que va sobre fondo de color se queda en blanco */
+body.p-organizador #prod .btn,
+body.p-organizador #prod button,
+body.p-organizador #prod .btn *,
+body.p-organizador #prod button *,
+body.p-organizador #prod .promo-banner,
+body.p-organizador #prod .promo-banner *,
+body.p-organizador #prod .cta,
+body.p-organizador #prod .cta *{color:#fff !important}
+
+/* el sello y su texto */
+body.p-organizador .og-sello,
+body.p-organizador .og-sello *{color:#fff !important}
