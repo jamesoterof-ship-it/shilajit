@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="tienda.css?v=99">
-<link rel="stylesheet" href="organizador.css?v=14">
+<link rel="stylesheet" href="organizador.css?v=16">
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -908,13 +908,24 @@ body.con-barra .wa{bottom:72px}
 </script>
 <!-- Meta Pixel: el mismo de las landings (Jaye Hogar) -->
 <script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 /* El pixel SOLO en la tienda de verdad. Cuando la pagina se abre desde otro
    lado —una copia local, una revision, una vista previa— tambien disparaba
    eventos, y esos entraban a Meta como si fueran clientes: el 28-08 hubo 72
    eventos desde localhost que ensuciaron el conteo de compras y el
-   aprendizaje de las campañas. */
+   aprendizaje de las campañas.
+
+   OJO con el orden: el cargador de Meta se llamaba SIEMPRE, incluso fuera
+   de la tienda, y bajaba fbevents.js igual. Justo despues se reemplazaba
+   `window.fbq` por una funcion vacia, sin la cola que el cargador habia
+   dejado. Cuando fbevents.js terminaba de bajar, buscaba esa cola para
+   vaciarla, se encontraba con `undefined` e intentaba recorrerla:
+   «undefined is not iterable», un error por cada carga en localhost y en
+   cualquier vista previa. En jayegroup.com.co nunca paso, porque ahi si
+   entraba por el `if`. Ahora el cargador vive DENTRO del `if`: fuera de la
+   tienda ni siquiera se baja el script de Facebook. En la tienda de verdad
+   se comporta exactamente igual que antes. */
 if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayegroup.com.co') {
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
   fbq('init','1249894010361489');
   fbq('track','PageView');
 } else {
@@ -1046,7 +1057,7 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
     </div>
   </footer>
 
-<script src="productos.js?v=49"></script>
+<script src="productos.js?v=50"></script>
 <script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=6"></script>
 <script src="efectos.js?v=4"></script>
@@ -1058,7 +1069,7 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
   <script src="lib/ScrollTrigger.min.js"></script>
   <script src="lib/countup.umd.js"></script>
 <script src="efectos-ficha.js?v=9"></script>
-<script src="organizador.js?v=17"></script>
+<script src="organizador.js?v=18"></script>
 <script>
 /* ---- el video del producto NO se baja al abrir la pagina ----
    Antes iba con preload="auto": el celular se traia los 2,1 MB de una,

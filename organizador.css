@@ -356,3 +356,11 @@ body.p-organizador .og-sello *{color:#fff !important}
    cada uno pesa como una clase: con !important y todo, le ganaba al dorado.
    Se repite la clase para pesar mas que ella. Medido: sale #C9CDD0 sin esto. */
 body.p-organizador #prod .bloque .rev-title span.stars.stars.stars{color:var(--og-oro) !important}
+
+/* ---- los sellos de la garantia ----
+   Son pastillas BLANCAS: el fondo es un degradado de #fff a #F4F1EA, que
+   vive en background-image. La regla que aclara todos los span se los
+   llevaba a #C9CDD0 y quedaba gris claro sobre blanco: contraste 1,48, no
+   se leia nada. Necesita la clase repetida por lo mismo que las estrellas:
+   aquella regla lleva tres :not() y cada uno pesa como una clase. */
+body.p-organizador #prod .bloque .gar-chips.gar-chips.gar-chips span{color:var(--tinta) !important}

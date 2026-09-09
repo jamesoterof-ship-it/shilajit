@@ -397,6 +397,10 @@ window.PRODUCTOS = [
        El competidor que pautea en Chile vende 4 cajas de 26 L por $19.990:
        la nuestra es casi cuatro veces mas grande, y ese es el argumento. */
     id: 'organizador', unidad: 'caja', promo: 6,
+    /* fotos reales de clientes, en orden de lo que mas convence: primero
+       las que muestran la caja LLENA y cerrada, despues el detalle de las
+       varillas y el cierre, y al final el paquete como llega */
+    fotosResenas: ['img/resenas-organizador/ro1.webp?v=1','img/resenas-organizador/ro2.webp?v=1','img/resenas-organizador/ro3.webp?v=1','img/resenas-organizador/ro4.webp?v=1','img/resenas-organizador/ro5.webp?v=1','img/resenas-organizador/ro6.webp?v=1','img/resenas-organizador/ro7.webp?v=1'],
     video: 'img/organizador.mp4?v=2',
     antesDespues: 'img/prod-organizador-ba.webp?v=2',
     antesDespuesSub: 'La misma pieza y la misma ropa: amontonada sobre la cama, y después guardada dentro de las cajas.',

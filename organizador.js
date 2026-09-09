@@ -286,7 +286,16 @@
   function fondoDe(el) {
     var n = el;
     while (n && n !== document.body) {
-      var bg = getComputedStyle(n).backgroundColor;
+      var cs = getComputedStyle(n);
+      /* Un DEGRADADO no vive en backgroundColor sino en backgroundImage, y
+         el color queda transparente. Sin esto, las pastillas blancas de la
+         garantia -que llevan un degradado de #fff a #F4F1EA- se leian como
+         si no tuvieran fondo, el corrector seguia subiendo hasta el carbon
+         y daba por bueno el texto claro: gris sobre blanco. Cuando hay
+         degradado no se puede medir, asi que se devuelve null y ese texto
+         no se toca. */
+      if (cs.backgroundImage && cs.backgroundImage.indexOf('gradient') >= 0) return null;
+      var bg = cs.backgroundColor;
       if (bg && bg.indexOf('rgb') === 0) {
         var m = bg.match(/[\d.]+/g);
         var alfa = (m && m.length > 3) ? parseFloat(m[3]) : 1;
@@ -314,6 +323,7 @@
       var cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden') return;
       var fondo = fondoDe(el);
+      if (!fondo) return;            /* hay un degradado detras: no se puede medir */
       var lf = lum(cs.color), lb = lum(fondo);
       var razon = (Math.max(lf, lb) + 0.05) / (Math.min(lf, lb) + 0.05);
       var grande = parseFloat(cs.fontSize) >= 24 ||
