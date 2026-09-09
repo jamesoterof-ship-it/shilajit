@@ -931,6 +931,53 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
 } else {
   window.fbq = function () {};   // fuera de la tienda no se manda nada
 }
+
+/* ---- LOS DATOS QUE PIDE LA API DE CONVERSIONES ----
+   Hoy la compra se le avisa a Meta SOLO desde el navegador, y ahi se pierde
+   una parte grande: bloqueadores, Safari, y el que cierra la pagina antes de
+   que salga el aviso. Meta reporta bastante menos ventas que el panel.
+
+   Para que el servidor pueda mandar esa misma compra —y que Meta no la
+   cuente dos veces— hacen falta tres cosas:
+     · `event_id`: el MISMO identificador en el aviso del navegador y en el
+       del servidor. Con eso Meta entiende que son la misma venta.
+     · `_fbp`: la cookie que el propio pixel deja en el navegador.
+     · `_fbc`: de que anuncio vino. Si la cookie todavia no existe -pasa
+       cuando el cliente entra y compra en la misma visita- se arma con el
+       `fbclid` que Meta pega en la URL, que es la forma que la propia
+       documentacion indica.
+   Aca solo se RECOGEN y se mandan con el pedido. Quien los usa es el flujo
+   del servidor. Si algo de esto falla, se manda vacio y todo sigue igual. */
+window.jayePixel = (function () {
+  function galleta(n) {
+    try { var m = document.cookie.match('(^|;)\\s*' + n + '\\s*=\\s*([^;]+)'); return m ? m.pop() : ''; }
+    catch (e) { return ''; }
+  }
+  function nuevoId() {
+    return 'jg.' + Date.now().toString(36) + '.' + Math.random().toString(36).slice(2, 10);
+  }
+  function fbc() {
+    var c = galleta('_fbc');
+    if (c) return c;
+    try {
+      var q = new URLSearchParams(location.search).get('fbclid');
+      if (q) return 'fb.1.' + Date.now() + '.' + q;
+    } catch (e) {}
+    return '';
+  }
+  return {
+    id: nuevoId,
+    fbp: function () { return galleta('_fbp'); },
+    fbc: fbc,
+    /* manda el evento con su identificador y lo devuelve, por si hay que
+       repetirlo desde el servidor */
+    track: function (ev, obj, idFijo) {
+      var e = idFijo || nuevoId();
+      try { if (window.fbq) window.fbq('track', ev, obj || {}, { eventID: e }); } catch (x) {}
+      return e;
+    },
+  };
+})();
 </script>
   <style>
     /* SOLO en la ficha de producto: al bajar se esconde la barra de anuncios
@@ -1061,7 +1108,7 @@ if (location.hostname === 'jayegroup.com.co' || location.hostname === 'www.jayeg
 <script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=6"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha.js?v=79"></script>
+<script src="ficha.js?v=80"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->

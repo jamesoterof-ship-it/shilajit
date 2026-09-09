@@ -94,7 +94,11 @@
   } catch (e) { window.avisarPanel('visita'); }
 
   /* pixel: que Meta sepa que producto se vio y con que precio */
-  if (window.fbq) try { fbq('track','ViewContent',{ content_name:p.nombre, content_type:'product',
+  /* con jayePixel el evento viaja con su `event_id`, que es lo que deja
+     mandar la misma venta desde el servidor sin que Meta la duplique */
+  if (window.jayePixel) window.jayePixel.track('ViewContent', { content_name:p.nombre, content_type:'product',
+    content_ids:[p.id], value:p.packs[0].precio, currency:'CLP' });
+  else if (window.fbq) try { fbq('track','ViewContent',{ content_name:p.nombre, content_type:'product',
     content_ids:[p.id], value:p.packs[0].precio, currency:'CLP' }); } catch (e) {}   // lo usa efectos.js para marcar la categoria
   document.title = p.nombre + ' · Jaye Group Chile';
   var meta = document.querySelector('meta[name="description"]');
@@ -808,13 +812,23 @@
      le contaba ni la llegada al formulario. El panel es dato propio, no Meta. */
   function _checkout() { if (_ic) return; _ic = true;
     if (window.avisarPanel) window.avisarPanel('visita_form');
-    if (!window.fbq) return;
-    try { fbq('track','InitiateCheckout',{ content_name:p.nombre, content_ids:[p.id],
-      value:p.packs[elegido].precio, currency:'CLP' }); } catch (e) {}
+    var d = { content_name:p.nombre, content_ids:[p.id],
+      value:p.packs[elegido].precio, currency:'CLP' };
+    if (window.jayePixel) window.jayePixel.track('InitiateCheckout', d);
+    else if (window.fbq) try { fbq('track','InitiateCheckout', d); } catch (e) {}
   }
   var _form = document.getElementById('pedir');
   if (_form && 'IntersectionObserver' in window)
     new IntersectionObserver(function (es, o) { if (es.some(function (x) { return x.isIntersecting; })) { _checkout(); o.disconnect(); } }).observe(_form);
+  /* Segunda puerta, porque la de arriba depende de que el navegador avise
+     cuando el formulario entra en pantalla, y eso NO siempre pasa: con la
+     pestaña de fondo, o en algun navegador viejo, el aviso no llega nunca y
+     el evento se pierde entero. Si el cliente toca un campo del formulario,
+     esta en el checkout aunque nadie haya avisado. Como `_checkout` tiene su
+     propio candado, se dispare por donde se dispare, sale UNA sola vez. */
+  if (_form) ['focusin', 'change'].forEach(function (ev) {
+    _form.addEventListener(ev, _checkout, { once: true });
+  });
   /* Contador de la promocion. Baja hasta la medianoche EN CHILE y vuelve a
      arrancar: no inventa una fecha falsa, el precio es el de hoy.
      La hora de Chile se pide con Intl para no hacer cuentas de huso a mano,
@@ -885,8 +899,20 @@
     if (f) f.scrollIntoView({ behavior: 'smooth' });
   });
 
+  var _atc = false;
   function elegirPack(i) {
     elegido = i;
+    /* AddToCart: elegir el pack es el paso del medio del embudo, y era el
+       unico que Meta no veia. Con el, el algoritmo tiene una señal mas para
+       encontrar al que compra, no solo al que mira. Sale UNA vez por visita:
+       el que prueba los tres packs no manda tres eventos. */
+    if (!_atc) { _atc = true;
+      var k = p.packs[i];
+      var d = { content_name:p.nombre, content_ids:[p.id], content_type:'product',
+        value:k.precio, currency:'CLP', num_items:k.cant };
+      if (window.jayePixel) window.jayePixel.track('AddToCart', d);
+      else if (window.fbq) try { fbq('track','AddToCart', d); } catch (e) {}
+    }
     ['packsForm'].forEach(function (cual) {
       var caja = $(cual); if (!caja) return;
       caja.querySelectorAll('.pack').forEach(function (x) {
@@ -985,6 +1011,19 @@
       /* el DESPACHO sigue siendo Chile; `pais` es el del numero, para que
          Camila le escriba al indicativo correcto */
       origen: 'ficha', pais: paisCod, pais_despacho: 'CL',
+      /* Para que el SERVIDOR pueda avisarle la compra a Meta. Hoy solo la
+         avisa el navegador y ahi se pierde una parte -bloqueadores, Safari,
+         el que cierra la pagina antes de tiempo-, que es justo por lo que
+         Meta reporta menos ventas que el panel.
+         El `fb_event_id` es el mismo que se usa un momento despues en el
+         aviso del navegador: con eso Meta entiende que son la misma venta y
+         no la cuenta dos veces. Si el flujo del servidor todavia no los usa,
+         estos campos viajan y ya: no cambian nada de lo que hoy funciona. */
+      fb_event_id: window.jayePixel ? window.jayePixel.id() : '',
+      fbp: window.jayePixel ? window.jayePixel.fbp() : '',
+      fbc: window.jayePixel ? window.jayePixel.fbc() : '',
+      ua: navigator.userAgent,
+      url_origen: location.href,
     };
     /* ANTES decia `.then(gracias).catch(gracias)`, o sea: pasara lo que
        pasara, al cliente se le daba las gracias Y se le avisaba la compra a
@@ -1026,12 +1065,16 @@
          unico punto donde el pedido ya salio. */
       if (window.fbq && !window._compraEnviada) {
         window._compraEnviada = true;
+        var _c = {
+          value: k.precio, currency: 'CLP',
+          content_name: p.nombre, content_ids: [p.id],
+          content_type: 'product', num_items: k.cant,
+        };
         try {
-          fbq('track', 'Purchase', {
-            value: k.precio, currency: 'CLP',
-            content_name: p.nombre, content_ids: [p.id],
-            content_type: 'product', num_items: k.cant,
-          });
+          /* MISMO identificador que viajo en el pedido: asi, cuando el
+             servidor mande esta compra tambien, Meta las junta en una sola */
+          if (window.jayePixel) window.jayePixel.track('Purchase', _c, _pedido.fb_event_id);
+          else fbq('track', 'Purchase', _c);
         } catch (e) { /* que un bloqueador de anuncios no tumbe la confirmacion */ }
       }
       $('pedir').innerHTML = '<div class="listo"><h3>Pedido recibido</h3>'
