@@ -429,8 +429,8 @@ window.PRODUCTOS = [
     categoria: 'Hogar',
     foto: 'img/prod-organizador.webp?v=1',
     fotos: ['img/prod-organizador.webp?v=1', 'img/prod-organizador-2.webp?v=1', 'img/prod-organizador-3.webp?v=1'],
-    acento: '#3C4A57',   /* el gris pizarra de la caja */
-    desc: 'Son cajas plegables para guardar la ropa que no estás usando: los plumones, las frazadas y la ropa de invierno cuando cambia la temporada. Cada una mide 60 x 43 x 38 cm, unos 98 litros, y le entra un plumón king completo, seis frazadas gruesas o dieciséis prendas dobladas. Van con varillas en las paredes, así que quedan paradas solas y se apilan una encima de otra sin hundirse. La ventana transparente del frente te deja ver qué guardaste sin tener que abrirlas, y el cierre corre por tres lados de la tapa, que se abre entera. La tela no es plástico: deja pasar el aire, así que la ropa no queda con olor a encierro. Cuando no las uses, se pliegan y quedan del grosor de un cuaderno.',
+    acento: '#F2542D',   /* el naranja del diseño: el gris dejaba el boton apagado */
+    desc: 'Cajas plegables para guardar lo que no estás usando: los plumones, las frazadas y la ropa de invierno cuando cambia la temporada. Cada una mide 60 x 43 x 38 cm, unos 98 litros, y le entra un plumón king completo. Van con varillas en las paredes, así que quedan paradas solas y se apilan sin hundirse. La ventana del frente te deja ver qué guardaste sin abrirlas, y la tela deja pasar el aire: la ropa no queda con olor a encierro.',
     puntos: [
       'Cada caja mide 60 x 43 x 38 cm: unos 98 litros',
       'Cabe un plumón king completo, o 16 prendas dobladas',
