@@ -84,7 +84,53 @@
       var el = cont.querySelector(s);
       if (el) el.style.display = 'none';
     });
+
+    contraste(cont);
     return true;
+  }
+
+  /* ---- contraste, medido y corregido uno por uno ----
+     La hoja no alcanzaba: producto.html trae su propio <style> y algo
+     vuelve a pintar los textos despues de que carga el css, asi que ni
+     con !important quedaban claros. Aca se mide el contraste real de
+     cada texto contra el fondo que tiene detras y se corrige SOLO el
+     que no llega al minimo. Lo que ya se lee no se toca, y por eso los
+     botones y las etiquetas de color quedan como estan. */
+  function lum(c) {
+    var m = String(c).match(/\d+/g);
+    if (!m) return 1;
+    var v = m.slice(0, 3).map(function (x) {
+      x = x / 255;
+      return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+  }
+  function fondoDe(el) {
+    var n = el;
+    while (n && n !== document.body) {
+      var bg = getComputedStyle(n).backgroundColor;
+      if (bg && bg.indexOf('rgba(0, 0, 0, 0)') < 0 && bg !== 'transparent') return bg;
+      n = n.parentElement;
+    }
+    return 'rgb(25, 28, 30)';
+  }
+  function contraste(cont) {
+    var arreglados = 0;
+    cont.querySelectorAll('*').forEach(function (el) {
+      if (el.children.length || !el.textContent.trim()) return;
+      var cs = getComputedStyle(el);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return;
+      var fondo = fondoDe(el);
+      var lf = lum(cs.color), lb = lum(fondo);
+      var razon = (Math.max(lf, lb) + 0.05) / (Math.min(lf, lb) + 0.05);
+      var grande = parseFloat(cs.fontSize) >= 24 ||
+        (parseFloat(cs.fontSize) >= 18.66 && parseInt(cs.fontWeight, 10) >= 700);
+      if (razon >= (grande ? 3 : 4.5)) return;
+      /* sobre fondo claro va texto oscuro; sobre oscuro, texto claro */
+      el.style.setProperty('color', lb > 0.35 ? '#141A20' : '#DDE1E4', 'important');
+      arreglados++;
+    });
+    if (window.console && arreglados) console.log('[organizador] contraste corregido en ' + arreglados + ' textos');
   }
 
   /* ficha.js puede pintar despues que este script; se espera a que exista */
