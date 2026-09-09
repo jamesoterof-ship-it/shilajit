@@ -110,7 +110,10 @@
           '<div><b>16</b><span>prendas dobladas</span></div>' +
         '</div>' +
         '<p class="og-sub">Y el pack trae tres.</p>' +
-        '<div class="og-gigante">294<small>litros en total</small></div>' +
+        /* el numero va escrito de una: si el conteo no llegara a correr,
+           el cliente igual ve 294 y no un cero */
+        '<div class="og-gigante"><span class="og-num" data-n="294">294</span>' +
+          '<small>litros en total</small></div>' +
       '</section>' +
       '<section class="og-blq og-linea">' +
         '<span class="og-rot">La diferencia</span>' +
@@ -223,7 +226,34 @@
     /* encender = quitar la marca de escondido. No se añade nada: el estado
        normal del elemento YA es visible, asi que aunque la transicion no
        llegue a correr, la seccion se ve. */
-    function encender(el) { el.classList.remove('og-entra', 'og-sec-entra'); }
+    function encender(el) {
+      el.classList.remove('og-entra', 'og-sec-entra');
+      var n = el.querySelector && el.querySelector('.og-num');
+      if (n) contar(n);
+    }
+
+    /* El 294 sube desde cero cuando el cliente llega al bloque.
+       Va con setInterval y no con requestAnimationFrame a proposito: el
+       rAF no corre si la pestaña esta de fondo, y ahi el numero se
+       quedaria congelado. Con esto, pase lo que pase, el ultimo paso
+       escribe la cifra buena. */
+    function contar(el) {
+      if (el.dataset.contando) return;
+      el.dataset.contando = '1';
+      var meta = parseInt(el.getAttribute('data-n'), 10) || 0;
+      if (quieto || !meta) { el.textContent = meta; return; }
+      var dur = 1100, ini = Date.now();
+      el.textContent = '0';
+      var reloj = setInterval(function () {
+        var t = Math.min(1, (Date.now() - ini) / dur);
+        /* frena al final en vez de llegar de golpe */
+        var v = Math.round(meta * (1 - Math.pow(1 - t, 3)));
+        el.textContent = v;
+        if (t >= 1) { clearInterval(reloj); el.textContent = meta; }
+      }, 30);
+      /* red de seguridad, por si el reloj se traba */
+      setTimeout(function () { clearInterval(reloj); el.textContent = meta; }, dur + 1500);
+    }
 
     var ojo = new IntersectionObserver(function (entradas) {
       entradas.forEach(function (e) {
