@@ -20,58 +20,12 @@
   }
   if (slug() !== 'organizador') return;
 
-  function pesos(n) { return '$' + Number(n).toLocaleString('es-CL').replace(/,/g, '.'); }
-
-  /* El precio de antes se calcula IGUAL que en la seccion de promocion de
-     ficha.js (precio x 1.8, redondeado a la centena). Si se sacara de otra
-     cuenta, la misma pagina mostraria dos "antes" distintos del mismo pack. */
-  function antesDe(precio) { return Math.round(precio * 1.8 / 100) * 100; }
-
-  /* ---- el bloque de precios, debajo de las medidas ----
-     Va arriba a proposito: el cliente ve de una lo que cuesta y con que
-     estrellas viene, y mas abajo se encuentra la promocion de verdad.
-     La nota y el numero de resenas se leen de lo que ya pinto ficha.js,
-     para que no haya dos cifras distintas en la misma pagina. */
-  function bloquePrecios(cont) {
-    var p = (window.PRODUCTOS || []).filter(function (x) { return x.id === 'organizador'; })[0];
-    if (!p || !p.packs || !p.packs.length) return '';
-
-    var nota = '4.8', cuantas = '';
-    var elNota = cont.querySelector('.rev-score .big');
-    var elCnt = cont.querySelector('.rev-score .cnt');
-    if (elNota && elNota.textContent.trim()) nota = elNota.textContent.trim();
-    if (elCnt && elCnt.textContent.trim()) cuantas = elCnt.textContent.trim();
-
-    var filas = p.packs.map(function (k) {
-      var esPop = k.cant === (p.promo || 6);
-      var antes = antesDe(k.precio);
-      return '<div class="og-pk' + (esPop ? ' n' : '') + '">' +
-        '<div class="og-pk__c">' + k.cant + '</div>' +
-        '<div class="og-pk__d">' +
-          (esPop ? '<span class="og-et">El más pedido</span>' : '') +
-          '<b>' + k.cant + ' cajas</b>' +
-          '<span>' + pesos(Math.round(k.precio / k.cant)) + ' cada una</span>' +
-        '</div>' +
-        '<div class="og-pk__p"><s>' + pesos(antes) + '</s><b>' + pesos(k.precio) + '</b></div>' +
-      '</div>';
-    }).join('');
-
-    return '<section class="og-precio">' +
-      '<div class="og-est">' +
-        '<span class="og-str">★★★★★</span>' +
-        '<span class="og-nota">' + nota +
-          (cuantas ? ' · <a href="#resenas">' + cuantas + '</a>' : '') +
-        '</span>' +
-      '</div>' +
-      '<div class="og-packs">' + filas + '</div>' +
-      '<a class="og-ver" href="#og-promo">Ver la promoción del pack de 6</a>' +
-    '</section>';
-  }
-
-  /* ---- las tres fotos que refuerzan «Qué es y para qué sirve» ----
-     Van pegadas a esa seccion, no sueltas en otro lado: foto, su
-     descripcion debajo, y la siguiente. Cada pie cuenta algo que la
-     foto NO trae escrito, para no decir lo mismo dos veces. */
+  /* ---- las tres fotos SON «Qué es y para qué sirve» ----
+     Esa seccion era un parrafo largo y seis viñetas debajo: pura letra.
+     Ahora el parrafo y la lista se van, y en su lugar quedan tres
+     tarjetas, una debajo de la otra: la foto arriba y su descripcion
+     adentro. Cada pie cuenta algo que la foto NO trae escrito, para no
+     decir lo mismo dos veces. */
   var FOTOS = [
     ['img/og-cap.webp?v=1',
      'Caja organizadora abierta sobre una cama con un plumón king doblado dentro',
@@ -88,13 +42,9 @@
   ];
 
   function bloqueFotos() {
-    return '<section class="og-blq og-linea og-ancho og-fotos-sec">' +
-      '<span class="og-rot">Míralo de cerca</span>' +
-      '<h2 class="og-h2">Cómo está hecha<br>y qué le entra.</h2>' +
-      '<div class="og-fichas">' + FOTOS.map(function (f) {
-        return ficha(f[0], f[1], f[2], f[3], f[4]);
-      }).join('') + '</div>' +
-    '</section>';
+    return '<div class="og-fichas">' + FOTOS.map(function (f) {
+      return ficha(f[0], f[1], f[2], f[3], f[4]);
+    }).join('') + '</div>';
   }
 
   /* una foto con su ficha debajo: rotulo, titular y el detalle */
@@ -142,7 +92,6 @@
         '<div><b>43</b><span>cm ancho</span></div>' +
         '<div><b>38</b><span>cm alto</span></div>' +
       '</div>' +
-      bloquePrecios(cont) +
       '<section class="og-blq">' +
         '<span class="og-rot">Lo que le cabe a cada una</span>' +
         '<div class="og-cabe og-cabe--sola">' +
@@ -165,9 +114,20 @@
         '<p class="og-sub">Por eso a la nuestra le entra el plumón, y a la otra apenas las poleras.</p>' +
       '</section>';
 
-    /* la galeria y la cabecera se van: en su lugar, una sola foto */
+    /* La GALERIA se va -arriba queda una sola foto, la del hero-, pero la
+       CABECERA se queda: son las estrellas, el nombre, el precio grande
+       con el tachado y el -37%. Es la misma que traen los otros nueve
+       productos y es lo que el cliente busca apenas ve la foto. Antes se
+       borraba entera `.arriba2` y con ella se iba el precio. */
     arriba.insertAdjacentHTML('beforebegin', html);
-    arriba.remove();
+    ['.gal', '.miniz'].forEach(function (s) {
+      var el = arriba.querySelector(s);
+      if (el) el.remove();
+    });
+    /* y sube a su sitio: justo debajo de la tira de medidas, que es donde
+       el cliente la busca despues de ver la foto */
+    var med = cont.querySelector('.og-med');
+    if (med) med.insertAdjacentElement('afterend', arriba);
 
     /* estos dos ahora dirian lo mismo dos veces */
     ['.med-sec', '.cmp-sec'].forEach(function (s) {
@@ -179,17 +139,23 @@
     var promo = cont.querySelector('.promo-sec');
     if (promo && !promo.id) promo.id = 'og-promo';
 
-    /* las tres fotos van JUSTO debajo de «Qué es y para qué sirve»:
-       ahi es donde el cliente esta leyendo de que se trata, y la foto
-       con su descripcion le refuerza cada cosa que acaba de leer. */
-    if (!cont.querySelector('.og-fotos-sec')) {
+    /* «Qué es y para qué sirve» pasa a ser las tres tarjetas: se van el
+       parrafo largo y la lista de viñetas, que decian lo mismo que los
+       pies de foto, y quedan la foto y su descripcion. */
+    if (!cont.querySelector('.og-fichas')) {
       var descSec = null;
       var secs = cont.querySelectorAll('section.desc');
       for (var i = 0; i < secs.length; i++) {
         var t = secs[i].querySelector('.tit2');
         if (t && t.textContent.indexOf('Qué es') >= 0) { descSec = secs[i]; break; }
       }
-      if (descSec) descSec.insertAdjacentHTML('afterend', bloqueFotos());
+      if (descSec) {
+        var parrafo = descSec.querySelector('p');
+        if (parrafo) parrafo.remove();
+        var lista = descSec.querySelector('ul');
+        if (lista) lista.remove();
+        descSec.insertAdjacentHTML('beforeend', bloqueFotos());
+      }
     }
 
     /* Se repasa varias veces: efectos-ficha.js anima con GSAP y hay
@@ -219,14 +185,29 @@
     });
     return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
   }
+  /* Devuelve el fondo REAL que hay detras del texto.
+     Dos trampas que costaron el pack seleccionado del formulario en blanco:
+       · el navegador puede devolver `color(srgb 0.72 0.22 0.10 / 0.1)`, y de
+         ahi lum() sacaba numeros sueltos y calculaba cualquier cosa;
+       · un tinte casi transparente -rgba(196,18,47,.05) sobre la tarjeta
+         blanca- se leia como si fuera rojo solido, o sea fondo oscuro, y el
+         corrector ponia la letra BLANCA sobre blanco.
+     Asi que solo vale un rgb/rgba con alfa alto; lo demas se salta y se
+     sigue subiendo hasta el fondo que si pinta. */
   function fondoDe(el) {
     var n = el;
     while (n && n !== document.body) {
       var bg = getComputedStyle(n).backgroundColor;
-      if (bg && bg.indexOf('rgba(0, 0, 0, 0)') < 0 && bg !== 'transparent') return bg;
+      if (bg && bg.indexOf('rgb') === 0) {
+        var m = bg.match(/[\d.]+/g);
+        var alfa = (m && m.length > 3) ? parseFloat(m[3]) : 1;
+        if (alfa >= 0.5) return bg;
+      }
       n = n.parentElement;
     }
-    return 'rgb(25, 28, 30)';
+    /* el body de la tienda es blanco; el carbon solo lo pone #prod */
+    var raiz = document.getElementById('prod');
+    return raiz ? getComputedStyle(raiz).backgroundColor : 'rgb(25, 28, 30)';
   }
   function contraste(cont) {
     var arreglados = 0;
