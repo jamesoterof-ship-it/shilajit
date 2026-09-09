@@ -76,7 +76,7 @@
     ['img/og-cap.webp?v=1',
      'Caja organizadora abierta sobre una cama con un plumón king doblado dentro',
      'La capacidad', '98 litros por caja',
-     'Le entra un plumón king completo, seis frazadas gruesas o dieciséis prendas dobladas. El cierre abre la tapa entera, no por una ranura: el plumón entra de una.'],
+     'O seis frazadas gruesas, o dieciséis prendas dobladas. La tapa abre entera por el cierre, no por una ranura: entra de una y cierra sin forzar.'],
     ['img/og-packs.webp?v=1',
      'Seis cajas organizadoras apiladas en dos torres en un dormitorio',
      'Cómo está armada', 'Varillas en las paredes',
@@ -84,7 +84,7 @@
     ['img/og-medida.webp?v=1',
      'Primer plano de la caja organizadora con la ropa doblada tras la ventana',
      'De qué está hecha', 'Tela no tejida que respira',
-     'No es plástico que se quiebra ni cartón que se hunde: la ropa no queda con olor a encierro. Ribete reforzado en los cantos y dos asas cosidas al armazón. Mide 60 × 43 × 38 cm.'],
+     'No es plástico que se quiebra ni cartón que se hunde con la humedad. Al dejar pasar el aire, la ropa sale igual que como la guardaste: sin olor a encierro, aunque pase la temporada entera adentro.'],
   ];
 
   function bloqueFotos() {
