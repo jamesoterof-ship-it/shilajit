@@ -397,7 +397,7 @@ window.PRODUCTOS = [
        El competidor que pautea en Chile vende 4 cajas de 26 L por $19.990:
        la nuestra es casi cuatro veces mas grande, y ese es el argumento. */
     id: 'organizador', unidad: 'caja', promo: 6,
-    video: 'img/organizador.mp4?v=1',
+    video: 'img/organizador.mp4?v=2',
     antesDespues: 'img/prod-organizador-ba.webp?v=1',
     antesDespuesSub: 'La misma pieza: la ropa de invierno amontonada sobre la cama, y despues guardada y apilada.',
     preguntas: [
