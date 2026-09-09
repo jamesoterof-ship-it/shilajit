@@ -69,6 +69,7 @@ body.p-organizador .og-blq{background:var(--og-carbon);color:var(--og-hueso)}
 .og-gigante small{font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:var(--og-cal);
   letter-spacing:.16em;text-transform:uppercase;display:block;margin-top:16px}
 .og-cabe{margin-top:28px;border-top:1px solid var(--og-linea)}
+.og-cabe--sola{margin-top:18px}
 .og-cabe div{display:flex;align-items:baseline;gap:16px;padding:16px 0;border-bottom:1px solid var(--og-linea)}
 .og-cabe b{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:34px;color:var(--og-cal);
   width:54px;font-variant-numeric:tabular-nums;flex:none}
@@ -89,9 +90,67 @@ body.p-organizador .og-blq{background:var(--og-carbon);color:var(--og-hueso)}
 .og-vs__f small{display:block;color:var(--og-humo);font-size:11.5px;margin-top:7px;letter-spacing:.04em}
 .og-sub{color:var(--og-humo);font-size:15px;margin:16px 0 0}
 
-/* El resto de la ficha -promo, reseñas, preguntas, garantia y formulario-
-   se queda EXACTAMENTE como en los demas productos: su fondo claro, sus
-   colores, su tipografia. Aca no se le toca ni una regla. */
+/* ============================================================
+   EL RESTO DE LA FICHA, EN OSCURO Y LEGIBLE
+
+   La primera vez le puse el carbon a #prod y no toque los colores:
+   las reseñas quedaron con los numeros gris sobre negro. Entonces
+   lo devolvi a claro, y la pagina quedo partida en dos -oscuro
+   arriba, blanco abajo-, que es peor.
+
+   Ahora va oscuro entero, y cada cosa lleva su color. La estructura
+   de las reseñas no se toca: solo cambian los colores para que se
+   lean, que es lo unico que hacia falta.
+   ============================================================ */
+body.p-organizador #prod{background:var(--og-carbon);color:var(--og-hueso)}
+body.p-organizador #prod .bloque{background:transparent}
+
+/* titulos y texto */
+body.p-organizador #prod h1,
+body.p-organizador #prod h2,
+body.p-organizador #prod h3,
+body.p-organizador #prod h4,
+body.p-organizador #prod strong{color:#fff}
+body.p-organizador #prod p,
+body.p-organizador #prod li,
+body.p-organizador #prod small,
+body.p-organizador #prod td,
+body.p-organizador #prod label{color:#C9CDD0}
+body.p-organizador #prod hr{border-color:var(--og-linea)}
+
+/* cualquier caja o tarjeta: fondo un punto mas claro que el fondo */
+body.p-organizador #prod .promo-card,
+body.p-organizador #prod .pack,
+body.p-organizador #prod .packs>*,
+body.p-organizador #prod .tarjeta,
+body.p-organizador #prod .res,
+body.p-organizador #prod .card,
+body.p-organizador #prod .faq-item,
+body.p-organizador #prod .gar-card,
+body.p-organizador #prod .form{background:var(--og-carbon2);border-color:var(--og-linea);color:var(--og-hueso)}
+
+/* reseñas: misma estructura, colores legibles */
+body.p-organizador #prod .track,
+body.p-organizador #prod .bar .track{background:#394046}
+body.p-organizador #prod .track i,
+body.p-organizador #prod .bar .track i{background:var(--og-cal)}
+body.p-organizador #prod .rev-bars b,
+body.p-organizador #prod .bar b,
+body.p-organizador #prod .lvl,
+body.p-organizador #prod .cnt{color:#C9CDD0}
+body.p-organizador #prod .big,
+body.p-organizador #prod .rev-score .big{color:#fff}
+
+/* campos del formulario */
+body.p-organizador #prod input,
+body.p-organizador #prod select,
+body.p-organizador #prod textarea{background:#2B3238;border-color:var(--og-linea);color:#fff}
+body.p-organizador #prod input::placeholder,
+body.p-organizador #prod textarea::placeholder{color:#8A939B}
+
+/* lo que ya era claro sobre claro: se invierte */
+body.p-organizador #prod .light,
+body.p-organizador #prod .claro{background:var(--og-carbon2)}
 
 @media (prefers-reduced-motion:reduce){
   .og-cae,.og-sello{animation:none;opacity:1;transform:none}

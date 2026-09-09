@@ -45,20 +45,23 @@
         '</div>' +
         '<div class="og-sello"><div><b>98</b><i>LITROS</i></div></div>' +
       '</div>' +
+      /* el 98 sale UNA vez, en el sello sobre la foto. Aca van las medidas,
+         que es otro dato; y abajo el total del pack, que tambien es nuevo.
+         Antes el 98 se repetia tres veces seguidas y saltaba a la vista. */
       '<div class="og-med">' +
         '<div><b>60</b><span>cm largo</span></div>' +
         '<div><b>43</b><span>cm ancho</span></div>' +
         '<div><b>38</b><span>cm alto</span></div>' +
-        '<div><b>98</b><span>litros</span></div>' +
       '</div>' +
       '<section class="og-blq">' +
-        '<span class="og-rot">Lo que le cabe</span>' +
-        '<div class="og-gigante">98<small>litros por caja</small></div>' +
-        '<div class="og-cabe">' +
+        '<span class="og-rot">Lo que le cabe a cada una</span>' +
+        '<div class="og-cabe og-cabe--sola">' +
           '<div><b>1</b><span>plumón king completo</span></div>' +
           '<div><b>6</b><span>frazadas gruesas</span></div>' +
           '<div><b>16</b><span>prendas dobladas</span></div>' +
         '</div>' +
+        '<p class="og-sub">Y el pack trae tres.</p>' +
+        '<div class="og-gigante">294<small>litros en total</small></div>' +
       '</section>' +
       '<section class="og-blq og-linea">' +
         '<span class="og-rot">La diferencia</span>' +
