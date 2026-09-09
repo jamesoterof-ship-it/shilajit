@@ -1011,15 +1011,18 @@
       /* el DESPACHO sigue siendo Chile; `pais` es el del numero, para que
          Camila le escriba al indicativo correcto */
       origen: 'ficha', pais: paisCod, pais_despacho: 'CL',
-      /* Para que el SERVIDOR pueda avisarle la compra a Meta. Hoy solo la
-         avisa el navegador y ahi se pierde una parte -bloqueadores, Safari,
-         el que cierra la pagina antes de tiempo-, que es justo por lo que
-         Meta reporta menos ventas que el panel.
-         El `fb_event_id` es el mismo que se usa un momento despues en el
-         aviso del navegador: con eso Meta entiende que son la misma venta y
-         no la cuenta dos veces. Si el flujo del servidor todavia no los usa,
-         estos campos viajan y ya: no cambian nada de lo que hoy funciona. */
-      fb_event_id: window.jayePixel ? window.jayePixel.id() : '',
+      /* EL NOMBRE DEL CAMPO IMPORTA: tiene que ser `event_id`, tal cual.
+         El flujo `Pedido Tienda Jaye` ya lo guarda en `capi_event_id` con
+         `NULLIF(d.j->>'event_id','')`, y de ahi lo toma el flujo `CAPI Ventas
+         WhatsApp`, que le manda la compra a Meta desde el servidor cada 15
+         minutos. Si el campo llega vacio, ese flujo cae a `wa-<id>` — un
+         identificador que el navegador nunca uso — y entonces Meta ve DOS
+         compras distintas por la misma venta.
+         Mandandolo con este nombre, el aviso del navegador y el del servidor
+         llevan el MISMO identificador y Meta los junta en uno. Asi se
+         recupera lo que el navegador no alcanza a avisar (bloqueadores,
+         Safari, el que cierra la pagina) sin contar de mas. */
+      event_id: window.jayePixel ? window.jayePixel.id() : '',
       fbp: window.jayePixel ? window.jayePixel.fbp() : '',
       fbc: window.jayePixel ? window.jayePixel.fbc() : '',
       ua: navigator.userAgent,
@@ -1073,7 +1076,7 @@
         try {
           /* MISMO identificador que viajo en el pedido: asi, cuando el
              servidor mande esta compra tambien, Meta las junta en una sola */
-          if (window.jayePixel) window.jayePixel.track('Purchase', _c, _pedido.fb_event_id);
+          if (window.jayePixel) window.jayePixel.track('Purchase', _c, _pedido.event_id);
           else fbq('track', 'Purchase', _c);
         } catch (e) { /* que un bloqueador de anuncios no tumbe la confirmacion */ }
       }
