@@ -180,8 +180,8 @@ body.p-organizador .og-vs__f.n b{color:var(--og-cal)}
 
 /* el naranja del sello y de la promo: se oscurece un punto para que el
    blanco encima llegue al contraste que pide la norma */
-body.p-organizador .og-sello{background:#D9451F}
-body.p-organizador #prod .promo-banner{background:#D9451F}
+body.p-organizador .og-sello{background:#B8391A}
+body.p-organizador #prod .promo-banner{background:#B8391A}
 
 /* los precios: naranja mas claro para que se despeguen del carbon */
 body.p-organizador #prod .promo-precio,
