@@ -90,7 +90,7 @@
        corre la primera pasada. Los puntos de la descripcion quedaban
        negros justo por eso. */
     contraste(cont);
-    [400, 1200, 2500, 4500].forEach(function (t) {
+    [300, 900, 1800, 3000, 4500, 6500, 9000].forEach(function (t) {
       setTimeout(function () { contraste(cont); }, t);
     });
     return true;
@@ -124,7 +124,6 @@
   function contraste(cont) {
     var arreglados = 0;
     cont.querySelectorAll('*').forEach(function (el) {
-      if (el.dataset.ogFix) return;
       /* Sirve cualquier elemento con texto PROPIO, aunque lleve hijos.
          Antes se saltaban los que tenian hijos y por eso los puntos de la
          descripcion seguian negros: cada uno lleva un svg de visto bueno
@@ -145,7 +144,6 @@
       if (razon >= (grande ? 3 : 4.5)) return;
       /* sobre fondo claro va texto oscuro; sobre oscuro, texto claro */
       el.style.setProperty('color', lb > 0.35 ? '#141A20' : '#DDE1E4', 'important');
-      el.dataset.ogFix = '1';
       arreglados++;
     });
     if (window.console && arreglados) console.log('[organizador] contraste corregido en ' + arreglados + ' textos');
