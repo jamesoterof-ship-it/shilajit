@@ -399,34 +399,34 @@ window.PRODUCTOS = [
     id: 'organizador', unidad: 'caja', promo: 6,
     /* fotos reales de clientes, en orden de lo que mas convence: primero
        las que muestran la caja LLENA y cerrada, despues el detalle de las
-       varillas y el cierre, y al final el paquete como llega */
+       asas y el cierre, y al final el paquete como llega */
     fotosResenas: ['img/resenas-organizador/ro1.webp?v=1','img/resenas-organizador/ro2.webp?v=1','img/resenas-organizador/ro3.webp?v=1','img/resenas-organizador/ro4.webp?v=1','img/resenas-organizador/ro5.webp?v=1','img/resenas-organizador/ro6.webp?v=1','img/resenas-organizador/ro7.webp?v=1'],
     video: 'img/organizador.mp4?v=2',
     antesDespues: 'img/prod-organizador-ba.webp?v=2',
     antesDespuesSub: 'La misma pieza y la misma ropa: amontonada sobre la cama, y después guardada dentro de las cajas.',
     preguntas: [
       { q: '¿De qué tamaño es cada caja?', a: '60 cm de largo, 43 de ancho y 38 de alto: unos 98 litros. Le entra un plumón king completo, seis frazadas gruesas o dieciséis prendas dobladas.' },
-      { q: '¿Se aplastan cuando las apilo?', a: 'No. Llevan varillas en las paredes que las mantienen firmes, así que puedes ponerlas una sobre otra sin que se hundan. Quedan paradas incluso vacías.' },
+      { q: '¿Cómo la guardo cuando no la uso?', a: 'Se pliega y la guardas donde sea, sin que ocupe espacio. Y para moverla cargada trae asas reforzadas, así la llevas de un lugar a otro sin esfuerzo.' },
       { q: '¿Qué colores llegan?', a: 'Vienen en gris, celeste y rosado. Si tienes preferencia nos la dices al confirmar el pedido y la tomamos en cuenta según lo que haya en bodega.' },
       { q: '¿Sirven para guardar debajo de la cama?', a: 'Sí, siempre que tu cama tenga al menos 40 cm libres de alto. Si es más baja, quedan mejor arriba del clóset o en el altillo.' },
       { q: '¿La ropa no queda con olor a encierro?', a: 'No, porque la tela no es plástico: es tela no tejida que deja pasar el aire. Por eso sirve para guardar de una temporada a la otra.' },
     ],
     formulaRotulo: 'Por dentro',
     formulaTitulo: 'Hecha para aguantar, no para durar un mes.',
-    formulaSub: 'Tela no tejida con estructura interna. Ni plástico que se quiebra ni cartón que se hunde con la humedad.',
+    formulaSub: 'Tela no tejida con visor transparente al frente. Ni plástico que se quiebra ni cartón que se hunde con la humedad.',
     formula: [
-      ['casa', 'Estructura interna', 'Varillas en las paredes: queda parada aunque esté vacía y no cede con el peso de la de arriba.'],
-      ['ojo', 'Ventana transparente', 'Ves qué guardaste sin abrir y desarmar todo para encontrar una sola prenda.'],
+      ['casa', 'Estilo sobrio y elegante', 'Combina con cualquier decoración del dormitorio sin romper la estética.'],
+      ['ojo', 'Ventana frontal transparente', 'Ves qué guardaste sin abrir y desarmar todo para encontrar una sola prenda.'],
       ['llave', 'Cierre por tres lados', 'La tapa se abre entera, no por una ranura. El plumón entra de una.'],
-      ['escudo', 'Asas reforzadas', 'Dos por caja, cosidas al armazón. La bajas del clóset cargada sin que se rasgue.'],
+      ['escudo', 'Asas reforzadas', 'La transportas cargada de un lugar a otro sin esfuerzo.'],
       ['fibra', 'Tela que respira', 'No es plástico: la ropa no queda con olor a encierro ni agarra humedad.'],
       ['pluma', 'Se pliega', 'Cuando no la usas, la doblas y queda del grosor de un cuaderno.'],
     ],
     comparaTitulo: 'No todas las cajas son del mismo porte',
     compara: [
       '98 litros por caja. Las que se ven por ahí traen 26: casi cuatro veces menos.',
-      'Estructura interna que la mantiene firme aunque la llenes hasta arriba.',
-      'Ventana transparente y asas cosidas al armazón, no pegadas a la tela.',
+      'Amplia capacidad: para ropa voluminosa como suéteres, edredones y frazadas.',
+      'Ventana frontal transparente y asas reforzadas para moverla cargada.',
     ],
     nombre: 'Organizador de Ropa Plegable',
     sub: 'Cabe un plumón king completo, y se apilan',
@@ -434,12 +434,12 @@ window.PRODUCTOS = [
     foto: 'img/prod-organizador.webp?v=1',
     fotos: ['img/prod-organizador.webp?v=1', 'img/prod-organizador-2.webp?v=1', 'img/prod-organizador-3.webp?v=1'],
     acento: '#B8391A',   /* el naranja del diseño: el gris dejaba el boton apagado */
-    desc: 'Cajas plegables para guardar lo que no estás usando: los plumones, las frazadas y la ropa de invierno cuando cambia la temporada. Cada una mide 60 x 43 x 38 cm, unos 98 litros, y le entra un plumón king completo. Van con varillas en las paredes, así que quedan paradas solas y se apilan sin hundirse. La ventana del frente te deja ver qué guardaste sin abrirlas, y la tela deja pasar el aire: la ropa no queda con olor a encierro.',
+    desc: 'Cajas plegables para guardar lo que no estás usando: los plumones, las frazadas y la ropa de invierno cuando cambia la temporada. Cada una mide 60 x 43 x 38 cm, unos 98 litros, y le entra un plumón king completo. La ventana del frente te deja ver qué guardaste sin abrirlas, las asas reforzadas te dejan moverlas cargadas, y cuando no las usas se pliegan sin ocupar espacio. La tela deja pasar el aire: la ropa no queda con olor a encierro.',
     puntos: [
       'Cada caja mide 60 x 43 x 38 cm: unos 98 litros',
       'Cabe un plumón king completo, o 16 prendas dobladas',
-      'Se apilan sin hundirse: aprovechas el alto del clóset',
-      'Ventana transparente para ver qué hay sin abrirla',
+      'Asas reforzadas: la mueves cargada sin esfuerzo',
+      'Ventana frontal transparente para ver qué hay sin abrirla',
       'Tela que respira: la ropa no agarra olor a encierro',
       'Se pliega cuando no la usas',
     ],
