@@ -142,6 +142,12 @@
       var grande = parseFloat(cs.fontSize) >= 24 ||
         (parseFloat(cs.fontSize) >= 18.66 && parseInt(cs.fontWeight, 10) >= 700);
       if (razon >= (grande ? 3 : 4.5)) return;
+      /* LA TRAMPA que costo seis intentos: estos elementos traen
+         `transition: all .5s`, y en la cascada las transiciones ganan
+         incluso al !important del autor. Se veia el color puesto en el
+         style inline y el navegador seguia pintando el viejo. Hay que
+         apagar la transicion ANTES de cambiar el color. */
+      el.style.setProperty('transition', 'none', 'important');
       /* sobre fondo claro va texto oscuro; sobre oscuro, texto claro */
       el.style.setProperty('color', lb > 0.35 ? '#141A20' : '#DDE1E4', 'important');
       arreglados++;
