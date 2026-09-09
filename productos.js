@@ -398,8 +398,8 @@ window.PRODUCTOS = [
        la nuestra es casi cuatro veces mas grande, y ese es el argumento. */
     id: 'organizador', unidad: 'caja', promo: 6,
     video: 'img/organizador.mp4?v=2',
-    antesDespues: 'img/prod-organizador-ba.webp?v=1',
-    antesDespuesSub: 'La misma pieza: la ropa de invierno amontonada sobre la cama, y despues guardada y apilada.',
+    antesDespues: 'img/prod-organizador-ba.webp?v=2',
+    antesDespuesSub: 'La misma pieza y la misma ropa: amontonada sobre la cama, y después guardada dentro de las cajas.',
     preguntas: [
       { q: '¿De qué tamaño es cada caja?', a: '60 cm de largo, 43 de ancho y 38 de alto: unos 98 litros. Le entra un plumón king completo, seis frazadas gruesas o dieciséis prendas dobladas.' },
       { q: '¿Se aplastan cuando las apilo?', a: 'No. Llevan varillas en las paredes que las mantienen firmes, así que puedes ponerlas una sobre otra sin que se hundan. Quedan paradas incluso vacías.' },

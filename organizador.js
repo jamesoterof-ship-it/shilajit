@@ -20,6 +20,95 @@
   }
   if (slug() !== 'organizador') return;
 
+  function pesos(n) { return '$' + Number(n).toLocaleString('es-CL').replace(/,/g, '.'); }
+
+  /* El precio de antes se calcula IGUAL que en la seccion de promocion de
+     ficha.js (precio x 1.8, redondeado a la centena). Si se sacara de otra
+     cuenta, la misma pagina mostraria dos "antes" distintos del mismo pack. */
+  function antesDe(precio) { return Math.round(precio * 1.8 / 100) * 100; }
+
+  /* ---- el bloque de precios, debajo de las medidas ----
+     Va arriba a proposito: el cliente ve de una lo que cuesta y con que
+     estrellas viene, y mas abajo se encuentra la promocion de verdad.
+     La nota y el numero de resenas se leen de lo que ya pinto ficha.js,
+     para que no haya dos cifras distintas en la misma pagina. */
+  function bloquePrecios(cont) {
+    var p = (window.PRODUCTOS || []).filter(function (x) { return x.id === 'organizador'; })[0];
+    if (!p || !p.packs || !p.packs.length) return '';
+
+    var nota = '4.8', cuantas = '';
+    var elNota = cont.querySelector('.rev-score .big');
+    var elCnt = cont.querySelector('.rev-score .cnt');
+    if (elNota && elNota.textContent.trim()) nota = elNota.textContent.trim();
+    if (elCnt && elCnt.textContent.trim()) cuantas = elCnt.textContent.trim();
+
+    var filas = p.packs.map(function (k) {
+      var esPop = k.cant === (p.promo || 6);
+      var antes = antesDe(k.precio);
+      return '<div class="og-pk' + (esPop ? ' n' : '') + '">' +
+        '<div class="og-pk__c">' + k.cant + '</div>' +
+        '<div class="og-pk__d">' +
+          (esPop ? '<span class="og-et">El más pedido</span>' : '') +
+          '<b>' + k.cant + ' cajas</b>' +
+          '<span>' + pesos(Math.round(k.precio / k.cant)) + ' cada una</span>' +
+        '</div>' +
+        '<div class="og-pk__p"><s>' + pesos(antes) + '</s><b>' + pesos(k.precio) + '</b></div>' +
+      '</div>';
+    }).join('');
+
+    return '<section class="og-precio">' +
+      '<div class="og-est">' +
+        '<span class="og-str">★★★★★</span>' +
+        '<span class="og-nota">' + nota +
+          (cuantas ? ' · <a href="#resenas">' + cuantas + '</a>' : '') +
+        '</span>' +
+      '</div>' +
+      '<div class="og-packs">' + filas + '</div>' +
+      '<a class="og-ver" href="#og-promo">Ver la promoción del pack de 6</a>' +
+    '</section>';
+  }
+
+  /* ---- las tres fotos que refuerzan «Qué es y para qué sirve» ----
+     Van pegadas a esa seccion, no sueltas en otro lado: foto, su
+     descripcion debajo, y la siguiente. Cada pie cuenta algo que la
+     foto NO trae escrito, para no decir lo mismo dos veces. */
+  var FOTOS = [
+    ['img/og-cap.webp?v=1',
+     'Caja organizadora abierta sobre una cama con un plumón king doblado dentro',
+     'La capacidad', '98 litros por caja',
+     'Le entra un plumón king completo, seis frazadas gruesas o dieciséis prendas dobladas. El cierre abre la tapa entera, no por una ranura: el plumón entra de una.'],
+    ['img/og-packs.webp?v=1',
+     'Seis cajas organizadoras apiladas en dos torres en un dormitorio',
+     'Cómo está armada', 'Varillas en las paredes',
+     'Queda parada aunque esté vacía y aguanta el peso de la de arriba, así que aprovechas el alto del clóset. Cuando no la usas, se pliega al grosor de un cuaderno.'],
+    ['img/og-medida.webp?v=1',
+     'Primer plano de la caja organizadora con la ropa doblada tras la ventana',
+     'De qué está hecha', 'Tela no tejida que respira',
+     'No es plástico que se quiebra ni cartón que se hunde: la ropa no queda con olor a encierro. Ribete reforzado en los cantos y dos asas cosidas al armazón. Mide 60 × 43 × 38 cm.'],
+  ];
+
+  function bloqueFotos() {
+    return '<section class="og-blq og-linea og-ancho og-fotos-sec">' +
+      '<span class="og-rot">Míralo de cerca</span>' +
+      '<h2 class="og-h2">Cómo está hecha<br>y qué le entra.</h2>' +
+      '<div class="og-fichas">' + FOTOS.map(function (f) {
+        return ficha(f[0], f[1], f[2], f[3], f[4]);
+      }).join('') + '</div>' +
+    '</section>';
+  }
+
+  /* una foto con su ficha debajo: rotulo, titular y el detalle */
+  function ficha(src, alt, rotulo, titulo, texto) {
+    return '<figure class="og-fi">' +
+      '<img src="' + src + '" alt="' + alt + '" loading="lazy" width="1024" height="1024">' +
+      '<figcaption>' +
+        '<span class="og-rot">' + rotulo + '</span>' +
+        '<b>' + titulo + '</b>' +
+        '<p>' + texto + '</p>' +
+      '</figcaption>' +
+    '</figure>';
+  }
+
   function montar() {
     var cont = document.getElementById('prod');
     if (!cont) return false;
@@ -53,6 +142,7 @@
         '<div><b>43</b><span>cm ancho</span></div>' +
         '<div><b>38</b><span>cm alto</span></div>' +
       '</div>' +
+      bloquePrecios(cont) +
       '<section class="og-blq">' +
         '<span class="og-rot">Lo que le cabe a cada una</span>' +
         '<div class="og-cabe og-cabe--sola">' +
@@ -84,6 +174,23 @@
       var el = cont.querySelector(s);
       if (el) el.style.display = 'none';
     });
+
+    /* el enlace del bloque de precios baja a la promocion */
+    var promo = cont.querySelector('.promo-sec');
+    if (promo && !promo.id) promo.id = 'og-promo';
+
+    /* las tres fotos van JUSTO debajo de «Qué es y para qué sirve»:
+       ahi es donde el cliente esta leyendo de que se trata, y la foto
+       con su descripcion le refuerza cada cosa que acaba de leer. */
+    if (!cont.querySelector('.og-fotos-sec')) {
+      var descSec = null;
+      var secs = cont.querySelectorAll('section.desc');
+      for (var i = 0; i < secs.length; i++) {
+        var t = secs[i].querySelector('.tit2');
+        if (t && t.textContent.indexOf('Qué es') >= 0) { descSec = secs[i]; break; }
+      }
+      if (descSec) descSec.insertAdjacentHTML('afterend', bloqueFotos());
+    }
 
     /* Se repasa varias veces: efectos-ficha.js anima con GSAP y hay
        bloques que todavia no estan pintados -o estan ocultos- cuando

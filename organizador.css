@@ -14,6 +14,7 @@ body.p-organizador{
   --og-humo:#9AA0A4;
   --og-cal:#F2542D;
   --og-linea:#33393D;
+  --og-oro:#D8A52E;   /* el dorado de la marca: las estrellas van SIEMPRE en este */
 }
 /* OJO: el oscuro va SOLO en los bloques nuevos (.og-*), NUNCA en todo #prod.
    Cuando se lo puse a la ficha entera, las reseñas -que estan hechas para
@@ -21,6 +22,7 @@ body.p-organizador{
    estilo a la seccion que James dijo no tocar. */
 body.p-organizador .og-hero,
 body.p-organizador .og-med,
+body.p-organizador .og-precio,
 body.p-organizador .og-blq{background:var(--og-carbon);color:var(--og-hueso)}
 
 /* ---------- una sola foto, con el texto cayendo arriba ---------- */
@@ -60,6 +62,38 @@ body.p-organizador .og-blq{background:var(--og-carbon);color:var(--og-hueso)}
   font-variant-numeric:tabular-nums}
 .og-med span{font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--og-humo)}
 
+/* ---------- precio de los tres packs, debajo de las medidas ----------
+   Va arriba para que el precio se vea antes de bajar. La promocion de
+   verdad sigue estando abajo; aca solo esta el enlace que lleva a ella,
+   asi que NO hay dos botones de compra seguidos. */
+.og-precio{padding:26px 22px 32px;max-width:560px;margin:0 auto;
+  border-bottom:1px solid var(--og-linea)}
+.og-est{display:flex;align-items:center;gap:9px;margin-bottom:18px}
+/* DORADAS. La hoja de la tienda pinta las estrellas con var(--oro), y en
+   producto.html --oro es var(--acento): en este producto el acento es el
+   naranja, asi que salian naranjas. Aca vuelven al dorado de la marca. */
+.og-str{color:var(--og-oro);font-size:15px;letter-spacing:.09em;line-height:1}
+.og-nota{font-size:13px;color:var(--og-humo)}
+.og-nota a{color:var(--og-humo);text-decoration:underline;text-underline-offset:2px}
+
+.og-packs{display:flex;flex-direction:column;gap:10px}
+.og-pk{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;
+  background:var(--og-carbon2);border:1px solid var(--og-linea);padding:15px 16px}
+.og-pk.n{border-color:var(--og-cal)}
+.og-pk__c{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:30px;
+  color:var(--og-cal);text-align:center;font-variant-numeric:tabular-nums;line-height:1}
+.og-pk__d b{display:block;font-size:15px;color:#fff;font-weight:600;line-height:1.25}
+.og-pk__d span{font-size:12.5px;color:#A8AEB2}
+.og-et{display:inline-block;background:#B8391A;color:#fff;font-size:9px;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;padding:3px 8px;margin-bottom:5px}
+.og-pk__p{text-align:right;line-height:1.2}
+.og-pk__p s{display:block;font-size:12.5px;color:#A8AEB2;text-decoration:line-through}
+.og-pk__p b{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:22px;color:#fff;
+  font-variant-numeric:tabular-nums}
+
+.og-ver{display:inline-block;margin-top:18px;color:var(--og-oro);font-size:13.5px;font-weight:600;
+  text-decoration:underline;text-underline-offset:3px}
+
 /* ---------- los numeros mandan ---------- */
 .og-blq{padding:42px 22px;max-width:560px;margin:0 auto}
 .og-linea{border-top:1px solid var(--og-linea)}
@@ -89,6 +123,27 @@ body.p-organizador .og-blq{background:var(--og-carbon);color:var(--og-hueso)}
 .og-vs__f.n .og-vs__b i{background:var(--og-cal)}
 .og-vs__f small{display:block;color:var(--og-humo);font-size:11.5px;margin-top:7px;letter-spacing:.04em}
 .og-sub{color:var(--og-humo);font-size:15px;margin:16px 0 0}
+
+/* ---------- las tres fotos con su ficha debajo ----------
+   Una columna en el telefono, que es por donde entra casi todo el
+   trafico. En pantalla ancha pasan a tres, con la misma altura de
+   imagen para que los pies queden alineados. */
+.og-fichas{margin-top:26px;display:grid;gap:26px}
+.og-fi{margin:0}
+.og-fi img{display:block;width:100%;height:auto;background:#0D0F10}
+.og-fi figcaption{padding:16px 0 0}
+.og-fi figcaption b{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:800;
+  font-size:24px;line-height:1.05;color:#fff;margin:9px 0 8px;text-transform:uppercase;
+  letter-spacing:-.005em}
+.og-fi figcaption p{margin:0;font-size:14.5px;line-height:1.6;color:#C9CDD0}
+@media (min-width:760px){
+  /* los demas bloques van a 560 para que el texto no se estire; este
+     lleva tres fotos al lado, asi que necesita mas ancho */
+  body.p-organizador .og-blq.og-ancho{max-width:1040px}
+  .og-fichas{grid-template-columns:repeat(3,1fr);gap:22px}
+  .og-fi figcaption b{font-size:21px}
+  .og-fi figcaption p{font-size:13.5px}
+}
 
 /* ============================================================
    EL RESTO DE LA FICHA, EN OSCURO Y LEGIBLE
@@ -136,7 +191,17 @@ body.p-organizador #prod .form{background:var(--og-carbon2);border-color:var(--o
 body.p-organizador #prod .track,
 body.p-organizador #prod .bar .track{background:#394046}
 body.p-organizador #prod .track i,
-body.p-organizador #prod .bar .track i{background:var(--og-cal)}
+body.p-organizador #prod .bar .track i{background:var(--og-oro)}
+
+/* LAS ESTRELLAS VAN DORADAS, en las reseñas y donde salgan.
+   producto.html define `--oro: var(--acento)`, y el acento de este producto
+   es el naranja: por eso salian naranjas. Se corrige SOLO en esta pagina,
+   los otros 9 productos siguen con su acento. */
+body.p-organizador #prod .est svg,
+body.p-organizador #prod .estrellas svg,
+body.p-organizador #prod .rsc .est svg{fill:var(--og-oro)}
+/* el ★★★★★ del titulo de reseñas va al final del archivo: ahi se explica
+   por que necesita tanta especificidad */
 body.p-organizador #prod .rev-bars b,
 body.p-organizador #prod .bar b,
 body.p-organizador #prod .lvl,
@@ -223,3 +288,9 @@ body.p-organizador #prod .cta *{color:#fff !important}
 /* el sello y su texto */
 body.p-organizador .og-sello,
 body.p-organizador .og-sello *{color:#fff !important}
+
+/* ---- el ★★★★★ del titulo de reseñas, DORADO ----
+   La regla de arriba que aclara los span lleva tres :not([class*=...]) y
+   cada uno pesa como una clase: con !important y todo, le ganaba al dorado.
+   Se repite la clase para pesar mas que ella. Medido: sale #C9CDD0 sin esto. */
+body.p-organizador #prod .bloque .rev-title span.stars.stars.stars{color:var(--og-oro) !important}
