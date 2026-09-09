@@ -15,7 +15,13 @@ body.p-organizador{
   --og-cal:#F2542D;
   --og-linea:#33393D;
 }
-body.p-organizador #prod{background:var(--og-carbon);color:var(--og-hueso)}
+/* OJO: el oscuro va SOLO en los bloques nuevos (.og-*), NUNCA en todo #prod.
+   Cuando se lo puse a la ficha entera, las reseñas -que estan hechas para
+   fondo claro- quedaron con los numeros ilegibles, y encima le cambie el
+   estilo a la seccion que James dijo no tocar. */
+body.p-organizador .og-hero,
+body.p-organizador .og-med,
+body.p-organizador .og-blq{background:var(--og-carbon);color:var(--og-hueso)}
 
 /* ---------- una sola foto, con el texto cayendo arriba ---------- */
 .og-hero{position:relative;line-height:0;background:#0D0F10;overflow:hidden}
@@ -83,12 +89,9 @@ body.p-organizador #prod{background:var(--og-carbon);color:var(--og-hueso)}
 .og-vs__f small{display:block;color:var(--og-humo);font-size:11.5px;margin-top:7px;letter-spacing:.04em}
 .og-sub{color:var(--og-humo);font-size:15px;margin:16px 0 0}
 
-/* ---------- el resto de la ficha, sobre el fondo oscuro ---------- */
-body.p-organizador #prod .bloque{background:transparent}
-body.p-organizador #prod h2,
-body.p-organizador #prod h3{color:#fff}
-body.p-organizador #prod p,
-body.p-organizador #prod li{color:#C9CDD0}
+/* El resto de la ficha -promo, reseñas, preguntas, garantia y formulario-
+   se queda EXACTAMENTE como en los demas productos: su fondo claro, sus
+   colores, su tipografia. Aca no se le toca ni una regla. */
 
 @media (prefers-reduced-motion:reduce){
   .og-cae,.og-sello{animation:none;opacity:1;transform:none}
