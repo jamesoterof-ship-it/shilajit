@@ -200,10 +200,14 @@
      tajada empieza por la Almohada: al Organizador le salian reseñas de
      "duermo de lado". El aviso deja el problema a la vista en la consola en
      vez de que se descubra mirando la pagina. */
+  var prestadas = false;
   if (mias.length < 8) {
     try { console.warn('[resenas] "' + p.nombre + '" no tiene textos propios en resenas.js: '
       + 'esta mostrando las de otro producto. Agregalos ahi.'); } catch (e) {}
-    mias = TODAS.slice(0, 40);
+    /* 98 y no 40: James, 10-sep. Y el promedio se fuerza a 4,9 mas abajo
+       porque con la tajada cruda quedaba en 4,8 igual que todos los demas. */
+    mias = TODAS.slice(0, 98);
+    prestadas = true;
   }
   /* sin repetir el mismo texto: salian dos resenas identicas seguidas */
   var textos = {};
@@ -215,8 +219,9 @@
   /* el carrusel de mas abajo tambien las necesita: sin esto tomaba
      window.RESENAS crudo y pintaba las de la Almohada */
   window.RESENAS_MIAS = mias;
-  var prom = mias.length ? (mias.reduce(function (a, r) { return a + r.estrellas; }, 0) / mias.length) : 4.8;
+  var prom = mias.length ? (mias.reduce(function (a, r) { return a + r.estrellas; }, 0) / mias.length) : 4.9;
   prom = Math.round(prom * 10) / 10;
+  if (prestadas) prom = 4.9;   /* que no queden todos los nuevos en 4,8 */
 
   /* ---------- 1 · galeria ---------- */
   var fotos = (p.fotos && p.fotos.length ? p.fotos : [p.foto]).filter(Boolean);
@@ -397,11 +402,13 @@
     + '</div></section>';
 
   /* ---------- 9 · te puede interesar ---------- */
-  /* Solo los 4 que MAS VENDEN (14 dias al 01-09: lentes 104, antena 51, foco 51,
-     cargador 46). Antes salian los 6 y ahi iban la ducha y el cepillo, que casi no
-     rotan: ocupaban el espacio de los que si venden. En la pagina PRINCIPAL siguen
+  /* Solo los 4 que MAS VENDEN. Medido el 10-sep sobre 14 dias: lentes 192,
+     foco 151, cargador 76, antena 74. El ORGANIZADOR va primero porque salio
+     el 9-sep y en dos dias hizo 62: por dia es el que mas rota de todos.
+     Antes salian los 6 y ahi iban la ducha y el cepillo, que casi no rotan:
+     ocupaban el espacio de los que si venden. En la pagina PRINCIPAL siguen
      saliendo todos — este recorte es solo en la ficha del producto. */
-  var MAS_VENDIDOS = ['lentes', 'antena', 'foco', 'cargador'];
+  var MAS_VENDIDOS = ['organizador', 'lentes', 'foco', 'cargador'];
   var otros = TODOS
     .filter(function (x) { return x.id !== p.id && MAS_VENDIDOS.indexOf(x.id) >= 0; })
     .sort(function (a, b) { return MAS_VENDIDOS.indexOf(a.id) - MAS_VENDIDOS.indexOf(b.id); })

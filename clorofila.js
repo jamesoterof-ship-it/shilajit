@@ -79,10 +79,15 @@
           '<i style="left:58%;animation-delay:2.3s"></i>' +
           '<i style="left:79%;animation-delay:3.4s"></i>' +
         '</div>' +
+        /* el texto entra EN CASCADA, trozo por trozo (James, 10-sep). El
+           turno de cada uno va en --i; el estilo hace el resto. */
         '<div class="cl-sobre">' +
-          '<span class="cl-rot">Clorofila liquida · 60 ml</span>'.replace('liquida', 'líquida') +
-          '<h1 class="cl-h1">Tu vaso de agua<em>de siempre.</em></h1>' +
-          '<p>Unas gotas y queda verde. Sabor menta, sin alcohol y sin gluten.</p>' +
+          '<span class="cl-rot cl-cae" style="--i:0">Clorofila líquida · 60 ml</span>' +
+          '<h1 class="cl-h1">' +
+            '<span class="cl-cae" style="--i:1">Tu vaso de agua</span>' +
+            '<em class="cl-cae" style="--i:2">de siempre.</em>' +
+          '</h1>' +
+          '<p class="cl-cae" style="--i:3">Unas gotas y queda verde. Sabor menta, sin alcohol y sin gluten.</p>' +
         '</div>' +
       '</div>' +
       '<div class="cl-med">' +
@@ -107,6 +112,13 @@
     });
     var med = cont.querySelector('.cl-med');
     if (med) med.insertAdjacentElement('afterend', arriba);
+
+    /* El bloque del «60» NO puede quedar pegado debajo del precio: ahi la ficha
+       ya pone su boton y quedaban DOS BOTONES SEGUIDOS, que es regla rota.
+       Se baja hasta justo antes de la descripcion. */
+    var blq = cont.querySelector('.cl-blq');
+    var desc = cont.querySelector('section.desc');
+    if (blq && desc) desc.insertAdjacentElement('beforebegin', blq);
 
     /* «Que es y para que sirve» pasa a ser las tres tarjetas */
     if (!cont.querySelector('.cl-fichas')) {
@@ -138,6 +150,20 @@
 
     var primera = cont.querySelector('details');
     if (primera) primera.open = true;
+
+    /* RED DE SEGURIDAD de la cascada. La animacion tiene `forwards`, pero
+       efectos-ficha.js tambien mueve opacidades con GSAP y el texto se quedaba
+       en cero. Regla que no se rompe: NUNCA puede quedar texto invisible por
+       culpa de un efecto, asi que a los 2,5 s se quita la clase y el titulo
+       vuelve a su estado normal, que ya es visible. */
+    var letras = cont.querySelectorAll('.cl-cae');
+    if (quieto) {
+      letras.forEach(function (el) { el.classList.remove('cl-cae'); });
+    } else {
+      setTimeout(function () {
+        letras.forEach(function (el) { el.classList.remove('cl-cae'); });
+      }, 2500);
+    }
 
     var piezas = [];
     /* las tarjetas entran de lado, alternando: izquierda, derecha, izquierda */
