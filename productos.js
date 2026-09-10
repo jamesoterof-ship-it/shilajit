@@ -454,6 +454,70 @@ window.PRODUCTOS = [
     popular: 2,
   },
   {
+    /* Clorofila Líquida Benevolent 60 ml — Dropi 118999 · VITALCOM (Recoleta)
+       🔴 OJO CON EL LENGUAJE. Es un SUPLEMENTO ALIMENTARIO y en Chile lo rige el
+       Reglamento Sanitario de los Alimentos (D.S. 977/96). El art. 536 prohibe
+       promocionarlo "para fines de diagnostico, prevencion o tratamiento de las
+       enfermedades", y el art. 110 prohibe sugerir "efectos terapeuticos,
+       curativos ni posologias".
+       PROHIBIDO en esta ficha y en los copys: desintoxica, elimina toxinas,
+       limpia la sangre o el higado, quema grasa, bajas de peso, cura, previene,
+       y tambien decir cuantas gotas tomar. La competencia lo publica igual;
+       ese es su riesgo, no el nuestro.
+       PERMITIDO: "ayuda a", "favorece", "apoya", y los hechos del producto
+       (sabor menta, sin alcohol, sin gluten, 60 ml, en gotas). */
+    id: 'clorofila', unidad: 'frasco', promo: 2,
+    preguntas: [
+      { q: '¿Cómo se toma?', a: 'Se disuelve en un vaso de agua fría y queda de un verde intenso. Puedes tomarlo en la mañana o en cualquier momento del día. La dosis sugerida viene indicada en la etiqueta del frasco.' },
+      { q: '¿A qué sabe?', a: 'A menta suave. No sabe a pasto ni deja regusto amargo, que es lo que la mayoría teme antes de probarla.' },
+      { q: '¿Cuánto dura un frasco?', a: 'El frasco trae 60 ml con gotero dosificador. Con un uso diario normal te rinde alrededor de un mes.' },
+      { q: '¿Tiene alcohol o gluten?', a: 'No. Es libre de alcohol y libre de gluten, así viene declarado en el envase del fabricante.' },
+      { q: '¿Se puede llevar en la cartera?', a: 'Sí. Son 60 ml en un frasco de vidrio con gotero, así que cabe en cualquier bolso y lo usas donde estés.' },
+      { q: '¿Quién no debería tomarlo?', a: 'Por norma chilena, los suplementos alimentarios no se recomiendan para menores de 8 años, embarazadas ni mujeres amamantando, salvo indicación de un profesional. Y no reemplaza una alimentación balanceada.' },
+    ],
+    formulaRotulo: 'Qué es',
+    formulaTitulo: 'Clorofila líquida, en gotas, con sabor a menta.',
+    formulaSub: 'Suplemento alimentario en formato líquido. Se disuelve en agua y no reemplaza una alimentación balanceada.',
+    formula: [
+      ['hoja', 'Clorofila líquida', 'El pigmento verde de las plantas, en presentación concentrada de 60 ml.'],
+      ['gota', 'Gotero dosificador', 'El frasco trae su propio gotero: mides sin tener que calcular a ojo.'],
+      ['hoja', 'Sabor menta', 'No sabe a pasto. Es lo primero que pregunta todo el mundo.'],
+      ['escudo', 'Sin alcohol', 'Declarado en el envase del fabricante.'],
+      ['escudo', 'Sin gluten', 'Declarado en el envase del fabricante.'],
+      ['pluma', 'Cabe en la cartera', 'Frasco de 60 ml: lo llevas al trabajo, al gimnasio o de viaje.'],
+    ],
+    comparaTitulo: 'Por qué en gotas y no en polvo',
+    compara: [
+      'Se disuelve al instante en agua fría, sin grumos ni batidora.',
+      'El gotero dosifica solo: no hay que medir cucharadas.',
+      'Sabor menta, sin alcohol y sin gluten.',
+    ],
+    nombre: 'Clorofila Líquida Benevolent',
+    sub: 'Sabor menta, en gotas, para tu vaso de agua del día',
+    categoria: 'Bienestar',
+    foto: 'img/prod-clorofila.webp?v=1',
+    fotos: ['img/prod-clorofila.webp?v=1', 'img/prod-clorofila-2.webp?v=1', 'img/prod-clorofila-3.webp?v=1'],
+    acento: '#5A9E2F',   /* el verde de la etiqueta Benevolent */
+    desc: 'Clorofila líquida Benevolent en frasco de 60 ml con gotero dosificador. Se disuelve en un vaso de agua fría y lo deja de un verde intenso, con sabor a menta suave: no sabe a pasto ni deja regusto amargo. Es libre de alcohol y libre de gluten, así viene declarado en el envase del fabricante. El frasco es chico, cabe en la cartera y lo usas donde estés. Es un suplemento alimentario: acompaña tu rutina diaria y no reemplaza una alimentación balanceada. La dosis sugerida viene en la etiqueta.',
+    puntos: [
+      'Frasco de 60 ml con gotero dosificador',
+      'Se disuelve al instante en agua fría',
+      'Sabor menta suave: no sabe a pasto',
+      'Sin alcohol y sin gluten, declarado por el fabricante',
+      'Cabe en la cartera: lo llevas a cualquier parte',
+      'Un frasco rinde alrededor de un mes',
+    ],
+    packs: [
+      /* mismo criterio del Organizador: el "antes" del primer pack es un 30%
+         sobre el precio, y los de 2 y 3 son lo que costaria comprarlos sueltos.
+         Escalera aprobada por James el 10-sep: 24.500 / 34.500 / 44.500. */
+      { cant: 1, precio: 24500, antes: 31900, texto: '1 frasco · 60 ml' },
+      { cant: 2, precio: 34500, antes: 49000, texto: '2 frascos · 120 ml' },
+      { cant: 3, precio: 44500, antes: 73500, texto: '3 frascos · 180 ml' },
+    ],
+    popular: 2,
+  },
+  {
     /* promo = el `cant` del pack que se destaca, NO la posicion.
        Aqui cant va en CAJAS de 10, asi que el pack de 60 parches es cant 6. */
     id: 'kinoki', unidad: 'caja de 10', promo: 6,
