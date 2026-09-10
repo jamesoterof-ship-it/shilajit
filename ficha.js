@@ -1004,7 +1004,26 @@
     else if (!g('fComuna')) falla = 'Elige tu comuna.', $('fComuna').classList.add('mal');
     /* el mismo candado que ya tiene la operacion: sin calle Y numero no se despacha */
     else if (g('fDir').length < 8 || !/\d/.test(g('fDir'))) falla = 'Falta el número de la dirección: sin eso el transportista no puede entregar.', $('fDir').classList.add('mal');
-    if (falla) { err.textContent = falla; err.style.display = 'block'; return; }
+    /* Si el formulario lo frena, no lo dejamos ahi parado: se le ofrece el
+       WhatsApp en el mismo error, con el pedido ya escrito. El 09-09 quedaron 50
+       carritos sin terminar y a la gente que se traba no le queda salida.
+       El texto del error se pinta con textContent aparte para que nunca se
+       inyecte HTML por accidente. */
+    if (falla) {
+      err.innerHTML = '';
+      var _t = document.createElement('span');
+      _t.textContent = falla;
+      err.appendChild(_t);
+      var _a = document.createElement('a');
+      _a.href = 'https://wa.me/56964775539?text=' + encodeURIComponent(
+        'Hola, quiero pedir ' + p.nombre + ' y se me complica el formulario');
+      _a.target = '_blank'; _a.rel = 'noopener';
+      _a.style.cssText = 'display:block;margin-top:6px;color:inherit;text-decoration:underline;font-weight:700';
+      _a.textContent = 'Se te complica? Escribenos al WhatsApp y te lo tomamos nosotros';
+      err.appendChild(_a);
+      err.style.display = 'block';
+      return;
+    }
     err.style.display = 'none';
 
     var k = p.packs[elegido];
