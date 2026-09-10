@@ -1,0 +1,142 @@
+/* ============================================================
+   Diseño propio de la Clorofila Liquida. Se carga siempre pero
+   TODO cuelga de body.p-clorofila, que solo se pone cuando el
+   producto es este: los otros diez quedan intactos.
+
+   Efectos distintos a los del Organizador a proposito (James,
+   10-sep: "ponle unos efectos diferentes"):
+     Organizador -> texto en cascada · destellos · barrido · conteo
+     Clorofila   -> marea verde · gotas que caen · numero que se
+                    llena · tarjetas que entran de lado · onda
+   ============================================================ */
+body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389; }
+
+/* ---------- HERO ---------- */
+.p-clorofila .cl-hero {
+  position: relative; margin: 0 0 14px; border-radius: 18px; overflow: hidden;
+  background: #0d2b1a;
+}
+.p-clorofila .cl-hero > img { display: block; width: 100%; height: auto; }
+
+/* la MAREA: un verde que sube desde abajo, como la gota disolviendose.
+   Va sobre la foto y por debajo del texto. */
+.p-clorofila .cl-marea {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
+  background: linear-gradient(to top, rgba(13,43,26,.94) 0%, rgba(31,107,61,.72) 38%, rgba(47,158,90,0) 100%);
+  transform: translateY(28%);
+  animation: cl-subir 1.5s cubic-bezier(.22,.9,.3,1) .15s both;
+  pointer-events: none;
+}
+@keyframes cl-subir { from { transform: translateY(60%); opacity: .2 } to { transform: translateY(0); opacity: 1 } }
+
+.p-clorofila .cl-sobre {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 18px 22px;
+  color: #fff; text-align: left;
+}
+.p-clorofila .cl-rot {
+  display: inline-block; font-size: 11.5px; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--cl-agua); margin: 0 0 8px;
+}
+.p-clorofila .cl-h1 {
+  margin: 0; font-size: clamp(30px, 8.6vw, 44px); line-height: 1.03; font-weight: 900;
+  letter-spacing: -.02em; text-shadow: 0 2px 18px rgba(0,0,0,.45);
+}
+.p-clorofila .cl-h1 em { display: block; font-style: normal; color: var(--cl-agua); }
+.p-clorofila .cl-sobre p { margin: 10px 0 0; font-size: 15px; opacity: .93; max-width: 30ch; }
+
+/* las GOTAS: caen sobre la franja de arriba, donde no hay producto */
+.p-clorofila .cl-gotas { position: absolute; inset: 0 0 45% 0; pointer-events: none; overflow: hidden; }
+.p-clorofila .cl-gotas i {
+  position: absolute; top: -14px; width: 9px; height: 12px; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(circle at 35% 30%, #b6f0c2, var(--cl-claro));
+  opacity: 0; animation: cl-caer 4.6s linear infinite;
+}
+@keyframes cl-caer {
+  0%   { transform: translateY(0) scale(.85); opacity: 0 }
+  12%  { opacity: .95 }
+  78%  { opacity: .9 }
+  100% { transform: translateY(360px) scale(1.15); opacity: 0 }
+}
+
+/* ---------- tira de datos ---------- */
+.p-clorofila .cl-med {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 16px;
+}
+.p-clorofila .cl-med > div {
+  background: var(--surface-2, #f4f8f5); border: 1px solid rgba(31,107,61,.14);
+  border-radius: 13px; padding: 12px 6px; text-align: center;
+}
+.p-clorofila .cl-med b {
+  display: block; font-size: 25px; font-weight: 900; color: var(--cl-verde); line-height: 1;
+}
+.p-clorofila .cl-med span { display: block; font-size: 11.5px; color: var(--ink-2, #5b6573); margin-top: 5px; }
+
+/* ---------- bloques ---------- */
+.p-clorofila .cl-blq { margin: 0 0 20px; }
+.p-clorofila .cl-h2 {
+  margin: 6px 0 12px; font-size: clamp(22px, 6.4vw, 30px); line-height: 1.12;
+  font-weight: 900; letter-spacing: -.015em; color: var(--ink, #12261a);
+}
+.p-clorofila .cl-sub { margin: 10px 0 0; font-size: 14.5px; color: var(--ink-2, #5b6573); }
+
+/* el NUMERO que se llena de verde de abajo hacia arriba */
+.p-clorofila .cl-gigante { text-align: center; margin: 16px 0 4px; }
+.p-clorofila .cl-num {
+  display: inline-block; font-size: clamp(64px, 21vw, 108px); font-weight: 900; line-height: .92;
+  letter-spacing: -.04em;
+  background: linear-gradient(to top, var(--cl-claro) 0%, var(--cl-claro) 50%, rgba(47,158,90,.22) 50%, rgba(47,158,90,.22) 100%);
+  background-size: 100% 200%; background-position: 0 0;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  transition: background-position 1.5s cubic-bezier(.3,.9,.3,1);
+}
+.p-clorofila .cl-num.cl-vacio { background-position: 0 100%; }
+.p-clorofila .cl-gigante small {
+  display: block; margin-top: 4px; font-size: 13px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2, #5b6573);
+}
+
+/* ---------- las tres tarjetas ---------- */
+.p-clorofila .cl-fichas { display: grid; gap: 14px; margin-top: 14px; }
+.p-clorofila .cl-fi {
+  margin: 0; border-radius: 16px; overflow: hidden;
+  background: var(--surface-2, #f4f8f5); border: 1px solid rgba(31,107,61,.14);
+}
+.p-clorofila .cl-fi img { display: block; width: 100%; height: auto; }
+.p-clorofila .cl-fi figcaption { padding: 14px 15px 16px; }
+.p-clorofila .cl-fi .cl-rot2 {
+  display: block; font-size: 11px; font-weight: 800; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--cl-claro); margin-bottom: 5px;
+}
+.p-clorofila .cl-fi b { display: block; font-size: 18px; font-weight: 900; color: var(--ink, #12261a); }
+.p-clorofila .cl-fi p { margin: 7px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-2, #5b6573); }
+
+/* ---------- entradas: de LADO, alternando ---------- */
+.p-clorofila .cl-entra-i, .p-clorofila .cl-entra-d {
+  opacity: 0; transition: opacity .62s ease, transform .62s cubic-bezier(.22,.9,.3,1);
+}
+.p-clorofila .cl-entra-i { transform: translateX(-34px); }
+.p-clorofila .cl-entra-d { transform: translateX(34px); }
+.p-clorofila .cl-sec-entra {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s cubic-bezier(.22,.9,.3,1);
+}
+
+/* ---------- la ONDA del boton ---------- */
+.p-clorofila .btn-comprar, .p-clorofila .cta, .p-clorofila button[type="submit"] { position: relative; overflow: hidden; }
+.p-clorofila .btn-comprar::after, .p-clorofila .cta::after, .p-clorofila button[type="submit"]::after {
+  content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 12px;
+  border-radius: 50%; background: rgba(255,255,255,.42);
+  transform: translate(-50%, -50%) scale(0); animation: cl-onda 2.9s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes cl-onda {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: .7 }
+  70%  { opacity: .12 }
+  100% { transform: translate(-50%,-50%) scale(26); opacity: 0 }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-clorofila .cl-marea, .p-clorofila .cl-gotas i { animation: none; }
+  .p-clorofila .cl-entra-i, .p-clorofila .cl-entra-d, .p-clorofila .cl-sec-entra { opacity: 1; transform: none; }
+  .p-clorofila .btn-comprar::after, .p-clorofila .cta::after, .p-clorofila button[type="submit"]::after { animation: none; opacity: 0; }
+}

@@ -467,6 +467,8 @@ window.PRODUCTOS = [
        PERMITIDO: "ayuda a", "favorece", "apoya", y los hechos del producto
        (sabor menta, sin alcohol, sin gluten, 60 ml, en gotas). */
     id: 'clorofila', unidad: 'frasco', promo: 2,
+    antesDespues: 'img/cl-ba.webp?v=1',
+    antesDespuesSub: 'Cómo se siente el día cuando la digestión anda pesada, y cómo se siente cuando no.',
     preguntas: [
       { q: '¿Cómo se toma?', a: 'Se disuelve en un vaso de agua fría y queda de un verde intenso. Puedes tomarlo en la mañana o en cualquier momento del día. La dosis sugerida viene indicada en la etiqueta del frasco.' },
       { q: '¿A qué sabe?', a: 'A menta suave. No sabe a pasto ni deja regusto amargo, que es lo que la mayoría teme antes de probarla.' },
@@ -590,4 +592,5 @@ window.PRECIOS_APROBADOS = [
   37500, 54500,          /* cepillo electrico parrilla */
   19500, 25500, 32500,   /* parches kinoki: 30 · 60 · 90 parches */
   29500, 39500, 49500,   /* almohada cervical: 1 · 2 · 3 unidades */
+  24500, 29500, 41500,   /* clorofila liquida: 1 · 2 · 3 frascos (James, 10-sep) */
 ];
