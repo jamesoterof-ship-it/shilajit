@@ -407,7 +407,7 @@ window.PRODUCTOS = [
     preguntas: [
       { q: '¿De qué tamaño es cada caja?', a: '60 cm de largo, 43 de ancho y 38 de alto: unos 98 litros. Le entra un plumón king completo, seis frazadas gruesas o dieciséis prendas dobladas.' },
       { q: '¿Cómo la guardo cuando no la uso?', a: 'Se pliega y la guardas donde sea, sin que ocupe espacio. Y para moverla cargada trae asas reforzadas, así la llevas de un lugar a otro sin esfuerzo.' },
-      { q: '¿Qué colores llegan?', a: 'Vienen en gris, celeste y rosado. Si tienes preferencia nos la dices al confirmar el pedido y la tomamos en cuenta según lo que haya en bodega.' },
+      { q: '¿De qué color son?', a: 'Vienen en gris. Es el color que maneja el proveedor, así que todas las cajas de tu pedido llegan iguales.' },
       { q: '¿Sirven para guardar debajo de la cama?', a: 'Sí, siempre que tu cama tenga al menos 40 cm libres de alto. Si es más baja, quedan mejor arriba del clóset o en el altillo.' },
       { q: '¿La ropa no queda con olor a encierro?', a: 'No, porque la tela no es plástico: es tela no tejida que deja pasar el aire. Por eso sirve para guardar de una temporada a la otra.' },
     ],
