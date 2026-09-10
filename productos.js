@@ -467,6 +467,7 @@ window.PRODUCTOS = [
        PERMITIDO: "ayuda a", "favorece", "apoya", y los hechos del producto
        (sabor menta, sin alcohol, sin gluten, 60 ml, en gotas). */
     id: 'clorofila', unidad: 'frasco', promo: 2,
+    video: 'img/clorofila.mp4?v=1',
     antesDespues: 'img/cl-ba.webp?v=1',
     antesDespuesSub: 'Cómo se siente el día cuando la digestión anda pesada, y cómo se siente cuando no.',
     preguntas: [
