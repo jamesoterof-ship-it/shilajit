@@ -512,8 +512,8 @@ window.PRODUCTOS = [
          sobre el precio, y los de 2 y 3 son lo que costaria comprarlos sueltos.
          Escalera aprobada por James el 10-sep: 24.500 / 34.500 / 44.500. */
       { cant: 1, precio: 24500, antes: 31900, texto: '1 frasco · 60 ml' },
-      { cant: 2, precio: 34500, antes: 49000, texto: '2 frascos · 120 ml' },
-      { cant: 3, precio: 44500, antes: 73500, texto: '3 frascos · 180 ml' },
+      { cant: 2, precio: 29500, antes: 49000, texto: '2 frascos · 120 ml' },
+      { cant: 3, precio: 41500, antes: 73500, texto: '3 frascos · 180 ml' },
     ],
     popular: 2,
   },
