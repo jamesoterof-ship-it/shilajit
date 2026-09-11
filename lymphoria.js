@@ -162,8 +162,19 @@
        debajo del precio ya esta el de la ficha, y dos seguidos rompen la regla */
     var desc = cont.querySelector('section.desc');
     if (desc && !cont.querySelector('.ly-pasos')) desc.insertAdjacentHTML('beforebegin', pasos() + cambio() + llega());
-    /* y las tres fotos al final de «Que es y para que sirve» */
-    if (desc && !cont.querySelector('.ly-fichas')) desc.insertAdjacentHTML('beforeend', fichas());
+    /* Las tres tarjetas van en «Que es y para que sirve». La seccion se busca
+       por su titulo, como en la clorofila. Diferencia a proposito (James,
+       11-sep: «no tienen que ser igual»): alla las tarjetas REEMPLAZAN el texto;
+       aca lo COMPLEMENTAN, asi que el parrafo y los puntos se quedan. */
+    if (!cont.querySelector('.ly-fichas')) {
+      var descSec = null;
+      var secs = cont.querySelectorAll('section.desc');
+      for (var i = 0; i < secs.length; i++) {
+        var t = secs[i].querySelector('.tit2');
+        if (t && t.textContent.indexOf('Qué es') >= 0) { descSec = secs[i]; break; }
+      }
+      if (descSec) descSec.insertAdjacentHTML('beforeend', fichas());
+    }
 
     efectos(cont);
     return true;
