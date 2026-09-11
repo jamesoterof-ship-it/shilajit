@@ -545,7 +545,7 @@ window.PRODUCTOS = [
        redes y la clasificacion por pagina. Por eso el nombre EMPIEZA con
        «Lymphoria», y en cada uno de esos sitios su regla va antes que la del polvo. */
     id: 'lymphoria', unidad: 'frasco', promo: 2,
-    video: 'img/lymphoria.mp4?v=1',
+    video: 'img/lymphoria.mp4?v=2',
     preguntas: [
       { q: '¿Cómo se toma?', a: 'Se agregan unas gotas a un vaso de agua o de jugo, en el momento del día que prefieras. La dosis sugerida viene indicada en la etiqueta del frasco.' },
       { q: '¿A qué sabe?', a: 'A miel. Así lo declara la propia caja con su sello «Tastes Like Honey».' },

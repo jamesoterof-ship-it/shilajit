@@ -229,6 +229,11 @@ body.p-lymphoria { --ly-bosque: #1E4D3B; --ly-miel: #C8942E; --ly-crema: #F6EEDC
 .p-lymphoria .ly-fotos img:nth-child(2) { transition-delay: .18s; }
 .p-lymphoria .ly-fotos.ly-espera img { clip-path: inset(100% 0 0 0 round 10px); transform: scale(1.1); }
 
+/* el video de la pagina va en 4:5 (James, 11-sep: el difuminado se veia mal).
+   El metraje trae el texto de otros vendedores ARRIBA: en vez de borrarlo, el
+   encuadre arranca justo debajo. La ficha le pone 9:16 en linea, por eso el !important */
+.p-lymphoria .vid-prod { aspect-ratio: 4 / 5 !important; }
+
 /* barra de miel arriba: se llena a medida que el cliente baja */
 .p-lymphoria .ly-barra {
   position: fixed; left: 0; top: 0; width: 100%; height: 3px; z-index: 1000; pointer-events: none;
