@@ -142,10 +142,11 @@
        debajo del precio ya esta el de la ficha, y dos seguidos rompen la regla */
     var desc = cont.querySelector('section.desc');
     if (desc && !cont.querySelector('.ly-pasos')) desc.insertAdjacentHTML('beforebegin', pasos());
-    /* Las tres tarjetas van en «Que es y para que sirve». La seccion se busca
-       por su titulo, como en la clorofila. Diferencia a proposito (James,
-       11-sep: «no tienen que ser igual»): alla las tarjetas REEMPLAZAN el texto;
-       aca lo COMPLEMENTAN, asi que el parrafo y los puntos se quedan. */
+    /* «Que es y para que sirve» PASA A SER las tres tarjetas, igual que en la
+       clorofila: la seccion se busca por su titulo y se le quitan el parrafo
+       y la lista de puntos, que las tarjetas reemplazan (James, 11-sep).
+       El dato que se pierde no se pierde de la pagina: el frasco, el sabor y
+       los sellos siguen en «Que es» (formula), en las preguntas y en la ficha. */
     if (!cont.querySelector('.ly-fichas')) {
       var descSec = null;
       var secs = cont.querySelectorAll('section.desc');
@@ -153,7 +154,27 @@
         var t = secs[i].querySelector('.tit2');
         if (t && t.textContent.indexOf('Qué es') >= 0) { descSec = secs[i]; break; }
       }
-      if (descSec) descSec.insertAdjacentHTML('beforeend', fichas());
+      if (descSec) {
+        /* el frasco flotando sobre su halo de miel, apenas debajo del titulo */
+        var tit = descSec.querySelector('.tit2');
+        if (tit) tit.insertAdjacentHTML('afterend',
+          '<figure class="ly-frasco"><img src="img/prod-lymphoria.webp?v=1" ' +
+          'alt="Frasco de vidrio ámbar Lymphoria junto a su caja" loading="lazy" width="1000" height="1000"></figure>');
+        /* 🔴 La tienda deja los puntos en opacidad 0 hasta que la seccion recibe
+           la clase «vino», y su observador exige ver el 12% de la seccion. Con el
+           frasco y las tres tarjetas esta seccion pasa de 7.000 px: ese 12% NO CABE
+           en la pantalla de un celular, asi que los puntos se quedaban invisibles
+           para siempre. Aca se prende viendo cualquier parte, con red a los 4 s. */
+        var prender = function () { descSec.classList.add('vino'); };
+        if ('IntersectionObserver' in window) {
+          var ojo = new IntersectionObserver(function (filas) {
+            if (filas.some(function (f) { return f.isIntersecting; })) { prender(); ojo.disconnect(); }
+          }, { threshold: 0 });
+          ojo.observe(descSec);
+        } else prender();
+        setTimeout(prender, 4000);
+        descSec.insertAdjacentHTML('beforeend', fichas());
+      }
     }
 
     efectos(cont);

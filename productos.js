@@ -583,14 +583,21 @@ window.PRODUCTOS = [
     foto: 'img/prod-lymphoria.webp?v=1',
     fotos: ['img/prod-lymphoria.webp?v=1', 'img/ly-llega1.webp?v=1'],
     acento: '#1E4D3B',   /* el verde bosque de la caja; distinto al verde de la clorofila */
-    desc: 'Lymphoria es un suplemento alimentario de extractos de hierbas en formato líquido, en frasco de 60 ml con gotero dosificador. Se agrega a un vaso de agua o de jugo y tiene sabor a miel, así lo declara su caja. Es vegano, sin gluten y sin transgénicos según el envase del fabricante. El frasco es chico y cabe en la cartera. Acompaña tu rutina diaria y no reemplaza una alimentación balanceada. La dosis sugerida viene indicada en la etiqueta.',
+    /* OJO con el lenguaje (D.S. 977/96, arts. 110 y 536): un suplemento no puede
+       prometer que desinflama, que baja la hinchazon o la retencion, que adelgaza,
+       desintoxica o sube las defensas, ni dar la posologia. Lo que SI se puede
+       decir es que es, como se toma y QUE DECLARA EL FABRICANTE en su envase.
+       Por eso lo del sistema linfatico va citado como declaracion de la caja
+       («traditional lymphatic support»), no como promesa nuestra. */
+    desc: 'Lymphoria es un suplemento alimentario líquido hecho con extractos de hierbas. Viene en un frasco de vidrio ámbar de 60 ml con gotero, y se toma agregando unas gotas a un vaso de agua o de jugo: se reparte al instante, sin cápsulas que tragar ni polvos que batir. Su caja lo presenta como «lymphatic drainage · traditional lymphatic support», que es como el fabricante declara esta línea: un apoyo de uso tradicional, no un medicamento. Sabe a miel, y así lo declara el sello «Tastes Like Honey» del envase, que además lo declara vegano, sin gluten y sin transgénicos. Es el formato que elige quien no traga pastillas o quien ya se cansó de los polvos que quedan con grumos. Como todo suplemento alimentario, acompaña tu alimentación y no la reemplaza, y no cura ni previene enfermedades. La dosis sugerida viene indicada en la etiqueta del frasco.',
     puntos: [
-      'Frasco de 60 ml con gotero dosificador',
-      'Extractos de hierbas en formato líquido',
-      'Sabor a miel, declarado en la caja',
-      'Vegano y sin gluten, según el envase',
-      'Cabe en la cartera: lo llevas a cualquier parte',
-      'Pagas al recibir, con envío gratis a todo Chile',
+      'Qué es: un suplemento alimentario líquido de extractos de hierbas',
+      'Qué declara la caja: «traditional lymphatic support», apoyo de uso tradicional',
+      'Cómo se toma: unas gotas en tu vaso de agua o de jugo',
+      'Frasco de vidrio ámbar de 60 ml con gotero dosificador',
+      'Sabor a miel, vegano, sin gluten y sin transgénicos, según el envase',
+      'No es un medicamento ni reemplaza una alimentación balanceada',
+      'Cabe en la cartera · pagas al recibir, con envío gratis a todo Chile',
     ],
     packs: [
       /* mismo criterio de la clorofila: el «antes» del primer pack es un 30%
