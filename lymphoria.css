@@ -107,7 +107,7 @@ body.p-lymphoria { --ly-bosque: #1E4D3B; --ly-miel: #C8942E; --ly-crema: #F6EEDC
 .p-lymphoria .ly-chip svg { width: 18px; height: 18px; color: var(--ly-miel); flex: none; }
 
 /* ---------- PASOS: la linea se dibuja de arriba hacia abajo ---------- */
-.p-lymphoria .ly-pasos, .p-lymphoria .ly-llega { margin: 0 0 24px; padding: 0 16px; }
+.p-lymphoria .ly-pasos { margin: 0 0 24px; padding: 0 16px; }
 .p-lymphoria .ly-rot2 { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ly-miel); }
 .p-lymphoria .ly-h2 {
   margin: 6px 0 14px; font-size: clamp(22px, 6.2vw, 30px); line-height: 1.12;
@@ -132,14 +132,6 @@ body.p-lymphoria { --ly-bosque: #1E4D3B; --ly-miel: #C8942E; --ly-crema: #F6EEDC
 /* estado previo: lo pone el js SOLO si hay observador, y lo quita siempre */
 .p-lymphoria .ly-lista.ly-antes li::after { transform: scaleY(0); }
 .p-lymphoria .ly-lista.ly-antes li { opacity: 0; transform: translateY(12px); }
-
-/* ---------- el producto real ---------- */
-.p-lymphoria .ly-fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.p-lymphoria .ly-fotos img {
-  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
-  border-radius: 10px; border: 1px solid rgba(30,77,59,.12); background: var(--ly-crema);
-}
-.p-lymphoria .ly-pie { margin: 8px 0 0; text-align: center; font-size: 12.5px; color: var(--ink-2, #5b6573); }
 
 /* ---------- el DESTELLO del boton: una luz de miel que lo cruza ---------- */
 .p-lymphoria .btn-comprar, .p-lymphoria .cta, .p-lymphoria button[type="submit"] { position: relative; overflow: hidden; }
@@ -221,14 +213,6 @@ body.p-lymphoria { --ly-bosque: #1E4D3B; --ly-miel: #C8942E; --ly-crema: #F6EEDC
 }
 .p-lymphoria .ly-lista.ly-antes li::before { background-position: 0 0; }
 
-/* las fotos reales se destapan como una cortina que sube */
-.p-lymphoria .ly-fotos img {
-  clip-path: inset(0 0 0 0 round 10px);
-  transition: clip-path .9s cubic-bezier(.6,0,.2,1), transform 1.4s cubic-bezier(.2,.7,.2,1);
-}
-.p-lymphoria .ly-fotos img:nth-child(2) { transition-delay: .18s; }
-.p-lymphoria .ly-fotos.ly-espera img { clip-path: inset(100% 0 0 0 round 10px); transform: scale(1.1); }
-
 /* las tres tarjetas de «Que es y para que sirve»: mismas medidas que las de
    la clorofila (James: «ponla asi igual»), solo con los colores de la Lymphoria */
 .p-lymphoria .ly-fichas { display: grid; gap: 14px; margin-top: 14px; }
@@ -246,12 +230,6 @@ body.p-lymphoria { --ly-bosque: #1E4D3B; --ly-miel: #C8942E; --ly-crema: #F6EEDC
 .p-lymphoria .ly-fi b { display: block; font-size: 18px; font-weight: 900; color: var(--ly-tinta); }
 .p-lymphoria .ly-fi p { margin: 7px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-2, #5b6573); }
 
-.p-lymphoria .ly-cambio { margin: 0 0 24px; padding: 0 16px; }
-.p-lymphoria .ly-cambio img {
-  display: block; width: 100%; height: auto;
-  border-radius: 12px; border: 1px solid rgba(30,77,59,.12); background: var(--ly-crema);
-}
-
 /* el video de la pagina va en 4:5 (James, 11-sep: el difuminado se veia mal).
    El metraje trae el texto de otros vendedores ARRIBA: en vez de borrarlo, el
    encuadre arranca justo debajo. La ficha le pone 9:16 en linea, por eso el !important */
@@ -268,7 +246,7 @@ body.p-lymphoria { --ly-bosque: #1E4D3B; --ly-miel: #C8942E; --ly-crema: #F6EEDC
   .p-lymphoria .ly-mota, .p-lymphoria .ly-glint, .p-lymphoria .ly-barra { display: none; }
   .p-lymphoria .ly-pop, .p-lymphoria .precioTop .off, .p-lymphoria .precioTop .antes::after { animation: none; }
   .p-lymphoria .ly-espera .ly-trazo path { stroke-dashoffset: 0; }
-  .p-lymphoria .ly-fotos.ly-espera img, .p-lymphoria .ly-fi.ly-espera img { clip-path: none; transform: none; }
+  .p-lymphoria .ly-fi.ly-espera img { clip-path: none; transform: none; }
   .p-lymphoria .ly-lista.ly-antes li::before { background-position: 0 100%; }
   .p-lymphoria .ly-hero > img, .p-lymphoria .ly-oro, .p-lymphoria .ly-sube, .p-lymphoria .ly-sube2 { animation: none; }
   .p-lymphoria .ly-gota, .p-lymphoria .ly-onda { display: none; }

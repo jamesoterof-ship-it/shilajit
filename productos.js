@@ -546,6 +546,12 @@ window.PRODUCTOS = [
        «Lymphoria», y en cada uno de esos sitios su regla va antes que la del polvo. */
     id: 'lymphoria', unidad: 'frasco', promo: 2,
     video: 'img/lymphoria.mp4?v=2',
+    /* La seccion «El cambio» de la tienda, en el mismo lugar que en la clorofila:
+       despues de la garantia y antes de las preguntas. La foto compara la RUTINA
+       (polvos y capsulas contra unas gotas), NUNCA el cuerpo: es suplemento y el
+       D.S. 977/96 no deja prometer que desinflama, y Meta rechaza esos antes/despues. */
+    antesDespues: 'img/ly-cambio.webp?v=1',
+    antesDespuesSub: 'Cómo era la rutina con polvos y cápsulas, y cómo es con unas gotas en el vaso.',
     preguntas: [
       { q: '¿Cómo se toma?', a: 'Se agregan unas gotas a un vaso de agua o de jugo, en el momento del día que prefieras. La dosis sugerida viene indicada en la etiqueta del frasco.' },
       { q: '¿A qué sabe?', a: 'A miel. Así lo declara la propia caja con su sello «Tastes Like Honey».' },

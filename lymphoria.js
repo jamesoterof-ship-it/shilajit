@@ -97,32 +97,12 @@
     }).join('') + '</div>';
   }
 
-  /* el antes y el ahora: es de la RUTINA, no del cuerpo. Un suplemento no
-     puede mostrar cambios del cuerpo (D.S. 977/96) y Meta los rechaza. */
-  function cambio() {
-    return '<section class="ly-cambio">' +
-      '<span class="ly-rot2">El cambio</span>' +
-      '<h2 class="ly-h2">De los polvos y las cápsulas, a unas gotas</h2>' +
-      '<img src="img/ly-cambio.webp?v=1" loading="lazy" width="1000" height="1250" ' +
-        'alt="Arriba, la mesada llena de frascos de cápsulas y un vaso mezclador con grumos. Abajo, unas gotas de Lymphoria en un vaso de agua con limón">' +
-    '</section>';
-  }
+  /* El antes/ahora NO se arma aca: va en la seccion «El cambio» de la tienda
+     (ba-sec), que sale de productos.js. Asi queda en el MISMO lugar que en la
+     clorofila, despues de la garantia (James, 11-sep). */
 
-  /* fotos del producto real: el mismo frasco y la misma caja que despachamos */
-  function llega() {
-    return '<section class="ly-llega">' +
-      '<span class="ly-rot2">El producto real</span>' +
-      '<h2 class="ly-h2">Caja sellada, frasco de vidrio y gotero</h2>' +
-      '<div class="ly-fotos">' +
-        '<img src="img/ly-llega1.webp?v=1" alt="Caja y frasco Lymphoria en la mano" loading="lazy" width="800" height="1000">' +
-        /* la segunda NO es otra toma del mismo video (salian casi iguales):
-           es la foto de estudio, que en la ficha no se ve porque el hero
-           reemplaza la galeria. Asi va el producto en la mano y en limpio */
-        '<img src="img/prod-lymphoria.webp?v=1" alt="Caja y frasco Lymphoria, foto de estudio" loading="lazy" width="1000" height="1000">' +
-      '</div>' +
-      '<p class="ly-pie">Frasco de vidrio de 60 ml, con su gotero y su caja.</p>' +
-    '</section>';
-  }
+  /* «El producto real» se saco (James, 11-sep: «quita esto»). Las fotos del
+     frasco ya estan en las tarjetas de «Que es y para que sirve» y en el video. */
 
   function montar() {
     var cont = document.getElementById('prod');
@@ -161,7 +141,7 @@
     /* pasos + producto real antes de la descripcion. Ninguno lleva boton:
        debajo del precio ya esta el de la ficha, y dos seguidos rompen la regla */
     var desc = cont.querySelector('section.desc');
-    if (desc && !cont.querySelector('.ly-pasos')) desc.insertAdjacentHTML('beforebegin', pasos() + cambio() + llega());
+    if (desc && !cont.querySelector('.ly-pasos')) desc.insertAdjacentHTML('beforebegin', pasos());
     /* Las tres tarjetas van en «Que es y para que sirve». La seccion se busca
        por su titulo, como en la clorofila. Diferencia a proposito (James,
        11-sep: «no tienen que ser igual»): alla las tarjetas REEMPLAZAN el texto;
@@ -228,7 +208,7 @@
 
     if (!quieto && 'IntersectionObserver' in window) {
       revelar(tits, 'ly-espera', false);                          /* adorno: sin red */
-      revelar(cont.querySelectorAll('.ly-fotos, .ly-fi'), 'ly-espera', true); /* fotos: con red */
+      revelar(cont.querySelectorAll('.ly-fi'), 'ly-espera', true); /* fotos: con red */
     }
 
     /* la linea de los pasos se dibuja cuando el cliente llega a ella */
