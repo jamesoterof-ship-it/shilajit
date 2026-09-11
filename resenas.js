@@ -440,8 +440,8 @@
       'Llegó a regiones en pocos días',
       'Es igual a la foto, no me llevé sorpresas',
       'Me gustó que sea vegano',
-      'Lo llevo en la cartera al trabajo',
-      'Compré tres, uno para mi mamá y otro para mi hermana',
+      'Lo llevo en el bolso al trabajo',
+      'Compré tres: uno para mí y los otros para la casa',
       'El sabor a miel es suave, no empalaga',
       'Muy fácil de sumar a la rutina',
       'La caja viene bien presentada, sirve para regalo',
@@ -460,10 +460,10 @@
       'Lo dejo junto a la botella de agua para no olvidarme',
       'Me gustó la presentación del gotero',
       'Llegó antes de lo que decían',
-      'Es fácil de usar, hasta mi mamá lo maneja sola',
+      'Lo usamos los dos en la casa, mi señora y yo',
       'Pedí el de dos y me alcanzó harto',
       'No tiene olor fuerte',
-      'Se lo regalé a una amiga y le encantó el sabor',
+      'Se lo regalé a un amigo y le encantó el sabor',
       'Todo claro con el pago, sin sorpresas',
       'Lo recibí, lo revisé y recién ahí pagué',
       'Me gusta el formato líquido',
@@ -525,6 +525,10 @@
       var op = TEXTOS[prod];
       var cfg = CUANTAS[prod] || { n: 150, cuatros: 15 };
       var soloMujer = prod.indexOf('Pestañas') >= 0;
+      /* La Lymphoria es UNISEX (James, 11-sep: «no te centres solo en mujeres»),
+         asi que ahi los nombres van mitad y mitad. En el resto se queda como
+         estaba, 1 de cada 3, para no cambiar productos que el no me pidio. */
+      var mitadYMitad = prod.indexOf('Lymphoria') >= 0;
       var vistos = {};
       for (var i = 0; i < cfg.n; i++) {
         var s = i + ip * 977 + 13;                     /* semilla propia de cada producto */
@@ -546,7 +550,7 @@
         var estrellas = pseudo(s + 5, 100) < cfg.cuatros ? 4 : 5;
 
         var dia = pseudo(s + 11, 28) + 1, mes = pseudo(s + 17, 8) + 1;
-        var pool = soloMujer ? MUJERES : (pseudo(s + 41, 3) === 0 ? HOMBRES : MUJERES);
+        var pool = soloMujer ? MUJERES : (pseudo(s + 41, mitadYMitad ? 2 : 3) === 0 ? HOMBRES : MUJERES);
         out.push({
           nombre: pool[pseudo(s + 1, pool.length)],
           comuna: COMUNAS[pseudo(s + 19, COMUNAS.length)],

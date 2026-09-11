@@ -546,6 +546,12 @@ window.PRODUCTOS = [
        «Lymphoria», y en cada uno de esos sitios su regla va antes que la del polvo. */
     id: 'lymphoria', unidad: 'frasco', promo: 2,
     video: 'img/lymphoria.mp4?v=2',
+    /* fotos REALES de clientes (las mando James, 11-sep). Hay manos de hombre
+       y de mujer a proposito: el producto es unisex y la pagina no puede
+       verse como algo solo para mujeres. */
+    fotosResenas: ['img/resenas-lymphoria/rly1.webp?v=1', 'img/resenas-lymphoria/rly2.webp?v=1',
+      'img/resenas-lymphoria/rly3.webp?v=1', 'img/resenas-lymphoria/rly4.webp?v=1',
+      'img/resenas-lymphoria/rly5.webp?v=1'],
     /* La seccion «El cambio» de la tienda, en el mismo lugar que en la clorofila:
        despues de la garantia y antes de las preguntas. La foto compara la RUTINA
        (polvos y capsulas contra unas gotas), NUNCA el cuerpo: es suplemento y el
@@ -555,21 +561,28 @@ window.PRODUCTOS = [
     preguntas: [
       { q: '¿Cómo se toma?', a: 'Se agregan unas gotas a un vaso de agua o de jugo, en el momento del día que prefieras. La dosis sugerida viene indicada en la etiqueta del frasco.' },
       { q: '¿A qué sabe?', a: 'A miel. Así lo declara la propia caja con su sello «Tastes Like Honey».' },
+      { q: '¿Qué trae dentro?', a: 'Una mezcla de 300 mg de extractos de cuatro hierbas: cleavers (Galium aparine), flor de trébol rojo (Trifolium pratense), raíz de stillingia (Stillingia sylvatica) y corteza de fresno espinoso (Zanthoxylum americanum). La base es agua purificada, glicerina, maltitol y saborizante, con sorbato de potasio como conservante. Todo eso viene declarado en la etiqueta del frasco.' },
       { q: '¿Cuánto me dura?', a: 'Depende de la dosis que indica la etiqueta. Por eso la mayoría se lleva el pack de 2 frascos: sale más conveniente y no se queda sin.' },
       { q: '¿Es vegano?', a: 'Sí. El envase lo declara vegano, sin gluten y sin transgénicos.' },
       { q: '¿Se puede llevar en la cartera?', a: 'Sí. Es un frasco de 60 ml con gotero, así que cabe en cualquier bolso y lo usas donde estés.' },
       { q: '¿Quién no debería tomarlo?', a: 'Por norma chilena, los suplementos alimentarios no se recomiendan para menores de 8 años, embarazadas ni mujeres amamantando, salvo indicación de un profesional. No reemplaza una alimentación balanceada.' },
     ],
-    formulaRotulo: 'Qué es',
-    formulaTitulo: 'Extractos de hierbas en gotas, con sabor a miel.',
-    formulaSub: 'Suplemento alimentario en formato líquido. Acompaña tu rutina diaria y no reemplaza una alimentación balanceada.',
+    /* Las cuatro hierbas SALEN DE LA ETIQUETA del frasco (Supplement Facts,
+       leida cuadro por cuadro del metraje real): mezcla de 300 mg con extractos
+       de cleavers, trebol rojo, stillingia y fresno espinoso. Se dice QUE trae
+       y de donde viene cada una; NO se dice que curen ni que desinflamen, y la
+       posologia de la etiqueta (1-2 goteros) NO se publica: el D.S. 977/96 la
+       prohibe en publicidad. */
+    formulaRotulo: 'Qué trae dentro',
+    formulaTitulo: 'Cuatro hierbas en una misma mezcla.',
+    formulaSub: 'Lo que declara la etiqueta del fabricante: 300 mg de extractos herbales por porción, en base líquida con sabor a miel.',
     formula: [
-      ['hoja', 'Extractos de hierbas', 'Fórmula líquida de extractos herbales, tal como la declara el fabricante.'],
-      ['gota', 'Gotero dosificador', 'El frasco trae su propio gotero: nada de medir a ojo.'],
-      ['hoja', 'Sabor a miel', 'Lo declara la caja con su sello. Se toma sin hacer caras.'],
-      ['escudo', 'Vegano', 'Declarado en el envase del fabricante.'],
-      ['escudo', 'Sin gluten', 'Declarado en el envase del fabricante.'],
-      ['pluma', 'Cabe en la cartera', 'Frasco de 60 ml: lo llevas al trabajo o de viaje.'],
+      ['hoja', 'Cleavers · Galium aparine', 'Se usa la parte aérea. Es la hierba que le da nombre a este tipo de fórmulas en la herbolaría europea.'],
+      ['hoja', 'Trébol rojo · Trifolium pratense', 'Se usa la flor. Clásica de las mezclas herbales de primavera.'],
+      ['hoja', 'Stillingia · Stillingia sylvatica', 'Se usa la raíz, de uso tradicional en la herbolaría del sur de Estados Unidos.'],
+      ['hoja', 'Fresno espinoso · Zanthoxylum americanum', 'Se usa la corteza. Es la cuarta del grupo en la etiqueta.'],
+      ['gota', 'La base líquida', 'Agua purificada, glicerina, maltitol y saborizante, con sorbato de potasio como conservante.'],
+      ['escudo', 'Vegano, sin gluten y sin transgénicos', 'Los tres sellos que trae impresos la caja del fabricante.'],
     ],
     comparaTitulo: 'Por qué en gotas y no en cápsulas',
     compara: [
@@ -591,9 +604,9 @@ window.PRODUCTOS = [
        («traditional lymphatic support»), no como promesa nuestra. */
     /* Corto a proposito (James, 11-sep: «muy cargada de texto, haz un mix»):
        el parrafo cuenta que es y como se toma, y los puntos NO lo repiten. */
-    desc: 'Lymphoria es un suplemento alimentario líquido de extractos de hierbas, en frasco de vidrio ámbar de 60 ml con gotero. Se toma agregando unas gotas a tu vaso de agua o de jugo: nada de cápsulas que tragar ni de polvos que quedan con grumos. Su caja lo declara «traditional lymphatic support», un apoyo de uso tradicional, no un medicamento: acompaña tu alimentación y no la reemplaza.',
+    desc: 'Lymphoria es un suplemento alimentario líquido de extractos de hierbas, en frasco de vidrio ámbar de 60 ml con gotero. Su mezcla son cuatro hierbas de la herbolaría clásica: cleavers (Galium aparine), flor de trébol rojo (Trifolium pratense), raíz de stillingia (Stillingia sylvatica) y corteza de fresno espinoso (Zanthoxylum americanum). Son las mismas que el fabricante reúne bajo el nombre de su línea, «traditional lymphatic support». El proveedor lo presenta como un complemento para apoyar el funcionamiento del sistema linfático, acompañar el equilibrio natural de líquidos del organismo y sumarse a una alimentación equilibrada y a la actividad física. Se toma agregando unas gotas a tu vaso de agua o de jugo: nada de cápsulas que tragar ni de polvos que quedan con grumos. Es un suplemento, no un medicamento: acompaña tu alimentación y no la reemplaza.',
     puntos: [
-      'Extractos de hierbas en gotas, con sabor a miel',
+      'Cuatro hierbas: cleavers, trébol rojo, stillingia y fresno espinoso',
       'Frasco de 60 ml con gotero · cabe en la cartera',
       'Vegano, sin gluten y sin transgénicos, según el envase',
       'Pagas al recibir, con envío gratis a todo Chile',
