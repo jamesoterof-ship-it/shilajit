@@ -93,7 +93,15 @@ body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389;
 .p-clorofila .cl-med span { display: block; font-size: 11.5px; color: var(--ink-2, #5b6573); margin-top: 5px; }
 
 /* ---------- bloques ---------- */
-.p-clorofila .cl-blq { margin: 0 0 20px; }
+/* OJO con el padding: este bloque lo mueve el js hasta antes de section.desc,
+   y ahi queda colgando de main.prod, que NO tiene padding. Las secciones de la
+   tienda traen el suyo (0 16px); sin esta linea el rotulo y el titulo salian
+   pegados al borde de la pantalla. Lo cazo James el 10-sep en su celular. */
+.p-clorofila .cl-blq { margin: 0 0 20px; padding: 0 16px; }
+
+/* El rotulo del hero va sobre la foto y necesita sombra para leerse. Este va
+   sobre blanco: la misma sombra le hacia un halo sucio alrededor de la letra. */
+.p-clorofila .cl-blq .cl-rot { text-shadow: none; }
 /* OJO: este bloque NO lleva boton. La ficha ya trae el suyo justo debajo y
    dos botones seguidos rompen la regla de James. */
 .p-clorofila .cl-h2 {
@@ -102,20 +110,16 @@ body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389;
 }
 .p-clorofila .cl-sub { margin: 10px 0 0; font-size: 14.5px; color: var(--ink-2, #5b6573); }
 
-/* el NUMERO que se llena de verde de abajo hacia arriba */
+/* el NUMERO que CUENTA de 0 a 60 cuando el cliente llega (James, 10-sep).
+   Antes se llenaba de verde con un degradado: no se entendia que estaba
+   pasando y a medio camino el numero quedaba a medias. Ahora cuenta y ya. */
 .p-clorofila .cl-gigante { text-align: center; margin: 16px 0 4px; }
 .p-clorofila .cl-num {
-  /* por defecto LLENO y legible; .cl-vacio es un estado momentaneo que el js
-     quita. Antes se veia el 60 en verde clarito sobre blanco: ilegible. */
   display: inline-block; font-size: clamp(58px, 19vw, 104px); font-weight: 900; line-height: .92;
-  letter-spacing: -.04em;
-  background: linear-gradient(to bottom, var(--cl-claro) 0%, var(--cl-claro) 50%, rgba(47,158,90,.28) 50%, rgba(47,158,90,.28) 100%);
-  background-size: 100% 200%; background-position: 0 0;
-  max-width: 100%;
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  transition: background-position 1.5s cubic-bezier(.3,.9,.3,1);
+  letter-spacing: -.04em; color: var(--cl-claro); max-width: 100%;
+  /* cifras de ancho fijo: si no, el numero baila mientras sube de 8 a 60 */
+  font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1;
 }
-.p-clorofila .cl-num.cl-vacio { background-position: 0 100%; }
 .p-clorofila .cl-gigante small {
   display: block; margin-top: 4px; font-size: 13px; font-weight: 700;
   letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2, #5b6573);

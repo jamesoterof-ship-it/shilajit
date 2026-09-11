@@ -179,27 +179,64 @@
     if (!piezas.length) return;
 
     var num = cont.querySelector('.cl-num');
-    if (num && !quieto) num.classList.add('cl-vacio');
 
-    if (quieto || !('IntersectionObserver' in window)) { if (num) num.classList.remove('cl-vacio'); return; }
+    /* ---- el CONTEO del 60 ----
+       Sube de 0 a 60 y frena al final. Corre UNA sola vez. El HTML ya trae el
+       60 escrito, asi que si el js no llega a arrancar nunca, el cliente ve el
+       numero completo igual: el efecto no puede esconder el dato. */
+    function contar(el, hasta, ms) {
+      if (el.dataset.contado) return;
+      el.dataset.contado = '1';
+      var listo = false, t0 = null;
+      function paso(t) {
+        if (t0 === null) t0 = t;
+        var k = Math.min(1, (t - t0) / ms);
+        if (listo) return;
+        el.textContent = String(Math.round(hasta * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) requestAnimationFrame(paso);
+        else { listo = true; el.textContent = String(hasta); }   /* cierra exacto */
+      }
+      /* RED DE SEGURIDAD del conteo. requestAnimationFrame NO corre si la
+         pestaña esta en segundo plano o si el navegador tiene el reloj de
+         cuadros parado, y ahi el numero se quedaria clavado en 0: el cliente
+         veria «0 MILILITROS CON GOTERO». Regla que no se rompe: ningun efecto
+         puede dejar un dato mal. Pase lo que pase, al final dice 60. */
+      var seguro = setTimeout(function () {
+        if (!listo) { listo = true; el.textContent = String(hasta); }
+      }, ms + 700);
+      el.textContent = '0';
+      requestAnimationFrame(function (t) {
+        if (listo) { clearTimeout(seguro); return; }
+        paso(t);
+      });
+    }
+    /* si pide menos movimiento, o el navegador no trae el observador, el 60 se
+       queda quieto tal como viene en el HTML */
+    if (quieto || !('IntersectionObserver' in window)) return;
 
     piezas.forEach(function (p) { p[0].classList.add(p[1]); });
 
-    function encender(el) {
+    /* `conNumero` separa las dos cosas a proposito. La red de seguridad de mas
+       abajo solo destapa el contenido; si tambien arrancara el conteo, el 60
+       correria a los 2,5 s con el cliente todavia mirando el hero, y al llegar
+       al bloque ya lo encontraria quieto en 60. */
+    function encender(el, conNumero) {
       el.classList.remove('cl-entra-i', 'cl-entra-d', 'cl-sec-entra');
+      if (!conNumero) return;
       var n = el.querySelector && el.querySelector('.cl-num');
-      if (n) setTimeout(function () { n.classList.remove('cl-vacio'); }, 180);
+      if (n) setTimeout(function () { contar(n, 60, 1400); }, 180);
     }
 
     var obs = new IntersectionObserver(function (filas) {
-      filas.forEach(function (f) { if (f.isIntersecting) { encender(f.target); obs.unobserve(f.target); } });
+      filas.forEach(function (f) { if (f.isIntersecting) { encender(f.target, true); obs.unobserve(f.target); } });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
     piezas.forEach(function (p) { obs.observe(p[0]); });
 
-    /* red de seguridad: si a los 2,5 s algo sigue marcado, se enciende igual */
+    /* red de seguridad: si a los 2,5 s algo sigue marcado, se enciende igual.
+       El numero NO se fuerza a contar aca: si nunca llego a verse, se queda
+       con el 60 del HTML, que es lo correcto. */
     setTimeout(function () {
       piezas.forEach(function (p) { encender(p[0]); });
-      if (num) num.classList.remove('cl-vacio');
     }, 2500);
   }
 
