@@ -589,15 +589,14 @@ window.PRODUCTOS = [
        decir es que es, como se toma y QUE DECLARA EL FABRICANTE en su envase.
        Por eso lo del sistema linfatico va citado como declaracion de la caja
        («traditional lymphatic support»), no como promesa nuestra. */
-    desc: 'Lymphoria es un suplemento alimentario líquido hecho con extractos de hierbas. Viene en un frasco de vidrio ámbar de 60 ml con gotero, y se toma agregando unas gotas a un vaso de agua o de jugo: se reparte al instante, sin cápsulas que tragar ni polvos que batir. Su caja lo presenta como «lymphatic drainage · traditional lymphatic support», que es como el fabricante declara esta línea: un apoyo de uso tradicional, no un medicamento. Sabe a miel, y así lo declara el sello «Tastes Like Honey» del envase, que además lo declara vegano, sin gluten y sin transgénicos. Es el formato que elige quien no traga pastillas o quien ya se cansó de los polvos que quedan con grumos. Como todo suplemento alimentario, acompaña tu alimentación y no la reemplaza, y no cura ni previene enfermedades. La dosis sugerida viene indicada en la etiqueta del frasco.',
+    /* Corto a proposito (James, 11-sep: «muy cargada de texto, haz un mix»):
+       el parrafo cuenta que es y como se toma, y los puntos NO lo repiten. */
+    desc: 'Lymphoria es un suplemento alimentario líquido de extractos de hierbas, en frasco de vidrio ámbar de 60 ml con gotero. Se toma agregando unas gotas a tu vaso de agua o de jugo: nada de cápsulas que tragar ni de polvos que quedan con grumos. Su caja lo declara «traditional lymphatic support», un apoyo de uso tradicional, no un medicamento: acompaña tu alimentación y no la reemplaza.',
     puntos: [
-      'Qué es: un suplemento alimentario líquido de extractos de hierbas',
-      'Qué declara la caja: «traditional lymphatic support», apoyo de uso tradicional',
-      'Cómo se toma: unas gotas en tu vaso de agua o de jugo',
-      'Frasco de vidrio ámbar de 60 ml con gotero dosificador',
-      'Sabor a miel, vegano, sin gluten y sin transgénicos, según el envase',
-      'No es un medicamento ni reemplaza una alimentación balanceada',
-      'Cabe en la cartera · pagas al recibir, con envío gratis a todo Chile',
+      'Extractos de hierbas en gotas, con sabor a miel',
+      'Frasco de 60 ml con gotero · cabe en la cartera',
+      'Vegano, sin gluten y sin transgénicos, según el envase',
+      'Pagas al recibir, con envío gratis a todo Chile',
     ],
     packs: [
       /* mismo criterio de la clorofila: el «antes» del primer pack es un 30%
