@@ -370,6 +370,58 @@
       'Ya no tengo ropa amontonada arriba del clóset',
       'Sirve igual para juguetes, no solo para ropa',
     ],
+    /* 🔴 CLOROFILA · LIMITE LEGAL. Es un SUPLEMENTO ALIMENTARIO. El D.S. 977/96
+       prohibe promocionarlo para prevenir o tratar enfermedades (art. 536) y
+       prohibe sugerir efectos terapeuticos o POSOLOGIA (art. 110). Una reseña
+       es publicidad igual que el copy: si una dice "me limpio el organismo" o
+       "baje de peso", la infraccion es nuestra.
+       PROHIBIDO aca: desintoxica, elimina toxinas, limpia la sangre o el
+       higado, quema grasa, adelgaza, mejora la piel, el acne, el aliento, la
+       digestion, sube las defensas, da energia, y decir cuantas gotas tomar.
+       PERMITIDO: los hechos del producto. Sabor, color del agua, que se
+       disuelve, el gotero, el tamaño, cuanto rinde, el envio y el pago. */
+    'Clorofila Líquida Benevolent': [
+      'A menta de verdad, pensé que iba a saber a pasto',
+      'Se disuelve sola, no queda nada en el fondo del vaso',
+      'El agua queda de un verde bonito, no turbio',
+      'El frasco es chico, lo llevo en la cartera sin problema',
+      'El gotero es de vidrio y se ve bien hecho',
+      'Llegó sellado y con su cajita',
+      'Pedí dos y me salieron mucho más baratos que uno solo',
+      'Lo echo en el vaso de agua de la mañana y listo',
+      'No deja ese regusto amargo que tienen otras',
+      'Antes usaba la de polvo y esta es mucho más cómoda',
+      'Un frasco me duró casi el mes completo',
+      'El sabor a menta hace que tome más agua en el día',
+      'No hay que revolver ni batir nada',
+      'Lo dejo en el escritorio y lo uso en la oficina',
+      'Se ve igual a la foto, no me llevé sorpresas',
+      'Pagué cuando llegó, eso me dio confianza',
+      'Mi hija me lo pidió después de probarlo',
+      'El gotero dosifica bien, no se derrama',
+      'Compré tres, uno para cada uno en la casa',
+      'Llegó a regiones en pocos días',
+      'No tiene alcohol, que era justo lo que yo buscaba',
+      'El frasco de vidrio oscuro se siente de buena calidad',
+      'Lo probé en agua fría y se mezcló al toque',
+      'Sabe mejor de lo que esperaba',
+      'Es práctico, no hay que preparar nada aparte',
+      'La tapa cierra bien, no se sale en el bolso',
+      'Se lo regalé a mi hermana y me pidió otro',
+      'Me gustó que sea sin gluten, en la casa lo cuidamos',
+      'Los 60 ml rinden más de lo que uno cree',
+      'Lo uso en el vaso de agua del almuerzo',
+      'El envío salió gratis y llegó bien embalado',
+      'No mancha el vaso ni deja residuo',
+      'Buen precio comparado con lo que vi en otros lados',
+      'Le echo unas gotas a la botella que llevo al gimnasio',
+      'Es el Benevolent tal cual sale en la etiqueta',
+      'Lo pedí para probar y terminé pidiendo dos más',
+      'Es fácil de usar, hasta mi mamá lo maneja sola',
+      'El color verde del agua es lo que más me llamó',
+      'No tiene olor fuerte, que era lo que me preocupaba',
+      'Llegó rápido y pude revisarlo antes de pagar',
+    ],
   };
 
   /* Coletillas: la mitad de la gente cierra hablando del despacho o del pago.
@@ -412,6 +464,9 @@
     'Cabezal de Ducha Masajeadora Spa': { n: 168, cuatros: 14 },
     'Almohada Cervical Ergonómica':      { n: 171, cuatros: 13 },
     'Organizador de Ropa Plegable':      { n: 198, cuatros: 13 },
+    /* 10 de cuatros deja la nota en 4.9, que es la que pidio James el 10-sep.
+       Sin esta linea caia al reparto por defecto (15) y salia 4.8. */
+    'Clorofila Líquida Benevolent':      { n: 159, cuatros: 10 },
   };
 
   function generar() {

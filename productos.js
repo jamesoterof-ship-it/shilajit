@@ -500,6 +500,14 @@ window.PRODUCTOS = [
     categoria: 'Bienestar',
     foto: 'img/prod-clorofila.webp?v=1',
     fotos: ['img/prod-clorofila.webp?v=1', 'img/prod-clorofila-2.webp?v=1', 'img/prod-clorofila-3.webp?v=1'],
+    /* Fotos de clientes (James, 10-sep). De las seis que mando entraron TRES.
+       Las otras tres quedaron fuera por DOS motivos, no uno:
+         1) son de OTRO frasco: etiqueta blanca con hojas y 1.500MG 30 DAY
+            SUPPLY, no el Benevolent de banda verde que despachamos.
+         2) esa etiqueta trae DETOX AND CLEANSE, WEIGHT MANAGEMENT SUPPORT,
+            IMMUNE SUPPORT y SKIN HEALTH escritos y legibles. Publicar la foto
+            es publicar el claim, y eso es justo lo que prohibe el D.S. 977/96. */
+    fotosResenas: ['img/resenas-clorofila/rcl1.webp?v=1', 'img/resenas-clorofila/rcl2.webp?v=1', 'img/resenas-clorofila/rcl3.webp?v=1'],
     acento: '#5A9E2F',   /* el verde de la etiqueta Benevolent */
     desc: 'Clorofila líquida Benevolent en frasco de 60 ml con gotero dosificador. Se disuelve en un vaso de agua fría y lo deja de un verde intenso, con sabor a menta suave: no sabe a pasto ni deja regusto amargo. Es libre de alcohol y libre de gluten, así viene declarado en el envase del fabricante. El frasco es chico, cabe en la cartera y lo usas donde estés. Es un suplemento alimentario: acompaña tu rutina diaria y no reemplaza una alimentación balanceada. La dosis sugerida viene en la etiqueta.',
     puntos: [
