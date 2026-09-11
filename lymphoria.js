@@ -79,15 +79,15 @@
      y el D.S. 977/96 lo prohibe. */
   function fichas() {
     var F = [
-      ['ly-p1.webp', 'La caja de envío abierta sobre el mueble, con el estuche y el frasco encima',
-       'Cómo llega', 'Sellado y con su estuche',
-       'Llega el frasco de vidrio ámbar dentro de su caja, con el gotero puesto. Lo abres tú: nadie lo destapa antes.'],
+      ['ly-p3.webp', 'Persona en su cocina con el frasco en una mano y un vaso de agua con limón en la otra',
+       'Para qué sirve', 'Apoyo al sistema linfático, en tu día a día',
+       'Su proveedor lo presenta como un complemento para apoyar el funcionamiento del sistema linfático, acompañar el equilibrio natural de líquidos del organismo y sumarse a una rutina de alimentación equilibrada y actividad física.'],
       ['ly-p2.webp', 'El gotero soltando gotas doradas en un vaso de agua con hielo, junto al frasco',
-       'Cómo se toma', 'Se reparte solo en el vaso',
-       'Es líquido: unas gotas en agua o en jugo y listo. No hay cápsulas que tragar ni polvo que se quede en el fondo.'],
-      ['ly-p3.webp', 'Mujer en su cocina con el frasco en una mano y un vaso de agua con limón en la otra',
-       'Cuándo', 'En el vaso que ya te ibas a tomar',
-       'No te cambia la rutina. El de la mañana, el del almuerzo o el que dejas en el escritorio. Y sabe a miel.'],
+       'Cómo se toma', 'Unas gotas y sigues con lo tuyo',
+       'Es líquido: cae en el agua o en el jugo y se reparte solo. Sabe a miel, así que se toma sin hacer caras, y no hay cápsulas que tragar ni polvo que quede en el fondo del vaso.'],
+      ['ly-p1.webp', 'La caja de envío abierta sobre el mueble, con el estuche y el frasco encima',
+       'Qué recibes', '60 ml, con 4 hierbas y su gotero',
+       'Frasco de vidrio ámbar sellado en su caja, con gotero. Adentro, 300 mg de mezcla por porción: cleavers, trébol rojo, stillingia y fresno espinoso. Vegano, sin gluten y sin transgénicos, y lo pagas cuando llega a tu casa.'],
     ];
     return '<div class="ly-fichas">' + F.map(function (f) {
       return '<figure class="ly-fi">' +

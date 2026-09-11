@@ -604,11 +604,18 @@ window.PRODUCTOS = [
        («traditional lymphatic support»), no como promesa nuestra. */
     /* Corto a proposito (James, 11-sep: «muy cargada de texto, haz un mix»):
        el parrafo cuenta que es y como se toma, y los puntos NO lo repiten. */
-    desc: 'Lymphoria es un suplemento alimentario líquido de extractos de hierbas, en frasco de vidrio ámbar de 60 ml con gotero. Su mezcla son cuatro hierbas de la herbolaría clásica: cleavers (Galium aparine), flor de trébol rojo (Trifolium pratense), raíz de stillingia (Stillingia sylvatica) y corteza de fresno espinoso (Zanthoxylum americanum). Son las mismas que el fabricante reúne bajo el nombre de su línea, «traditional lymphatic support». El proveedor lo presenta como un complemento para apoyar el funcionamiento del sistema linfático, acompañar el equilibrio natural de líquidos del organismo y sumarse a una alimentación equilibrada y a la actividad física. Se toma agregando unas gotas a tu vaso de agua o de jugo: nada de cápsulas que tragar ni de polvos que quedan con grumos. Es un suplemento, no un medicamento: acompaña tu alimentación y no la reemplaza.',
+    /* PARA QUE SIRVE va PRIMERO (James, 11-sep: «es una landing de venta,
+       tiene que convertir»). Lo que se promete es lo que declara el proveedor
+       en su ficha, citado como suyo. NO se dice que desinflama, que baja la
+       hinchazon o la retencion, ni se da la dosis: eso lo prohibe el
+       D.S. 977/96 y Meta rechaza los anuncios que lo dicen. */
+    desc: 'PARA QUÉ SIRVE. El proveedor lo presenta como un complemento para apoyar el funcionamiento del sistema linfático, acompañar el equilibrio natural de líquidos del organismo y sumarse a una rutina de alimentación equilibrada y actividad física. QUÉ ES. Un suplemento alimentario líquido de extractos de hierbas, en frasco de vidrio ámbar de 60 ml con gotero. Su fórmula son cuatro hierbas de la herbolaría clásica: cleavers (Galium aparine), flor de trébol rojo (Trifolium pratense), raíz de stillingia (Stillingia sylvatica) y corteza de fresno espinoso (Zanthoxylum americanum), 300 mg de mezcla por porción, en base líquida con sabor a miel. CÓMO SE TOMA. Unas gotas en tu vaso de agua o de jugo: nada de cápsulas que tragar ni de polvos que quedan con grumos. Es un suplemento alimentario, no un medicamento: acompaña tu alimentación y no la reemplaza.',
     puntos: [
+      'Apoya el funcionamiento del sistema linfático, según su proveedor',
+      'Acompaña el equilibrio natural de líquidos del organismo',
       'Cuatro hierbas: cleavers, trébol rojo, stillingia y fresno espinoso',
-      'Frasco de 60 ml con gotero · cabe en la cartera',
-      'Vegano, sin gluten y sin transgénicos, según el envase',
+      'Se toma en gotas: nada de cápsulas ni de polvos con grumos',
+      'Sabor a miel · vegano, sin gluten y sin transgénicos',
       'Pagas al recibir, con envío gratis a todo Chile',
     ],
     packs: [
