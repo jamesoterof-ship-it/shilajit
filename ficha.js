@@ -184,7 +184,29 @@
       foto: 'img/encendedor.webp',
       beneficios: ['Enciende la parrilla sin fósforos ni gas', 'Recargable por USB: no se acaba',
         'Cuello largo y flexible: no te quemas', 'Doble seguro para que no prenda solo'],
-      opciones: [{ cant: 1, precio: 4950 }, { cant: 2, precio: 7950 }] }
+      opciones: [{ cant: 1, precio: 4950 }, { cant: 2, precio: 7950 }] },
+    /* Clorofila -> Lymphoria Drenaje Linfatico (Dropi 159173).
+       Es el caso mas limpio de los tres: MISMO proveedor (VITALCOM), MISMA
+       bodega (Recoleta) y mismo formato de 60 ml en gotas, asi que el frasco
+       extra entra en la misma caja y no paga un peso de flete.
+       🔴 LIMITE LEGAL: es un SUPLEMENTO ALIMENTARIO. El D.S. 977/96 prohibe
+       promocionarlo para prevenir o tratar enfermedades y prohibe indicar
+       posologia. Los beneficios de aca usan «favorece» y «apoya», que es lo
+       que declara el propio fabricante en el envase, y NO se dice que
+       desinflama, que baja la hinchazon ni cuantas gotas tomar. La competencia
+       lo anuncia con «no mas hinchazon»: ese es su riesgo, no el nuestro. */
+    clorofila: { nombre: 'Drenaje Linfático Lymphoria',
+      webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-lymphoria',
+      foto: 'img/lymphoria.webp',
+      beneficios: ['Favorece el sistema linfático', 'Apoya las defensas naturales',
+        'Ingredientes naturales', 'Bienestar general'],
+      /* los verdes salen de la propia placa: el verde bosque de la caja y el
+         verde claro de los circulos. Con el azul de los otros upsells la
+         ventana no parecia del mismo producto que la foto. */
+      tema: { osc: '#123A28', med: '#2E7D4F', btnA: '#1B5E3A', btnB: '#3AA05F',
+              texto: '#123A28', borde: '#cfe6d9', suave: '#f2f8f4', foto: '#0d2b1a',
+              sombra: '27,94,58' },
+      opciones: [{ cant: 1, precio: 12990 }, { cant: 2, precio: 19990 }] }
   };
   /* la ventana post-compra vive fuera de este bloque, por eso se exponen */
   window.UPSELLS = UPSELLS;
@@ -1363,6 +1385,16 @@ function abrirUpsell(nombre, telWA, upsell) {
   var money = function (n) { return '$' + Math.round(n).toLocaleString('es-CL'); };
   var fb = function (ev, obj) { try { if (window.fbq) window.fbq('track', ev, obj); } catch (e) {} };
 
+  /* ---- EL COLOR DE LA VENTANA ----
+     Antes estaba clavado en el azul marino del Gel Sellador. Con la placa
+     verde del Lymphoria encima quedaba pegado y no parecia el mismo producto
+     (lo cazo James, 10-sep). Ahora cada upsell puede traer su `tema`; el que
+     no trae ninguno se queda con el azul de siempre, asi que el sellador y el
+     encendedor no cambian en nada. */
+  var T = U.tema || { osc: '#0B1A3F', med: '#1E4A8C', btnA: '#12306E', btnB: '#2563C7',
+                      texto: '#10265A', borde: '#cfdcf2', suave: '#f6f9ff', foto: '#0a1020',
+                      sombra: '18,48,110' };
+
   var st = document.createElement('style');
   st.textContent =
     '@keyframes upIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}'
@@ -1372,10 +1404,10 @@ function abrirUpsell(nombre, telWA, upsell) {
   + '.upcard{position:relative;background:#fff;border-radius:24px;max-width:360px;width:100%;'
   + 'padding:0 0 20px;text-align:center;color:#1b2432;overflow:hidden;'
   + 'box-shadow:0 30px 80px rgba(4,10,24,.55);animation:upIn .26s cubic-bezier(.2,.9,.3,1.15)}'
-  + '.upcard .cab{background:linear-gradient(135deg,#0B1A3F,#1E4A8C);padding:16px 18px 14px}'
+  + '.upcard .cab{background:linear-gradient(135deg,' + T.osc + ',' + T.med + ');padding:16px 18px 14px}'
   /* el texto es largo: con radio de capsula y 3 lineas se veia mal. Radio
      mediano, letra un punto menor y menos espaciado para que entre en dos. */
-  + '.upcard .tag{display:inline-block;background:#fff;color:#10265A;font-weight:800;'
+  + '.upcard .tag{display:inline-block;background:#fff;color:' + T.texto + ';font-weight:800;'
   + 'border-radius:13px;padding:7px 14px;font-size:11px;letter-spacing:.3px;'
   + 'line-height:1.4;max-width:100%;text-wrap:balance}'
   + '.upcard h3{font-size:19px;margin:9px 0 0;font-weight:800;line-height:1.25;color:#fff}'
@@ -1383,23 +1415,23 @@ function abrirUpsell(nombre, telWA, upsell) {
      unidades debajo del pliegue en celular, y ahi esta el margen. Con
      'contain' la placa se ve entera, solo mas chica. */
   + '.upcard .foto{display:block;width:100%;height:auto;max-height:240px;'
-  + 'object-fit:contain;background:#0a1020;margin:0}'
+  + 'object-fit:contain;background:' + T.foto + ';margin:0}'
   + '.upcard .sub{font-size:13px;color:#68788e;margin:14px 22px 12px;line-height:1.5}'
-  + '.upcard .precio{font-size:33px;font-weight:800;color:#10265A;letter-spacing:-.6px;margin:2px 0 0}'
+  + '.upcard .precio{font-size:33px;font-weight:800;color:' + T.texto + ';letter-spacing:-.6px;margin:2px 0 0}'
   + '.upcard .precio small{font-size:12.5px;color:#68788e;font-weight:500;display:block;'
   + 'margin-top:5px;letter-spacing:0}'
   + '.upbtns{margin:16px 22px 0}'
   + '.upsi,.updos{width:100%;border:0;border-radius:15px;font-weight:800;cursor:pointer;'
   + 'transition:transform .14s ease,box-shadow .22s ease,filter .22s ease,border-color .22s ease}'
-  + '.upsi{padding:16px;font-size:15px;background:linear-gradient(135deg,#12306E,#2563C7);'
-  + 'color:#fff;box-shadow:0 10px 24px rgba(18,48,110,.38)}'
-  + '.upsi:hover{filter:brightness(1.09);box-shadow:0 14px 30px rgba(18,48,110,.46)}'
-  + '.upsi:active{transform:translateY(2px);box-shadow:0 5px 12px rgba(18,48,110,.34)}'
-  + '.updos{margin-top:10px;padding:14px;font-size:13.5px;background:#fff;color:#12306E;'
-  + 'border:2px solid #cfdcf2;display:flex;align-items:center;justify-content:center;gap:9px}'
-  + '.updos:hover{border-color:#2563C7;background:#f6f9ff}'
+  + '.upsi{padding:16px;font-size:15px;background:linear-gradient(135deg,' + T.btnA + ',' + T.btnB + ');'
+  + 'color:#fff;box-shadow:0 10px 24px rgba(' + T.sombra + ',.38)}'
+  + '.upsi:hover{filter:brightness(1.09);box-shadow:0 14px 30px rgba(' + T.sombra + ',.46)}'
+  + '.upsi:active{transform:translateY(2px);box-shadow:0 5px 12px rgba(' + T.sombra + ',.34)}'
+  + '.updos{margin-top:10px;padding:14px;font-size:13px;background:#fff;color:' + T.btnA + ';'
+  + 'border:2px solid ' + T.borde + ';display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}'
+  + '.updos:hover{border-color:' + T.btnB + ';background:' + T.suave + '}'
   + '.updos:active{transform:translateY(2px)}'
-  + '.updos .ah{background:#e8f7ee;color:#1c7a3e;font-size:11.5px;font-weight:800;'
+  + '.updos .ah{background:#e8f7ee;color:#1c7a3e;font-size:11px;font-weight:800;white-space:nowrap;'
   + 'border-radius:999px;padding:4px 9px}'
   /* El NO tiene que verse y poder tocarse. Estaba en gris #93a1b5 (contraste
      2.6 sobre blanco: casi invisible) y con 16px de alto, imposible de
