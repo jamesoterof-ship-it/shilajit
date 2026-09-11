@@ -206,7 +206,8 @@
       tema: { osc: '#123A28', med: '#2E7D4F', btnA: '#1B5E3A', btnB: '#3AA05F',
               texto: '#123A28', borde: '#cfe6d9', suave: '#f2f8f4', foto: '#0d2b1a',
               sombra: '27,94,58' },
-      opciones: [{ cant: 1, precio: 12990 }, { cant: 2, precio: 19990 }] }
+      /* los dos a 22.000 los fijo James el 10-sep (venian en 19.990) */
+      opciones: [{ cant: 1, precio: 12990 }, { cant: 2, precio: 22000 }] }
   };
   /* la ventana post-compra vive fuera de este bloque, por eso se exponen */
   window.UPSELLS = UPSELLS;
