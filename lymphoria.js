@@ -73,6 +73,41 @@
     '</section>';
   }
 
+  /* las tres fotos 1:1 de James van DENTRO de «Que es y para que sirve»,
+     como en la clorofila. Cada pie cuenta algo que la foto no trae escrito,
+     para no decir dos veces lo mismo. Ninguno promete salud: es suplemento
+     y el D.S. 977/96 lo prohibe. */
+  function fichas() {
+    var F = [
+      ['ly-p1.webp', 'La caja de envío abierta sobre el mueble, con el estuche y el frasco encima',
+       'Cómo llega', 'Sellado y con su estuche',
+       'Llega el frasco de vidrio ámbar dentro de su caja, con el gotero puesto. Lo abres tú: nadie lo destapa antes.'],
+      ['ly-p2.webp', 'El gotero soltando gotas doradas en un vaso de agua con hielo, junto al frasco',
+       'Cómo se toma', 'Se reparte solo en el vaso',
+       'Es líquido: unas gotas en agua o en jugo y listo. No hay cápsulas que tragar ni polvo que se quede en el fondo.'],
+      ['ly-p3.webp', 'Mujer en su cocina con el frasco en una mano y un vaso de agua con limón en la otra',
+       'Cuándo', 'En el vaso que ya te ibas a tomar',
+       'No te cambia la rutina. El de la mañana, el del almuerzo o el que dejas en el escritorio. Y sabe a miel.'],
+    ];
+    return '<div class="ly-fichas">' + F.map(function (f) {
+      return '<figure class="ly-fi">' +
+        '<img src="img/' + f[0] + '?v=1" alt="' + f[1] + '" loading="lazy" width="1000" height="1000">' +
+        '<figcaption><span class="ly-rot2">' + f[2] + '</span><b>' + f[3] + '</b><p>' + f[4] + '</p></figcaption>' +
+      '</figure>';
+    }).join('') + '</div>';
+  }
+
+  /* el antes y el ahora: es de la RUTINA, no del cuerpo. Un suplemento no
+     puede mostrar cambios del cuerpo (D.S. 977/96) y Meta los rechaza. */
+  function cambio() {
+    return '<section class="ly-cambio">' +
+      '<span class="ly-rot2">El cambio</span>' +
+      '<h2 class="ly-h2">De los polvos y las cápsulas, a unas gotas</h2>' +
+      '<img src="img/ly-cambio.webp?v=1" loading="lazy" width="1000" height="1250" ' +
+        'alt="Arriba, la mesada llena de frascos de cápsulas y un vaso mezclador con grumos. Abajo, unas gotas de Lymphoria en un vaso de agua con limón">' +
+    '</section>';
+  }
+
   /* fotos del producto real: el mismo frasco y la misma caja que despachamos */
   function llega() {
     return '<section class="ly-llega">' +
@@ -126,7 +161,9 @@
     /* pasos + producto real antes de la descripcion. Ninguno lleva boton:
        debajo del precio ya esta el de la ficha, y dos seguidos rompen la regla */
     var desc = cont.querySelector('section.desc');
-    if (desc && !cont.querySelector('.ly-pasos')) desc.insertAdjacentHTML('beforebegin', pasos() + llega());
+    if (desc && !cont.querySelector('.ly-pasos')) desc.insertAdjacentHTML('beforebegin', pasos() + cambio() + llega());
+    /* y las tres fotos al final de «Que es y para que sirve» */
+    if (desc && !cont.querySelector('.ly-fichas')) desc.insertAdjacentHTML('beforeend', fichas());
 
     efectos(cont);
     return true;
@@ -180,7 +217,7 @@
 
     if (!quieto && 'IntersectionObserver' in window) {
       revelar(tits, 'ly-espera', false);                          /* adorno: sin red */
-      revelar(cont.querySelectorAll('.ly-fotos'), 'ly-espera', true); /* fotos: con red */
+      revelar(cont.querySelectorAll('.ly-fotos, .ly-fi'), 'ly-espera', true); /* fotos: con red */
     }
 
     /* la linea de los pasos se dibuja cuando el cliente llega a ella */
