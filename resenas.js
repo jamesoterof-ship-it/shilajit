@@ -422,6 +422,54 @@
       'No tiene olor fuerte, que era lo que me preocupaba',
       'Llegó rápido y pude revisarlo antes de pagar',
     ],
+    /* 🔴 LYMPHORIA · LIMITE LEGAL. Una reseña es publicidad igual que el copy.
+       Toda la competencia pone reseñas del tipo «se me desinflamaron las
+       piernas» o «me siento menos hinchada»: eso es promesa de efecto en un
+       suplemento y lo prohibe el D.S. 977/96. Aca NADA de eso, ni «me siento
+       mas liviana», ni dosis. Solo el sabor, el gotero, el envase, el envio y
+       el pago. */
+    'Lymphoria Drenaje Linfático': [
+      'Sabe a miel de verdad, lo esperaba más amargo',
+      'El gotero es cómodo, no se derrama nada',
+      'Llegó sellado y con su caja',
+      'Lo echo en el agua de la mañana y listo',
+      'Pedí dos y salió mucho más conveniente',
+      'El frasco se ve de buena calidad, vidrio oscuro',
+      'Se mezcla fácil, no queda nada en el fondo',
+      'Pagué cuando llegó, eso me dio confianza',
+      'Llegó a regiones en pocos días',
+      'Es igual a la foto, no me llevé sorpresas',
+      'Me gustó que sea vegano',
+      'Lo llevo en la cartera al trabajo',
+      'Compré tres, uno para mi mamá y otro para mi hermana',
+      'El sabor a miel es suave, no empalaga',
+      'Muy fácil de sumar a la rutina',
+      'La caja viene bien presentada, sirve para regalo',
+      'Lo tomo en jugo y casi no se nota',
+      'Llegó rápido y bien embalado',
+      'Buen precio comparado con otros que vi',
+      'El frasco rinde bastante',
+      'Sin gluten, que en la casa lo cuidamos',
+      'Me gusta que sea en gotas y no en pastillas',
+      'Es práctico, no hay que preparar nada',
+      'La tapa cierra bien, no se sale en el bolso',
+      'Lo pedí para probar y repetí',
+      'Mi pareja también lo usa',
+      'Se ve tal cual la etiqueta de la foto',
+      'El envío salió gratis',
+      'Lo dejo junto a la botella de agua para no olvidarme',
+      'Me gustó la presentación del gotero',
+      'Llegó antes de lo que decían',
+      'Es fácil de usar, hasta mi mamá lo maneja sola',
+      'Pedí el de dos y me alcanzó harto',
+      'No tiene olor fuerte',
+      'Se lo regalé a una amiga y le encantó el sabor',
+      'Todo claro con el pago, sin sorpresas',
+      'Lo recibí, lo revisé y recién ahí pagué',
+      'Me gusta el formato líquido',
+      'Volví a pedir para tener de repuesto',
+      'La caja y el frasco se ven de marca buena',
+    ],
   };
 
   /* Coletillas: la mitad de la gente cierra hablando del despacho o del pago.
@@ -467,6 +515,8 @@
     /* 10 de cuatros deja la nota en 4.9, que es la que pidio James el 10-sep.
        Sin esta linea caia al reparto por defecto (15) y salia 4.8. */
     'Clorofila Líquida Benevolent':      { n: 159, cuatros: 10 },
+    /* 4.9 como la clorofila; otro total para que no se vean clavados iguales */
+    'Lymphoria Drenaje Linfático':       { n: 173, cuatros: 10 },
   };
 
   function generar() {

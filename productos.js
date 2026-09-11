@@ -529,6 +529,73 @@ window.PRODUCTOS = [
     popular: 2,
   },
   {
+    /* Lymphoria Drenaje Linfático 60 ml — Dropi 159173 · VITALCOM (Recoleta)
+       Precio aprobado por James el 11-sep: 24.500 / 29.500 / 39.500.
+       🔴 LIMITE LEGAL. Suplemento alimentario (D.S. 977/96, arts. 110 y 536).
+       TODA la competencia vende con «desinflama / adios hinchazon / elimina
+       liquidos / en 7 dias», doctores falsos y antes/despues. Aca NO: ni
+       hinchazon, ni retencion, ni celulitis, ni adelgaza, ni desintoxica, ni
+       defensas, ni cuantas gotas tomar. Solo hechos del producto y de la compra.
+       SELLOS: solo los que salen en TODAS las versiones del envase: vegano,
+       sin gluten, sin transgenicos. «Sin alcohol» sale en la foto de Dropi y
+       «sin alergenos» en el metraje; como no coinciden, no se afirma ninguno.
+       El sabor a miel sale del sello «Tastes Like Honey» de la caja.
+       SIN antes y despues, a proposito.
+       OJO NOMBRE: «drenaje» ya lo atrapa el DRAINPRO en el panel, el bot de
+       redes y la clasificacion por pagina. Por eso el nombre EMPIEZA con
+       «Lymphoria», y en cada uno de esos sitios su regla va antes que la del polvo. */
+    id: 'lymphoria', unidad: 'frasco', promo: 2,
+    video: 'img/lymphoria.mp4?v=1',
+    preguntas: [
+      { q: '¿Cómo se toma?', a: 'Se agregan unas gotas a un vaso de agua o de jugo, en el momento del día que prefieras. La dosis sugerida viene indicada en la etiqueta del frasco.' },
+      { q: '¿A qué sabe?', a: 'A miel. Así lo declara la propia caja con su sello «Tastes Like Honey».' },
+      { q: '¿Cuánto me dura?', a: 'Depende de la dosis que indica la etiqueta. Por eso la mayoría se lleva el pack de 2 frascos: sale más conveniente y no se queda sin.' },
+      { q: '¿Es vegano?', a: 'Sí. El envase lo declara vegano, sin gluten y sin transgénicos.' },
+      { q: '¿Se puede llevar en la cartera?', a: 'Sí. Es un frasco de 60 ml con gotero, así que cabe en cualquier bolso y lo usas donde estés.' },
+      { q: '¿Quién no debería tomarlo?', a: 'Por norma chilena, los suplementos alimentarios no se recomiendan para menores de 8 años, embarazadas ni mujeres amamantando, salvo indicación de un profesional. No reemplaza una alimentación balanceada.' },
+    ],
+    formulaRotulo: 'Qué es',
+    formulaTitulo: 'Extractos de hierbas en gotas, con sabor a miel.',
+    formulaSub: 'Suplemento alimentario en formato líquido. Acompaña tu rutina diaria y no reemplaza una alimentación balanceada.',
+    formula: [
+      ['hoja', 'Extractos de hierbas', 'Fórmula líquida de extractos herbales, tal como la declara el fabricante.'],
+      ['gota', 'Gotero dosificador', 'El frasco trae su propio gotero: nada de medir a ojo.'],
+      ['hoja', 'Sabor a miel', 'Lo declara la caja con su sello. Se toma sin hacer caras.'],
+      ['escudo', 'Vegano', 'Declarado en el envase del fabricante.'],
+      ['escudo', 'Sin gluten', 'Declarado en el envase del fabricante.'],
+      ['pluma', 'Cabe en la cartera', 'Frasco de 60 ml: lo llevas al trabajo o de viaje.'],
+    ],
+    comparaTitulo: 'Por qué en gotas y no en cápsulas',
+    compara: [
+      'Se mezcla en tu agua o tu jugo: no hay que tragar pastillas.',
+      'El gotero dosifica solo: nada de contar cápsulas.',
+      'Sabor a miel, vegano y sin gluten.',
+    ],
+    nombre: 'Lymphoria Drenaje Linfático',
+    sub: 'Extractos de hierbas en gotas, con sabor a miel',
+    categoria: 'Bienestar',
+    foto: 'img/prod-lymphoria.webp?v=1',
+    fotos: ['img/prod-lymphoria.webp?v=1', 'img/ly-llega1.webp?v=1'],
+    acento: '#1E4D3B',   /* el verde bosque de la caja; distinto al verde de la clorofila */
+    desc: 'Lymphoria es un suplemento alimentario de extractos de hierbas en formato líquido, en frasco de 60 ml con gotero dosificador. Se agrega a un vaso de agua o de jugo y tiene sabor a miel, así lo declara su caja. Es vegano, sin gluten y sin transgénicos según el envase del fabricante. El frasco es chico y cabe en la cartera. Acompaña tu rutina diaria y no reemplaza una alimentación balanceada. La dosis sugerida viene indicada en la etiqueta.',
+    puntos: [
+      'Frasco de 60 ml con gotero dosificador',
+      'Extractos de hierbas en formato líquido',
+      'Sabor a miel, declarado en la caja',
+      'Vegano y sin gluten, según el envase',
+      'Cabe en la cartera: lo llevas a cualquier parte',
+      'Pagas al recibir, con envío gratis a todo Chile',
+    ],
+    packs: [
+      /* mismo criterio de la clorofila: el «antes» del primer pack es un 30%
+         sobre el precio, y los de 2 y 3 son lo que costaria comprarlos sueltos */
+      { cant: 1, precio: 24500, antes: 31900, texto: '1 frasco · 60 ml' },
+      { cant: 2, precio: 29500, antes: 49000, texto: '2 frascos · 120 ml' },
+      { cant: 3, precio: 39500, antes: 73500, texto: '3 frascos · 180 ml' },
+    ],
+    popular: 1,   /* el pack de 2, el MAS VENDIDO de la placa de James */
+  },
+  {
     /* promo = el `cant` del pack que se destaca, NO la posicion.
        Aqui cant va en CAJAS de 10, asi que el pack de 60 parches es cant 6. */
     id: 'kinoki', unidad: 'caja de 10', promo: 6,
@@ -602,4 +669,5 @@ window.PRECIOS_APROBADOS = [
   19500, 25500, 32500,   /* parches kinoki: 30 · 60 · 90 parches */
   29500, 39500, 49500,   /* almohada cervical: 1 · 2 · 3 unidades */
   24500, 29500, 41500,   /* clorofila liquida: 1 · 2 · 3 frascos (James, 10-sep) */
+  24500, 29500, 39500,   /* lymphoria drenaje: 1 · 2 · 3 frascos (James, 11-sep) */
 ];
