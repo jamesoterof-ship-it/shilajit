@@ -165,7 +165,12 @@
      mas bajo y es el que no espanta al que recien entra. El pack que se
      empuja no se pierde: tiene su propia seccion de PROMOCION mas abajo,
      con contador, y ese pack lo elige el dueno en el campo `promo`. */
-  var elegido = 0;
+  /* 🔴 James, 11-sep: «en el formulario siempre seleccione el MAS VENDIDO».
+     Antes arrancaba en 0 (el pack de entrada). Ahora arranca en el pack
+     destacado, que es el mismo que lleva la etiqueta «Más vendido».
+     OJO: esta variable no solo pinta la seleccion, tambien manda el precio y
+     la cantidad del pedido, asi que se cambia aca y todo queda en linea. */
+  var elegido = iPop;
   /* Upsells post-compra, uno por producto. Todos viajan en la MISMA guia que
      el pedido, asi que no pagan flete aparte: por eso el extra tiene que ser
      del MISMO proveedor. Si un producto no esta en esta lista, no se le
@@ -275,7 +280,10 @@
       : '');
 
   /* ---------- 2 y 3 · estrellas, precio y nombre ---------- */
-  var kPop = p.packs[elegido];
+  /* El precio grande de arriba nace con el PACK DE ENTRADA, no con el
+     seleccionado: es el numero mas bajo y es el que no espanta al que recien
+     entra (regla de James). El formulario si arranca en el mas vendido. */
+  var kPop = p.packs[0];
   var off = kPop.antes ? Math.round((1 - kPop.precio / kPop.antes) * 100) : 0;
   var cabecera = '<div class="datos">'
     + '<div class="estrellas">' + estrellas(prom)
@@ -307,7 +315,9 @@
   function seccionPromo() {
     if (typeof p.promo !== 'number') return '';
     var iP = p.packs.findIndex(function (k) { return k.cant === p.promo; });
-    if (iP < 0 || iP === elegido) return '';
+    /* se compara contra el pack de ENTRADA, que es el que manda arriba. Con
+       `elegido` la seccion se escondia sola al arrancar en el mas vendido. */
+    if (iP < 0 || iP === 0) return '';
     var k = p.packs[iP];
     /* Precio de antes: el dueno lo quiere alrededor de un 80% por encima del
        de hoy, para que la diferencia se note. Se redondea a la centena. */
@@ -832,15 +842,21 @@
     } else arrancar();
   })();
 
+  /* Mientras el cliente NO haya tocado un pack, el precio grande de arriba se
+     queda en el de entrada. Apenas elige uno, arriba sigue su eleccion.
+     El resumen del formulario y PACK_ELEGIDO van SIEMPRE con el seleccionado:
+     es lo que se cobra, y no puede decir una cosa y registrar otra. */
+  var _tocado = false;
   function pintarPrecio() {
     var k = p.packs[elegido];
+    var kArriba = _tocado ? k : p.packs[0];
     window.PACK_ELEGIDO = { cant: k.cant, precio: k.precio };
     window.PRODUCTO_NOMBRE = p.nombre;
-    var o = k.antes ? Math.round((1 - k.precio / k.antes) * 100) : 0;
-    $('pcAhora').textContent = pesos(k.precio);
-    if ($('pcAntes')) $('pcAntes').textContent = k.antes ? pesos(k.antes) : '';
+    var o = kArriba.antes ? Math.round((1 - kArriba.precio / kArriba.antes) * 100) : 0;
+    $('pcAhora').textContent = pesos(kArriba.precio);
+    if ($('pcAntes')) $('pcAntes').textContent = kArriba.antes ? pesos(kArriba.antes) : '';
     if ($('pcOff')) $('pcOff').textContent = o ? '-' + o + '%' : '';
-    if ($('pcPack')) $('pcPack').textContent = k.texto + ' · ' + pesos(Math.round(k.precio / k.cant)) + ' cada ' + (p.unidad || 'una');
+    if ($('pcPack')) $('pcPack').textContent = kArriba.texto + ' · ' + pesos(Math.round(kArriba.precio / kArriba.cant)) + ' cada ' + (p.unidad || 'una');
     if ($('sumSub')) $('sumSub').textContent = pesos(k.antes || k.precio);
     if ($('sumDesc')) $('sumDesc').textContent = '-' + pesos((k.antes || k.precio) - k.precio);
     if ($('sumTot')) $('sumTot').textContent = pesos(k.precio);
@@ -943,6 +959,7 @@
   var _atc = false;
   function elegirPack(i) {
     elegido = i;
+    _tocado = true;   /* desde aca, el precio de arriba sigue lo que el cliente elija */
     /* AddToCart: elegir el pack es el paso del medio del embudo, y era el
        unico que Meta no veia. Con el, el algoritmo tiene una señal mas para
        encontrar al que compra, no solo al que mira. Sale UNA vez por visita:
