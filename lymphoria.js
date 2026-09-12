@@ -81,7 +81,7 @@
     var F = [
       ['ly-p3.webp', 'Persona en su cocina con el frasco en una mano y un vaso de agua con limón en la otra',
        'Para qué sirve', 'Apoyo al sistema linfático, en tu día a día',
-       'Su proveedor lo presenta como un complemento para apoyar el funcionamiento del sistema linfático, acompañar el equilibrio natural de líquidos del organismo y sumarse a una rutina de alimentación equilibrada y actividad física.'],
+       'Está pensado para apoyar el funcionamiento del sistema linfático, acompañar el equilibrio natural de líquidos del organismo y sumarse a una rutina de alimentación equilibrada y actividad física. Así lo declara su envase: «traditional lymphatic support».'],
       ['ly-p2.webp', 'El gotero soltando gotas doradas en un vaso de agua con hielo, junto al frasco',
        'Cómo se toma', 'Unas gotas y sigues con lo tuyo',
        'Es líquido: cae en el agua o en el jugo y se reparte solo. Sabe a miel, así que se toma sin hacer caras, y no hay cápsulas que tragar ni polvo que quede en el fondo del vaso.'],
