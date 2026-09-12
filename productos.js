@@ -559,6 +559,7 @@ window.PRODUCTOS = [
     antesDespues: 'img/ly-cambio.webp?v=1',
     antesDespuesSub: 'Cómo era la rutina con polvos y cápsulas, y cómo es con unas gotas en el vaso.',
     preguntas: [
+      { q: '¿Para qué sirve?', a: 'Es un drenaje linfático en gotas. Está pensado para apoyar el funcionamiento del sistema linfático, acompañar el equilibrio natural de líquidos del organismo y sumarse a una rutina de alimentación equilibrada y actividad física. Así lo declara su envase, que lo presenta como «traditional lymphatic support». Es un suplemento alimentario: acompaña tu alimentación y no la reemplaza.' },
       { q: '¿Cómo se toma?', a: 'Se agregan unas gotas a un vaso de agua o de jugo, en el momento del día que prefieras. La dosis sugerida viene indicada en la etiqueta del frasco.' },
       { q: '¿A qué sabe?', a: 'A miel. Así lo declara la propia caja con su sello «Tastes Like Honey».' },
       { q: '¿Qué trae dentro?', a: 'Una mezcla de 300 mg de extractos de cuatro hierbas: cleavers (Galium aparine), flor de trébol rojo (Trifolium pratense), raíz de stillingia (Stillingia sylvatica) y corteza de fresno espinoso (Zanthoxylum americanum). La base es agua purificada, glicerina, maltitol y saborizante, con sorbato de potasio como conservante. Todo eso viene declarado en la etiqueta del frasco.' },
@@ -609,7 +610,10 @@ window.PRODUCTOS = [
        en su ficha, citado como suyo. NO se dice que desinflama, que baja la
        hinchazon o la retencion, ni se da la dosis: eso lo prohibe el
        D.S. 977/96 y Meta rechaza los anuncios que lo dicen. */
-    desc: 'PARA QUÉ SIRVE. Lymphoria es un drenaje linfático en gotas: está pensado para apoyar el funcionamiento del sistema linfático, acompañar el equilibrio natural de líquidos del organismo y sumarse a una rutina de alimentación equilibrada y actividad física. Así lo declara su propio envase, «traditional lymphatic support». QUÉ ES. Un suplemento alimentario líquido de extractos de hierbas, en frasco de vidrio ámbar de 60 ml con gotero. Su fórmula son cuatro hierbas de la herbolaría clásica: cleavers (Galium aparine), flor de trébol rojo (Trifolium pratense), raíz de stillingia (Stillingia sylvatica) y corteza de fresno espinoso (Zanthoxylum americanum), 300 mg de mezcla por porción, en base líquida con sabor a miel. CÓMO SE TOMA. Unas gotas en tu vaso de agua o de jugo: nada de cápsulas que tragar ni de polvos que quedan con grumos. Es un suplemento alimentario, no un medicamento: acompaña tu alimentación y no la reemplaza.',
+    /* CORTO (James, 11-sep: «esa seccion esta demasiado larga»). El detalle
+       —las cuatro hierbas, los 300 mg y como se toma— vive en «Que trae
+       dentro» y en las preguntas frecuentes, no aca. */
+    desc: 'Un drenaje linfático en gotas, pensado para apoyar el funcionamiento del sistema linfático y acompañar el equilibrio natural de líquidos del organismo. Así lo declara su envase: «traditional lymphatic support». Es un suplemento alimentario, no un medicamento.',
     puntos: [
       'Apoya el funcionamiento del sistema linfático',
       'Acompaña el equilibrio natural de líquidos del organismo',
