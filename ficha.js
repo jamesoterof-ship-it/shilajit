@@ -212,7 +212,26 @@
               texto: '#123A28', borde: '#cfe6d9', suave: '#f2f8f4', foto: '#0d2b1a',
               sombra: '27,94,58' },
       /* los dos a 22.000 los fijo James el 10-sep (venian en 19.990) */
-      opciones: [{ cant: 1, precio: 12990 }, { cant: 2, precio: 22000 }] }
+      opciones: [{ cant: 1, precio: 12990 }, { cant: 2, precio: 22000 }] },
+    /* Lymphoria -> Colageno Neocell (Dropi 142607). Otra vez el caso limpio:
+       MISMO proveedor (VITALCOM) y MISMA bodega (Recoleta), asi que el tarro
+       entra en la misma caja y no paga flete aparte.
+       Precios de James, 12-sep: 1 tarro 12.990 · 2 tarros 22.500.
+       🔴 Es un SUPLEMENTO: los beneficios de aca son los que declara el propio
+       envase («favorece», «contribuye», «apoya»). El mismo bote avisa que no
+       se use para bajar de peso, asi que eso NO se insinua ni de lejos. */
+    lymphoria: { nombre: 'Colágeno Neocell Bio-Peptides',
+      webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-colageno',
+      foto: 'img/colageno.webp',
+      beneficios: ['20 g de colágeno por porción', 'Favorece la firmeza y elasticidad de la piel',
+        'Contribuye a huesos, articulaciones, cabello y uñas', 'Sin sabor: se mezcla en agua, café o jugo'],
+      /* los azules salen del propio tarro: el azul del envase y el de sus
+         circulos. Con el verde de la Lymphoria la ventana no parecia del
+         producto de la foto (James, 12-sep: «utiliza los colores del producto») */
+      tema: { osc: '#0B4C82', med: '#1E9BE0', btnA: '#0E77C0', btnB: '#35B5F2',
+              texto: '#0B4C82', borde: '#cfe6f8', suave: '#f1f8fe', foto: '#0a3a63',
+              sombra: '14,119,192' },
+      opciones: [{ cant: 1, precio: 12990 }, { cant: 2, precio: 22500 }] }
   };
   /* la ventana post-compra vive fuera de este bloque, por eso se exponen */
   window.UPSELLS = UPSELLS;
