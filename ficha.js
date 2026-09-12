@@ -1437,8 +1437,12 @@ function abrirUpsell(nombre, telWA, upsell) {
     '@keyframes upIn{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}'
   + '@keyframes upFade{from{opacity:0}to{opacity:1}}'
   + '.upov{position:fixed;inset:0;background:rgba(4,10,24,.74);z-index:99999;display:flex;'
-  + 'align-items:center;justify-content:center;padding:14px;overflow:auto;animation:upFade .18s ease}'
+  + 'align-items:center;justify-content:center;padding:8px;overflow:auto;animation:upFade .18s ease}'
   + '.upcard{position:relative;background:#fff;border-radius:24px;max-width:360px;width:100%;'
+  /* James, 12-sep: «que se vea completa en el celular, sin scroll». La tarjeta
+     se limita al alto de la pantalla y reparte el espacio: la foto toma lo que
+     sobra y se ve entera, solo mas chica. Nada queda debajo del pliegue. */
+  + 'display:flex;flex-direction:column;max-height:calc(100dvh - 16px);'
   + 'padding:0 0 20px;text-align:center;color:#1b2432;overflow:hidden;'
   + 'box-shadow:0 30px 80px rgba(4,10,24,.55);animation:upIn .26s cubic-bezier(.2,.9,.3,1.15)}'
   + '.upcard .cab{background:linear-gradient(135deg,' + T.osc + ',' + T.med + ');padding:16px 18px 14px}'
@@ -1451,7 +1455,11 @@ function abrirUpsell(nombre, telWA, upsell) {
   /* La foto se limita en alto: a tamano completo empujaba la opcion de dos
      unidades debajo del pliegue en celular, y ahi esta el margen. Con
      'contain' la placa se ve entera, solo mas chica. */
-  + '.upcard .foto{display:block;width:100%;height:auto;max-height:240px;'
+  /* James, 12-sep: «que ocupe toda la pantalla la imagen». Se va el tope de
+     240px: la placa va de borde a borde y entera. Como eso empuja el precio
+     y el boton hacia abajo, la ventana gana desplazamiento propio (mas
+     abajo, en .upcard) para que el boton siga siendo alcanzable. */
+  + '.upcard .foto{display:block;width:100%;flex:1 1 auto;min-height:0;height:auto;'
   + 'object-fit:contain;background:' + T.foto + ';margin:0}'
   + '.upcard .sub{font-size:13px;color:#68788e;margin:14px 22px 12px;line-height:1.5}'
   + '.upcard .precio{font-size:33px;font-weight:800;color:' + T.texto + ';letter-spacing:-.6px;margin:2px 0 0}'
@@ -1475,14 +1483,25 @@ function abrirUpsell(nombre, telWA, upsell) {
      acertar con el dedo. Ahora llega a 4.9 de contraste y a 46px de alto,
      que es el minimo para tocar. Sigue siendo el boton secundario: no
      compite con el de comprar, pero el que no lo quiere puede salir. */
-  + '.upno{width:100%;border:0;background:none;color:#5a6a80;margin-top:10px;'
-  + 'font-size:14px;font-weight:600;padding:13px 8px;min-height:46px;cursor:pointer;'
-  + 'border-radius:12px;text-decoration:underline;text-underline-offset:3px}'
-  + '.upno:hover{color:#3d4a5c;background:#f3f5f8}'
+  /* James, 12-sep: «mas grande» y «ponlo como boton tambien». Deja de ser un
+     enlace subrayado y pasa a boton con borde, del mismo alto que los otros
+     dos, pero en gris: sigue siendo la salida, no compite con el CTA. */
+  + '.upno{width:100%;border:1.5px solid #d8dee8;background:#fff;color:#43536b;margin-top:12px;'
+  + 'font-size:16px;font-weight:700;padding:16px 8px;min-height:54px;cursor:pointer;'
+  + 'border-radius:15px}'
+  + '.upno:hover{color:#2b3a4d;background:#f3f5f8;border-color:#c7d0dd}'
   /* la X pasa de 29 a 42px: 29 no se acierta con el dedo */
   + '.upx{position:absolute;top:9px;right:10px;border:0;background:rgba(255,255,255,.24);color:#fff;'
   + 'width:44px;height:44px;min-width:44px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer;z-index:2}'
   + '.upx:hover{background:rgba(255,255,255,.34)}'
+  /* pantallas bajas: se aprietan los textos para que los tres botones entren
+     sin scroll. La foto cede lo que haga falta porque es la que reparte. */
+  + '@media (max-height:820px){.upcard{padding-bottom:12px}'
+  + '.upcard .cab{padding:12px 16px 10px}.upcard .cab h3{font-size:17px;margin-top:7px}'
+  + '.upcard .sub{margin:9px 20px 8px;font-size:12.5px}'
+  + '.upcard .precio{font-size:28px}.upcard .precio small{margin-top:3px}'
+  + '.upbtns{margin:10px 20px 0}.upsi{padding:14px}.updos{padding:12px}'
+  + '.upno{margin-top:8px;padding:13px 8px;min-height:48px}}'
   + '@media (prefers-reduced-motion:reduce){.upcard,.upov{animation:none}'
   + '.upsi,.updos{transition:none}}';
   document.head.appendChild(st);
