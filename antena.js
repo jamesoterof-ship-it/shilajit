@@ -98,7 +98,7 @@
       ['prod-antena-3.webp', 'La antena con el cable extendido hasta la ventana',
        'Cable de 3 metros', 'Llega hasta la ventana',
        'La señal entra mejor cerca de la ventana. Con 3 metros de cable la pones ahí sin alargadores ni mover el televisor.'],
-      ['prod-antena-4.webp', 'Televisor mostrando un canal en alta definición con la antena conectada',
+      ['antena-f3.webp?v=1', 'La antena conectada al televisor con el partido en HD y sus beneficios al lado',
        'Canales en HD', 'Señal abierta, nítida',
        'Capta los canales abiertos de Chile en alta definición: noticias, fútbol, teleseries. Es antena de señal abierta: no reemplaza el cable ni el streaming.'],
     ];
