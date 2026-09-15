@@ -222,6 +222,10 @@ window.PRODUCTOS = [
        la ficha lo pinta abajo, sin sonido, en bucle y arrancando solo, igual
        que en los demas productos (James, 14-09: nada de boton de play). */
     video: 'video/instala_antena.mp4?v=2',   /* v=2: cortado a 1:15,9 (fuera el rotulo ajeno del final) */
+    /* el antes y despues lo hizo James (14-09): la ficha lo pinta en «El cambio»,
+       justo antes de las preguntas, igual que en el cargador */
+    antesDespues: 'img/antena-ba.webp?v=1',
+    antesDespuesSub: 'Misma tele, mismo partido: la diferencia es la antena.',
     foto: 'img/prod-antena.webp',
     fotos: ['img/prod-antena.webp', 'img/prod-antena-2.webp', 'img/prod-antena-3.webp', 'img/prod-antena-4.webp'],
     acento: '#123C8C',      /* azul, el del creativo de la antena */
