@@ -245,7 +245,7 @@ window.PRODUCTOS = [
       { cant: 2, precio: 24500, antes: 39000, texto: '2 antenas' },
       { cant: 3, precio: 29500, antes: 48000, texto: '3 antenas' },
     ],
-    popular: 0,
+    popular: 1,   /* el mas vendido es el pack de 2 (James, 14-09); el formulario arranca ahi */
     nota: 'Viene en pack del proveedor. No hay unidad suelta.',
   },
   {
