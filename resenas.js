@@ -186,7 +186,7 @@
       'Vienen dos, una para el living y otra para la pieza',
       'Se conecta y se buscan canales, listo',
       'En regiones también agarra bien, yo estoy en Chillán',
-      'Adiós a la mensualidad del cable',
+      'Los canales abiertos se ven nítidos',
       'La base magnética se afirma sola, eso está bueno',
       'El cable de tres metros me alcanzó justo hasta la ventana',
       'Chiquita pero agarra harto',

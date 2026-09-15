@@ -34,6 +34,28 @@
     play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>'
   };
   function chip(ico, txt) { return '<span class="an-chip">' + ico + txt + '</span>'; }
+
+  /* CASCADA del titulo (James, 14-09): letra por letra, de izquierda a derecha
+     y de arriba abajo. Cada letra SINTONIZA (parpadea un instante y se fija),
+     no cae como en la clorofila. Las lineas son arreglos de trozos: texto
+     suelto se parte en letras; {hd:'HD'} es un solo bloque rojo. El indice --k
+     corre por todo el titulo para que la cascada no se reinicie en cada linea. */
+  function cascada(lineas) {
+    var k = 0;
+    return lineas.map(function (linea) {
+      return '<span class="an-linea">' + linea.map(function (trozo) {
+        if (trozo && trozo.hd) return '<span class="an-w"><span class="an-l an-hd" style="--k:' + (k++) + '">' + trozo.hd + '</span></span>';
+        /* cada PALABRA va en su caja (an-w) para que el navegador nunca la
+           parta a la mitad al saltar de linea; adentro, letra por letra */
+        return String(trozo).split(' ').map(function (palabra) {
+          if (!palabra) return '';
+          return '<span class="an-w">' + palabra.split('').map(function (ch) {
+            return '<span class="an-l" style="--k:' + (k++) + '">' + ch + '</span>';
+          }).join('') + '</span>';
+        }).join(' ');
+      }).join('') + '</span>';
+    }).join('');
+  }
   function barras() { var s = ''; for (var i = 0; i < 4; i++) s += '<i style="--n:' + i + '"></i>'; return '<span class="an-barras" aria-hidden="true">' + s + '</span>'; }
 
   /* pone el estado "antes" y lo quita cuando el elemento entra en pantalla.
@@ -55,7 +77,7 @@
     var P = [
       ['La conectas al televisor', 'Un solo cable al puerto de antena que trae cualquier tele. No hay app, no hay clave, no hay técnico.'],
       ['La pegas donde entre la señal', 'La base es magnética: se afirma sola en el marco de la ventana o en el mueble. El cable de 3 metros llega hasta allá.'],
-      ['Buscas canales y listo', 'En el menú del televisor le das «buscar canales» y en dos minutos tienes los canales chilenos en HD, gratis.'],
+      ['Buscas canales y listo', 'En el menú del televisor le das «buscar canales» y en dos minutos tienes los canales abiertos de Chile en HD.'],
     ];
     return '<section class="an-pasos">' +
       '<span class="an-rot2">Así de simple</span>' +
@@ -77,8 +99,8 @@
        'Cable de 3 metros', 'Llega hasta la ventana',
        'La señal entra mejor cerca de la ventana. Con 3 metros de cable la pones ahí sin alargadores ni mover el televisor.'],
       ['prod-antena-4.webp', 'Televisor mostrando un canal en alta definición con la antena conectada',
-       'Canales en HD', 'Sin mensualidad, sin contrato',
-       'Capta los canales chilenos abiertos en alta definición: noticias, fútbol, teleseries. Se paga una vez y no vuelve a cobrar nadie.'],
+       'Canales en HD', 'Señal abierta, nítida',
+       'Capta los canales abiertos de Chile en alta definición: noticias, fútbol, teleseries. Es antena de señal abierta: no reemplaza el cable ni el streaming.'],
     ];
     return '<div class="an-fichas">' + F.map(function (f) {
       return '<figure class="an-fi">' +
@@ -108,16 +130,17 @@
         '<div class="an-ondas" aria-hidden="true">' + ondas + '</div>' +
         '<div class="an-sobre">' +
           '<span class="an-rot"><i></i>Antena TV Digital HD · pack de 2</span>' +
-          '<h1 class="an-h1">' +
-            '<span class="an-sinto" style="--i:0">Todos los canales</span>' +
-            '<span class="an-sinto" style="--i:1">chilenos en <span class="an-hd">HD</span>,</span>' +
-            '<span class="an-sinto" style="--i:2">sin pagar mensualidad.</span>' +
+          /* OJO copy (James, 14-09): NUNCA "sin mensualidad", "sin contrato" ni
+             "todos los canales": la gente entiende que reemplaza el cable y
+             reclama. Es señal ABIERTA y se dice asi. */
+          '<h1 class="an-h1 an-cascada" aria-label="Los canales abiertos de Chile en HD, sin técnico ni instalación.">' +
+            cascada([['Los canales abiertos'], ['de Chile en ', { hd: 'HD' }, ','], ['sin técnico ni instalación.']]) +
           '</h1>' +
           '<p class="an-bajada an-aparece">Se conecta, buscas canales y listo. Pagas cuando te llega.</p>' +
         '</div>' +
         '<div class="an-cont an-busca" aria-live="polite"><b data-fin="40">0</b><small>canales</small></div>' +
       '</div>' +
-      '<div class="an-chips">' + chip(ICO.hd, 'Canales en HD') + chip(ICO.libre, 'Sin mensualidad') + chip(ICO.iman, 'Base magnética') + '</div>';
+      '<div class="an-chips">' + chip(ICO.hd, 'Canales en HD') + chip(ICO.libre, 'Señal abierta') + chip(ICO.iman, 'Base magnética') + '</div>';
 
     /* la GALERIA se va (arriba queda el hero); la cabecera con estrellas,
        nombre, precio y boton se queda, justo debajo de los chips */
@@ -173,10 +196,14 @@
       c.style.setProperty('--i', i);
       if (!quieto) c.classList.add('an-iman');
     });
-    var subir = cont.querySelectorAll('.an-sinto, .an-aparece, .an-iman');
+    var subir = cont.querySelectorAll('.an-aparece, .an-iman');
+    var h1 = cont.querySelector('.an-h1');
     setTimeout(function () {
-      subir.forEach(function (el) { el.classList.remove('an-sinto', 'an-aparece', 'an-iman'); });
-    }, quieto ? 0 : 2800);
+      subir.forEach(function (el) { el.classList.remove('an-aparece', 'an-iman'); });
+      /* la cascada termina sola en ~2,5 s; aca se apaga la clase por si el
+         navegador frena los cuadros: sin ella, todas las letras quedan fijas */
+      if (h1) h1.classList.remove('an-cascada');
+    }, quieto ? 0 : 3400);
 
     /* CONTADOR: busca canales (salta numeros al azar) y aterriza en el final */
     var cnt = cont.querySelector('.an-cont b');

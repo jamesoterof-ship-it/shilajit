@@ -44,13 +44,26 @@ body.p-antena { --an-azul: #123C8C; --an-azulD: #0B2557; --an-rojo: #C4122F; --a
   margin: 0; max-width: 80%; font-size: clamp(32px, 9.2vw, 46px); line-height: 1.02;
   font-weight: 900; letter-spacing: -.02em; color: #fff;
 }
-.p-antena .an-h1 > span { display: block; }
-/* SINTONIZAR: cada linea parpadea como una tele que agarra la señal y se fija.
-   El estado final es visible; a los 2,6 s el js quita la clase por si acaso. */
-.p-antena .an-sinto { animation: an-sinto 1.1s steps(1, end) both; animation-delay: calc(.15s + var(--i) * .22s); }
-@keyframes an-sinto {
-  0% { opacity: 0 } 12% { opacity: .9 } 20% { opacity: .15 } 32% { opacity: 1 }
-  40% { opacity: .35 } 52% { opacity: 1 } 60% { opacity: .6 } 100% { opacity: 1 }
+.p-antena .an-linea { display: block; }
+/* cada palabra es una caja que no se parte: sin esto el navegador cortaba
+   "MENSUALID/AD" a la mitad al saltar de linea */
+.p-antena .an-w { display: inline-block; white-space: nowrap; }
+.p-antena .an-l { display: inline-block; }
+/* CASCADA que SINTONIZA (James, 14-09): las letras entran una tras otra, de
+   izquierda a derecha, y cada una parpadea un instante como una tele que agarra
+   la señal antes de fijarse. Distinto a la clorofila, donde las letras caen.
+   Solo corre mientras el h1 tiene .an-cascada; el js la quita a los 3,4 s y
+   todas las letras quedan fijas pase lo que pase. */
+.p-antena .an-cascada .an-l {
+  animation: an-letra .55s steps(1, end) both;
+  animation-delay: calc(.15s + var(--k) * 45ms);
+}
+@keyframes an-letra {
+  0%   { opacity: 0;   transform: translateY(-.12em) scale(1.12); filter: blur(2px); }
+  30%  { opacity: .85; transform: translateY(0) scale(1.04); filter: blur(1px); }
+  45%  { opacity: .2;  transform: none; filter: none; }
+  60%  { opacity: 1;   text-shadow: 0 0 10px rgba(140,190,255,.9); }
+  100% { opacity: 1;   transform: none; filter: none; text-shadow: none; }
 }
 .p-antena .an-hd {
   color: #fff; background: var(--an-rojo); padding: 0 .18em; border-radius: .14em;
@@ -158,7 +171,7 @@ body.p-antena { --an-azul: #123C8C; --an-azulD: #0B2557; --an-rojo: #C4122F; --a
   .p-antena .an-fichas { grid-template-columns: repeat(3, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .p-antena .an-sinto, .p-antena .an-aparece, .p-antena .an-iman, .p-antena .an-onda, .p-antena .an-rot i,
+  .p-antena .an-cascada .an-l, .p-antena .an-aparece, .p-antena .an-iman, .p-antena .an-onda, .p-antena .an-rot i,
   .p-antena .an-rec i, .p-antena .an-play span::after, .p-antena .precioTop .off,
   .p-antena .btn-comprar::after, .p-antena .cta::after, .p-antena button[type="submit"]::after { animation: none !important; opacity: 1; transform: none; }
   .p-antena .an-espera.an-fi img { filter: none; transform: none; }

@@ -200,7 +200,10 @@ window.PRODUCTOS = [
     id: 'antena', unidad: 'una', promo: 2,
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
-      { q: '¿Hay que pagar mensualidad?', a: 'No. Los canales chilenos se ven gratis, sin mensualidad y sin contrato.' },
+      /* OJO copy (James, 14-09): NUNCA decir "sin mensualidad" ni "sin contrato":
+         la gente entiende que reemplaza el cable y reclama. Se dice SEÑAL ABIERTA
+         y se aclara de frente que no es cable ni streaming. */
+      { q: '¿Se ven los canales de cable o de streaming?', a: 'No. Es una antena de señal abierta: se ven los canales abiertos de Chile en HD (TVN, Mega, Chilevisión, Canal 13, La Red y sus señales). No reemplaza el cable ni Netflix.' },
       { q: '¿Puedo llevar una sola?', a: 'Sí, una antena sale $18.500. El pack de 2 queda en $24.500: la segunda te sale por $6.000 más y dejas una en cada televisor.' },
       { q: '¿Es difícil de instalar?', a: 'No. Se conecta al televisor, buscas canales y listo. La base es magnética y se afirma sola.' },
       { q: '¿Dónde la pongo?', a: 'Donde entre mejor la señal, normalmente cerca de una ventana. Por eso el cable es de 3 metros.' },
@@ -213,20 +216,20 @@ window.PRODUCTOS = [
     comparaTitulo: "¿Qué la hace diferente?",
     compara: ["Base magnética que se afirma sola — las comunes se caen con el cable.","Cable de 3 metros para llegar a la ventana, donde entra la señal.","Viene el pack de 2: una para cada televisor, sin pagar dos veces."],
     nombre: 'Antena TV Digital HD',
-    sub: 'Canales chilenos gratis en HD, sin mensualidad',
+    sub: 'Los canales abiertos de Chile en HD, sin técnico',
     categoria: 'Hogar',
     /* el video real de instalacion (el mismo que Camila manda tras la compra):
        la ficha lo pinta abajo, sin sonido, en bucle y arrancando solo, igual
        que en los demas productos (James, 14-09: nada de boton de play). */
-    video: 'video/instala_antena.mp4',
+    video: 'video/instala_antena.mp4?v=2',   /* v=2: cortado a 1:15,9 (fuera el rotulo ajeno del final) */
     foto: 'img/prod-antena.webp',
     fotos: ['img/prod-antena.webp', 'img/prod-antena-2.webp', 'img/prod-antena-3.webp', 'img/prod-antena-4.webp'],
     acento: '#123C8C',      /* azul, el del creativo de la antena */
     acento2Manual: '#C4122F',  /* y el rojo para los avisos: descuento, mas vendido */
-    desc: 'Antena para televisión digital que capta los canales chilenos en alta definición, sin pagar mensualidad y sin contratos. Viene en pack de dos: una para cada televisor. Se conecta al televisor y se busca canales, sin instalación complicada.',
+    desc: 'Antena de señal abierta para televisión digital: capta los canales abiertos de Chile en alta definición. No es cable ni streaming. Viene en pack de dos: una para cada televisor. Se conecta al televisor y se busca canales, sin técnico ni instalación complicada.',
     puntos: [
-      'Canales chilenos en HD, gratis',
-      'Sin mensualidad ni contrato',
+      'Los canales abiertos de Chile en HD',
+      'Señal abierta: no es cable ni streaming',
       'Vienen dos: una para cada tele',
       'Se conecta y buscas canales, listo',
     ],
