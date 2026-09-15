@@ -66,23 +66,6 @@
     '</section>';
   }
 
-  /* el video REAL de instalacion, el mismo que Camila manda despues de la
-     compra. Con controles y con sonido cuando el cliente lo pide: NO arranca
-     solo, y NO se baja al abrir la pagina (13 MB): la fuente se pone cuando
-     el cliente toca el play o cuando el telefono entra en pantalla. */
-  function video() {
-    return '<section class="an-video">' +
-      '<div class="an-tel">' +
-        '<span class="an-rec" aria-hidden="true"><i></i>VIDEO REAL</span>' +
-        '<video playsinline controls preload="none" poster="img/antena-video-poster.webp?v=1" ' +
-          'data-src="video/instala_antena.mp4" width="576" height="1024" ' +
-          'aria-label="Video de cómo se instala la antena, paso a paso"></video>' +
-        '<button type="button" class="an-play" aria-label="Ver cómo se instala"><span>' + ICO.play + '</span></button>' +
-      '</div>' +
-      '<p class="an-video-pie">Es el mismo video que te mandamos por WhatsApp cuando te llega el pedido. Míralo antes, y sabes que puedes.</p>' +
-    '</section>';
-  }
-
   /* las tres fotos reales van DENTRO de «Que es y para que sirve». Cada pie
      cuenta algo que la foto no trae escrito. */
   function fichas() {
@@ -146,7 +129,7 @@
     /* pasos + video antes de la descripcion. Ninguno lleva boton: debajo del
        precio ya esta el de la ficha, y dos seguidos rompen la regla */
     var desc = cont.querySelector('section.desc');
-    if (desc && !cont.querySelector('.an-pasos')) desc.insertAdjacentHTML('beforebegin', pasos() + video());
+    if (desc && !cont.querySelector('.an-pasos')) desc.insertAdjacentHTML('beforebegin', pasos());
 
     /* «Que es y para que sirve» pasa a ser las tres tarjetas: se busca la
        seccion por su titulo y se le cuelgan las fichas al final */
@@ -224,23 +207,9 @@
        al 59,5% del alto */
     if (ond) { ond.style.setProperty('--px', '49%'); ond.style.setProperty('--py', '59.5%'); }
 
-    /* VIDEO: la fuente se pone al tocar el play (o al entrar en pantalla) */
-    var vid = cont.querySelector('.an-tel video');
-    var play = cont.querySelector('.an-play');
-    var cargar = function () { if (vid && !vid.getAttribute('src')) vid.setAttribute('src', vid.getAttribute('data-src')); };
-    if (vid && play) {
-      play.addEventListener('click', function () {
-        cargar(); play.classList.add('an-fuera');
-        var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {});
-      });
-      vid.addEventListener('play', function () { play.classList.add('an-fuera'); });
-      if ('IntersectionObserver' in window) {
-        var ov = new IntersectionObserver(function (filas) {
-          if (filas.some(function (f) { return f.isIntersecting; })) { cargar(); ov.disconnect(); }
-        }, { rootMargin: '200px 0px' });
-        ov.observe(vid);
-      }
-    }
+    /* El VIDEO de instalacion ya no se arma aca: va por el campo `video` de
+       productos.js y lo pinta la ficha abajo, sin sonido, en bucle y arrancando
+       solo, como en los demas productos (James, 14-09). */
 
     /* barras de señal bajo los titulos de seccion de la ficha (el h1 no) */
     var tits = cont.querySelectorAll('section.bloque h2, section.form h2');

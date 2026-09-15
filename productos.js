@@ -215,6 +215,10 @@ window.PRODUCTOS = [
     nombre: 'Antena TV Digital HD',
     sub: 'Canales chilenos gratis en HD, sin mensualidad',
     categoria: 'Hogar',
+    /* el video real de instalacion (el mismo que Camila manda tras la compra):
+       la ficha lo pinta abajo, sin sonido, en bucle y arrancando solo, igual
+       que en los demas productos (James, 14-09: nada de boton de play). */
+    video: 'video/instala_antena.mp4',
     foto: 'img/prod-antena.webp',
     fotos: ['img/prod-antena.webp', 'img/prod-antena-2.webp', 'img/prod-antena-3.webp', 'img/prod-antena-4.webp'],
     acento: '#123C8C',      /* azul, el del creativo de la antena */

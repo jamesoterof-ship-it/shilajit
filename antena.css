@@ -119,33 +119,8 @@ body.p-antena { --an-azul: #123C8C; --an-azulD: #0B2557; --an-rojo: #C4122F; --a
 .p-antena .an-lista.an-antes li::after { transform: scaleY(0); }
 .p-antena .an-lista.an-antes li { opacity: 0; transform: translateY(12px); }
 
-/* ---------- VIDEO de instalacion: telefono en vertical, con controles ---------- */
-.p-antena .an-video { margin: 0 0 26px; padding: 0 16px; }
-.p-antena .an-tel {
-  position: relative; margin: 0 auto; max-width: 340px; border-radius: 26px; overflow: hidden;
-  background: #000; box-shadow: 0 18px 40px rgba(11,37,87,.28), 0 0 0 6px #0b1220;
-}
-.p-antena .an-tel video { display: block; width: 100%; aspect-ratio: 576/1024; object-fit: cover; background: #000; }
-/* REC: puntito rojo que late mientras el video no arranca */
-.p-antena .an-rec {
-  position: absolute; top: 14px; left: 14px; z-index: 2; display: inline-flex; align-items: center; gap: 6px;
-  padding: 5px 9px; border-radius: 999px; background: rgba(0,0,0,.55); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .1em;
-}
-.p-antena .an-rec i { width: 8px; height: 8px; border-radius: 50%; background: #ff3b3b; animation: an-rec 1.2s ease-in-out infinite; }
-@keyframes an-rec { 0%, 100% { opacity: 1 } 50% { opacity: .25 } }
-/* el boton de play grande: un anillo de señal late alrededor */
-.p-antena .an-play {
-  position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; background: rgba(11,37,87,.18); border: 0; cursor: pointer; padding: 0;
-}
-.p-antena .an-play span {
-  width: 74px; height: 74px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--an-azul);
-  box-shadow: 0 10px 28px rgba(0,0,0,.35); position: relative;
-}
-.p-antena .an-play span::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid #fff; opacity: 0; animation: an-anillo 2.2s ease-out infinite; }
-@keyframes an-anillo { 0% { opacity: .9; transform: scale(.7) } 100% { opacity: 0; transform: scale(1.6) } }
-.p-antena .an-play svg { width: 30px; height: 30px; margin-left: 4px; }
-.p-antena .an-play.an-fuera { display: none; }
-.p-antena .an-video-pie { margin: 12px auto 0; max-width: 340px; font-size: 13.5px; line-height: 1.5; color: var(--ink-2, #5b6573); text-align: center; }
+/* El video de instalacion lo pinta la ficha (campo `video` en productos.js):
+   sin sonido, en bucle, arranca solo, a todo el ancho y mas abajo. */
 
 /* ---------- FICHAS: tres fotos que ENTRAN BORROSAS y se enfocan (SD → HD) ---------- */
 .p-antena .an-fichas { display: grid; gap: 18px; margin: 14px 0 0; }
