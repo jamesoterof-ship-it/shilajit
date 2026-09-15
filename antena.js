@@ -133,7 +133,10 @@
           /* OJO copy (James, 14-09): NUNCA "sin mensualidad", "sin contrato" ni
              "todos los canales": la gente entiende que reemplaza el cable y
              reclama. Es señal ABIERTA y se dice asi. */
-          '<h1 class="an-h1 an-cascada" aria-label="Los canales abiertos de Chile en HD, sin técnico ni instalación.">' +
+          /* la clase an-cascada NO va aqui: la pone efectos() cuando la foto del
+             hero y la fuente ya cargaron. Antes arrancaba al pintar y en el
+             celular terminaba antes de que el hero se viera (James, 14-09). */
+          '<h1 class="an-h1" aria-label="Los canales abiertos de Chile en HD, sin técnico ni instalación.">' +
             cascada([['Los canales abiertos'], ['de Chile en ', { hd: 'HD' }, ','], ['sin técnico ni instalación.']]) +
           '</h1>' +
           '<p class="an-bajada an-aparece">Se conecta, buscas canales y listo. Pagas cuando te llega.</p>' +
@@ -180,7 +183,92 @@
     }
 
     efectos(cont);
+    efectos2(cont);
     return true;
+  }
+
+  /* SEGUNDA TANDA (James, 14-09: «ponle efectos a varias secciones, la dejaste
+     muy simple»). Todo con el hilo de la señal, nada de lo de la clorofila ni
+     la Lymphoria:
+       precio       -> los digitos SINTONIZAN (saltan como buscando canal) y se fijan
+       packs        -> cada tarjeta entra con LLUVIA de tele vieja y se aclara
+       que incluye  -> cada item entra de la izquierda y su icono hace un PING de señal
+       comparativa  -> las filas entran alternadas, izquierda/derecha
+       reseñas      -> la nota 4.8 sintoniza y las estrellas se PRENDEN de a una
+       garantia     -> el sello se ESTAMPA
+       el cambio    -> la foto entra con lluvia, se aclara y una linea de barrido la cruza
+       despacho     -> los sellos suben de a uno
+       formulario   -> el pack elegido late con anillo de señal (CSS)
+     Cada cosa se esconde SOLO si hay observador, y tiene red: a los 8 s se
+     muestra todo pase lo que pase. */
+  function efectos2(cont) {
+    var quieto = false;
+    try { quieto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    if (quieto || !('IntersectionObserver' in window)) return;
+
+    var grupos = [
+      ['.promo-card', 'an-lluvia'],
+      ['.form-sec .ing', 'an-desliza'],
+      ['.cmp-sec .cmp > *', 'an-alterna'],
+      ['.gar-sec .gseal', 'an-sello'],
+      ['.ba-sec .ba-img', 'an-lluvia an-barrido'],
+      ['.sellos .sello', 'an-sube'],
+      ['.rev-sec .stars', 'an-prende'],
+    ];
+    var todos = [];
+    grupos.forEach(function (g) {
+      var els = [].slice.call(cont.querySelectorAll(g[0]));
+      els.forEach(function (el, i) {
+        el.style.setProperty('--i', i);
+        el.classList.add('an-pre');
+        g[1].split(' ').forEach(function (c) { el.classList.add(c); });
+        todos.push(el);
+      });
+    });
+    /* estrellas: cada svg con su indice para prenderse de a una */
+    cont.querySelectorAll('.rev-sec .stars svg, .estrellas .est svg').forEach(function (s, i) { s.style.setProperty('--i', i); });
+
+    /* numeros que SINTONIZAN: el precio y la nota de las reseñas */
+    function sintonizar(el) {
+      if (!el || el.getAttribute('data-an-ok')) return;
+      el.setAttribute('data-an-ok', '1');
+      var fin = el.textContent, dur = 1100, t0 = Date.now();
+      var digs = fin.replace(/[^0-9]/g, '');
+      if (!digs) return;
+      el.classList.add('an-tune');
+      (function paso() {
+        var p = (Date.now() - t0) / dur;
+        if (p >= 1) { el.textContent = fin; el.classList.remove('an-tune'); return; }
+        var k = Math.floor(p * digs.length);        /* de izquierda a derecha se van fijando */
+        var out = '', d = 0;
+        for (var i = 0; i < fin.length; i++) {
+          var ch = fin[i];
+          if (/[0-9]/.test(ch)) { out += (d < k) ? ch : String(Math.floor(Math.random() * 10)); d++; }
+          else out += ch;
+        }
+        el.textContent = out;
+        requestAnimationFrame(paso);
+      })();
+      setTimeout(function () { el.textContent = fin; el.classList.remove('an-tune'); }, dur + 300);
+    }
+    var numeros = [].slice.call(cont.querySelectorAll('.precioTop .ahora, .rev-score .big, .promo-precio'));
+    numeros.forEach(function (n) { n.classList.add('an-num'); todos.push(n); });
+
+    var obs = new IntersectionObserver(function (filas) {
+      filas.forEach(function (f) {
+        if (!f.isIntersecting) return;
+        var el = f.target;
+        el.classList.remove('an-pre'); el.classList.add('an-go');
+        if (el.classList.contains('an-num')) sintonizar(el);
+        obs.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+    todos.forEach(function (el) { obs.observe(el); });
+    /* red: a los 8 s todo visible y quieto, se haya visto o no */
+    setTimeout(function () {
+      todos.forEach(function (el) { el.classList.remove('an-pre'); el.classList.add('an-go'); });
+      obs.disconnect();
+    }, 8000);
   }
 
   function efectos(cont) {
@@ -197,13 +285,33 @@
       if (!quieto) c.classList.add('an-iman');
     });
     var subir = cont.querySelectorAll('.an-aparece, .an-iman');
-    var h1 = cont.querySelector('.an-h1');
     setTimeout(function () {
       subir.forEach(function (el) { el.classList.remove('an-aparece', 'an-iman'); });
-      /* la cascada termina sola en ~2,5 s; aca se apaga la clase por si el
-         navegador frena los cuadros: sin ella, todas las letras quedan fijas */
-      if (h1) h1.classList.remove('an-cascada');
     }, quieto ? 0 : 3400);
+
+    /* CASCADA: las letras se esconden ya (an-listo) y arrancan SOLO cuando la
+       foto del hero y la fuente estan cargadas, asi el cliente la ve de verdad.
+       Red de seguridad: a los 6 s de arrancar (o a los 9 s pase lo que pase) se
+       quitan las clases y todas las letras quedan fijas. */
+    var h1 = cont.querySelector('.an-h1');
+    var heroImg = cont.querySelector('.an-hero > img');
+    if (h1 && !quieto) {
+      h1.classList.add('an-listo');
+      var arrancada = false;
+      var arrancar = function () {
+        if (arrancada) return; arrancada = true;
+        h1.classList.remove('an-listo'); h1.classList.add('an-cascada');
+        setTimeout(function () { h1.classList.remove('an-cascada'); }, 6000);
+      };
+      var conFuente = function () {
+        try { document.fonts.ready.then(arrancar, arrancar); } catch (e) { arrancar(); }
+      };
+      if (heroImg && !heroImg.complete) {
+        heroImg.addEventListener('load', conFuente); heroImg.addEventListener('error', conFuente);
+      } else conFuente();
+      setTimeout(function () { arrancar(); }, 3000);                 /* si la foto tarda, igual arranca */
+      setTimeout(function () { h1.classList.remove('an-listo', 'an-cascada'); }, 9000);
+    }
 
     /* CONTADOR: busca canales (salta numeros al azar) y aterriza en el final */
     var cnt = cont.querySelector('.an-cont b');
