@@ -407,7 +407,9 @@ window.PRODUCTOS = [
        Medidas de la ficha del proveedor: 60 x 43 x 38 cm, unos 98 litros.
        El competidor que pautea en Chile vende 4 cajas de 26 L por $19.990:
        la nuestra es casi cuatro veces mas grande, y ese es el argumento. */
-    id: 'organizador', unidad: 'caja', promo: 6,
+    /* promo 9 (James 15-09): el combo de 9 es el que deja ganancia ($13.662 por entrega contra
+       $7.748 el de 6), asi que la promocion y el mas vendido (popular: 2) empujan el de 9. */
+    id: 'organizador', unidad: 'caja', promo: 9,
     /* fotos reales de clientes, en orden de lo que mas convence: primero
        las que muestran la caja LLENA y cerrada, despues el detalle de las
        asas y el cierre, y al final el paquete como llega */
