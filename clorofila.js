@@ -83,13 +83,14 @@
            turno de cada uno va en --i; el estilo hace el resto. */
         '<div class="cl-sobre">' +
           '<span class="cl-rot cl-cae" style="--i:0">Clorofila líquida · sabor menta</span>' +
-          '<h1 class="cl-h1">' +
-            '<span class="cl-cae" style="--i:1">Digestión liviana,</span>' +
-            '<em class="cl-cae" style="--i:2">aliento fresco.</em>' +
+          '<h1 class="cl-h1 cl-listo">' +
+            '<span>Digestión liviana,</span>' +
+            '<em>aliento fresco.</em>' +
           '</h1>' +
-          '<p class="cl-cae" style="--i:3">Unas gotas en tu agua de la mañana. Liviano después de comer, aliento fresco.</p>' +
         '</div>' +
       '</div>' +
+      /* la bajada va DEBAJO del hero (James, 15-sep): dentro tapaba el frasco */
+      '<p class="cl-bajada">Unas gotas en tu vaso de agua de la mañana. La toman para sentirse livianos después de comer, para la hinchazón de la tarde y para empezar el día con el aliento fresco.</p>' +
       '<div class="cl-med">' +
         '<div><b>1</b><span>vaso de agua al día</span></div>' +
         '<div><b>1</b><span>mes te rinde</span></div>' +
@@ -163,6 +164,30 @@
       setTimeout(function () {
         letras.forEach(function (el) { el.classList.remove('cl-cae'); });
       }, 2500);
+    }
+
+    /* ---- el TITULO entra LETRA POR LETRA (James, 15-sep: "las letras no
+       tienen efecto"). Cada palabra va en un .cl-w que no se parte, y cada
+       letra en un .cl-l con su turno en --k. Red de seguridad: a los 5 s se
+       quita la marca y el titulo queda normal, visible. */
+    var h1 = cont.querySelector('.cl-h1.cl-listo');
+    if (h1) {
+      var k = 0;
+      h1.querySelectorAll('span, em').forEach(function (linea) {
+        var palabras = linea.textContent.split(' ');
+        linea.textContent = '';
+        palabras.forEach(function (pal, i) {
+          var w = document.createElement('span'); w.className = 'cl-w';
+          Array.prototype.forEach.call(pal, function (ch) {
+            var l = document.createElement('span'); l.className = 'cl-l';
+            l.textContent = ch; l.style.setProperty('--k', k++); w.appendChild(l);
+          });
+          linea.appendChild(w);
+          if (i < palabras.length - 1) linea.appendChild(document.createTextNode(' '));
+        });
+      });
+      if (quieto) h1.classList.remove('cl-listo');
+      else setTimeout(function () { h1.classList.remove('cl-listo'); }, 5000);
     }
 
     var piezas = [];

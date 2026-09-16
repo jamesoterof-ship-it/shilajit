@@ -24,8 +24,8 @@ body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389;
 /* la MAREA: un verde que sube desde abajo, como la gota disolviendose.
    Va sobre la foto y por debajo del texto. */
 .p-clorofila .cl-marea {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
-  background: linear-gradient(to top, rgba(13,43,26,.55) 0%, rgba(31,107,61,.25) 50%, rgba(47,158,90,0) 100%);
+  position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
+  background: linear-gradient(to top, rgba(13,43,26,.94) 0%, rgba(31,107,61,.72) 38%, rgba(47,158,90,0) 100%);
   transform: translateY(28%);
   animation: cl-subir 1.5s cubic-bezier(.22,.9,.3,1) .15s both;
   pointer-events: none;
@@ -197,8 +197,28 @@ body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389;
   .p-clorofila .off { animation: none; box-shadow: none; }
 }
 
-/* en el celular la bajada del hero rozaba la caja del frasco: se queda solo
-   rotulo + titulo. En pantallas anchas hay sitio y la bajada vuelve. */
-@media (max-width: 560px) {
-  .p-clorofila .cl-sobre p { display: none; }
+/* la BAJADA va debajo del hero, no encima del producto (James, 15-sep) */
+.p-clorofila .cl-bajada {
+  margin: 0 0 14px; padding: 0 16px; font-size: 15.5px; line-height: 1.5;
+  color: var(--ink-2, #3f4a45); max-width: 40ch;
+}
+
+/* ---------- el TITULO letra por letra ----------
+   Cada letra baja, se enfoca y suelta un destello verde; la palabra entera va
+   en .cl-w para que nunca se parta a mitad. .cl-listo es la marca que enciende
+   la animacion; el js la quita a los 5 s (red de seguridad). */
+.p-clorofila .cl-w { display: inline-block; white-space: nowrap; }
+.p-clorofila .cl-l { display: inline-block; }
+.p-clorofila .cl-listo .cl-l {
+  opacity: 0;
+  animation: cl-letra .62s cubic-bezier(.2,.85,.3,1) both;
+  animation-delay: calc(.25s + var(--k) * 55ms);
+}
+@keyframes cl-letra {
+  0%   { opacity: 0; transform: translateY(-.35em) scale(1.18); filter: blur(3px); }
+  55%  { opacity: 1; transform: none; filter: blur(0); text-shadow: 0 0 16px rgba(123,211,137,.95), 0 0 2px #fff; }
+  100% { opacity: 1; text-shadow: 0 2px 18px rgba(0,0,0,.45); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .p-clorofila .cl-listo .cl-l { animation: none; opacity: 1; }
 }
