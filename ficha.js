@@ -175,6 +175,23 @@
      el pedido, asi que no pagan flete aparte: por eso el extra tiene que ser
      del MISMO proveedor. Si un producto no esta en esta lista, no se le
      ofrece nada y todo se comporta igual que antes.                        */
+  /* Magnesio Complex x 90 capsulas (Dropi 118987, VITALCOM, costo 4.700).
+     James 16-sep: pasa a ser el upsell de la CLOROFILA y de la LYMPHORIA
+     (antes: Lymphoria y Colageno). MISMO proveedor que las dos, asi que va en
+     la misma caja y no paga flete. Precios de James: 1 u. 9.500 · 2 u. 17.500.
+     🔴 SUPLEMENTO (D.S. 977/96): nada de tratar ni prevenir enfermedades ni de
+     posologia; solo lo que declara el envase. La placa la hace James.
+     El precio vive tambien en el flujo n8n «Upsell Magnesio»: cambiar los dos. */
+  var MAGNESIO = { nombre: 'Magnesio Complex 90 cáps',
+    webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-magnesio',
+    foto: 'img/magnesio.webp',
+    beneficios: ['90 cápsulas', 'Contribuye a la función muscular normal',
+      'Contribuye a disminuir el cansancio', 'Va en el mismo envío, sin flete'],
+    /* colores provisorios: se ajustan a la placa de James cuando llegue */
+    tema: { osc: '#14385C', med: '#2F7FB8', btnA: '#1D5A8C', btnB: '#3C9AD6',
+            texto: '#14385C', borde: '#d3e4f2', suave: '#f2f7fc', foto: '#0f2c48',
+            sombra: '29,90,140' },
+    opciones: [{ cant: 1, precio: 9500 }, { cant: 2, precio: 17500 }] };
   var UPSELLS = {
     /* Cabezal de ducha -> Gel Sellador (Dropi 144587) */
     ducha: { nombre: 'Gel Sellador Invisible 300g',
@@ -200,7 +217,12 @@
        que declara el propio fabricante en el envase, y NO se dice que
        desinflama, que baja la hinchazon ni cuantas gotas tomar. La competencia
        lo anuncia con «no mas hinchazon»: ese es su riesgo, no el nuestro. */
-    clorofila: { nombre: 'Drenaje Linfático Lymphoria',
+    /* 16-sep: la clorofila y la lymphoria pasan al MAGNESIO (arriba). Los dos
+       upsells viejos quedan guardados con otra llave, que no coincide con
+       ningun producto, por si James quiere volver a ellos. */
+    clorofila: MAGNESIO,
+    lymphoria: MAGNESIO,
+    viejo_clorofila_lymphoria: { nombre: 'Drenaje Linfático Lymphoria',
       webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-lymphoria',
       foto: 'img/lymphoria.webp',
       beneficios: ['Favorece el sistema linfático', 'Apoya las defensas naturales',
@@ -220,7 +242,7 @@
        🔴 Es un SUPLEMENTO: los beneficios de aca son los que declara el propio
        envase («favorece», «contribuye», «apoya»). El mismo bote avisa que no
        se use para bajar de peso, asi que eso NO se insinua ni de lejos. */
-    lymphoria: { nombre: 'Colágeno Neocell Bio-Peptides',
+    viejo_lymphoria_colageno: { nombre: 'Colágeno Neocell Bio-Peptides',
       webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-colageno',
       foto: 'img/colageno.webp',
       beneficios: ['20 g de colágeno por porción', 'Favorece la firmeza y elasticidad de la piel',
@@ -231,7 +253,29 @@
       tema: { osc: '#0B4C82', med: '#1E9BE0', btnA: '#0E77C0', btnB: '#35B5F2',
               texto: '#0B4C82', borde: '#cfe6f8', suave: '#f1f8fe', foto: '#0a3a63',
               sombra: '14,119,192' },
-      opciones: [{ cant: 1, precio: 12990 }, { cant: 2, precio: 22500 }] }
+      opciones: [{ cant: 1, precio: 12990 }, { cant: 2, precio: 22500 }] },
+    /* Organizador -> Aislante de Puerta Grueso (Dropi 109642). MISMO proveedor
+       (MEIBO.CL) y MISMA bodega (Santiago), asi que va en la misma caja del
+       organizador y no paga flete aparte. Le cuesta $1.000 al proveedor y
+       tiene 4.893 de stock (16-sep). Precios propuestos 16-sep: 1 u. 7.990 ·
+       2 u. 11.990. Los grises y el madera salen de la propia foto del
+       producto (James: «utiliza los colores del producto»). */
+    organizador: { nombre: 'Aislante de Puerta Grueso',
+      webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-aislante',
+      foto: 'img/aislante.webp',
+      beneficios: ['Tapa la rendija de abajo de la puerta', 'Frena el polvo, el ruido y la corriente de aire',
+        'No entran bichos por debajo', 'Se desliza por debajo: sin pegar ni atornillar'],
+      /* James 16-sep: «ponle publicidad… evita la mugre, que entren bichos,
+         animales». En esta ventana el texto de «Antes de despachar tu
+         paquete» se cambia por este titular y estas cuatro ventajas. Los
+         demas upsells no traen «anuncio» y siguen con su texto de siempre. */
+      anuncio: { titulo: 'Sella la rendija de tu puerta',
+        puntos: ['Evita el polvo y la mugre', 'No entran insectos ni ratones',
+                 'Frena el frío y las corrientes', 'Baja el ruido de afuera'] },
+      tema: { osc: '#2F343C', med: '#7A5C43', btnA: '#3E4450', btnB: '#8A6A4E',
+              texto: '#2F343C', borde: '#dcdfe4', suave: '#f4f5f7', foto: '#2a2d33',
+              sombra: '62,68,80' },
+      opciones: [{ cant: 1, precio: 7990 }, { cant: 2, precio: 11990 }] }
   };
   /* la ventana post-compra vive fuera de este bloque, por eso se exponen */
   window.UPSELLS = UPSELLS;
@@ -1462,6 +1506,18 @@ function abrirUpsell(nombre, telWA, upsell) {
   + '.upcard .foto{display:block;width:100%;flex:1 1 auto;min-height:0;height:auto;'
   + 'object-fit:contain;background:' + T.foto + ';margin:0}'
   + '.upcard .sub{font-size:13px;color:#68788e;margin:14px 22px 12px;line-height:1.5}'
+  /* James 16-sep: con los beneficios la foto quedaba angosta y con bordes
+     negros a los lados. En la ventana con anuncio la foto llena todo el
+     ancho y recorta arriba y abajo (pared y piso), nunca a los lados. */
+  + '.upcon .foto{object-fit:cover;object-position:50% 62%;width:100%}'
+  + '.upben{margin:13px 18px 8px;text-align:center}'
+  + '.upbt{margin:0 0 9px;font-size:17px;font-weight:800;color:' + T.texto + ';letter-spacing:-.2px}'
+  + '.upben ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:7px}'
+  + '.upben li{display:flex;align-items:center;gap:6px;text-align:left;font-size:12.5px;font-weight:700;'
+  + 'color:' + T.texto + ';background:' + T.suave + ';border:1px solid ' + T.borde + ';border-radius:11px;'
+  + 'padding:8px 9px;line-height:1.25}'
+  + '.upben svg{flex:0 0 17px;width:17px;height:17px;border-radius:50%;background:' + T.btnB + ';'
+  + 'fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;padding:2px;box-sizing:border-box}'
   + '.upcard .precio{font-size:33px;font-weight:800;color:' + T.texto + ';letter-spacing:-.6px;margin:2px 0 0}'
   + '.upcard .precio small{font-size:12.5px;color:#68788e;font-weight:500;display:block;'
   + 'margin-top:5px;letter-spacing:0}'
@@ -1499,6 +1555,7 @@ function abrirUpsell(nombre, telWA, upsell) {
   + '@media (max-height:820px){.upcard{padding-bottom:12px}'
   + '.upcard .cab{padding:12px 16px 10px}.upcard .cab h3{font-size:17px;margin-top:7px}'
   + '.upcard .sub{margin:9px 20px 8px;font-size:12.5px}'
+  + '.upben{margin:9px 16px 6px}.upbt{font-size:15.5px;margin-bottom:7px}.upben li{padding:6px 8px;font-size:12px}'
   + '.upcard .precio{font-size:28px}.upcard .precio small{margin-top:3px}'
   + '.upbtns{margin:10px 20px 0}.upsi{padding:14px}.updos{padding:12px}'
   + '.upno{margin-top:8px;padding:13px 8px;min-height:48px}}'
@@ -1508,15 +1565,20 @@ function abrirUpsell(nombre, telWA, upsell) {
 
   var uno = U.opciones[0].precio, dos = U.opciones[1].precio;
   var ov = document.createElement('div'); ov.className = 'upov';
-  ov.innerHTML = '<div class="upcard">'
+  ov.innerHTML = '<div class="upcard' + (U.anuncio ? ' upcon' : '') + '">'
     + '<button class="upx" id="upX" aria-label="Cerrar">&times;</button>'
     + '<div class="cab">'
     +   '<span class="tag">TE GANASTE ESTA PROMOCI\u00d3N POR TU COMPRA</span>'
     +   '<h3>' + U.nombre + '</h3>'
     + '</div>'
     + (U.foto ? '<img class="foto" src="' + U.foto + '" alt="' + U.nombre + '" onerror="this.remove()">' : '')
-    + '<p class="sub">Antes de despachar tu paquete, agr\u00e9galo con un toque. '
-    +   'Va en el mismo env\u00edo, sin costo extra de despacho.</p>'
+    + (U.anuncio
+        ? '<div class="upben"><p class="upbt">' + U.anuncio.titulo + '</p><ul>'
+          + U.anuncio.puntos.map(function (t) {
+              return '<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>' + t + '</li>';
+            }).join('') + '</ul></div>'
+        : '<p class="sub">Antes de despachar tu paquete, agr\u00e9galo con un toque. '
+          + 'Va en el mismo env\u00edo, sin costo extra de despacho.</p>')
     + '<div class="precio">+' + money(uno)
     +   '<small>lo pagas al recibir, junto con tu pedido</small></div>'
     + '<div class="upbtns">'
