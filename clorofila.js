@@ -29,12 +29,12 @@
   var FOTOS = [
     ['img/cl-gotero.webp?v=1',
      'Gotero dejando caer clorofila liquida dentro de un vaso de agua con hielo',
-     'Como se usa', 'Se disuelve al instante',
-     'Cae en el agua fria y se reparte sola, sin grumos y sin batidora. No hay que revolver dos minutos ni esperar a que baje el polvo del fondo.'],
+     'Como se usa', 'Unas gotas en el agua',
+     'Cae en el agua fria y se reparte sola, sin grumos y sin batidora. El vaso queda verde y sabe a menta.'],
     ['img/cl-cocina.webp?v=1',
      'Mujer en su cocina echando gotas de clorofila en un vaso de agua',
-     'Cuando', 'En el vaso que ya te ibas a tomar',
-     'No cambia tu rutina ni te obliga a preparar nada aparte. El vaso de agua de la mañana, el del almuerzo o el que dejas en el escritorio.'],
+     'Cuando', 'En la mañana, antes del desayuno',
+     'El vaso de agua verde con el que muchos arrancan el día: para el aliento fresco y para sentirse livianos después de comer.'],
     ['img/cl-ficha.webp?v=1',
      'Ficha del producto con el frasco, la caja y los tres packs disponibles',
      'Que llega', 'El frasco de 60 ml con su caja',
@@ -82,23 +82,23 @@
         /* el texto entra EN CASCADA, trozo por trozo (James, 10-sep). El
            turno de cada uno va en --i; el estilo hace el resto. */
         '<div class="cl-sobre">' +
-          '<span class="cl-rot cl-cae" style="--i:0">Clorofila líquida · 60 ml</span>' +
+          '<span class="cl-rot cl-cae" style="--i:0">Clorofila líquida · sabor menta</span>' +
           '<h1 class="cl-h1">' +
-            '<span class="cl-cae" style="--i:1">Tu vaso de agua</span>' +
-            '<em class="cl-cae" style="--i:2">de siempre.</em>' +
+            '<span class="cl-cae" style="--i:1">Digestión liviana,</span>' +
+            '<em class="cl-cae" style="--i:2">aliento fresco.</em>' +
           '</h1>' +
-          '<p class="cl-cae" style="--i:3">Unas gotas y queda verde. Sabor menta, sin alcohol y sin gluten.</p>' +
+          '<p class="cl-cae" style="--i:3">Unas gotas en tu vaso de agua de la mañana. La toman para sentirse livianos después de comer, para la hinchazón de la tarde y para empezar el día con el aliento fresco.</p>' +
         '</div>' +
       '</div>' +
       '<div class="cl-med">' +
-        '<div><b>60</b><span>ml por frasco</span></div>' +
+        '<div><b>1</b><span>vaso de agua al día</span></div>' +
         '<div><b>1</b><span>mes te rinde</span></div>' +
         '<div><b>0</b><span>alcohol y gluten</span></div>' +
       '</div>' +
       '<section class="cl-blq">' +
-        '<span class="cl-rot" style="color:var(--cl-claro)">Lo primero que preguntan</span>' +
-        '<h2 class="cl-h2">¿A qué sabe?</h2>' +
-        '<p class="cl-sub">A menta suave. No sabe a pasto ni deja regusto amargo, que es justo lo que casi todo el mundo teme antes de probarla.</p>' +
+        '<span class="cl-rot" style="color:var(--cl-claro)">Para qué la usan</span>' +
+        '<h2 class="cl-h2">¿Para qué sirve?</h2>' +
+        '<p class="cl-sub">Es lo que más nos cuentan: la pesadez de estómago después del almuerzo, la hinchazón en la tarde y el aliento de la mañana. Unas gotas en el agua, todos los días, y el día se siente distinto. Sabe a menta, no a pasto.</p>' +
         '<div class="cl-gigante"><span class="cl-num">60</span><small>mililitros con gotero</small></div>' +
       '</section>';
 
