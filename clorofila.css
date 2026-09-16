@@ -24,8 +24,8 @@ body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389;
 /* la MAREA: un verde que sube desde abajo, como la gota disolviendose.
    Va sobre la foto y por debajo del texto. */
 .p-clorofila .cl-marea {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 62%;
-  background: linear-gradient(to top, rgba(13,43,26,.94) 0%, rgba(31,107,61,.72) 38%, rgba(47,158,90,0) 100%);
+  position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
+  background: linear-gradient(to top, rgba(13,43,26,.55) 0%, rgba(31,107,61,.25) 50%, rgba(47,158,90,0) 100%);
   transform: translateY(28%);
   animation: cl-subir 1.5s cubic-bezier(.22,.9,.3,1) .15s both;
   pointer-events: none;
@@ -33,8 +33,15 @@ body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389;
 @keyframes cl-subir { from { transform: translateY(60%); opacity: .2 } to { transform: translateY(0); opacity: 1 } }
 
 .p-clorofila .cl-sobre {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 18px 22px;
-  color: #fff; text-align: left;
+  /* ARRIBA (James, 15-sep): abajo tapaba el frasco y el vaso. La franja de
+     arriba es planta y ventana, ahi el texto no estorba. */
+  position: absolute; left: 0; right: 0; top: 0; bottom: auto; padding: 18px 18px 0;
+  color: #fff; text-align: left; z-index: 3;
+}
+/* velo de arriba para que el texto se lea sobre la ventana clara */
+.p-clorofila .cl-hero::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 58%; z-index: 2; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(13,43,26,.86) 0%, rgba(13,43,26,.62) 45%, rgba(13,43,26,0) 100%);
 }
 .p-clorofila .cl-rot {
   display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em;
