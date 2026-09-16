@@ -87,7 +87,7 @@
             '<span class="cl-cae" style="--i:1">Digestión liviana,</span>' +
             '<em class="cl-cae" style="--i:2">aliento fresco.</em>' +
           '</h1>' +
-          '<p class="cl-cae" style="--i:3">Unas gotas en tu vaso de agua de la mañana. La toman para sentirse livianos después de comer, para la hinchazón de la tarde y para empezar el día con el aliento fresco.</p>' +
+          '<p class="cl-cae" style="--i:3">Unas gotas en tu agua de la mañana. Liviano después de comer, aliento fresco.</p>' +
         '</div>' +
       '</div>' +
       '<div class="cl-med">' +
