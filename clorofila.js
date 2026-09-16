@@ -69,6 +69,15 @@
 
     var html =
       '<div class="cl-hero">' +
+        /* la franja del titulo va ARRIBA de la foto (James, 15-sep: "asi ponlo
+           arriba"). El texto entra en cascada; el turno va en --i. */
+        '<div class="cl-sobre">' +
+          '<span class="cl-rot cl-cae" style="--i:0">Clorofila líquida · sabor menta</span>' +
+          '<h1 class="cl-h1 cl-listo">' +
+            '<span>Digestión liviana,</span>' +
+            '<em>aliento fresco.</em>' +
+          '</h1>' +
+        '</div>' +
         '<div class="cl-foto">' +
         '<img src="img/cl-hero.webp?v=1" alt="Frasco de clorofila liquida junto a un vaso de agua verde con hielo" fetchpriority="high">' +
         '<div class="cl-marea"></div>' +
@@ -80,15 +89,6 @@
           '<i style="left:58%;animation-delay:2.3s"></i>' +
           '<i style="left:79%;animation-delay:3.4s"></i>' +
         '</div>' +
-        '</div>' +
-        /* el texto entra EN CASCADA, trozo por trozo (James, 10-sep). El
-           turno de cada uno va en --i; el estilo hace el resto. */
-        '<div class="cl-sobre">' +
-          '<span class="cl-rot cl-cae" style="--i:0">Clorofila líquida · sabor menta</span>' +
-          '<h1 class="cl-h1 cl-listo">' +
-            '<span>Digestión liviana,</span>' +
-            '<em>aliento fresco.</em>' +
-          '</h1>' +
         '</div>' +
       '</div>' +
       /* la bajada va DEBAJO del hero (James, 15-sep): dentro tapaba el frasco */
