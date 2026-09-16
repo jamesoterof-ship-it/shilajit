@@ -69,6 +69,7 @@
 
     var html =
       '<div class="cl-hero">' +
+        '<div class="cl-foto">' +
         '<img src="img/cl-hero.webp?v=1" alt="Frasco de clorofila liquida junto a un vaso de agua verde con hielo" fetchpriority="high">' +
         '<div class="cl-marea"></div>' +
         /* las gotas caen en la franja de arriba, que es cielo y encimera:
@@ -78,6 +79,7 @@
           '<i style="left:34%;animation-delay:1.1s"></i>' +
           '<i style="left:58%;animation-delay:2.3s"></i>' +
           '<i style="left:79%;animation-delay:3.4s"></i>' +
+        '</div>' +
         '</div>' +
         /* el texto entra EN CASCADA, trozo por trozo (James, 10-sep). El
            turno de cada uno va en --i; el estilo hace el resto. */
