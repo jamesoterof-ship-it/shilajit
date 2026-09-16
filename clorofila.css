@@ -196,3 +196,9 @@ body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389;
 @media (prefers-reduced-motion: reduce) {
   .p-clorofila .off { animation: none; box-shadow: none; }
 }
+
+/* en el celular la bajada del hero rozaba la caja del frasco: se queda solo
+   rotulo + titulo. En pantallas anchas hay sitio y la bajada vuelve. */
+@media (max-width: 560px) {
+  .p-clorofila .cl-sobre p { display: none; }
+}
