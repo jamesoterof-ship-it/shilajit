@@ -38,11 +38,9 @@ body.p-clorofila { --cl-verde: #1F6B3D; --cl-claro: #2F9E5A; --cl-agua: #7BD389;
   position: absolute; left: 0; right: 0; top: 0; bottom: auto; padding: 18px 18px 0;
   color: #fff; text-align: left; z-index: 3;
 }
-/* velo de arriba para que el texto se lea sobre la ventana clara */
-.p-clorofila .cl-hero::before {
-  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 58%; z-index: 2; pointer-events: none;
-  background: linear-gradient(to bottom, rgba(13,43,26,.86) 0%, rgba(13,43,26,.62) 45%, rgba(13,43,26,0) 100%);
-}
+/* sin velo oscuro arriba (James, 15-sep: "eso oscuro arriba quitalo"): el
+   texto se sostiene solo con su sombra */
+.p-clorofila .cl-h1 { text-shadow: 0 2px 10px rgba(0,0,0,.6), 0 0 24px rgba(0,0,0,.35); }
 .p-clorofila .cl-rot {
   display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em;
   text-transform: uppercase; color: var(--cl-agua); margin: 0 0 8px;
