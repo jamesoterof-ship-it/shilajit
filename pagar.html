@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paga con tarjeta y ahorra 7% | Jaye Group</title>
+<meta name="description" content="Paga tu pedido por adelantado con tarjeta de débito o crédito y te descontamos el 7%. Envío gratis a todo Chile.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tienda.css?v=95">
+<style>
+  .pg-wrap{max-width:860px;margin:0 auto;padding:22px 16px 60px}
+  .pg-hero{background:linear-gradient(135deg,#0f2f24,#14483a);color:#fff;border-radius:18px;padding:26px 20px;text-align:center}
+  .pg-hero h1{font-family:'Barlow Condensed',system-ui,sans-serif;font-size:34px;line-height:1.05;margin:0 0 10px;letter-spacing:.5px}
+  .pg-hero .dto{display:inline-block;background:#d8a52e;color:#14281f;font-weight:800;border-radius:999px;padding:6px 14px;font-size:14px;margin-bottom:12px}
+  .pg-hero p{margin:0;font-size:15.5px;line-height:1.5;opacity:.95}
+  .pg-pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 6px}
+  .pg-paso{background:#f4f7f5;border:1px solid #dfe8e3;border-radius:14px;padding:12px}
+  .pg-paso b{display:block;font-size:13px;color:#14483a;margin-bottom:3px}
+  .pg-paso span{font-size:13px;color:#4b5a54;line-height:1.35}
+  h2.pg-t{font-family:'Barlow Condensed',system-ui,sans-serif;font-size:24px;margin:26px 0 10px;color:#14281f}
+  .pg-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .pg-chip{border:1.5px solid #dfe8e3;background:#fff;border-radius:999px;padding:9px 14px;font-size:14px;font-weight:600;cursor:pointer;color:#26332e}
+  .pg-chip.on{border-color:#14483a;background:#14483a;color:#fff}
+  .pg-packs{display:grid;gap:12px}
+  .pg-pack{border:1.5px solid #dfe8e3;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px;background:#fff}
+  .pg-pack .txt{flex:1;min-width:0}
+  .pg-pack .cant{font-weight:700;font-size:15.5px;color:#14281f}
+  .pg-pack .antes{font-size:13px;color:#7c8a84}
+  .pg-pack .antes s{margin-right:6px}
+  .pg-pack .ahora{font-family:'Barlow Condensed',system-ui,sans-serif;font-size:27px;font-weight:700;color:#14483a;line-height:1}
+  .pg-pack .ahorro{font-size:12.5px;color:#0f7a4a;font-weight:700}
+  .pg-btn{background:#25D366;color:#08331f;font-weight:800;border-radius:12px;padding:12px 16px;text-decoration:none;font-size:14.5px;white-space:nowrap}
+  .pg-nota{background:#fff8e8;border:1px solid #f0dcae;border-radius:14px;padding:14px 16px;font-size:14px;color:#4a3d1c;line-height:1.5;margin-top:20px}
+  .pg-mini{font-size:13px;color:#6b7a74;line-height:1.5;margin-top:14px}
+  @media(max-width:560px){.pg-pasos{grid-template-columns:1fr}.pg-pack{flex-wrap:wrap}.pg-btn{width:100%;text-align:center}}
+</style>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1249894010361489');fbq('track','PageView');</script>
+</head>
+<body class="legal">
+<header class="legal-head">
+  <div class="wrap">
+    <a href="index.html" class="logo"><span class="j">JAYE</span><i class="raya"></i><span class="g">GROUP</span></a>
+    <a href="index.html" class="volver">← Volver</a>
+  </div>
+</header>
+
+<main class="pg-wrap">
+  <section class="pg-hero">
+    <span class="dto">7% DE DESCUENTO</span>
+    <h1>PAGA CON TARJETA Y AHORRA</h1>
+    <p>Si pagas tu pedido por adelantado con tarjeta de débito o crédito, te descontamos el 7%. Envío gratis a todo Chile y al recibir no pagas nada más.</p>
+  </section>
+
+  <div class="pg-pasos">
+    <div class="pg-paso"><b>1. Eliges tu pack</b><span>Aquí abajo ves el precio con el descuento ya aplicado.</span></div>
+    <div class="pg-paso"><b>2. Pagas con tu tarjeta</b><span>Débito o crédito, sin crear ninguna cuenta.</span></div>
+    <div class="pg-paso"><b>3. Se despacha</b><span>Te llega la guía para hacer el seguimiento de tu pedido.</span></div>
+  </div>
+
+  <h2 class="pg-t">Elige tu producto</h2>
+  <div class="pg-chips" id="chips"></div>
+  <div class="pg-packs" id="packs"></div>
+
+  <div class="pg-nota">
+    <b>¿Prefieres pagar al recibir?</b> También puedes. El pago contra entrega sigue disponible en todos nuestros productos, solo que sin el 7% de descuento.
+  </div>
+
+  <p class="pg-mini">
+    Jaye Group es una marca de JAYE DISTRIBUCIONES S.A.S. · NIT 901795482-6.
+    Los precios están en pesos chilenos e incluyen el envío. El descuento del 7% aplica solo a pedidos pagados por adelantado con tarjeta.
+    Si tu pedido no llega, te devolvemos el dinero.
+  </p>
+</main>
+
+<script src="productos.js?v=95"></script>
+<script>
+(function(){
+  /* Los precios NO se escriben aquí: salen de productos.js, la misma lista aprobada
+     que usa la tienda. Si un precio cambia allá, esta página cambia sola. */
+  var DTO = 0.07;                 /* descuento por pagar adelantado (James, 17-09) */
+  var WA  = '56964775539';        /* Camila */
+  var EN_VENTA = ['organizador','lentes','foco','antena','lymphoria','clorofila','mascara'];
+
+  var TODOS = (window.PRODUCTOS || []).filter(function(p){ return EN_VENTA.indexOf(p.id) >= 0; });
+  TODOS.sort(function(a,b){ return EN_VENTA.indexOf(a.id) - EN_VENTA.indexOf(b.id); });
+
+  function pesos(n){ return '$' + Math.round(n).toLocaleString('es-CL'); }
+  /* se redondea a la centena de abajo: el cliente ve un precio limpio y nunca paga de mas */
+  function conDto(n){ return Math.floor(n * (1 - DTO) / 100) * 100; }
+
+  var sel = 0;
+
+  function pintarChips(){
+    document.getElementById('chips').innerHTML = TODOS.map(function(p,i){
+      return '<button class="pg-chip' + (i===sel?' on':'') + '" data-i="' + i + '">' + p.nombre + '</button>';
+    }).join('');
+    [].forEach.call(document.querySelectorAll('.pg-chip'), function(b){
+      b.addEventListener('click', function(){ sel = Number(b.dataset.i); pintarChips(); pintarPacks(); });
+    });
+  }
+
+  function pintarPacks(){
+    var p = TODOS[sel]; if(!p) return;
+    document.getElementById('packs').innerHTML = (p.packs||[]).map(function(k){
+      var precio = conDto(k.precio), ahorro = k.precio - precio;
+      var msg = 'Hola, quiero pagar por adelantado con tarjeta: ' + k.texto + ' de ' + p.nombre
+              + ' por ' + pesos(precio) + ' con el 7% de descuento.';
+      return '<div class="pg-pack">'
+        + '<div class="txt">'
+        +   '<div class="cant">' + k.texto + '</div>'
+        +   '<div class="antes"><s>' + pesos(k.precio) + '</s> pagando al recibir</div>'
+        +   '<div class="ahora">' + pesos(precio) + '</div>'
+        +   '<div class="ahorro">Ahorras ' + pesos(ahorro) + ' pagando con tarjeta</div>'
+        + '</div>'
+        + '<a class="pg-btn" target="_blank" rel="noopener" href="https://wa.me/' + WA + '?text=' + encodeURIComponent(msg) + '">Pagar con tarjeta</a>'
+        + '</div>';
+    }).join('');
+  }
+
+  pintarChips(); pintarPacks();
+})();
+</script>
+</body>
+</html>
