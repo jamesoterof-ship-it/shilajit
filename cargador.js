@@ -80,14 +80,10 @@
         '</div>' +
         '<div class="cg-foto">' +
           '<img src="img/prod-cargador-4.webp?v=1" alt="Cargador reparador de baterias 12V con la pantalla encendida y las pinzas" fetchpriority="high">' +
-          '<div class="cg-pulso"></div>' +
-          /* las chispas caen en la franja de arriba, donde no esta el producto */
-          '<div class="cg-chispas">' +
-            '<i style="left:14%;top:22%;animation-delay:0s"></i>' +
-            '<i style="left:38%;top:12%;animation-delay:.9s"></i>' +
-            '<i style="left:62%;top:28%;animation-delay:1.7s"></i>' +
-            '<i style="left:84%;top:16%;animation-delay:2.4s"></i>' +
-          '</div>' +
+          /* la BARRA DE CARGA: se llena de 0 a 100 en el borde de abajo, como
+             la bateria cargandose. Reemplaza a las chispas y al barrido, que
+             James vio feos el 19-09 ("ese efecto feo, falta creatividad"). */
+          '<div class="cg-carga"><i></i></div>' +
           /* el voltimetro: el HTML ya trae el 12.6 escrito, asi que si el js
              no alcanza a contar, el cliente ve el dato completo igual */
           '<div class="cg-volt"><b>12.6</b><span>V</span></div>' +
@@ -123,8 +119,8 @@
     if (blq && desc) desc.insertAdjacentElement('beforebegin', blq);
 
     /* «Que es y para que sirve» pasa a ser las tres tarjetas */
+    var descSec = null;
     if (!cont.querySelector('.cg-fichas')) {
-      var descSec = null;
       var secs = cont.querySelectorAll('section.desc');
       for (var i = 0; i < secs.length; i++) {
         var t = secs[i].querySelector('.tit2');
@@ -135,6 +131,18 @@
         var ul = descSec.querySelector('ul'); if (ul) ul.remove();
         descSec.insertAdjacentHTML('beforeend', bloqueFotos());
       }
+    }
+
+    /* EL VIDEO SUBE. 19-09: quedaba a 5.900 px de scroll, al final de la
+       pagina, y James no lo encontraba ("donde esta el video"). Va DEBAJO DE
+       LA DESCRIPCION del producto y el precio, donde el cliente ya sabe que
+       es y quiere verlo funcionando (James: "ponlo debajo de la descripcion
+       del producto y precio"). Se mueve la seccion que ya pinta ficha.js: no
+       se duplica ni se toca su carga diferida. */
+    var vid = cont.querySelector('.vid-wrap');
+    if (vid) {
+      var tras = descSec || cont.querySelector('section.desc');
+      if (tras) tras.insertAdjacentElement('afterend', vid);
     }
 
     efectos(cont);
