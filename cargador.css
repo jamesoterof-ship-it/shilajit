@@ -93,8 +93,10 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
    Sube de 10.0 a 12.6 V: es lo que el aparato le devuelve a la bateria.
    El HTML ya trae 12.6 escrito, asi que si el js no arranca el cliente
    ve el dato completo igual. */
+/* va a la IZQUIERDA a proposito: a la derecha lo tapaba el boton flotante
+   de WhatsApp, que es fijo y esta en esa esquina (visto el 19-09 en celular) */
 .p-cargador .cg-volt {
-  position: absolute; z-index: 3; right: 12px; bottom: 12px;
+  position: absolute; z-index: 3; left: 12px; bottom: 12px;
   display: flex; align-items: baseline; gap: 4px;
   padding: 7px 12px; border-radius: 11px;
   background: rgba(8,12,18,.82); border: 1px solid rgba(255,59,47,.45);
