@@ -102,12 +102,15 @@
         '<div class="cg-gigante"><span class="cg-num">100</span><small>Ah · hasta ese tamaño de batería</small></div>' +
       '</section>';
 
-    /* La GALERIA SE QUEDA. 19-09: la primera version la borraba (como hace
-       la clorofila) y James lo cazo de una: "tiene mas fotos y vas a repetir
-       las mismas". El producto tiene su carrusel con las flechas y las
-       miniaturas, y ahi estan TODAS sus fotos: no se toca. El hero va ENCIMA,
-       con el titulo y el movimiento, y debajo queda la galeria completa. */
+    /* MISMAS SECCIONES QUE LA CLOROFILA (James, 19-09): la GALERIA se va y el
+       hero queda en su lugar. Sus tres fotos pasan a las tarjetas de abajo,
+       asi cada foto se ve UNA sola vez y ninguna se repite. La CABECERA se
+       queda: estrellas, nombre y el precio grande con el tachado. */
     arriba.insertAdjacentHTML('beforebegin', html);
+    ['.gal', '.miniz'].forEach(function (s) {
+      var el = arriba.querySelector(s);
+      if (el) el.remove();
+    });
     var med = cont.querySelector('.cg-med');
     if (med) med.insertAdjacentElement('afterend', arriba);
 
