@@ -148,6 +148,43 @@
       if (tras) tras.insertAdjacentElement('afterend', vid);
     }
 
+    /* SEGUNDO VIDEO (James, 19-09: "pon 2 videos en varias secciones").
+       La ficha solo admite uno en el catalogo, asi que este se inyecta aca,
+       despues de «Que lo hace diferente» y antes de las reseñas: el cliente ya
+       sabe por que es mejor y el video le cierra la idea.
+       Se arma con DOM y no con texto: la primera version lo hacia con un
+       string lleno de comillas escapadas y se publico con un error de
+       sintaxis que dejo la pagina sin js. Nunca mas asi.
+       Se baja solo cuando entra en pantalla, para no sumarle 2 MB a la carga. */
+    if (!cont.querySelector('.cg-vid2')) {
+      var cmp = cont.querySelector('.cmp-sec');
+      if (cmp) {
+        var sec2 = document.createElement('section');
+        sec2.className = 'bloque vid-wrap cg-vid2';
+        sec2.style.cssText = 'position:relative;overflow:hidden;padding:0;margin:0';
+        var v2 = document.createElement('video');
+        v2.className = 'vid-prod';
+        v2.playsInline = true; v2.autoplay = true; v2.muted = true; v2.loop = true;
+        v2.preload = 'none';
+        v2.setAttribute('data-src', 'img/cargador2.mp4?v=1');
+        v2.poster = 'img/prod-cargador-3.webp?v=1';
+        v2.style.cssText = 'width:100%;display:block;background:#000';
+        /* si el archivo falla, la seccion se esconde: nunca un hueco negro */
+        v2.addEventListener('error', function () { sec2.style.display = 'none'; });
+        sec2.appendChild(v2);
+        cmp.insertAdjacentElement('afterend', sec2);
+        function prende2() {
+          if (!v2.getAttribute('src')) v2.setAttribute('src', v2.getAttribute('data-src'));
+        }
+        if ('IntersectionObserver' in window) {
+          var ob2 = new IntersectionObserver(function (fs) {
+            fs.forEach(function (f) { if (f.isIntersecting) { prende2(); ob2.unobserve(f.target); } });
+          }, { rootMargin: '250px 0px' });
+          ob2.observe(v2);
+        } else { prende2(); }
+      }
+    }
+
     efectos(cont);
     return true;
   }
