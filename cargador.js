@@ -148,6 +148,40 @@
       if (tras) tras.insertAdjacentElement('afterend', vid);
     }
 
+    /* SEGUNDO VIDEO (James, 19-09: "pon 2 videos en varias secciones").
+       La ficha solo admite uno en el catalogo, asi que este se inyecta aca,
+       despues de «Que lo hace diferente» y antes de las reseñas: el cliente ya
+       sabe por que es mejor y el video le cierra la idea.
+       Se baja igual que el otro -solo cuando entra en pantalla- para no
+       sumarle 2 MB a la carga de la pagina. */
+    if (!cont.querySelector('.cg-vid2')) {
+      var cmp = cont.querySelector('.cmp-sec');
+      if (cmp) {
+        cmp.insertAdjacentHTML('afterend',
+          '<section class="bloque vid-wrap cg-vid2" style="position:relative;overflow:hidden;padding:0;margin:0">' +
+            '<video class="vid-prod" playsinline autoplay muted loop preload="none" ' +
+              'data-src="img/cargador2.mp4?v=1" poster="img/prod-cargador-3.webp?v=1" ' +
+              'style="width:100%;display:block;background:#000" ' +
+              'onerror="this.closest('.cg-vid2').style.display='none'"></video>' +
+          '</section>');
+        var v2 = cont.querySelector('.cg-vid2 video');
+        if (v2) {
+          if ('IntersectionObserver' in window) {
+            var ob2 = new IntersectionObserver(function (fs) {
+              fs.forEach(function (f) {
+                if (!f.isIntersecting) return;
+                if (!v2.getAttribute('src')) v2.setAttribute('src', v2.getAttribute('data-src'));
+                ob2.unobserve(f.target);
+              });
+            }, { rootMargin: '250px 0px' });
+            ob2.observe(v2);
+          } else {
+            v2.setAttribute('src', v2.getAttribute('data-src'));
+          }
+        }
+      }
+    }
+
     efectos(cont);
     return true;
   }
