@@ -34,8 +34,8 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
    grande. */
 .p-cargador .cg-foto > img {
   display: block; width: 100%;
-  height: clamp(320px, 66vh, 560px);
-  object-fit: cover; object-position: 50% 64%;
+  height: clamp(380px, 74vh, 620px);
+  object-fit: cover; object-position: 50% 72%;
   /* TERCER EFECTO (19-09). Los dos anteriores no gustaron: la barra que se
      cargaba y el zoom en bucle. Este es de otro tipo, no da vueltas solo:
        1. al abrir, la foto se REVELA: entra un poco mas grande y desenfocada
@@ -53,21 +53,26 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
   to   { transform: scale(1);    filter: blur(0)    brightness(1) }
 }
 
-/* la franja del titulo va ARRIBA de la foto y se funde con ella */
+/* El titulo va ENCIMA DE LA FOTO, sin franja negra (James, 19-09: "quita esa
+   franja negra y deja las letras en la imagen"). Se sostiene solo con su
+   sombra: nada de velo oscuro encima de la foto. */
 .p-cargador .cg-sobre {
-  position: relative; z-index: 3; margin-bottom: -1px; padding: 18px 18px 12px;
-  color: #fff; text-align: left;
-  background: linear-gradient(to bottom, #1a1016 0%, var(--cg-noche) 100%);
+  position: absolute; left: 0; right: 0; top: 0; z-index: 3;
+  padding: 20px 18px 14px; color: #fff; text-align: left;
+  pointer-events: none;
 }
 .p-cargador .cg-rot {
-  display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em;
+  display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: .08em;
   text-transform: uppercase; color: var(--cg-chispa); margin: 0 0 8px;
   max-width: 100%; white-space: normal; overflow-wrap: anywhere;
-  text-shadow: 0 1px 8px rgba(0,0,0,.55);
+  text-shadow: 0 2px 10px rgba(0,0,0,.85), 0 0 22px rgba(0,0,0,.6);
 }
 .p-cargador .cg-h1 {
-  margin: 0; font-size: clamp(30px, 8.6vw, 44px); line-height: 1.03; font-weight: 900;
-  letter-spacing: -.02em; text-shadow: 0 2px 18px rgba(0,0,0,.45);
+  /* mas grande (James, 19-09: "a las letras puedes darle mas tamaño") y con
+     doble sombra, porque ahora va sobre la foto y no sobre negro */
+  margin: 0; font-size: clamp(40px, 12vw, 64px); line-height: .98; font-weight: 900;
+  letter-spacing: -.03em;
+  text-shadow: 0 3px 14px rgba(0,0,0,.75), 0 1px 40px rgba(0,0,0,.6);
   overflow-wrap: anywhere; hyphens: auto;
 }
 .p-cargador .cg-h1 em { display: block; font-style: normal; color: var(--cg-claro); }
@@ -215,14 +220,19 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
 
 /* ---------- la CASCADA del titulo y el rotulo ----------
    Cada linea entra por turno: sube y aparece. El turno va en --i. */
+/* CASCADA MAS MARCADA (James, 19-09: "que se note mas el efecto de
+   cascada"): cada linea recorre mas camino (52 px), entra un poco mas grande
+   y el turno entre una y otra se separa a 0,26 s, asi se ve caer una por una
+   y no todas juntas. */
 .p-cargador .cg-cae {
-  display: inline-block; opacity: 0; transform: translateY(26px);
-  animation: cg-entrar .72s cubic-bezier(.2,.85,.3,1) forwards;
-  animation-delay: calc(.18s + var(--i) * .13s);
+  display: inline-block; opacity: 0;
+  animation: cg-entrar .86s cubic-bezier(.16,.86,.24,1) forwards;
+  animation-delay: calc(.35s + var(--i) * .26s);
 }
 @keyframes cg-entrar {
-  from { opacity: 0; transform: translateY(26px) }
-  to   { opacity: 1; transform: translateY(0) }
+  0%   { opacity: 0; transform: translateY(-52px) scale(1.06); filter: blur(5px) }
+  60%  { opacity: 1; filter: blur(0) }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0) }
 }
 
 @media (prefers-reduced-motion: reduce) {
