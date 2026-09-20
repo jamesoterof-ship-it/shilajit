@@ -25,7 +25,17 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
   width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
 }
 .p-cargador .cg-foto { position: relative; overflow: hidden; line-height: 0; }
-.p-cargador .cg-foto > img { display: block; width: 100%; height: auto; }
+/* La foto del hero es 1024x1536 y trae mucho aire arriba: si se deja con
+   alto automatico, en la primera pantalla solo se ve el fondo y el producto
+   queda abajo, fuera de vista (se cazo el 19-09 con la pagina ya publicada).
+   Se le fija un alto y se encuadra sobre el aparato con object-position, asi
+   el cliente ve el producto de entrada tanto en celular como en pantalla
+   grande. El voltimetro va anclado abajo a la derecha y no se tapa. */
+.p-cargador .cg-foto > img {
+  display: block; width: 100%;
+  height: clamp(320px, 66vh, 560px);
+  object-fit: cover; object-position: 50% 64%;
+}
 
 /* la franja del titulo va ARRIBA de la foto y se funde con ella */
 .p-cargador .cg-sobre {
