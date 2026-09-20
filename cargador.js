@@ -167,7 +167,7 @@
         v2.className = 'vid-prod';
         v2.playsInline = true; v2.autoplay = true; v2.muted = true; v2.loop = true;
         v2.preload = 'none';
-        v2.setAttribute('data-src', 'img/cargador2.mp4?v=1');
+        v2.setAttribute('data-src', 'img/cargador2.mp4?v=2');
         v2.poster = 'img/prod-cargador-3.webp?v=1';
         v2.style.cssText = 'width:100%;display:block;background:#000';
         /* si el archivo falla, la seccion se esconde: nunca un hueco negro */
