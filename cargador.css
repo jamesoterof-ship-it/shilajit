@@ -104,20 +104,11 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
 }
 .p-cargador .cg-volt span { font-size: 12px; font-weight: 800; color: #fff; opacity: .85; }
 
-/* ---------- el VIDEO: fuera las bandas negras ----------
-   El unico video que hay es el creativo de Meta: viene 720x1280 (9:16) pero
-   el metraje real esta en una franja del centro, con negro arriba y abajo
-   donde el creativo trae sus titulos quemados. En la pagina eso se veia como
-   dos bandas negras enormes (James, 19-09: "esos bordes negros y titulos
-   feos"). Se reencuadra a cuadrado y se centra en el metraje: las bandas
-   quedan fuera. El aspect-ratio va con !important porque ficha.js lo escribe
-   en el style del propio elemento. */
-.p-cargador .vid-wrap .vid-prod {
-  aspect-ratio: 1 / 1 !important;
-  object-fit: cover; object-position: 50% 57%;
-}
-/* el bloque del video no necesita aire arriba y abajo: el hero y la
-   descripcion ya traen el suyo */
+/* ---------- el VIDEO ----------
+   19-09: el archivo se EDITO con ffmpeg (crop=720:560:0:355) para sacarle las
+   bandas negras y los titulos quemados que traia el creativo de Meta. Ya no
+   hay nada que tapar desde el css: solo se le pone su proporcion real. */
+.p-cargador .vid-wrap .vid-prod { aspect-ratio: 720 / 560 !important; object-fit: cover; }
 .p-cargador .vid-wrap { padding: 0 !important; }
 
 /* ---------- la BAJADA ---------- */
