@@ -80,10 +80,7 @@
         '</div>' +
         '<div class="cg-foto">' +
           '<img src="img/prod-cargador-4.webp?v=1" alt="Cargador reparador de baterias 12V con la pantalla encendida y las pinzas" fetchpriority="high">' +
-          /* la BARRA DE CARGA: se llena de 0 a 100 en el borde de abajo, como
-             la bateria cargandose. Reemplaza a las chispas y al barrido, que
-             James vio feos el 19-09 ("ese efecto feo, falta creatividad"). */
-          '<div class="cg-carga"><i></i></div>' +
+
           /* el voltimetro: el HTML ya trae el 12.6 escrito, asi que si el js
              no alcanza a contar, el cliente ve el dato completo igual */
           '<div class="cg-volt"><b>12.6</b><span>V</span></div>' +
@@ -197,6 +194,28 @@
   function efectos(cont) {
     var quieto = false;
     try { quieto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    /* PARALLAX del hero (19-09): la foto se mueve mas lento que el texto al
+       bajar, asi el hero se siente con profundidad. Solo transform, atado a
+       requestAnimationFrame para que no trabe el scroll. Se apaga si el
+       cliente pide menos movimiento. */
+    var fotoHero = cont.querySelector('.cg-foto > img');
+    if (fotoHero && !quieto) {
+      var pendiente = false;
+      var mover = function () {
+        pendiente = false;
+        var caja = fotoHero.parentElement.getBoundingClientRect();
+        if (caja.bottom < 0 || caja.top > innerHeight) return;   /* fuera de pantalla: nada */
+        var y = Math.max(-60, Math.min(60, -caja.top * 0.18));
+        fotoHero.style.transform = 'scale(1.1) translateY(' + y.toFixed(1) + 'px)';
+      };
+      addEventListener('scroll', function () {
+        if (pendiente) return;
+        pendiente = true; requestAnimationFrame(mover);
+      }, { passive: true });
+      /* arranca despues del revelado, para no pisarle el transform */
+      setTimeout(mover, 1000);
+    }
 
     var primera = cont.querySelector('details');
     if (primera) primera.open = true;
