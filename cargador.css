@@ -9,8 +9,9 @@
      Clorofila   -> marea verde · gotas · numero que se llena ·
                     tarjetas de lado · onda
      Cargador    -> pulso de corriente que recorre · chispas ·
-                    voltimetro que sube 10.0 -> 12.6 · tarjetas que
-                    suben escalonadas · relampago en el boton
+                    voltimetro que sube 10.0 -> 12.6 · titulo en
+                    cascada · tarjetas que suben escalonadas
+                    (el boton va SIN efecto: lo pidio James)
 
    El encabezado (.top) y el pie (.pie) NO se tocan: viven fuera de
    #prod y aca ni se nombran. Es la regla de James.
@@ -30,7 +31,7 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
    queda abajo, fuera de vista (se cazo el 19-09 con la pagina ya publicada).
    Se le fija un alto y se encuadra sobre el aparato con object-position, asi
    el cliente ve el producto de entrada tanto en celular como en pantalla
-   grande. El voltimetro va anclado abajo a la derecha y no se tapa. */
+   grande. */
 .p-cargador .cg-foto > img {
   display: block; width: 100%;
   height: clamp(320px, 66vh, 560px);
@@ -173,20 +174,8 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
   transition: opacity .6s ease, transform .6s cubic-bezier(.22,.9,.3,1);
 }
 
-/* ---------- el RELAMPAGO del boton (en clorofila era una onda) ---------- */
-.p-cargador .btn-comprar, .p-cargador .cta, .p-cargador button[type="submit"] { position: relative; overflow: hidden; }
-.p-cargador .btn-comprar::after, .p-cargador .cta::after, .p-cargador button[type="submit"]::after {
-  content: ''; position: absolute; top: 0; bottom: 0; left: -40%; width: 34%;
-  background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 100%);
-  transform: skewX(-16deg); animation: cg-relampago 3.4s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes cg-relampago {
-  0%   { left: -40%; opacity: 0 }
-  10%  { opacity: 1 }
-  55%  { opacity: .9 }
-  70%, 100% { left: 110%; opacity: 0 }
-}
+/* el boton de compra va SIN efecto: James lo pidio asi el 19-09
+   ("el boton nada de especial"). */
 
 /* ---------- el descuento LATE, con un pulso rojo ---------- */
 .p-cargador .off {
@@ -201,24 +190,8 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
   100% { transform: scale(1);    box-shadow: 0 0 0 10px rgba(210,6,3,0); }
 }
 
-/* ---------- el TITULO letra por letra ----------
-   Cada letra baja y suelta un destello rojo; la palabra entera va en .cg-w
-   para que nunca se parta. .cg-listo enciende la animacion y el js la quita
-   a los 5 s: NUNCA puede quedar texto invisible por culpa de un efecto. */
-.p-cargador .cg-w { display: inline-block; white-space: nowrap; }
-.p-cargador .cg-l { display: inline-block; }
-.p-cargador .cg-listo .cg-l {
-  opacity: 0;
-  animation: cg-letra .62s cubic-bezier(.2,.85,.3,1) both;
-  animation-delay: calc(.25s + var(--k) * 55ms);
-}
-@keyframes cg-letra {
-  0%   { opacity: 0; transform: translateY(-.35em) scale(1.18); filter: blur(3px); }
-  55%  { opacity: 1; transform: none; filter: blur(0); text-shadow: 0 0 16px rgba(255,59,47,.95), 0 0 2px #fff; }
-  100% { opacity: 1; text-shadow: 0 2px 18px rgba(0,0,0,.45); }
-}
-
-/* ---------- la CASCADA del rotulo ---------- */
+/* ---------- la CASCADA del titulo y el rotulo ----------
+   Cada linea entra por turno: sube y aparece. El turno va en --i. */
 .p-cargador .cg-cae {
   display: inline-block; opacity: 0; transform: translateY(26px);
   animation: cg-entrar .72s cubic-bezier(.2,.85,.3,1) forwards;
@@ -232,8 +205,6 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
 @media (prefers-reduced-motion: reduce) {
   .p-cargador .cg-pulso::before, .p-cargador .cg-chispas i { animation: none; opacity: 0; }
   .p-cargador .cg-cae { animation: none; opacity: 1; transform: none; }
-  .p-cargador .cg-listo .cg-l { animation: none; opacity: 1; }
   .p-cargador .cg-entra-ab, .p-cargador .cg-sec-entra { opacity: 1; transform: none; }
-  .p-cargador .btn-comprar::after, .p-cargador .cta::after, .p-cargador button[type="submit"]::after { animation: none; opacity: 0; }
   .p-cargador .off { animation: none; box-shadow: none; }
 }

@@ -33,11 +33,11 @@
      'Cargador reparador de baterias 12V con su pantalla, las pinzas y el cable',
      'Que llega', 'Pantalla, pinzas y cable',
      'Viene listo para usar: las pinzas, el cable y la pantalla. Se enchufa a un toma corriente comun de la casa, sin taller y sin mecanico.'],
-    ['img/prod-cargador-3.webp?v=1',
-     'Las pinzas del cargador conectadas a los bornes de una bateria de auto',
+    ['img/prod-cargador.webp?v=1',
+     'Persona conectando las pinzas del cargador a la bateria del auto',
      'Como se conecta', 'La roja al positivo, la negra al negativo',
      'No hay que desmontar la bateria ni sacarla del auto. Se conecta con el capo abierto y el aparato hace el resto solo.'],
-    ['img/prod-cargador-4.webp?v=1',
+    ['img/prod-cargador-3.webp?v=1',
      'Pantalla del cargador encendida mostrando el voltaje de la bateria',
      'Mientras trabaja', 'La pantalla te dice como va',
      'Ves el voltaje real en todo momento, y cuando la bateria queda lista corta la carga por su cuenta. Lo dejas conectado tranquilo.'],
@@ -73,9 +73,9 @@
       '<div class="cg-hero">' +
         '<div class="cg-sobre">' +
           '<span class="cg-rot cg-cae" style="--i:0">Cargador inteligente · carga, repara y protege</span>' +
-          '<h1 class="cg-h1 cg-listo">' +
-            '<span>No la botes.</span>' +
-            '<em>Recupérala.</em>' +
+          '<h1 class="cg-h1">' +
+            '<span class="cg-cae" style="--i:1">No la botes.</span>' +
+            '<em class="cg-cae" style="--i:2">Recupérala.</em>' +
           '</h1>' +
         '</div>' +
         '<div class="cg-foto">' +
@@ -161,29 +161,6 @@
       setTimeout(function () {
         letras.forEach(function (el) { el.classList.remove('cg-cae'); });
       }, 2500);
-    }
-
-    /* ---- el TITULO entra LETRA POR LETRA. Cada palabra en un .cg-w que no se
-       parte y cada letra en un .cg-l con su turno en --k. A los 5 s se quita la
-       marca y el titulo queda normal, visible. */
-    var h1 = cont.querySelector('.cg-h1.cg-listo');
-    if (h1) {
-      var k = 0;
-      h1.querySelectorAll('span, em').forEach(function (linea) {
-        var palabras = linea.textContent.split(' ');
-        linea.textContent = '';
-        palabras.forEach(function (pal, i) {
-          var w = document.createElement('span'); w.className = 'cg-w';
-          Array.prototype.forEach.call(pal, function (ch) {
-            var l = document.createElement('span'); l.className = 'cg-l';
-            l.textContent = ch; l.style.setProperty('--k', k++); w.appendChild(l);
-          });
-          linea.appendChild(w);
-          if (i < palabras.length - 1) linea.appendChild(document.createTextNode(' '));
-        });
-      });
-      if (quieto) h1.classList.remove('cg-listo');
-      else setTimeout(function () { h1.classList.remove('cg-listo'); }, 5000);
     }
 
     /* ---- el VOLTIMETRO del hero: sube de 10.0 a 12.6 V una sola vez ----
