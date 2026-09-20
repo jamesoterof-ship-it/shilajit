@@ -8,7 +8,7 @@
    #prod y aca ni se nombran. Es la regla de James.
 
    Lo que hace:
-     1. cambia la galeria por UNA foto de hero, con el pulso de
+     1. pone un hero ARRIBA de la galeria (que se queda entera), con el pulso de
         corriente recorriendola, chispas arriba y el voltimetro
         que sube de 10.0 a 12.6 V
      2. mete la tira de datos (12V · 10A · sin taller) y el numero
@@ -106,13 +106,12 @@
         '<div class="cg-gigante"><span class="cg-num">100</span><small>Ah · hasta ese tamaño de batería</small></div>' +
       '</section>';
 
-    /* La GALERIA se va -arriba queda la foto del hero-, pero la CABECERA
-       se queda: estrellas, nombre y el precio grande con el tachado. */
+    /* La GALERIA SE QUEDA. 19-09: la primera version la borraba (como hace
+       la clorofila) y James lo cazo de una: "tiene mas fotos y vas a repetir
+       las mismas". El producto tiene su carrusel con las flechas y las
+       miniaturas, y ahi estan TODAS sus fotos: no se toca. El hero va ENCIMA,
+       con el titulo y el movimiento, y debajo queda la galeria completa. */
     arriba.insertAdjacentHTML('beforebegin', html);
-    ['.gal', '.miniz'].forEach(function (s) {
-      var el = arriba.querySelector(s);
-      if (el) el.remove();
-    });
     var med = cont.querySelector('.cg-med');
     if (med) med.insertAdjacentElement('afterend', arriba);
 
