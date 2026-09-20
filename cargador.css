@@ -8,7 +8,7 @@
      Organizador -> texto en cascada · destellos · barrido · conteo
      Clorofila   -> marea verde · gotas · numero que se llena ·
                     tarjetas de lado · onda
-     Cargador    -> barra que se carga de 0 a 100 · LED que late ·
+     Cargador    -> zoom lento de cine · destello que cruza ·
                     voltimetro que sube 10.0 -> 12.6 · titulo en
                     cascada · tarjetas que suben escalonadas
                     (el boton va SIN efecto: lo pidio James)
@@ -36,7 +36,15 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
   display: block; width: 100%;
   height: clamp(320px, 66vh, 560px);
   object-fit: cover; object-position: 50% 64%;
+  /* ZOOM LENTO (19-09, James: "ponle efecto al hero, busca otro que se vea
+     mejor"). Es el efecto de cine: la foto se acerca y se aleja sola, muy
+     despacio. Da vida al hero sin rayas ni destellos de colores, que era lo
+     que se veia cutre. 16 s de ida y vuelta: apenas se nota y no marea. */
+  animation: cg-zoom 16s ease-in-out infinite alternate;
+  transform-origin: 50% 62%;
+  will-change: transform;
 }
+@keyframes cg-zoom { from { transform: scale(1) } to { transform: scale(1.09) } }
 
 /* la franja del titulo va ARRIBA de la foto y se funde con ella */
 .p-cargador .cg-sobre {
@@ -57,31 +65,23 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
 }
 .p-cargador .cg-h1 em { display: block; font-style: normal; color: var(--cg-claro); }
 
-/* ---------- la BARRA DE CARGA ----------
-   Se llena de 0 a 100 en el borde de abajo del hero, como la bateria
-   cargandose. Es el movimiento propio del producto: no hace falta explicarlo.
-   Reemplaza las chispas y el barrido blanco de la primera version. */
-.p-cargador .cg-carga {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 5px; z-index: 3;
-  background: rgba(255,255,255,.14);
-}
+/* ---------- el DESTELLO ----------
+   Un brillo suave que cruza el aparato en diagonal cada 7 s, como la luz
+   pasando sobre el plastico. Reemplaza a la barra de carga y al LED de fondo,
+   que se veian como una raya de colores (James, 19-09). */
+.p-cargador .cg-carga { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 2; }
 .p-cargador .cg-carga i {
-  display: block; height: 100%; width: 0;
-  background: linear-gradient(90deg, var(--cg-rojo), var(--cg-claro) 60%, var(--cg-chispa));
-  box-shadow: 0 0 14px rgba(255,59,47,.85);
-  animation: cg-cargar 2.4s cubic-bezier(.25,.9,.3,1) .5s forwards;
+  position: absolute; top: -20%; bottom: -20%; left: -30%; width: 26%;
+  background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.16) 45%, rgba(255,255,255,.34) 52%, rgba(255,255,255,0) 100%);
+  transform: skewX(-14deg);
+  animation: cg-destello 7s ease-in-out 1.4s infinite;
 }
-@keyframes cg-cargar { to { width: 100% } }
-
-/* el LED rojo del aparato latiendo: un resplandor suave en el borde */
-.p-cargador .cg-hero::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 2;
-  box-shadow: inset 0 0 70px rgba(255,59,47,.16);
-  animation: cg-led 3.4s ease-in-out infinite;
-}
-@keyframes cg-led {
-  0%, 100% { box-shadow: inset 0 0 70px rgba(255,59,47,.10) }
-  50%      { box-shadow: inset 0 0 90px rgba(255,59,47,.26) }
+@keyframes cg-destello {
+  0%      { left: -30%; opacity: 0 }
+  8%      { opacity: 1 }
+  38%     { opacity: .9 }
+  50%     { left: 104%; opacity: 0 }
+  100%    { left: 104%; opacity: 0 }
 }
 
 /* ---------- el VOLTIMETRO del hero ----------
@@ -204,8 +204,8 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .p-cargador .cg-carga i { animation: none; width: 100%; }
-  .p-cargador .cg-hero::after { animation: none; }
+  .p-cargador .cg-foto > img { animation: none; transform: none; }
+  .p-cargador .cg-carga i { animation: none; opacity: 0; }
   .p-cargador .cg-cae { animation: none; opacity: 1; transform: none; }
   .p-cargador .cg-entra-ab, .p-cargador .cg-sec-entra { opacity: 1; transform: none; }
   .p-cargador .off { animation: none; box-shadow: none; }
