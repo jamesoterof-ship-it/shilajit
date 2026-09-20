@@ -1,0 +1,227 @@
+/* ============================================================
+   Diseño propio del Cargador Reparador 12V. Se carga siempre pero
+   TODO cuelga de body.p-cargador, que solo se pone cuando el
+   producto es este: los otros diez quedan intactos.
+
+   Efectos DISTINTOS a los de las otras paginas, a proposito
+   (regla de James: cada pagina con su propio movimiento):
+     Organizador -> texto en cascada · destellos · barrido · conteo
+     Clorofila   -> marea verde · gotas · numero que se llena ·
+                    tarjetas de lado · onda
+     Cargador    -> pulso de corriente que recorre · chispas ·
+                    voltimetro que sube 10.0 -> 12.6 · tarjetas que
+                    suben escalonadas · relampago en el boton
+
+   El encabezado (.top) y el pie (.pie) NO se tocan: viven fuera de
+   #prod y aca ni se nombran. Es la regla de James.
+   ============================================================ */
+body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F; --cg-noche: #0F1520; }
+
+/* ---------- HERO ---------- */
+.p-cargador .cg-hero {
+  /* RECTO y de borde a borde, como en las otras paginas */
+  position: relative; margin: 0 0 14px; border-radius: 0; overflow: hidden;
+  background: var(--cg-noche);
+  width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
+}
+.p-cargador .cg-foto { position: relative; overflow: hidden; line-height: 0; }
+.p-cargador .cg-foto > img { display: block; width: 100%; height: auto; }
+
+/* la franja del titulo va ARRIBA de la foto y se funde con ella */
+.p-cargador .cg-sobre {
+  position: relative; z-index: 3; margin-bottom: -1px; padding: 18px 18px 12px;
+  color: #fff; text-align: left;
+  background: linear-gradient(to bottom, #1a1016 0%, var(--cg-noche) 100%);
+}
+.p-cargador .cg-rot {
+  display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--cg-chispa); margin: 0 0 8px;
+  max-width: 100%; white-space: normal; overflow-wrap: anywhere;
+  text-shadow: 0 1px 8px rgba(0,0,0,.55);
+}
+.p-cargador .cg-h1 {
+  margin: 0; font-size: clamp(30px, 8.6vw, 44px); line-height: 1.03; font-weight: 900;
+  letter-spacing: -.02em; text-shadow: 0 2px 18px rgba(0,0,0,.45);
+  overflow-wrap: anywhere; hyphens: auto;
+}
+.p-cargador .cg-h1 em { display: block; font-style: normal; color: var(--cg-claro); }
+
+/* ---------- el PULSO DE CORRIENTE ----------
+   Una banda de luz que recorre la foto de izquierda a derecha: es la
+   corriente entrando a la bateria. Va sobre la foto, debajo del texto. */
+.p-cargador .cg-pulso {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.p-cargador .cg-pulso::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: -35%; width: 32%;
+  background: linear-gradient(100deg, rgba(255,59,47,0) 0%, rgba(255,210,31,.30) 45%, rgba(255,255,255,.42) 55%, rgba(255,59,47,0) 100%);
+  transform: skewX(-12deg);
+  animation: cg-correr 3.8s cubic-bezier(.45,.05,.55,.95) 1s infinite;
+}
+@keyframes cg-correr {
+  0%   { left: -35%; opacity: 0 }
+  12%  { opacity: 1 }
+  72%  { opacity: .85 }
+  100% { left: 105%; opacity: 0 }
+}
+
+/* ---------- las CHISPAS ----------
+   Destellos cortos en la franja de arriba, donde no esta el producto. */
+.p-cargador .cg-chispas { position: absolute; inset: 0 0 52% 0; pointer-events: none; overflow: hidden; }
+.p-cargador .cg-chispas i {
+  position: absolute; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--cg-chispa); box-shadow: 0 0 10px 2px rgba(255,210,31,.85);
+  opacity: 0; animation: cg-chispear 3.2s ease-in-out infinite;
+}
+@keyframes cg-chispear {
+  0%, 100% { opacity: 0; transform: scale(.5) }
+  6%       { opacity: 1; transform: scale(1.5) }
+  16%      { opacity: 0; transform: scale(.7) }
+}
+
+/* ---------- el VOLTIMETRO del hero ----------
+   Sube de 10.0 a 12.6 V: es lo que el aparato le devuelve a la bateria.
+   El HTML ya trae 12.6 escrito, asi que si el js no arranca el cliente
+   ve el dato completo igual. */
+.p-cargador .cg-volt {
+  position: absolute; z-index: 3; right: 12px; bottom: 12px;
+  display: flex; align-items: baseline; gap: 4px;
+  padding: 7px 12px; border-radius: 11px;
+  background: rgba(8,12,18,.82); border: 1px solid rgba(255,59,47,.45);
+  box-shadow: 0 0 22px rgba(255,59,47,.25);
+}
+.p-cargador .cg-volt b {
+  font-size: 26px; font-weight: 900; line-height: 1; color: var(--cg-claro);
+  font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1;
+  text-shadow: 0 0 14px rgba(255,59,47,.7);
+}
+.p-cargador .cg-volt span { font-size: 12px; font-weight: 800; color: #fff; opacity: .85; }
+
+/* ---------- la BAJADA ---------- */
+.p-cargador .cg-bajada {
+  margin: 0 0 14px; padding: 0 16px; font-size: 15.5px; line-height: 1.5;
+  color: var(--ink-2, #4a4f57); max-width: 40ch;
+}
+
+/* ---------- tira de datos ---------- */
+.p-cargador .cg-med { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 16px; }
+.p-cargador .cg-med > div {
+  background: var(--surface-2, #f6f4f4); border: 1px solid rgba(210,6,3,.14);
+  border-radius: 13px; padding: 12px 6px; text-align: center;
+}
+.p-cargador .cg-med b { display: block; font-size: 25px; font-weight: 900; color: var(--cg-rojo); line-height: 1; }
+.p-cargador .cg-med span { display: block; font-size: 11.5px; color: var(--ink-2, #5b6573); margin-top: 5px; }
+
+/* ---------- bloque del numero grande ----------
+   OJO con el padding: el js mueve este bloque hasta antes de section.desc
+   y ahi cuelga de main.prod, que NO trae padding. Sin esta linea el rotulo
+   sale pegado al borde en el celular. */
+.p-cargador .cg-blq { margin: 0 0 20px; padding: 0 16px; }
+.p-cargador .cg-blq .cg-rot { text-shadow: none; color: var(--cg-rojo); }
+/* este bloque NO lleva boton: la ficha ya trae el suyo debajo y dos botones
+   seguidos rompen la regla de James */
+.p-cargador .cg-h2 {
+  margin: 6px 0 12px; font-size: clamp(22px, 6.4vw, 30px); line-height: 1.12;
+  font-weight: 900; letter-spacing: -.015em; color: var(--ink, #14181f);
+}
+.p-cargador .cg-sub { margin: 10px 0 0; font-size: 14.5px; color: var(--ink-2, #5b6573); }
+.p-cargador .cg-gigante { text-align: center; margin: 16px 0 4px; }
+.p-cargador .cg-num {
+  display: inline-block; font-size: clamp(58px, 19vw, 104px); font-weight: 900; line-height: .92;
+  letter-spacing: -.04em; color: var(--cg-rojo); max-width: 100%;
+  font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1;
+}
+.p-cargador .cg-gigante small {
+  display: block; margin-top: 4px; font-size: 13px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2, #5b6573);
+}
+
+/* ---------- las tres tarjetas ---------- */
+.p-cargador .cg-fichas { display: grid; gap: 14px; margin-top: 14px; }
+.p-cargador .cg-fi {
+  margin: 0; border-radius: 16px; overflow: hidden;
+  background: var(--surface-2, #f6f4f4); border: 1px solid rgba(210,6,3,.14);
+}
+.p-cargador .cg-fi img { display: block; width: 100%; height: auto; }
+.p-cargador .cg-fi figcaption { padding: 14px 15px 16px; }
+.p-cargador .cg-fi .cg-rot2 {
+  display: block; font-size: 11px; font-weight: 800; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--cg-rojo); margin-bottom: 5px;
+}
+.p-cargador .cg-fi b { display: block; font-size: 18px; font-weight: 900; color: var(--ink, #14181f); }
+.p-cargador .cg-fi p { margin: 7px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-2, #5b6573); }
+
+/* ---------- entradas: SUBEN escalonadas (en clorofila entran de lado) ---------- */
+.p-cargador .cg-entra-ab {
+  opacity: 0; transform: translateY(30px) scale(.985);
+  transition: opacity .58s ease, transform .58s cubic-bezier(.22,.9,.3,1);
+}
+.p-cargador .cg-sec-entra {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s cubic-bezier(.22,.9,.3,1);
+}
+
+/* ---------- el RELAMPAGO del boton (en clorofila era una onda) ---------- */
+.p-cargador .btn-comprar, .p-cargador .cta, .p-cargador button[type="submit"] { position: relative; overflow: hidden; }
+.p-cargador .btn-comprar::after, .p-cargador .cta::after, .p-cargador button[type="submit"]::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: -40%; width: 34%;
+  background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-16deg); animation: cg-relampago 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes cg-relampago {
+  0%   { left: -40%; opacity: 0 }
+  10%  { opacity: 1 }
+  55%  { opacity: .9 }
+  70%, 100% { left: 110%; opacity: 0 }
+}
+
+/* ---------- el descuento LATE, con un pulso rojo ---------- */
+.p-cargador .off {
+  display: inline-block; transform-origin: 50% 50%;
+  animation: cg-late 2.6s ease-in-out 1.2s infinite;
+  box-shadow: 0 0 0 0 rgba(210,6,3,.55);
+}
+@keyframes cg-late {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(210,6,3,.55); }
+  12%  { transform: scale(1.14) rotate(-3deg); }
+  24%  { transform: scale(1);    box-shadow: 0 0 0 10px rgba(210,6,3,0); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 10px rgba(210,6,3,0); }
+}
+
+/* ---------- el TITULO letra por letra ----------
+   Cada letra baja y suelta un destello rojo; la palabra entera va en .cg-w
+   para que nunca se parta. .cg-listo enciende la animacion y el js la quita
+   a los 5 s: NUNCA puede quedar texto invisible por culpa de un efecto. */
+.p-cargador .cg-w { display: inline-block; white-space: nowrap; }
+.p-cargador .cg-l { display: inline-block; }
+.p-cargador .cg-listo .cg-l {
+  opacity: 0;
+  animation: cg-letra .62s cubic-bezier(.2,.85,.3,1) both;
+  animation-delay: calc(.25s + var(--k) * 55ms);
+}
+@keyframes cg-letra {
+  0%   { opacity: 0; transform: translateY(-.35em) scale(1.18); filter: blur(3px); }
+  55%  { opacity: 1; transform: none; filter: blur(0); text-shadow: 0 0 16px rgba(255,59,47,.95), 0 0 2px #fff; }
+  100% { opacity: 1; text-shadow: 0 2px 18px rgba(0,0,0,.45); }
+}
+
+/* ---------- la CASCADA del rotulo ---------- */
+.p-cargador .cg-cae {
+  display: inline-block; opacity: 0; transform: translateY(26px);
+  animation: cg-entrar .72s cubic-bezier(.2,.85,.3,1) forwards;
+  animation-delay: calc(.18s + var(--i) * .13s);
+}
+@keyframes cg-entrar {
+  from { opacity: 0; transform: translateY(26px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-cargador .cg-pulso::before, .p-cargador .cg-chispas i { animation: none; opacity: 0; }
+  .p-cargador .cg-cae { animation: none; opacity: 1; transform: none; }
+  .p-cargador .cg-listo .cg-l { animation: none; opacity: 1; }
+  .p-cargador .cg-entra-ab, .p-cargador .cg-sec-entra { opacity: 1; transform: none; }
+  .p-cargador .btn-comprar::after, .p-cargador .cta::after, .p-cargador button[type="submit"]::after { animation: none; opacity: 0; }
+  .p-cargador .off { animation: none; box-shadow: none; }
+}

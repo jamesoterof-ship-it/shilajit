@@ -270,7 +270,8 @@ window.PRODUCTOS = [
     sub: 'Revive y repara la batería del auto o la moto',
     categoria: 'Vehículos',
     foto: 'img/prod-cargador.webp?v=1',
-    fotos: ['img/prod-cargador.webp?v=1','img/prod-cargador-2.webp?v=1','img/prod-cargador-3.webp?v=1'],
+    fotos: ['img/prod-cargador.webp?v=1','img/prod-cargador-2.webp?v=1','img/prod-cargador-3.webp?v=1','img/prod-cargador-4.webp?v=1'],
+    video: 'img/cargador.mp4?v=1',
     acento: '#D20603',   /* rojo medido de sus propios creativos */
     desc: 'El Cargador Reparador de Baterías 12V no solo carga, también repara: manda pulsos que limpian las placas sulfatadas y hacen que la batería vuelva a tomar carga, así te ahorras comprar una batería nueva. Sirve para auto, moto, camioneta y lancha, de 4Ah a 100Ah, tiene pantalla digital y se apaga solo cuando termina, así que lo dejas conectado tranquilo.',
     puntos: [
