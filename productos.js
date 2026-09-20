@@ -275,7 +275,7 @@ window.PRODUCTOS = [
        creativo de Meta y trae bandas negras y los titulos quemados dentro
        (hechos para el feed). Con un video limpio -solo el producto
        funcionando, sin letras- esta seccion se ve bastante mejor. */
-    video: 'img/cargador.mp4?v=2',
+    video: 'img/cargador.mp4?v=3',
     acento: '#D20603',   /* rojo medido de sus propios creativos */
     desc: 'El Cargador Reparador de Baterías 12V no solo carga, también repara: manda pulsos que limpian las placas sulfatadas y hacen que la batería vuelva a tomar carga, así te ahorras comprar una batería nueva. Sirve para auto, moto, camioneta y lancha, de 4Ah a 100Ah, tiene pantalla digital y se apaga solo cuando termina, así que lo dejas conectado tranquilo.',
     puntos: [

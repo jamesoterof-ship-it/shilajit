@@ -148,10 +148,44 @@
       if (tras) tras.insertAdjacentElement('afterend', vid);
     }
 
-    /* UN SOLO VIDEO. James pidio dos, pero los dos que hay en la cuenta de
-       Meta son el MISMO metraje (las mismas manos, el mismo plano): uno en
-       9:16 y el otro cuadrado. Ponerlos los dos seria repetir lo mismo, que
-       es justo lo que no quiere. Para el segundo hace falta otro metraje. */
+    /* SEGUNDO VIDEO (James, 19-09: "pon 2 videos en varias secciones").
+       El creativo de Meta traia tres planos distintos y al final una placa con
+       los precios. Se corto en dos videos de 9 s, cada uno con su plano, y la
+       placa quedo fuera: el primero es el de las pinzas en la bateria y este
+       el del aparato en las manos con la pantalla. Va despues de «Que lo hace
+       diferente» y antes de las reseñas.
+       Se arma con DOM y no con texto: un intento anterior (3cf7c99, revertido)
+       se publico con un error de sintaxis por las comillas escapadas y dejo la
+       pagina sin js. Se baja solo cuando entra en pantalla. */
+    if (!cont.querySelector('.cg-vid2')) {
+      var cmp = cont.querySelector('.cmp-sec');
+      if (cmp) {
+        var sec2 = document.createElement('section');
+        sec2.className = 'bloque vid-wrap cg-vid2';
+        sec2.style.cssText = 'position:relative;overflow:hidden;padding:0;margin:0';
+        var v2 = document.createElement('video');
+        v2.className = 'vid-prod';
+        v2.playsInline = true; v2.autoplay = true; v2.muted = true; v2.loop = true;
+        v2.preload = 'none';
+        v2.setAttribute('data-src', 'img/cargador2.mp4?v=1');
+        v2.poster = 'img/prod-cargador-3.webp?v=1';
+        v2.style.cssText = 'width:100%;display:block;background:#000';
+        /* si el archivo falla, la seccion se esconde: nunca un hueco negro */
+        v2.addEventListener('error', function () { sec2.style.display = 'none'; });
+        sec2.appendChild(v2);
+        cmp.insertAdjacentElement('afterend', sec2);
+        var prende2 = function () {
+          if (!v2.getAttribute('src')) v2.setAttribute('src', v2.getAttribute('data-src'));
+        };
+        if ('IntersectionObserver' in window) {
+          var ob2 = new IntersectionObserver(function (fs) {
+            fs.forEach(function (f) { if (f.isIntersecting) { prende2(); ob2.unobserve(f.target); } });
+          }, { rootMargin: '250px 0px' });
+          ob2.observe(v2);
+        } else { prende2(); }
+      }
+    }
+
     efectos(cont);
     return true;
   }
