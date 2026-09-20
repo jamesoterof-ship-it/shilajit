@@ -83,7 +83,15 @@
 
           /* el voltimetro: el HTML ya trae el 12.6 escrito, asi que si el js
              no alcanza a contar, el cliente ve el dato completo igual */
-          '<div class="cg-volt"><b>12.6</b><span>V</span></div>' +
+          /* el VOLTIMETRO con su indicador de bateria: las celdas se llenan
+             y el voltaje sube, como el aparato real cargando (James, 19-09:
+             "algo de efectos de carga, algo que tenga que ver con lo que
+             estamos vendiendo"). El 12.6 ya viene escrito: si el js no
+             arranca, el cliente ve el dato completo igual. */
+          '<div class="cg-volt">' +
+            '<span class="cg-bat"><i></i><i></i><i></i><i></i></span>' +
+            '<b>12.6</b><span class="cg-u">V</span>' +
+          '</div>' +
         '</div>' +
       '</div>' +
       '<p class="cg-bajada">El sulfato pegado en las placas es lo que impide que tu batería tome carga. Este cargador manda pulsos que lo limpian y la deja cargando otra vez. Auto, moto, camioneta o lancha.</p>' +
@@ -235,20 +243,29 @@
        voltaje es un DATO y un efecto no puede dejarlo mal. */
     var volt = cont.querySelector('.cg-volt b');
     if (volt && !quieto) {
-      var desde = 10.0, hasta = 12.6, ms = 2200, t0 = null, cerrado = false;
-      var seguro = setTimeout(function () {
-        if (!cerrado) { cerrado = true; volt.textContent = hasta.toFixed(1); }
-      }, ms + 900);
-      function pasoV(t) {
-        if (cerrado) return;
-        if (t0 === null) t0 = t;
-        var x = Math.min(1, (t - t0) / ms);
-        volt.textContent = (desde + (hasta - desde) * (1 - Math.pow(1 - x, 3))).toFixed(1);
-        if (x < 1) requestAnimationFrame(pasoV);
-        else { cerrado = true; clearTimeout(seguro); volt.textContent = hasta.toFixed(1); }
-      }
-      volt.textContent = desde.toFixed(1);
-      requestAnimationFrame(pasoV);
+      /* el voltaje sube de 10.0 a 12.6 en 2,6 s y el ciclo se repite cada 8 s,
+         en el mismo compas que las celdas de la bateria del css. Asi el que
+         llega tarde tambien lo ve cargar. RED DE SEGURIDAD: si algo corta el
+         reloj de cuadros, el numero queda en 12.6, nunca a medias. */
+      var desde = 10.0, hasta = 12.6, ms = 2600;
+      var subir = function () {
+        var t0 = null, cerrado = false;
+        var seguro = setTimeout(function () {
+          if (!cerrado) { cerrado = true; volt.textContent = hasta.toFixed(1); }
+        }, ms + 900);
+        var paso = function (t) {
+          if (cerrado) return;
+          if (t0 === null) t0 = t;
+          var x = Math.min(1, (t - t0) / ms);
+          volt.textContent = (desde + (hasta - desde) * (1 - Math.pow(1 - x, 3))).toFixed(1);
+          if (x < 1) requestAnimationFrame(paso);
+          else { cerrado = true; clearTimeout(seguro); volt.textContent = hasta.toFixed(1); }
+        };
+        volt.textContent = desde.toFixed(1);
+        requestAnimationFrame(paso);
+      };
+      subir();
+      setInterval(subir, 8000);
     }
 
     var piezas = [];

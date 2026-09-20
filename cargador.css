@@ -8,8 +8,8 @@
      Organizador -> texto en cascada · destellos · barrido · conteo
      Clorofila   -> marea verde · gotas · numero que se llena ·
                     tarjetas de lado · onda
-     Cargador    -> la foto se revela desenfocada y hace parallax al
-                    scroll · voltimetro que sube 10.0 -> 12.6 · titulo en
+     Cargador    -> bateria que se carga celda por celda con el voltaje
+                    subiendo · la foto se revela y hace parallax · titulo en
                     cascada · tarjetas que suben escalonadas
                     (el boton va SIN efecto: lo pidio James)
 
@@ -90,7 +90,41 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
   font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1;
   text-shadow: 0 0 14px rgba(255,59,47,.7);
 }
-.p-cargador .cg-volt span { font-size: 12px; font-weight: 800; color: #fff; opacity: .85; }
+.p-cargador .cg-volt .cg-u { font-size: 12px; font-weight: 800; color: #fff; opacity: .85; }
+
+/* ---------- el INDICADOR DE BATERIA CARGANDO ----------
+   Es EL efecto del producto (James, 19-09): cuatro celdas que se llenan una
+   tras otra, en el mismo compas que el voltaje que sube al lado. Ciclo de 8 s:
+   carga, queda lleno un rato y vuelve a empezar, asi el que llega tarde
+   tambien lo ve. La primera version era una raya de colores en el borde del
+   hero y se veia cutre; esto es el dibujo de una bateria de verdad. */
+.p-cargador .cg-bat {
+  position: relative; display: inline-flex; align-items: center; gap: 2px;
+  width: 30px; height: 15px; padding: 2px;
+  border: 1.5px solid rgba(255,255,255,.75); border-radius: 3px;
+  margin-right: 7px;
+}
+/* el bornecito de la derecha, para que se lea como bateria */
+.p-cargador .cg-bat::after {
+  content: ''; position: absolute; right: -4px; top: 4px;
+  width: 2.5px; height: 5px; border-radius: 0 2px 2px 0;
+  background: rgba(255,255,255,.75);
+}
+.p-cargador .cg-bat i {
+  flex: 1; height: 100%; border-radius: 1px;
+  background: var(--cg-claro); opacity: 0; transform: scaleY(.55);
+  animation: cg-celda 8s ease-in-out infinite;
+}
+.p-cargador .cg-bat i:nth-child(1) { animation-delay: .2s }
+.p-cargador .cg-bat i:nth-child(2) { animation-delay: .85s }
+.p-cargador .cg-bat i:nth-child(3) { animation-delay: 1.5s }
+.p-cargador .cg-bat i:nth-child(4) { animation-delay: 2.15s; background: var(--cg-chispa) }
+@keyframes cg-celda {
+  0%          { opacity: 0; transform: scaleY(.55) }
+  6%          { opacity: 1; transform: scaleY(1) }
+  62%         { opacity: 1; transform: scaleY(1) }
+  72%, 100%   { opacity: 0; transform: scaleY(.55) }
+}
 
 /* ---------- el VIDEO ----------
    19-09: el archivo se EDITO con ffmpeg (crop=720:560:0:355) para sacarle las
@@ -193,6 +227,7 @@ body.p-cargador { --cg-rojo: #D20603; --cg-claro: #FF3B2F; --cg-chispa: #FFD21F;
 
 @media (prefers-reduced-motion: reduce) {
   .p-cargador .cg-foto > img { animation: none; transform: none; filter: none; }
+  .p-cargador .cg-bat i { animation: none; opacity: 1; transform: none; }
   .p-cargador .cg-cae { animation: none; opacity: 1; transform: none; }
   .p-cargador .cg-entra-ab, .p-cargador .cg-sec-entra { opacity: 1; transform: none; }
   .p-cargador .off { animation: none; box-shadow: none; }
