@@ -332,6 +332,54 @@ window.PRODUCTOS = [
     popular: 2,
   },
   {
+    /* GUIRNALDA SOLAR · 22-09. Va detras del foco porque es el otro producto
+       solar de la tienda. Todo lo que se afirma aca sale de la placa que hizo
+       James: energia solar, IP65, LED de larga duracion y facil instalacion.
+       🔴 NO se dice que "se enciende sola al anochecer" ni cuantas horas de luz
+       da: eso no esta confirmado con el proveedor. Tampoco se nombra ninguna
+       pinza ni gancho: el pack trae la guirnalda y el panel con su estaca. */
+    id: 'guirnalda', unidad: 'una', promo: 2,
+    fotosResenas: ['img/resenas-guirnalda/rg1.webp?v=1','img/resenas-guirnalda/rg2.webp?v=1','img/resenas-guirnalda/rg3.webp?v=1','img/resenas-guirnalda/rg4.webp?v=1','img/resenas-guirnalda/rg5.webp?v=1','img/resenas-guirnalda/rg6.webp?v=1','img/resenas-guirnalda/rg7.webp?v=1','img/resenas-guirnalda/rg8.webp?v=1','img/resenas-guirnalda/rg9.webp?v=1'],
+    video: 'img/guirnalda-ficha.mp4',
+    heroDia: 'img/guirnalda-dia.webp?v=1',
+    heroNoche: 'img/guirnalda-noche.webp?v=1',
+    /* sin comparador deslizante: la pieza de James (gui-sec-antes.webp) ya trae
+       el antes y el despues con sus etiquetas, y la monta guirnalda.js como
+       seccion entera. Poner los dos seria repetir el mismo argumento. */
+    preguntas: [
+      { q: '¿Sube la cuenta de la luz?', a: 'No. Funciona con energia solar: el panel se carga de dia con el sol y la guirnalda alumbra de noche. No se enchufa a la corriente, asi que no consume nada.' },
+      { q: '¿Aguanta la lluvia?', a: 'Si. Es IP65, hecha para estar afuera todo el ano. Las ampolletas y el cable resisten el agua y el viento.' },
+      { q: '¿Cuanto mide y cuantas ampolletas trae?', a: 'Diez metros de cable con diez ampolletas tipo Edison de luz calida. Alcanza para cruzar una terraza completa de lado a lado.' },
+      { q: '¿Que viene en la caja?', a: 'La guirnalda de diez metros con sus diez ampolletas y el panel solar con su estaca. Nada mas: no necesita enchufe, ni electricista, ni herramientas.' },
+    ],
+    formulaRotulo: "Que incluye",
+    formulaTitulo: "Diez metros de luz calida.",
+    formulaSub: "Se cuelga, el panel va donde le de el sol, y esa misma noche el patio se ve distinto.",
+    formula: [["sol","Energia solar","El panel se carga de dia con el sol."],["cable","Diez metros","Cruza una terraza completa de lado a lado."],["rayo","Diez ampolletas LED","Luz calida tipo Edison, de larga duracion."],["agua","Resistente al agua","IP65: aguanta la lluvia y el viento afuera."],["casa","Facil instalacion","Se cuelga en un minuto, sin herramientas."],["llave","Panel con estaca","Se clava en la tierra donde le llegue el sol."]],
+    comparaTitulo: "¿Que la hace diferente?",
+    compara: ["No sube la cuenta de la luz — funciona con sol, sin enchufe ni cables por el suelo.","Diez metros de verdad: cubre la terraza entera, no un pedazo.","IP65, para dejarla puesta todo el ano sin descolgarla."],
+    nombre: 'Guirnalda Solar Decorativa',
+    sub: 'Diez metros con diez ampolletas de luz calida',
+    categoria: 'Hogar',
+    foto: 'img/prod-guirnalda.webp?v=1',
+    fotos: ['img/prod-guirnalda.webp?v=1','img/prod-guirnalda-2.webp?v=1','img/prod-guirnalda-3.webp?v=1'],
+    acento: '#f2a900',   /* ambar calido: el color de su propia luz. Ningun otro producto lo usa */
+    desc: 'La Guirnalda Solar Decorativa son diez metros de cable con diez ampolletas tipo Edison de luz calida, pensadas para dejar puestas afuera. Funciona con energia solar: trae un panel con estaca que se clava donde le llegue el sol y se carga de dia, asi que no se enchufa a la corriente y no sube la cuenta de la luz. Es IP65, resistente al agua, para que aguante la lluvia y el viento todo el ano. Se cuelga en un minuto, sin electricista y sin cables cruzando el patio. Ideal para terraza, patio, balcon, pergola, jardin y eventos.',
+    puntos: [
+      'Diez metros con diez ampolletas de luz calida',
+      'Energia solar: no sube la cuenta de la luz',
+      'IP65, resistente al agua para dejarla afuera',
+      'LED de larga duracion, luz calida tipo Edison',
+      'Se cuelga en un minuto, sin electricista',
+    ],
+    packs: [
+      { cant: 1, precio: 24990, antes: 37000, texto: '1 guirnalda' },
+      { cant: 2, precio: 34990, antes: 58000, texto: '2 guirnaldas' },
+      { cant: 3, precio: 44990, antes: 78000, texto: '3 guirnaldas' },
+    ],
+    popular: 2,
+  },
+  {
     id: 'ducha', unidad: 'uno', promo: 2,
     fotosResenas: ['img/resenas-ducha/rd1.webp?v=1','img/resenas-ducha/rd2.webp?v=1','img/resenas-ducha/rd3.webp?v=1','img/resenas-ducha/rd4.webp?v=1'],
     antesDespues: 'img/prod-ducha-ba.webp?v=1',
@@ -726,4 +774,5 @@ window.PRECIOS_APROBADOS = [
   29500, 39500, 49500,   /* almohada cervical: 1 · 2 · 3 unidades */
   24500, 29500, 41500,   /* clorofila liquida: 1 · 2 · 3 frascos (James, 10-sep) */
   24500, 29500, 39500,   /* lymphoria drenaje: 1 · 2 · 3 frascos (James, 11-sep) */
+  24990, 34990, 44990,   /* guirnalda solar: 1 · 2 · 3 guirnaldas (la placa de James, 22-09) */
 ];
