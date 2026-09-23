@@ -355,7 +355,7 @@ window.PRODUCTOS = [
     formulaRotulo: "Que incluye",
     formulaTitulo: "Diez metros de luz cálida.",
     formulaSub: "Se cuelga, el panel va donde le de el sol, y esa misma noche el patio se ve distinto.",
-    formula: [["sol","Energía solar","El panel se carga de día con el sol."],["cable","Diez metros","Cruza una terraza completa de lado a lado."],["rayo","Diez ampolletas LED","Luz cálida tipo Edison, de larga duración."],["agua","Resistente al agua","IP65: aguanta la lluvia y el viento afuera."],["casa","Fácil instalación","Se cuelga en un minuto, sin herramientas."],["llave","Panel con estaca","Se clava en la tierra donde le llegue el sol."]],
+    formula: [["sol","Energía solar","El panel se carga de día con el sol."],["cable","Diez metros","Cruza una terraza completa de lado a lado."],["rayo","Diez ampolletas LED","Luz cálida tipo Edison, de larga duración."],["agua","Resistente al agua","IP65: aguanta la lluvia y el viento afuera."],["casa","Fácil instalación","Se cuelga en un minuto, sin herramientas."],["llave","Panel con estaca","La estaca se entierra donde le llegue el sol."]],
     comparaTitulo: "¿Que la hace diferente?",
     compara: ["No sube la cuenta de la luz — funciona con sol, sin enchufe ni cables por el suelo.","Diez metros de verdad: cubre la terraza entera, no un pedazo.","IP65, para dejarla puesta todo el año sin descolgarla."],
     nombre: 'Guirnalda Solar Decorativa',
@@ -369,7 +369,7 @@ window.PRODUCTOS = [
        cortas, una idea cada una. Los saltos van como \n escapado: si se
        escriben como salto de verdad, productos.js deja de parsear y se caen
        LAS TRECE FICHAS de la tienda. Casi pasa. */
-    desc: 'Diez metros de cable con diez ampolletas tipo Edison de luz cálida, para dejar puestas afuera todo el año.\n\nFunciona con el sol: el panel se clava donde le llegue la luz y se carga solo. No se enchufa a la corriente, así que no te sube la cuenta.\n\nEs IP65, hecha para aguantar la lluvia y el viento. Se cuelga en un minuto, sin electricista y sin cables cruzando el patio.',
+    desc: 'Diez metros de cable con diez ampolletas tipo Edison de luz cálida, para dejar puestas afuera todo el año.\n\nFunciona con el sol: el panel va donde le llegue la luz y se carga solo. No se enchufa a la corriente, así que no te sube la cuenta.\n\nEs IP65, hecha para aguantar la lluvia y el viento. Se cuelga en un minuto, sin electricista y sin cables cruzando el patio.',
     puntos: [
       'Diez metros con diez ampolletas de luz cálida',
       'Energía solar: no sube la cuenta de la luz',

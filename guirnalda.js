@@ -41,9 +41,9 @@
      'La luz', 'Cálida, no blanca de hospital',
      'Ampolletas tipo Edison con el filamento a la vista. La luz sale ámbar: el color que hace que un patio se vea acogedor y no como una bodega.'],
     ['img/gui-sec-panel.webp?v=1',
-     'Panel solar negro clavado con su estaca en el pasto de un jardín',
+     'Panel solar negro montado en su estaca sobre el pasto de un jardín',
      'De dónde sale la energía', 'El panel va donde le dé el sol',
-     'Se clava en la tierra o en una maceta, apuntando adonde pega el sol la mayor parte del día. El cable llega hasta la guirnalda y no queda nada a la vista.'],
+     'La estaca se entierra en el pasto o en una maceta, apuntando adonde pega el sol la mayor parte del día. El cable llega hasta la guirnalda y no queda nada a la vista.'],
   ];
 
   var CINTA = [
@@ -180,7 +180,7 @@
         '</div>' +
       '</div>' +
       '<section class="gu-sec gu-oscura">' +
-        '<p class="gu-sub" style="max-width:52ch">Diez metros de cable con diez ampolletas tipo Edison de luz cálida, para dejar puestas afuera. El panel se clava donde le dé el sol y se carga de día: no se enchufa a la corriente, así que no te sube la cuenta de la luz.</p>' +
+        '<p class="gu-sub" style="max-width:52ch">Diez metros de cable con diez ampolletas tipo Edison de luz cálida, para dejar puestas afuera. El panel va donde le dé el sol y se carga de día: no se enchufa a la corriente, así que no te sube la cuenta de la luz.</p>' +
         '<div class="gu-med">' +
           '<div><b>10</b><span>metros de largo</span></div>' +
           '<div><b>10</b><span>ampolletas cálidas</span></div>' +
