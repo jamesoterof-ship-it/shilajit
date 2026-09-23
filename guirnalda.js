@@ -170,7 +170,7 @@
         '<video class="gu-video" autoplay muted loop playsinline preload="auto"' +
           ' poster="img/guirnalda-noche.webp?v=1"' +
           ' aria-label="La misma terraza de día y de noche: las diez ampolletas de la guirnalda se encienden al caer la tarde">' +
-          '<source src="img/guirnalda-hero.mp4?v=1" type="video/mp4">' +
+          '<source src="img/guirnalda-hero.mp4?v=2" type="video/mp4">' +
         '</video>' +
         '<div class="gu-vineta" aria-hidden="true"></div>' +
         '<div class="gu-sobre">' +
