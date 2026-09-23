@@ -889,3 +889,55 @@
   max-width: 420px;
   scroll-snap-align: center;
 }
+
+/* ============================================================
+   LA CINTA MÉTRICA SE LLENA · 22-09
+   James: "ponle efecto de llenado". Las barras aparecían ya llenas y no
+   se veía nada. Ahora cada una crece de izquierda a derecha cuando la
+   sección entra en pantalla, una después de otra, y la nuestra remata con
+   un destello que la recorre: es la que llega hasta el final.
+
+   Igual que en el hero: si la animación no corre, las barras se ven
+   LLENAS, no vacías. El efecto es un adorno, no un requisito.
+   ============================================================ */
+.p-guirnalda .gu-huincha i {
+  transform-origin: left center;
+  transition: transform 1.1s cubic-bezier(.22,.9,.3,1);
+}
+.p-guirnalda .gu-tramo.gu-pre .gu-huincha i { transform: scaleX(0); }
+.p-guirnalda .gu-tramo.vis .gu-huincha i { transform: scaleX(1); }
+
+/* escalonadas: primero el balcón, después la terraza, al final la nuestra */
+.p-guirnalda .gu-cinta .gu-tramo:nth-child(1) .gu-huincha i { transition-delay: .05s; }
+.p-guirnalda .gu-cinta .gu-tramo:nth-child(2) .gu-huincha i { transition-delay: .35s; }
+.p-guirnalda .gu-cinta .gu-tramo:nth-child(3) .gu-huincha i { transition-delay: .65s; }
+
+/* el destello que recorre la barra mientras se llena */
+.p-guirnalda .gu-huincha i::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.p-guirnalda .gu-tramo.vis .gu-huincha i::after {
+  animation: gu-brillo 1.3s cubic-bezier(.3,.7,.3,1) forwards;
+}
+.p-guirnalda .gu-cinta .gu-tramo:nth-child(2) .gu-huincha i::after { animation-delay: .35s; }
+.p-guirnalda .gu-cinta .gu-tramo:nth-child(3) .gu-huincha i::after { animation-delay: .65s; }
+@keyframes gu-brillo {
+  from { transform: translateX(-120%); }
+  to   { transform: translateX(340%); }
+}
+
+/* la nuestra, al llenarse del todo, queda con su resplandor */
+.p-guirnalda .gu-tramo.gu-mia.vis .gu-huincha {
+  box-shadow: 0 0 0 1px rgba(242,169,0,.5), 0 10px 34px -12px rgba(242,169,0,.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-guirnalda .gu-huincha i { transform: scaleX(1) !important; transition: none !important; }
+  .p-guirnalda .gu-huincha i::after { display: none; }
+}

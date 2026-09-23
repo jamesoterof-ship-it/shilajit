@@ -176,7 +176,10 @@
         '<div class="gu-sobre">' +
           '<span class="gu-rot">Diez metros · diez ampolletas · energía solar</span>' +
           '<h1 class="gu-h1">Tu patio de noche,<em>por fin.</em></h1>' +
-          '<p class="gu-frase">De día tu terraza se ve linda. De noche no se ve nada.</p>' +
+          /* 🔴 James: "no entiendo esto". La frase decia "de noche no se ve
+   nada" MIENTRAS el video muestra el patio encendido: el texto
+   contradecia la imagen. Ahora dice lo que el cliente esta viendo. */
+            '<p class="gu-frase">Diez ampolletas de luz cálida, sin un cable ni un enchufe a la vista.</p>' +
         '</div>' +
       '</div>' +
       '<section class="gu-sec gu-oscura">' +
