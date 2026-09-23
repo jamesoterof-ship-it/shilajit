@@ -941,3 +941,18 @@
   .p-guirnalda .gu-huincha i { transform: scaleX(1) !important; transition: none !important; }
   .p-guirnalda .gu-huincha i::after { display: none; }
 }
+
+/* 🔴 LA CINTA DE RESEÑAS. James: "esto el ancho de pantalla, no así" y
+   después "sigue igual".
+   Lo segundo era culpa mía: apunté a `.rsn`, que en esta ficha no existe.
+   El carrusel real es `.rev-auto`, y NO es de deslizar: es una cinta que
+   corre sola con overflow oculto, así que las tarjetas de los extremos
+   quedan cortadas a la mitad, en seco, y no se puede leer ninguna.
+
+   No se puede ensanchar sin romper la cinta de las otras doce fichas, así
+   que se hace lo que se hace con las marquesinas: los bordes se DESVANECEN.
+   El corte deja de verse como un error y se lee como que la cinta sigue. */
+.p-guirnalda .rev-auto {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+}
