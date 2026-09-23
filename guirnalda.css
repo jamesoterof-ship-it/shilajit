@@ -801,3 +801,76 @@
    que al menos no se vea el corte */
 .p-guirnalda #prod > .bloque:has(+ .gu-oscura),
 .p-guirnalda #prod > .gu-oscura + .bloque { margin-top: 0; }
+
+/* ============================================================
+   LA CASCADA DEL HERO, QUE NO ENTRABA · 22-09
+   James: "las letras del hero no entran en cascada".
+   Medido: los tres estaban en opacity 0 y la animación nunca corría, y
+   el título y la frase habían perdido su retardo. La culpa fue de usar
+   la forma abreviada `animation:` en una regla posterior, que resetea
+   animation-delay a 0 y pisa los escalones.
+   Estas reglas van al final y son las que mandan.
+   ============================================================ */
+@keyframes gu-cae-letra {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.p-guirnalda .gu-hero .gu-sobre > .gu-rot,
+.p-guirnalda .gu-hero .gu-sobre > .gu-h1,
+.p-guirnalda .gu-hero .gu-sobre > .gu-frase {
+  opacity: 0;
+  animation-name: gu-cae-letra !important;
+  animation-duration: .75s !important;
+  animation-timing-function: cubic-bezier(.22,.9,.3,1) !important;
+  animation-fill-mode: forwards !important;
+  animation-iteration-count: 1 !important;
+}
+.p-guirnalda .gu-hero .gu-sobre > .gu-rot   { animation-delay: .25s !important; }
+.p-guirnalda .gu-hero .gu-sobre > .gu-h1    { animation-delay: .55s !important; }
+.p-guirnalda .gu-hero .gu-sobre > .gu-frase { animation-delay: .9s  !important; }
+
+/* 🔴 EL DESCUENTO, CON EFECTO. James: "ponle efecto a esto, te quedas
+   demasiado corto". El -32% entra girando y después late despacio, para
+   que el ojo vuelva al precio sin que parezca un cartel parpadeando. */
+@keyframes gu-sello {
+  0%   { opacity: 0; transform: scale(.4) rotate(-14deg); }
+  60%  { opacity: 1; transform: scale(1.14) rotate(4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-3deg); }
+}
+@keyframes gu-late-sello {
+  0%, 100% { transform: scale(1) rotate(-3deg); box-shadow: 0 0 0 0 rgba(242,169,0,.55); }
+  50%      { transform: scale(1.06) rotate(-3deg); box-shadow: 0 0 0 9px rgba(242,169,0,0); }
+}
+.p-guirnalda #prod .off,
+.p-guirnalda #prod .desc-off,
+.p-guirnalda #prod [class*="-off"] {
+  display: inline-block;
+  animation: gu-sello .8s cubic-bezier(.2,1.5,.4,1) .35s both,
+             gu-late-sello 2.8s ease-in-out 1.6s infinite;
+}
+/* el precio tachado se desvanece un poco antes, para que el sello entre
+   sobre algo que ya cedió */
+.p-guirnalda #prod .antes { animation: gu-cae-letra .6s ease .15s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .p-guirnalda .gu-hero .gu-sobre > * { opacity: 1 !important; animation: none !important; }
+  .p-guirnalda #prod .off,
+  .p-guirnalda #prod [class*="-off"] { animation: none !important; opacity: 1; }
+}
+
+/* 🔴 LA CASCADA, A PRUEBA DE FALLOS.
+   Tenía `opacity: 0` en la regla base y la animación la subía a 1. Si la
+   animación no corre por lo que sea —pestaña en segundo plano, el navegador
+   la pausa, un error antes— las letras se quedan INVISIBLES para siempre, y
+   eso es exactamente el "hero vacío" que James reportó dos veces.
+
+   Ahora la opacidad base es 1 y el escondite lo pone la propia animación con
+   fill-mode `both`: antes del retardo aplica el primer fotograma (invisible),
+   y al terminar deja el último (visible). Si la animación nunca arranca, las
+   letras se ven igual. La cascada es un adorno, no un requisito para leer. */
+.p-guirnalda .gu-hero .gu-sobre > .gu-rot,
+.p-guirnalda .gu-hero .gu-sobre > .gu-h1,
+.p-guirnalda .gu-hero .gu-sobre > .gu-frase {
+  opacity: 1;
+  animation-fill-mode: both !important;
+}
