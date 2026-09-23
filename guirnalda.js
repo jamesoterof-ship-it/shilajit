@@ -156,21 +156,26 @@
     }
 
     var html =
-      '<div class="gu-hero">' +
-        '<img class="gu-capa" src="img/guirnalda-dia.webp?v=1" width="1024" height="1536" fetchpriority="high"' +
-          ' alt="Terraza con la guirnalda de diez ampolletas colgada de la pérgola, de día y apagada">' +
-        '<img class="gu-capa gu-noche-img" src="img/guirnalda-noche.webp?v=1" width="1024" height="1536"' +
-          ' alt="La misma terraza de noche, con las diez ampolletas encendidas con luz cálida">' +
-        '<div class="gu-vineta" aria-hidden="true"></div>' +
-        '<div class="gu-glow" aria-hidden="true"></div>' +
-        cable(360, 42, 26) +
-        '<div class="gu-sobre">' +
-          '<span class="gu-rot">Diez metros · diez ampolletas · energía solar</span>' +
-          '<h1 class="gu-h1">Tu patio de noche,<em>por fin.</em></h1>' +
-          '<button class="gu-sw" type="button" aria-pressed="false">' +
-            '<span class="gu-perilla" aria-hidden="true"></span>' +
-            '<span class="gu-sw-t"></span>' +
-          '</button>' +
+      /* la escena mide dos pantallas y media; el hero va pegado arriba y el
+         patio atardece mientras el cliente la recorre con el dedo */
+      '<div class="gu-escena">' +
+        '<div class="gu-hero">' +
+          '<img class="gu-capa" src="img/guirnalda-dia.webp?v=1" width="1024" height="1536" fetchpriority="high"' +
+            ' alt="Terraza con la guirnalda de diez ampolletas colgada de la pérgola, de día y apagada">' +
+          '<img class="gu-capa gu-noche-img" src="img/guirnalda-noche.webp?v=1" width="1024" height="1536"' +
+            ' alt="La misma terraza de noche, con las diez ampolletas encendidas con luz cálida">' +
+          '<div class="gu-vineta" aria-hidden="true"></div>' +
+          '<div class="gu-glow" aria-hidden="true"></div>' +
+          cable(360, 42, 26) +
+          '<div class="gu-sobre">' +
+            '<span class="gu-rot">Diez metros · diez ampolletas · energía solar</span>' +
+            '<h1 class="gu-h1">Tu patio de noche,<em>por fin.</em></h1>' +
+            '<p class="gu-frase">' +
+              '<span class="gu-f1">De día tu terraza se ve linda. De noche no se ve nada.</span>' +
+              '<span class="gu-f2">Diez ampolletas encendidas, y el patio es otro lugar.</span>' +
+            '</p>' +
+            '<span class="gu-baja"><i></i>Desliza y se enciende</span>' +
+          '</div>' +
         '</div>' +
       '</div>' +
       '<section class="gu-sec">' +
@@ -206,54 +211,52 @@
   }
 
   function animar() {
+    var escena = document.querySelector('.gu-escena');
     var hero = document.querySelector('.gu-hero');
-    if (!hero) return;
+    if (!hero || !escena) return;
     var noche = hero.querySelector('.gu-noche-img');
     var amps = [].slice.call(hero.querySelectorAll('.gu-cable .gu-amp'));
-    var sw = hero.querySelector('.gu-sw');
-    var encendida = false;
-    var relojes = [];
+    var pedido = false;
 
-    function limpiar() { relojes.forEach(clearTimeout); relojes = []; }
+    /* ---------- EL ATARDECER, CON EL SCROLL ----------
+       James, 22-09: "eso no debe tener switch, sino el efecto al momento de
+       hacer scroll". El avance sale de cuanto lleva recorrido de la escena:
+       0 es pleno dia y 1 es de noche con las diez ampolletas prendidas.
+       Se lee y se escribe en el mismo cuadro, con rAF, para no trabajar de
+       mas ni provocar reflows. */
+    function pintar() {
+      pedido = false;
+      var caja = escena.getBoundingClientRect();
+      var recorrido = caja.height - hero.offsetHeight;
+      var avance = recorrido > 0 ? (-caja.top) / recorrido : 1;
+      avance = Math.max(0, Math.min(1, avance));
 
-    /* ---------- ENCENDER / APAGAR ----------
-       Lo maneja el cliente. Al encender, el patio pasa de día a noche en
-       2,4 s y las ampolletas prenden de izquierda a derecha, una cada
-       110 ms, como cuando la corriente recorre el cable. Al apagar,
-       vuelve a ser de día: puede repetirlo las veces que quiera. */
-    function cambiar(on) {
-      encendida = on;
-      limpiar();
-      hero.classList.add('gu-anim');
-      hero.classList.toggle('gu-on', on);
-      if (noche) noche.style.setProperty('--gu-cae', on ? '1' : '0');
-      if (sw) sw.setAttribute('aria-pressed', on ? 'true' : 'false');
+      /* la noche se completa al 80% del recorrido: el ultimo tramo queda
+         para que el cliente se quede mirando el patio ya encendido */
+      var luz = Math.min(1, avance / 0.8);
+      if (noche) noche.style.setProperty('--gu-cae', luz.toFixed(3));
 
-      amps.forEach(function (a, i) {
-        var espera = on ? 260 + i * 110 : (amps.length - i) * 45;
-        relojes.push(setTimeout(function () { a.classList.toggle('on', on); }, espera));
-      });
+      var n = Math.round(luz * AMPOLLETAS);
+      for (var i = 0; i < amps.length; i++) amps[i].classList.toggle('on', i < n);
+
+      hero.classList.toggle('gu-mov', avance > 0.02);   /* esconde el "desliza" */
+      hero.classList.toggle('gu-on', luz > 0.55);       /* cambia la frase */
     }
 
-    if (sw) sw.addEventListener('click', function () { cambiar(!encendida); });
-
-    /* Si el cliente baja sin tocar el interruptor, igual se enciende sola
-       al llegar al final del hero: el que no juega no se queda sin ver el
-       producto encendido. Una sola vez, y después manda él. */
-    var yaSola = false;
     function alScroll() {
-      if (yaSola || encendida) return;
-      var r = hero.getBoundingClientRect();
-      if (r.bottom < window.innerHeight * 0.75) { yaSola = true; cambiar(true); }
+      if (pedido) return;
+      pedido = true;
+      requestAnimationFrame(pintar);
     }
     window.addEventListener('scroll', alScroll, { passive: true });
+    window.addEventListener('resize', alScroll, { passive: true });
+    pintar();
 
     /* si el sistema pide poco movimiento, se muestra encendida y listo */
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      hero.classList.add('gu-on');
       if (noche) noche.style.setProperty('--gu-cae', '1');
       amps.forEach(function (a) { a.classList.add('on'); });
-      encendida = true;
+      hero.classList.add('gu-on', 'gu-mov');
     }
 
     /* ---------- las secciones entran al aparecer ----------

@@ -39,48 +39,39 @@
   --gu-linea:  rgba(242,169,0,.16);
 }
 
-/* ---------- 1 · LA NOCHE, CONTINUA ----------
-   El fondo va en el body y las secciones de la tienda quedan
-   TRANSPARENTES: así no queda ni un borde entre bloque y bloque y la
-   ficha se lee como un solo ambiente, en vez de cajas pegadas. */
-body.p-guirnalda {
+/* ---------- 1 · BANDAS, NO CAJAS NI FICHA OSCURA ENTERA ----------
+   🔴 22-09. Dos intentos fallidos antes de dar con esto:
+
+     a) Primero fueron CAJAS NEGRAS con margen flotando sobre el blanco de
+        la tienda. James: "que pagina tan fea, basica". Con razon.
+     b) Despues oscureci LA FICHA ENTERA. Peor: las secciones que ya trae
+        la tienda -resenas, promocion, comparativa, resultados- estan
+        hechas para fondo blanco, y quedaron con texto gris claro sobre
+        oscuro. El "4.8" de las resenas desaparecio, las tarjetas se
+        volvieron ilegibles y la tabla comparativa quedo blanca en medio
+        de todo. James: "feooo no que mierda". Tambien con razon.
+
+   Lo que si funciona: la tienda se queda CLARA, como siempre, y las
+   secciones propias son BANDAS OSCURAS DE BORDE A BORDE. Una banda a
+   todo el ancho no se lee como un parche pegado: se lee como seccion.
+   Y no toca ni una de las secciones de la tienda, asi que nada de lo que
+   ya funcionaba se rompe. */
+
+/* cada banda se estira al ancho de la ventana, salga de donde salga */
+.p-guirnalda .gu-banda {
+  position: relative;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 100vw;
   background: var(--gu-noche);
   background-image:
-    radial-gradient(90% 45% at 50% 0%, rgba(242,169,0,.13) 0%, transparent 58%),
-    radial-gradient(70% 40% at 15% 32%, rgba(255,184,77,.06) 0%, transparent 60%);
-  background-attachment: fixed;
+    radial-gradient(85% 50% at 50% 0%, rgba(242,169,0,.12) 0%, transparent 60%);
   color: var(--gu-texto);
 }
-.p-guirnalda #prod,
-.p-guirnalda #prod > .bloque,
-.p-guirnalda #prod > section,
-.p-guirnalda .arriba2,
-.p-guirnalda .datos { background: transparent; }
-
-/* el texto que la tienda pinta oscuro hay que aclararlo o desaparece */
-.p-guirnalda #prod p,
-.p-guirnalda #prod li,
-.p-guirnalda #prod .sub,
-.p-guirnalda #prod .sub2 { color: var(--gu-texto); }
-.p-guirnalda #prod h1,
-.p-guirnalda #prod h2,
-.p-guirnalda #prod h3,
-.p-guirnalda #prod b,
-.p-guirnalda #prod strong { color: var(--gu-crema); }
-
-/* las tarjetas propias de la tienda se levantan del fondo con una
-   superficie apenas más clara y un filo de luz, no con una caja negra */
-.p-guirnalda #prod .card,
-.p-guirnalda #prod .promo-sec,
-.p-guirnalda #prod .res-sec,
-.p-guirnalda #prod .cmp-sec,
-.p-guirnalda #prod .rev-sec,
-.p-guirnalda #prod .gar-sec,
-.p-guirnalda #prod .form-sec,
-.p-guirnalda #prod .vid-wrap {
-  background: linear-gradient(180deg, var(--gu-alto) 0%, var(--gu-noche) 100%);
-  border-top: 1px solid var(--gu-linea);
-}
+/* el contenido de la banda vuelve al ancho de lectura */
+.p-guirnalda .gu-banda > * { padding-left: 20px; padding-right: 20px; }
+.p-guirnalda .gu-banda > img { padding: 0; }
 
 /* ---------- 2 · TIPOGRAFÍA CON CARÁCTER ---------- */
 .p-guirnalda .gu-display,
@@ -103,25 +94,41 @@ body.p-guirnalda {
 }
 
 /* ============================================================
-   3 · EL HERO: A SANGRE, SIN UN SOLO RADIO, Y CON INTERRUPTOR
+   3 · EL HERO: LA ESCENA QUE ATARDECE CON EL SCROLL
+
+   🔴 22-09, James: "eso no debe tener switch, sino el efecto al
+   momento de hacer scroll". El interruptor obligaba a tocar; ahora el
+   patio atardece SOLO con bajar el dedo, que es como se ve sin pedirle
+   nada al cliente.
+
+   Como funciona: la escena mide dos pantallas y media y el hero va
+   PEGADO (sticky) arriba. Mientras el cliente recorre esas dos pantallas
+   y media, la foto de noche va apareciendo sobre la de dia y las diez
+   ampolletas se encienden de izquierda a derecha. Al terminar, el hero
+   se despega y la pagina sigue normal.
    ============================================================ */
 
-.gu-hero {
+.gu-escena {
   position: relative;
-  /* 🔴 A SANGRE. Se come el margen lateral de la tienda y NO lleva
-     border-radius: un hero con esquinas redondas parece una tarjeta. */
-  margin: 0 calc(50% - 50vw) 0;
+  margin: 0 calc(50% - 50vw);
   width: 100vw;
   max-width: 100vw;
-  min-height: 92svh;
+  height: 250svh;          /* dos pantallas y media de recorrido */
+}
+@supports not (height: 250svh) { .gu-escena { height: 250vh; } }
+
+.gu-hero {
+  position: sticky;
+  top: 0;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
-  border-radius: 0;
+  border-radius: 0;        /* 🔴 jamas un radio en un hero */
   background: var(--gu-noche);
 }
-@supports not (min-height: 92svh) { .gu-hero { min-height: 92vh; } }
+@supports not (height: 100svh) { .gu-hero { height: 100vh; } }
 
 .gu-hero img.gu-capa {
   position: absolute;
@@ -131,34 +138,30 @@ body.p-guirnalda {
   display: block;
   border-radius: 0;
 }
-/* La de noche entra por transparencia sobre la de día: la misma terraza,
-   otra hora. ARRANCA EN CERO: el patio se ve de día hasta que el cliente
-   la enciende. Ese es el punto de haber pedido las dos fotos. */
-.gu-hero .gu-noche-img { opacity: var(--gu-cae, 0); will-change: opacity; transition: opacity .1s linear; }
-.gu-hero.gu-anim .gu-noche-img { transition: opacity 2.4s cubic-bezier(.3,.7,.3,1); }
+/* la de noche sobre la de dia: la misma terraza, otra hora. Arranca en
+   CERO y sube con el scroll. Sin transicion: la mueve el dedo, cuadro a
+   cuadro, asi que cualquier transicion la haria ir por detras. */
+.gu-hero .gu-noche-img { opacity: var(--gu-cae, 0); will-change: opacity; }
 
-/* viñeta cálida: hunde los bordes y deja el centro luminoso */
 .gu-hero .gu-vineta {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
     linear-gradient(to top, rgba(6,9,15,.95) 0%, rgba(6,9,15,.5) 32%, rgba(6,9,15,.08) 60%, rgba(6,9,15,.3) 100%),
     radial-gradient(120% 70% at 50% 8%, transparent 32%, rgba(6,9,15,.5) 100%);
 }
-/* el resplandor, que nace en la curva del cable */
+/* el resplandor sube junto con la noche, no de golpe */
 .gu-hero .gu-glow {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  opacity: 0;
+  opacity: var(--gu-cae, 0);
   background:
     radial-gradient(60% 30% at 50% 17%, rgba(255,205,120,.52) 0%, rgba(255,184,77,.18) 45%, transparent 74%),
     radial-gradient(130% 55% at 50% 13%, rgba(242,169,0,.24) 0%, transparent 62%);
   mix-blend-mode: screen;
-  transition: opacity 1.6s ease .3s;
 }
-.gu-hero.gu-on .gu-glow { opacity: 1; animation: gu-respira 6s ease-in-out 2.2s infinite; }
 
-.gu-hero .gu-sobre { position: relative; z-index: 3; padding: 0 20px 28px; }
+.gu-hero .gu-sobre { position: relative; z-index: 3; padding: 0 20px 30px; }
 .gu-h1 {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   font-size: clamp(42px, 13.5vw, 72px);
   color: #fff;
   text-wrap: balance;
@@ -167,65 +170,40 @@ body.p-guirnalda {
 .gu-h1 em { display: block; font-style: italic; color: var(--gu-luz); }
 .gu-hero .gu-rot { display: block; margin: 0 0 10px; }
 
-/* ---------- el interruptor ----------
-   James: "ningún efecto tiene ese hero". El problema era que la animación
-   pasaba sola y se perdía. Acá el cliente TOCA y la enciende él: el
-   efecto se ve porque lo provoca, y de paso es el producto en su mano. */
-.gu-sw {
-  display: inline-flex;
-  align-items: center;
-  gap: 13px;
-  margin: 0;
-  padding: 10px 20px 10px 11px;
-  min-height: 48px;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 99px;
-  background: rgba(10,14,22,.5);
-  -webkit-backdrop-filter: blur(9px);
-  backdrop-filter: blur(9px);
-  color: #fff;
-  font-family: inherit;
-  font-size: 14.5px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: border-color .4s ease, background .4s ease, transform .12s ease;
+/* la linea que cambia a mitad del recorrido: primero dice lo que se ve
+   (de dia no pasa nada), despues lo que pasa cuando cae la noche */
+.gu-frase { position: relative; min-height: 2.9em; margin: 0 0 6px; }
+.gu-frase span {
+  position: absolute; left: 0; right: 0; top: 0;
+  font-size: 16px; line-height: 1.45;
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 1px 12px rgba(0,0,0,.7);
+  transition: opacity .45s ease;
 }
-.gu-sw:active { transform: scale(.97); }
-.gu-sw:focus-visible { outline: 2px solid var(--gu-luz); outline-offset: 3px; }
-.gu-sw .gu-perilla {
-  position: relative;
-  width: 48px; height: 28px;
-  border-radius: 99px;
-  background: rgba(255,255,255,.16);
-  flex: none;
-  transition: background .4s ease;
-}
-.gu-sw .gu-perilla::after {
-  content: '';
-  position: absolute;
-  top: 3px; left: 3px;
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  background: #d5dae1;
-  transition: transform .4s cubic-bezier(.34,1.4,.5,1), background .4s ease, box-shadow .4s ease;
-}
-.gu-hero.gu-on .gu-sw .gu-perilla { background: rgba(242,169,0,.45); }
-.gu-hero.gu-on .gu-sw .gu-perilla::after {
-  transform: translateX(20px);
-  background: var(--gu-luz);
-  box-shadow: 0 0 15px 3px rgba(255,217,138,.85);
-}
-.gu-hero.gu-on .gu-sw { border-color: rgba(242,169,0,.5); }
-/* el estado se dice con palabras, no solo con color */
-.gu-sw .gu-sw-t::after { content: 'Tócala para encenderla'; }
-.gu-hero.gu-on .gu-sw .gu-sw-t::after { content: 'Encendida'; }
+.gu-frase .gu-f2 { opacity: 0; color: var(--gu-luz); }
+.gu-hero.gu-on .gu-frase .gu-f1 { opacity: 0; }
+.gu-hero.gu-on .gu-frase .gu-f2 { opacity: 1; }
 
-/* un latido suave en el interruptor hasta que lo tocan, para que se vea */
-@keyframes gu-late {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,217,138,0); }
-  50%      { box-shadow: 0 0 0 7px rgba(255,217,138,.09); }
+/* el aviso de que hay que bajar. Se va apenas empieza el recorrido. */
+.gu-baja {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: rgba(255,255,255,.75);
+  transition: opacity .4s ease;
 }
-.gu-hero:not(.gu-on) .gu-sw { animation: gu-late 2.6s ease-in-out 1.2s infinite; }
+.gu-hero.gu-mov .gu-baja { opacity: 0; }
+.gu-baja i {
+  display: block; width: 1px; height: 22px;
+  background: linear-gradient(to bottom, transparent, var(--gu-luz));
+  animation: gu-cae 1.8s ease-in-out infinite;
+}
+@keyframes gu-cae {
+  0%   { transform: translateY(-7px); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: translateY(7px); opacity: 0; }
+}
 
 /* ---------- la guirnalda dibujada ----------
    El cable cuelga de verdad y las ampolletas se encienden de izquierda a
