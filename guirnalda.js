@@ -89,7 +89,7 @@
   }
 
   function bloqueFotos() {
-    return '<div class="gu-fichas">' + FOTOS.map(function (f, i) {
+    return '<div class="gu-fichas gu-clara">' + FOTOS.map(function (f, i) {
       return '<figure class="gu-fi" style="--i:' + i + '">' +
         '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="1000" height="750">' +
         '<figcaption>' +
@@ -102,7 +102,7 @@
   }
 
   function bloqueMomento() {
-    return '<section class="gu-mom">' +
+    return '<section class="gu-mom gu-oscura">' +
       '<span class="gu-rot">El antes y el después</span>' +
       '<h2 class="gu-h2">Nadie se queda en un patio <em>a oscuras.</em></h2>' +
       '<p class="gu-sub">Es la misma mesa, la misma gente y la misma noche. Lo único que cambia es que hay luz, y con luz la junta no se corta a las nueve.</p>' +
@@ -112,7 +112,7 @@
   }
 
   function bloqueCinta() {
-    return '<section class="gu-sec gu-blq">' +
+    return '<section class="gu-sec gu-blq gu-clara">' +
       '<span class="gu-rot">Lo que nadie te dice</span>' +
       '<h2 class="gu-h2">¿Cuánto son <em>diez metros?</em></h2>' +
       '<p class="gu-sub">Es la duda de todos antes de comprar. Diez metros no es un número: es cruzar una terraza completa de lado a lado, y que todavía te sobre cable.</p>' +
@@ -128,7 +128,7 @@
   }
 
   function bloqueCaps() {
-    return '<div class="gu-caps">' + CAPS.map(function (c) {
+    return '<div class="gu-caps gu-oscura">' + CAPS.map(function (c) {
       return '<div class="gu-cap">' +
         '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONOS[c[0]] + '</svg>' +
         '<b>' + esc(c[1]) + '</b><span>' + esc(c[2]) + '</span>' +
@@ -178,7 +178,7 @@
           '</div>' +
         '</div>' +
       '</div>' +
-      '<section class="gu-sec">' +
+      '<section class="gu-sec gu-oscura">' +
         '<p class="gu-sub" style="max-width:52ch">Diez metros de cable con diez ampolletas tipo Edison de luz cálida, para dejar puestas afuera. El panel se clava donde le dé el sol y se carga de día: no se enchufa a la corriente, así que no te sube la cuenta de la luz.</p>' +
         '<div class="gu-med">' +
           '<div><b>10</b><span>metros de largo</span></div>' +

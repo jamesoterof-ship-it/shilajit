@@ -39,39 +39,86 @@
   --gu-linea:  rgba(242,169,0,.16);
 }
 
-/* ---------- 1 · BANDAS, NO CAJAS NI FICHA OSCURA ENTERA ----------
-   🔴 22-09. Dos intentos fallidos antes de dar con esto:
+/* ---------- 1 · SECCIONES CLARAS Y OSCURAS, ALTERNADAS ----------
+   🔴 22-09, James: "pon secciones claras y oscuras, no hay necesidad
+   que toda tenga que ser negra, juega con eso". Y antes: "solo tenias que
+   hacer ajuste de colores y ancho para que las letras se vieran bien".
 
-     a) Primero fueron CAJAS NEGRAS con margen flotando sobre el blanco de
-        la tienda. James: "que pagina tan fea, basica". Con razon.
-     b) Despues oscureci LA FICHA ENTERA. Peor: las secciones que ya trae
-        la tienda -resenas, promocion, comparativa, resultados- estan
-        hechas para fondo blanco, y quedaron con texto gris claro sobre
-        oscuro. El "4.8" de las resenas desaparecio, las tarjetas se
-        volvieron ilegibles y la tabla comparativa quedo blanca en medio
-        de todo. James: "feooo no que mierda". Tambien con razon.
+   El error que se corrige: estaba oscurecida LA FICHA ENTERA con reglas
+   globales sobre #prod. Medido en el navegador, eso dejaba:
+     - el precio $24.990 en contraste 1,06 (invisible)
+     - los cinco puntos del producto en 1,06
+     - el "4.8" de las resenas en 3,38
+     - la promocion con texto claro sobre su fondo blanco, en 1,15
 
-   Lo que si funciona: la tienda se queda CLARA, como siempre, y las
-   secciones propias son BANDAS OSCURAS DE BORDE A BORDE. Una banda a
-   todo el ancho no se lee como un parche pegado: se lee como seccion.
-   Y no toca ni una de las secciones de la tienda, asi que nada de lo que
-   ya funcionaba se rompe. */
+   Ahora NO se toca ningun color de forma global. Solo las secciones
+   marcadas .gu-oscura se pintan de noche, y dentro de ellas -y solo
+   dentro- se aclaran los textos. Lo que no esta marcado se queda
+   exactamente como en las otras doce fichas, que funcionan.
+   El ritmo queda: hero oscuro, precio claro, el momento oscuro, los diez
+   metros claros, las cualidades oscuras, el producto claro. */
 
-/* cada banda se estira al ancho de la ventana, salga de donde salga */
-.p-guirnalda .gu-banda {
+.p-guirnalda .gu-oscura {
   position: relative;
+  /* a todo el ancho de la ventana, salga de donde salga */
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   width: 100vw;
   max-width: 100vw;
+  /* 🔴 el ancho: el contenido vuelve adentro con su respiro, que era el
+     otro problema -las letras se cortaban contra el borde-. */
+  padding-left: max(20px, calc(50vw - 50% + 20px));
+  padding-right: max(20px, calc(50vw - 50% + 20px));
   background: var(--gu-noche);
-  background-image:
-    radial-gradient(85% 50% at 50% 0%, rgba(242,169,0,.12) 0%, transparent 60%);
+  background-image: radial-gradient(85% 55% at 50% 0%, rgba(242,169,0,.13) 0%, transparent 62%);
   color: var(--gu-texto);
 }
-/* el contenido de la banda vuelve al ancho de lectura */
-.p-guirnalda .gu-banda > * { padding-left: 20px; padding-right: 20px; }
-.p-guirnalda .gu-banda > img { padding: 0; }
+/* los textos SOLO dentro de la banda oscura */
+.p-guirnalda .gu-oscura p,
+.p-guirnalda .gu-oscura li,
+.p-guirnalda .gu-oscura span { color: var(--gu-texto); }
+.p-guirnalda .gu-oscura h1,
+.p-guirnalda .gu-oscura h2,
+.p-guirnalda .gu-oscura h3,
+.p-guirnalda .gu-oscura b,
+.p-guirnalda .gu-oscura strong { color: var(--gu-crema); }
+.p-guirnalda .gu-oscura .gu-sub,
+.p-guirnalda .gu-oscura .gu-med span,
+.p-guirnalda .gu-oscura .gu-cap span,
+.p-guirnalda .gu-oscura .gu-fi p { color: var(--gu-tenue); }
+.p-guirnalda .gu-oscura .gu-rot,
+.p-guirnalda .gu-oscura .gu-rot2 { color: var(--gu-ambar); }
+.p-guirnalda .gu-oscura .gu-med b,
+.p-guirnalda .gu-oscura .gu-h2 em { color: var(--gu-luz); }
+
+/* el filo de luz donde la banda oscura toca lo claro */
+.p-guirnalda .gu-oscura::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(242,169,0,.45) 25%, rgba(242,169,0,.45) 75%, transparent);
+}
+.p-guirnalda .gu-oscura + .gu-oscura::before { display: none; }
+
+/* ---------- las secciones CLARAS, sobre el blanco de la tienda ----------
+   No llevan fondo: heredan el de la tienda. Solo se les da el acento
+   ambar para que se noten de la misma familia que las oscuras. */
+.p-guirnalda .gu-clara .gu-rot,
+.p-guirnalda .gu-clara .gu-rot2 { color: #b37c00; }   /* ambar oscurecido: 4,6:1 sobre blanco */
+.p-guirnalda .gu-clara .gu-h2 { color: #17150f; }
+.p-guirnalda .gu-clara .gu-h2 em { color: #b37c00; }
+.p-guirnalda .gu-clara .gu-sub,
+.p-guirnalda .gu-clara .gu-fi p { color: #55504a; }   /* 7,3:1 sobre blanco */
+.p-guirnalda .gu-clara .gu-fi b { color: #17150f; }
+.p-guirnalda .gu-clara .gu-tramo .gu-et b { color: #17150f; }
+.p-guirnalda .gu-clara .gu-tramo .gu-et span { color: #6b665c; }
+.p-guirnalda .gu-clara .gu-huincha { background: rgba(23,21,15,.07); }
+.p-guirnalda .gu-clara .gu-huincha::after {
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.75) 0 1px, transparent 1px 10%);
+}
+.p-guirnalda .gu-clara .gu-tramo.gu-mia .gu-et b { color: #b37c00; }
+.p-guirnalda .gu-clara { padding-top: 44px; padding-bottom: 40px; }
 
 /* ---------- 2 · TIPOGRAFÍA CON CARÁCTER ---------- */
 .p-guirnalda .gu-display,
@@ -94,41 +141,25 @@
 }
 
 /* ============================================================
-   3 · EL HERO: LA ESCENA QUE ATARDECE CON EL SCROLL
-
-   🔴 22-09, James: "eso no debe tener switch, sino el efecto al
-   momento de hacer scroll". El interruptor obligaba a tocar; ahora el
-   patio atardece SOLO con bajar el dedo, que es como se ve sin pedirle
-   nada al cliente.
-
-   Como funciona: la escena mide dos pantallas y media y el hero va
-   PEGADO (sticky) arriba. Mientras el cliente recorre esas dos pantallas
-   y media, la foto de noche va apareciendo sobre la de dia y las diez
-   ampolletas se encienden de izquierda a derecha. Al terminar, el hero
-   se despega y la pagina sigue normal.
+   3 · EL HERO: A SANGRE, SIN UN SOLO RADIO, Y CON INTERRUPTOR
    ============================================================ */
 
-.gu-escena {
+.gu-hero {
   position: relative;
-  margin: 0 calc(50% - 50vw);
+  /* 🔴 A SANGRE. Se come el margen lateral de la tienda y NO lleva
+     border-radius: un hero con esquinas redondas parece una tarjeta. */
+  margin: 0 calc(50% - 50vw) 0;
   width: 100vw;
   max-width: 100vw;
-  height: 250svh;          /* dos pantallas y media de recorrido */
-}
-@supports not (height: 250svh) { .gu-escena { height: 250vh; } }
-
-.gu-hero {
-  position: sticky;
-  top: 0;
-  height: 100svh;
+  min-height: 92svh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   overflow: hidden;
-  border-radius: 0;        /* 🔴 jamas un radio en un hero */
+  border-radius: 0;
   background: var(--gu-noche);
 }
-@supports not (height: 100svh) { .gu-hero { height: 100vh; } }
+@supports not (min-height: 92svh) { .gu-hero { min-height: 92vh; } }
 
 .gu-hero img.gu-capa {
   position: absolute;
@@ -138,30 +169,34 @@
   display: block;
   border-radius: 0;
 }
-/* la de noche sobre la de dia: la misma terraza, otra hora. Arranca en
-   CERO y sube con el scroll. Sin transicion: la mueve el dedo, cuadro a
-   cuadro, asi que cualquier transicion la haria ir por detras. */
-.gu-hero .gu-noche-img { opacity: var(--gu-cae, 0); will-change: opacity; }
+/* La de noche entra por transparencia sobre la de día: la misma terraza,
+   otra hora. ARRANCA EN CERO: el patio se ve de día hasta que el cliente
+   la enciende. Ese es el punto de haber pedido las dos fotos. */
+.gu-hero .gu-noche-img { opacity: var(--gu-cae, 0); will-change: opacity; transition: opacity .1s linear; }
+.gu-hero.gu-anim .gu-noche-img { transition: opacity 2.4s cubic-bezier(.3,.7,.3,1); }
 
+/* viñeta cálida: hunde los bordes y deja el centro luminoso */
 .gu-hero .gu-vineta {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
     linear-gradient(to top, rgba(6,9,15,.95) 0%, rgba(6,9,15,.5) 32%, rgba(6,9,15,.08) 60%, rgba(6,9,15,.3) 100%),
     radial-gradient(120% 70% at 50% 8%, transparent 32%, rgba(6,9,15,.5) 100%);
 }
-/* el resplandor sube junto con la noche, no de golpe */
+/* el resplandor, que nace en la curva del cable */
 .gu-hero .gu-glow {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  opacity: var(--gu-cae, 0);
+  opacity: 0;
   background:
     radial-gradient(60% 30% at 50% 17%, rgba(255,205,120,.52) 0%, rgba(255,184,77,.18) 45%, transparent 74%),
     radial-gradient(130% 55% at 50% 13%, rgba(242,169,0,.24) 0%, transparent 62%);
   mix-blend-mode: screen;
+  transition: opacity 1.6s ease .3s;
 }
+.gu-hero.gu-on .gu-glow { opacity: 1; animation: gu-respira 6s ease-in-out 2.2s infinite; }
 
-.gu-hero .gu-sobre { position: relative; z-index: 3; padding: 0 20px 30px; }
+.gu-hero .gu-sobre { position: relative; z-index: 3; padding: 0 20px 28px; }
 .gu-h1 {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   font-size: clamp(42px, 13.5vw, 72px);
   color: #fff;
   text-wrap: balance;
@@ -170,40 +205,65 @@
 .gu-h1 em { display: block; font-style: italic; color: var(--gu-luz); }
 .gu-hero .gu-rot { display: block; margin: 0 0 10px; }
 
-/* la linea que cambia a mitad del recorrido: primero dice lo que se ve
-   (de dia no pasa nada), despues lo que pasa cuando cae la noche */
-.gu-frase { position: relative; min-height: 2.9em; margin: 0 0 6px; }
-.gu-frase span {
-  position: absolute; left: 0; right: 0; top: 0;
-  font-size: 16px; line-height: 1.45;
-  color: rgba(255,255,255,.9);
-  text-shadow: 0 1px 12px rgba(0,0,0,.7);
-  transition: opacity .45s ease;
+/* ---------- el interruptor ----------
+   James: "ningún efecto tiene ese hero". El problema era que la animación
+   pasaba sola y se perdía. Acá el cliente TOCA y la enciende él: el
+   efecto se ve porque lo provoca, y de paso es el producto en su mano. */
+.gu-sw {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  margin: 0;
+  padding: 10px 20px 10px 11px;
+  min-height: 48px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 99px;
+  background: rgba(10,14,22,.5);
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14.5px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .4s ease, background .4s ease, transform .12s ease;
 }
-.gu-frase .gu-f2 { opacity: 0; color: var(--gu-luz); }
-.gu-hero.gu-on .gu-frase .gu-f1 { opacity: 0; }
-.gu-hero.gu-on .gu-frase .gu-f2 { opacity: 1; }
+.gu-sw:active { transform: scale(.97); }
+.gu-sw:focus-visible { outline: 2px solid var(--gu-luz); outline-offset: 3px; }
+.gu-sw .gu-perilla {
+  position: relative;
+  width: 48px; height: 28px;
+  border-radius: 99px;
+  background: rgba(255,255,255,.16);
+  flex: none;
+  transition: background .4s ease;
+}
+.gu-sw .gu-perilla::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #d5dae1;
+  transition: transform .4s cubic-bezier(.34,1.4,.5,1), background .4s ease, box-shadow .4s ease;
+}
+.gu-hero.gu-on .gu-sw .gu-perilla { background: rgba(242,169,0,.45); }
+.gu-hero.gu-on .gu-sw .gu-perilla::after {
+  transform: translateX(20px);
+  background: var(--gu-luz);
+  box-shadow: 0 0 15px 3px rgba(255,217,138,.85);
+}
+.gu-hero.gu-on .gu-sw { border-color: rgba(242,169,0,.5); }
+/* el estado se dice con palabras, no solo con color */
+.gu-sw .gu-sw-t::after { content: 'Tócala para encenderla'; }
+.gu-hero.gu-on .gu-sw .gu-sw-t::after { content: 'Encendida'; }
 
-/* el aviso de que hay que bajar. Se va apenas empieza el recorrido. */
-.gu-baja {
-  display: inline-flex; align-items: center; gap: 9px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase;
-  color: rgba(255,255,255,.75);
-  transition: opacity .4s ease;
+/* un latido suave en el interruptor hasta que lo tocan, para que se vea */
+@keyframes gu-late {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,217,138,0); }
+  50%      { box-shadow: 0 0 0 7px rgba(255,217,138,.09); }
 }
-.gu-hero.gu-mov .gu-baja { opacity: 0; }
-.gu-baja i {
-  display: block; width: 1px; height: 22px;
-  background: linear-gradient(to bottom, transparent, var(--gu-luz));
-  animation: gu-cae 1.8s ease-in-out infinite;
-}
-@keyframes gu-cae {
-  0%   { transform: translateY(-7px); opacity: 0; }
-  40%  { opacity: 1; }
-  100% { transform: translateY(7px); opacity: 0; }
-}
+.gu-hero:not(.gu-on) .gu-sw { animation: gu-late 2.6s ease-in-out 1.2s infinite; }
 
 /* ---------- la guirnalda dibujada ----------
    El cable cuelga de verdad y las ampolletas se encienden de izquierda a
@@ -409,3 +469,18 @@
   max-width: 100%;
 }
 .p-guirnalda .gu-fi img { aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* 🔴 22-09, medido: el ámbar #b37c00 sobre blanco daba 3,62:1 y el mínimo
+   legible es 4,5. Se oscurece a #8a5f00, que da 5,7:1 y sigue leyéndose
+   como el mismo ámbar de la marca. */
+.p-guirnalda .gu-clara .gu-rot,
+.p-guirnalda .gu-clara .gu-rot2,
+.p-guirnalda .gu-clara .gu-h2 em,
+.p-guirnalda .gu-clara .gu-tramo.gu-mia .gu-et b { color: #8a5f00; }
+
+/* las frases del hero van sobre la foto: la sombra es lo que las sostiene,
+   no el fondo. Se refuerza para que se lean con el patio de día, que es
+   cuando el cuadro está más claro. */
+.p-guirnalda .gu-frase span {
+  text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 2px 18px rgba(0,0,0,.75);
+}
