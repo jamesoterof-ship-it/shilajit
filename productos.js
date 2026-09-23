@@ -340,7 +340,10 @@ window.PRODUCTOS = [
        pinza ni gancho: el pack trae la guirnalda y el panel con su estaca. */
     id: 'guirnalda', unidad: 'una', promo: 2,
     fotosResenas: ['img/resenas-guirnalda/rg1.webp?v=1','img/resenas-guirnalda/rg2.webp?v=1','img/resenas-guirnalda/rg3.webp?v=1','img/resenas-guirnalda/rg4.webp?v=1','img/resenas-guirnalda/rg5.webp?v=1','img/resenas-guirnalda/rg6.webp?v=1','img/resenas-guirnalda/rg7.webp?v=1','img/resenas-guirnalda/rg8.webp?v=1','img/resenas-guirnalda/rg9.webp?v=1'],
-    video: 'img/guirnalda-ficha.mp4',
+    /* el video limpio de la ficha: sin subtítulos ni placa, y con la cinta
+       de JAYE GROUP corriendo encima de la franja difuminada. ?v=2 para que
+       nadie coma el de antes desde la caché. */
+    video: 'img/guirnalda-ficha.mp4?v=2',
     heroDia: 'img/guirnalda-dia.webp?v=1',
     heroNoche: 'img/guirnalda-noche.webp?v=1',
     /* sin comparador deslizante: la pieza de James (gui-sec-antes.webp) ya trae

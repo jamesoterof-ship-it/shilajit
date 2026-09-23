@@ -874,3 +874,18 @@
   opacity: 1;
   animation-fill-mode: both !important;
 }
+
+/* 🔴 EL CARRUSEL DE RESEÑAS, AL ANCHO DE LA PANTALLA.
+   James con la captura: las tarjetas asomaban cortadas por los dos lados
+   ("drigo Cáceres", "erificado") y no se podía leer ninguna entera.
+   La tienda las hace de 186 px fijos, tres asomando a la vez. Acá cada
+   tarjeta ocupa el ancho completo menos el margen, y con scroll-snap cae
+   una por una, entera y legible. Solo en la guirnalda: las otras doce
+   fichas quedan como estaban. */
+.p-guirnalda .rese-pista { gap: 12px; padding-left: 20px; padding-right: 20px; }
+.p-guirnalda .rese-pista .rsn {
+  flex: 0 0 auto;
+  width: calc(100vw - 40px);
+  max-width: 420px;
+  scroll-snap-align: center;
+}
