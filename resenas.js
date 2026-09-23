@@ -302,7 +302,7 @@
       'La usé para el matrimonio de mi hermana en el jardín',
       'Resistió el viento del sur sin soltarse',
       'Pagué al recibir, eso me dio confianza',
-      'El vidrio de las ampolletas se ve de buena cálidad',
+      'El vidrio de las ampolletas se ve de buena calidad',
       'La terraza pasa de oscura a acogedora, así de simple',
       'Compré la de tres y cubri el patio, el quincho y la entrada',
       'Se guarda fácil si uno la quiere descolgar',

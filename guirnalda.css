@@ -942,17 +942,32 @@
   .p-guirnalda .gu-huincha i::after { display: none; }
 }
 
-/* 🔴 LA CINTA DE RESEÑAS. James: "esto el ancho de pantalla, no así" y
-   después "sigue igual".
-   Lo segundo era culpa mía: apunté a `.rsn`, que en esta ficha no existe.
-   El carrusel real es `.rev-auto`, y NO es de deslizar: es una cinta que
-   corre sola con overflow oculto, así que las tarjetas de los extremos
-   quedan cortadas a la mitad, en seco, y no se puede leer ninguna.
 
-   No se puede ensanchar sin romper la cinta de las otras doce fichas, así
-   que se hace lo que se hace con las marquesinas: los bordes se DESVANECEN.
-   El corte deja de verse como un error y se lee como que la cinta sigue. */
+
+/* ============================================================
+   LA CINTA DE RESEÑAS, AL ANCHO DE LA PANTALLA · 23-09
+   James: "el carrusel se le ve ese sombreado blanco y tiene que ocupar
+   toda la pantalla".
+
+   Dos intentos fallidos antes:
+     · apunté a `.rsn`, que en esta ficha no existe — no hizo nada
+     · le puse una máscara de desvanecido en los bordes, y eso es
+       justamente el "sombreado blanco" que él vio
+
+   La tarjeta real es `.rsc`, dentro de `.rev-auto__track`, una cinta que
+   corre sola. Ahora cada tarjeta ocupa el ancho completo de la pantalla
+   menos el margen, así que siempre se lee una entera. Sin máscara, sin
+   desvanecido, sin nada encima.
+   Solo en la guirnalda: las otras doce fichas quedan como estaban.
+   ============================================================ */
 .p-guirnalda .rev-auto {
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
-          mask-image: linear-gradient(90deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+  -webkit-mask-image: none;
+          mask-image: none;
+}
+.p-guirnalda .rev-auto__track { gap: 14px; }
+.p-guirnalda .rev-auto__track .rsc {
+  flex: 0 0 auto;
+  width: calc(100vw - 36px);
+  max-width: 460px;
+  box-sizing: border-box;
 }
