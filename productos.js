@@ -344,32 +344,37 @@ window.PRODUCTOS = [
     heroDia: 'img/guirnalda-dia.webp?v=1',
     heroNoche: 'img/guirnalda-noche.webp?v=1',
     /* sin comparador deslizante: la pieza de James (gui-sec-antes.webp) ya trae
-       el antes y el despues con sus etiquetas, y la monta guirnalda.js como
+       el antes y el después con sus etiquetas, y la monta guirnalda.js como
        seccion entera. Poner los dos seria repetir el mismo argumento. */
     preguntas: [
-      { q: '¿Sube la cuenta de la luz?', a: 'No. Funciona con energia solar: el panel se carga de dia con el sol y la guirnalda alumbra de noche. No se enchufa a la corriente, asi que no consume nada.' },
-      { q: '¿Aguanta la lluvia?', a: 'Si. Es IP65, hecha para estar afuera todo el ano. Las ampolletas y el cable resisten el agua y el viento.' },
-      { q: '¿Cuanto mide y cuantas ampolletas trae?', a: 'Diez metros de cable con diez ampolletas tipo Edison de luz calida. Alcanza para cruzar una terraza completa de lado a lado.' },
+      { q: '¿Sube la cuenta de la luz?', a: 'No. Funciona con energía solar: el panel se carga de día con el sol y la guirnalda alumbra de noche. No se enchufa a la corriente, así que no consume nada.' },
+      { q: '¿Aguanta la lluvia?', a: 'Si. Es IP65, hecha para estar afuera todo el año. Las ampolletas y el cable resisten el agua y el viento.' },
+      { q: '¿Cuanto mide y cuantas ampolletas trae?', a: 'Diez metros de cable con diez ampolletas tipo Edison de luz cálida. Alcanza para cruzar una terraza completa de lado a lado.' },
       { q: '¿Que viene en la caja?', a: 'La guirnalda de diez metros con sus diez ampolletas y el panel solar con su estaca. Nada mas: no necesita enchufe, ni electricista, ni herramientas.' },
     ],
     formulaRotulo: "Que incluye",
-    formulaTitulo: "Diez metros de luz calida.",
+    formulaTitulo: "Diez metros de luz cálida.",
     formulaSub: "Se cuelga, el panel va donde le de el sol, y esa misma noche el patio se ve distinto.",
-    formula: [["sol","Energia solar","El panel se carga de dia con el sol."],["cable","Diez metros","Cruza una terraza completa de lado a lado."],["rayo","Diez ampolletas LED","Luz calida tipo Edison, de larga duracion."],["agua","Resistente al agua","IP65: aguanta la lluvia y el viento afuera."],["casa","Facil instalacion","Se cuelga en un minuto, sin herramientas."],["llave","Panel con estaca","Se clava en la tierra donde le llegue el sol."]],
+    formula: [["sol","Energía solar","El panel se carga de día con el sol."],["cable","Diez metros","Cruza una terraza completa de lado a lado."],["rayo","Diez ampolletas LED","Luz cálida tipo Edison, de larga duración."],["agua","Resistente al agua","IP65: aguanta la lluvia y el viento afuera."],["casa","Fácil instalación","Se cuelga en un minuto, sin herramientas."],["llave","Panel con estaca","Se clava en la tierra donde le llegue el sol."]],
     comparaTitulo: "¿Que la hace diferente?",
-    compara: ["No sube la cuenta de la luz — funciona con sol, sin enchufe ni cables por el suelo.","Diez metros de verdad: cubre la terraza entera, no un pedazo.","IP65, para dejarla puesta todo el ano sin descolgarla."],
+    compara: ["No sube la cuenta de la luz — funciona con sol, sin enchufe ni cables por el suelo.","Diez metros de verdad: cubre la terraza entera, no un pedazo.","IP65, para dejarla puesta todo el año sin descolgarla."],
     nombre: 'Guirnalda Solar Decorativa',
-    sub: 'Diez metros con diez ampolletas de luz calida',
+    sub: 'Diez metros con diez ampolletas de luz cálida',
     categoria: 'Hogar',
     foto: 'img/prod-guirnalda.webp?v=1',
     fotos: ['img/prod-guirnalda.webp?v=1','img/prod-guirnalda-2.webp?v=1','img/prod-guirnalda-3.webp?v=1'],
     acento: '#f2a900',   /* ambar calido: el color de su propia luz. Ningun otro producto lo usa */
-    desc: 'La Guirnalda Solar Decorativa son diez metros de cable con diez ampolletas tipo Edison de luz calida, pensadas para dejar puestas afuera. Funciona con energia solar: trae un panel con estaca que se clava donde le llegue el sol y se carga de dia, asi que no se enchufa a la corriente y no sube la cuenta de la luz. Es IP65, resistente al agua, para que aguante la lluvia y el viento todo el ano. Se cuelga en un minuto, sin electricista y sin cables cruzando el patio. Ideal para terraza, patio, balcon, pergola, jardin y eventos.',
+    /* 🔴 James mandó la captura del muro de texto: diez líneas seguidas sin
+       respiro, que en un teléfono no las lee nadie. Se parte en tres frases
+       cortas, una idea cada una. Los saltos van como \n escapado: si se
+       escriben como salto de verdad, productos.js deja de parsear y se caen
+       LAS TRECE FICHAS de la tienda. Casi pasa. */
+    desc: 'Diez metros de cable con diez ampolletas tipo Edison de luz cálida, para dejar puestas afuera todo el año.\n\nFunciona con el sol: el panel se clava donde le llegue la luz y se carga solo. No se enchufa a la corriente, así que no te sube la cuenta.\n\nEs IP65, hecha para aguantar la lluvia y el viento. Se cuelga en un minuto, sin electricista y sin cables cruzando el patio.',
     puntos: [
-      'Diez metros con diez ampolletas de luz calida',
-      'Energia solar: no sube la cuenta de la luz',
+      'Diez metros con diez ampolletas de luz cálida',
+      'Energía solar: no sube la cuenta de la luz',
       'IP65, resistente al agua para dejarla afuera',
-      'LED de larga duracion, luz calida tipo Edison',
+      'LED de larga duración, luz cálida tipo Edison',
       'Se cuelga en un minuto, sin electricista',
     ],
     packs: [

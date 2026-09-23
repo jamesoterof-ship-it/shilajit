@@ -1,36 +1,25 @@
 /* ============================================================
-   GUIRNALDA SOLAR · el diseño propio, montado sobre la ficha. 22-09.
+   GUIRNALDA SOLAR · el diseño propio, montado sobre la ficha.
+   REHECHO el 22-09 después del rechazo de James.
 
-   Corre DESPUES de ficha.js. Si el producto no es la guirnalda se va
-   sin hacer nada, así que los otros doce quedan igual que siempre.
-   No toca el encabezado (.top) ni el pie (.pie): viven fuera de #prod
-   y acá ni se nombran. Es la regla de James.
+   Lo que él dijo, y lo que cambia por cada cosa:
+     · "qué página tan fea, básica"  -> la ficha entera es de noche, sin
+       cajas negras flotando sobre blanco.
+     · "esquinas redondas JAMÁS en un hero" -> el hero va a sangre, de
+       borde a borde, sin un solo radio.
+     · "ningún efecto tiene ese hero" y "¿para qué me pediste las dos
+       imágenes?" -> LA CLAVE. Antes la transición día→noche arrancaba ya
+       medio encendida y se completaba sola en 2 s, antes de que nadie
+       mirara: el cliente nunca veía el cambio, y las dos fotos no
+       servían de nada. AHORA el hero arranca DE DÍA del todo y la
+       enciende EL CLIENTE con un interruptor. El efecto se ve porque lo
+       provoca él, y puede apagarla y prenderla las veces que quiera.
 
-   LOS ANGULOS, en el orden en que atacan (James, 22-09: "ojo con los
-   angulos que vas a atacar"):
-     1. EL MOMENTO -> nadie se queda en un patio a oscuras. Es el que
-        vende: no se compra una guirnalda, se compra la juntada.
-     2. CERO CUENTA DE LUZ -> funciona con sol, sin enchufe.
-     3. DIEZ METROS DE VERDAD -> la duda real del que compra, que
-        ningun competidor le responde.
-     4. AGUANTA AFUERA TODO EL ANO -> IP65.
+   Corre DESPUES de ficha.js. Si el producto no es la guirnalda se va sin
+   hacer nada. No toca el encabezado (.top) ni el pie (.pie).
 
-   Lo que hace:
-     1. pone el HERO QUE ATARDECE arriba de la cabecera: la misma
-        terraza de día y de noche, y la de noche va apareciendo con el
-        scroll mientras las diez ampolletas de la tira se encienden
-     2. mete la bajada y los tres números (10 m · 10 ampolletas · $0 luz)
-     3. la seccion del MOMENTO, con la pieza de antes y despues
-     4. la seccion nueva CUANTO SON DIEZ METROS, con la regla a escala
-     5. convierte «Qué es y para qué sirve» en tres tarjetas con las
-        fotos de sección
-     6. pone las cuatro cápsulas: solar · IP65 · LED · instalación
-
-   Lo demás de la ficha -promo, reseñas, preguntas y el formulario-
-   sigue tal cual, para no romper la compra.
-
-   OJO: NO se afirma en ningún lado que se encienda sola al anochecer ni
-   cuántas horas de luz da. Eso no está confirmado con el proveedor.
+   OJO: no se afirma que se encienda sola al anochecer ni cuántas horas
+   dura. Eso no está confirmado con el proveedor.
    ============================================================ */
 (function () {
   'use strict';
@@ -42,8 +31,6 @@
 
   var AMPOLLETAS = 10;
 
-  /* las tres fotos SON «Qué es y para qué sirve». Cada pie cuenta algo
-     que la foto no trae escrito, para no decir dos veces lo mismo. */
   var FOTOS = [
     ['img/gui-sec-pack.webp?v=1',
      'Guirnalda solar de diez ampolletas tipo Edison junto a su panel solar y la estaca, sobre una mesa de madera',
@@ -52,15 +39,14 @@
     ['img/gui-sec-ampolleta.webp?v=1',
      'Primer plano de tres ampolletas tipo Edison encendidas con luz ámbar cálida',
      'La luz', 'Cálida, no blanca de hospital',
-     'Ampolletas tipo Edison con el filamento a la vista. La luz sale ámbar, del color que hace que un patio se vea acogedor y no como una bodega.'],
+     'Ampolletas tipo Edison con el filamento a la vista. La luz sale ámbar: el color que hace que un patio se vea acogedor y no como una bodega.'],
     ['img/gui-sec-panel.webp?v=1',
      'Panel solar negro clavado con su estaca en el pasto de un jardín',
      'De dónde sale la energía', 'El panel va donde le dé el sol',
-     'Se clava en la tierra o en una maceta, apuntando a donde pega el sol la mayor parte del día. El cable llega hasta la guirnalda y no queda nada a la vista.'],
+     'Se clava en la tierra o en una maceta, apuntando adonde pega el sol la mayor parte del día. El cable llega hasta la guirnalda y no queda nada a la vista.'],
   ];
 
-  /* la regla a escala: contra cosas que el cliente tiene en su casa */
-  var REGLA = [
+  var CINTA = [
     ['Un balcón de departamento', '3 m', 30],
     ['Una terraza corriente', '6 m', 60],
     ['La guirnalda', '10 m', 100, true],
@@ -82,20 +68,30 @@
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
-  function tira() {
-    var s = '';
-    /* --n es el turno de cada ampolleta: el CSS lo usa para que se
-       enciendan en secuencia y no todas de golpe */
-    for (var i = 0; i < AMPOLLETAS; i++) s += '<i style="--n:' + i + '"></i>';
-    /* aria-hidden: es decoración y a la vez avance; el lector de pantalla
-       no gana nada leyendo diez puntos */
-    return '<div class="gu-tira" aria-hidden="true">' + s + '</div>';
+  /* ---------- la guirnalda dibujada ----------
+     El cable NO es una línea recta: cuelga en una catenaria, como cuelga
+     de verdad entre dos puntos. Las ampolletas van colgadas de la curva. */
+  function cable(ancho, alto, caida) {
+    var d = 'M 0 6 Q ' + (ancho / 2) + ' ' + (caida * 2) + ' ' + ancho + ' 6';
+    var amp = '';
+    for (var i = 0; i < AMPOLLETAS; i++) {
+      var t = (i + 0.5) / AMPOLLETAS;
+      var x = t * ancho;
+      /* punto de la curva de Bézier cuadrática en t */
+      var y = (1 - t) * (1 - t) * 6 + 2 * (1 - t) * t * (caida * 2) + t * t * 6;
+      amp += '<g class="gu-amp" style="--n:' + i + '" data-i="' + i + '">' +
+        '<line x1="' + x.toFixed(1) + '" y1="' + y.toFixed(1) + '" x2="' + x.toFixed(1) + '" y2="' + (y + 7).toFixed(1) + '" stroke="#0b0f16" stroke-width="1.6"/>' +
+        '<ellipse cx="' + x.toFixed(1) + '" cy="' + (y + 11).toFixed(1) + '" rx="4.2" ry="5.4"/>' +
+      '</g>';
+    }
+    return '<svg class="gu-cable" viewBox="0 0 ' + ancho + ' ' + alto + '" preserveAspectRatio="none" aria-hidden="true">' +
+      '<path class="gu-hilo" d="' + d + '"/>' + amp + '</svg>';
   }
 
   function bloqueFotos() {
     return '<div class="gu-fichas">' + FOTOS.map(function (f, i) {
       return '<figure class="gu-fi" style="--i:' + i + '">' +
-        '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="1000" height="1000">' +
+        '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="1000" height="750">' +
         '<figcaption>' +
           '<span class="gu-rot2">' + esc(f[2]) + '</span>' +
           '<b>' + esc(f[3]) + '</b>' +
@@ -105,29 +101,26 @@
     }).join('') + '</div>';
   }
 
-  /* EL ANGULO QUE VENDE. El patio a oscuras donde nadie se queda, y el
-     mismo patio con luz donde la gente se queda hasta tarde. La pieza de
-     James ya lo dice con imagen; acá solo se le pone el marco. */
   function bloqueMomento() {
     return '<section class="gu-mom">' +
       '<span class="gu-rot">El antes y el después</span>' +
-      '<h2 class="gu-h2">Nadie se queda en un patio a oscuras.</h2>' +
+      '<h2 class="gu-h2">Nadie se queda en un patio <em>a oscuras.</em></h2>' +
       '<p class="gu-sub">Es la misma mesa, la misma gente y la misma noche. Lo único que cambia es que hay luz, y con luz la junta no se corta a las nueve.</p>' +
       '<img src="img/gui-sec-antes.webp?v=1" width="1080" height="1320" loading="lazy"' +
         ' alt="La misma terraza con amigos en la mesa: a oscuras sin iluminación, y después con la guirnalda solar encendida">' +
     '</section>';
   }
 
-  function bloqueRegla() {
-    return '<section class="gu-blq">' +
+  function bloqueCinta() {
+    return '<section class="gu-sec gu-blq">' +
       '<span class="gu-rot">Lo que nadie te dice</span>' +
-      '<h2 class="gu-h2">¿Cuánto son diez metros?</h2>' +
+      '<h2 class="gu-h2">¿Cuánto son <em>diez metros?</em></h2>' +
       '<p class="gu-sub">Es la duda de todos antes de comprar. Diez metros no es un número: es cruzar una terraza completa de lado a lado, y que todavía te sobre cable.</p>' +
-      '<div class="gu-regla">' +
-        REGLA.map(function (r) {
-          return '<div class="gu-fila' + (r[3] ? ' gu-mia' : '') + '">' +
+      '<div class="gu-cinta">' +
+        CINTA.map(function (r) {
+          return '<div class="gu-tramo' + (r[3] ? ' gu-mia' : '') + '">' +
             '<div class="gu-et"><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></div>' +
-            '<div class="gu-barra"><i style="--w:' + r[2] + '%"></i></div>' +
+            '<div class="gu-huincha"><i style="--w:' + r[2] + '%"></i></div>' +
           '</div>';
         }).join('') +
       '</div>' +
@@ -147,60 +140,64 @@
     var cont = document.getElementById('prod');
     if (!cont) return false;
     var arriba = cont.querySelector('.arriba2');
-    if (!arriba) return false;                        /* ficha.js todavía no pintó */
-    if (cont.querySelector('.gu-hero')) return true;  /* ya estaba puesto */
+    if (!arriba) return false;
+    if (cont.querySelector('.gu-hero')) return true;
 
     document.body.classList.add('p-guirnalda');
 
-    /* La de DÍA va primero y la de NOCHE encima: así el navegador pinta la
-       de día de una y la de noche entra por opacidad, sin reflow. Las dos
-       llevan width/height para que no salte el layout al cargar. */
+    /* la serif de display. Va acá y no en el HTML para no cargarla en las
+       otras doce fichas, que no la usan. */
+    if (!document.getElementById('gu-fuente')) {
+      var l = document.createElement('link');
+      l.id = 'gu-fuente';
+      l.rel = 'stylesheet';
+      l.href = 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap';
+      document.head.appendChild(l);
+    }
+
     var html =
       '<div class="gu-hero">' +
-        '<img src="img/guirnalda-dia.webp?v=1" width="1024" height="1536" fetchpriority="high"' +
+        '<img class="gu-capa" src="img/guirnalda-dia.webp?v=1" width="1024" height="1536" fetchpriority="high"' +
           ' alt="Terraza con la guirnalda de diez ampolletas colgada de la pérgola, de día y apagada">' +
-        '<img class="gu-noche-img" src="img/guirnalda-noche.webp?v=1" width="1024" height="1536" fetchpriority="high"' +
+        '<img class="gu-capa gu-noche-img" src="img/guirnalda-noche.webp?v=1" width="1024" height="1536"' +
           ' alt="La misma terraza de noche, con las diez ampolletas encendidas con luz cálida">' +
+        '<div class="gu-vineta" aria-hidden="true"></div>' +
         '<div class="gu-glow" aria-hidden="true"></div>' +
-        '<div class="gu-barrido" aria-hidden="true"></div>' +
-        tira() +
+        cable(360, 42, 26) +
         '<div class="gu-sobre">' +
           '<span class="gu-rot">Diez metros · diez ampolletas · energía solar</span>' +
           '<h1 class="gu-h1">Tu patio de noche,<em>por fin.</em></h1>' +
+          '<button class="gu-sw" type="button" aria-pressed="false">' +
+            '<span class="gu-perilla" aria-hidden="true"></span>' +
+            '<span class="gu-sw-t"></span>' +
+          '</button>' +
         '</div>' +
       '</div>' +
-      '<p class="gu-bajada">Diez metros de cable con diez ampolletas tipo Edison de luz cálida, para dejar puestas afuera. El panel solar se clava donde le dé el sol y se carga de día: no se enchufa a la corriente, así que no te sube la cuenta de la luz. Es IP65, hecha para aguantar la lluvia todo el año.</p>' +
-      '<div class="gu-med">' +
-        '<div><b>10</b><span>metros de largo</span></div>' +
-        '<div><b>10</b><span>ampolletas cálidas</span></div>' +
-        '<div><b>$0</b><span>de cuenta de luz</span></div>' +
-      '</div>';
+      '<section class="gu-sec">' +
+        '<p class="gu-sub" style="max-width:52ch">Diez metros de cable con diez ampolletas tipo Edison de luz cálida, para dejar puestas afuera. El panel se clava donde le dé el sol y se carga de día: no se enchufa a la corriente, así que no te sube la cuenta de la luz.</p>' +
+        '<div class="gu-med">' +
+          '<div><b>10</b><span>metros de largo</span></div>' +
+          '<div><b>10</b><span>ampolletas cálidas</span></div>' +
+          '<div><b>$0</b><span>de cuenta de luz</span></div>' +
+        '</div>' +
+      '</section>';
 
-    /* El hero va ARRIBA de la cabecera, y la galería se va: sus fotos ya
-       están en el hero y en las tarjetas, así ninguna se ve dos veces.
-       La cabecera se queda entera -estrellas, nombre y precio tachado-
-       porque de ahí sale el botón de compra. */
     arriba.insertAdjacentHTML('beforebegin', html);
     ['.gal', '.miniz'].forEach(function (s) {
       var el = arriba.querySelector(s);
       if (el) el.remove();
     });
-    var med = cont.querySelector('.gu-med');
-    if (med) med.insertAdjacentElement('afterend', arriba);
+    var sec = cont.querySelector('.gu-sec');
+    if (sec) sec.insertAdjacentElement('afterend', arriba);
 
-    /* Las secciones NO pueden quedar pegadas bajo el precio: ahí la ficha
-       ya pone su botón y quedarían dos botones seguidos, que es regla
-       rota. Se bajan hasta justo antes de la descripción, y en el orden de
-       los ángulos: primero el POR QUÉ (el momento), después el CUÁNTO (los
-       diez metros) y al final el CÓMO (las cápsulas). */
     var desc = cont.querySelector('section.desc');
     if (desc) {
-      /* insertAdjacentHTML('beforebegin') respeta el orden de inserción, así
-         que acá van en el orden en que se leen: el momento primero. */
+      /* orden de los ángulos: primero el POR QUÉ, después el CUÁNTO,
+         al final el CÓMO. Nunca pegados al precio: ahí la ficha ya pone
+         su botón y quedarían dos botones seguidos. */
       desc.insertAdjacentHTML('beforebegin', bloqueMomento());
-      desc.insertAdjacentHTML('beforebegin', bloqueRegla());
+      desc.insertAdjacentHTML('beforebegin', bloqueCinta());
       desc.insertAdjacentHTML('beforebegin', bloqueCaps());
-      /* «Qué es y para qué sirve» pasa a ser las tres tarjetas */
       var p = desc.querySelector('p');
       if (p) p.insertAdjacentHTML('afterend', bloqueFotos());
       else desc.insertAdjacentHTML('beforeend', bloqueFotos());
@@ -208,118 +205,63 @@
     return true;
   }
 
-  /* ---------- el atardecer ----------
-     Una sola función atada al scroll, con rAF, para no hacer trabajo por
-     cada evento. Lee y escribe en el mismo cuadro: nada de layout
-     thrashing. */
   function animar() {
     var hero = document.querySelector('.gu-hero');
     if (!hero) return;
     var noche = hero.querySelector('.gu-noche-img');
-    var puntos = [].slice.call(hero.querySelectorAll('.gu-tira i'));
-    var pedido = false;
-    var lento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var amps = [].slice.call(hero.querySelectorAll('.gu-cable .gu-amp'));
+    var sw = hero.querySelector('.gu-sw');
+    var encendida = false;
+    var relojes = [];
 
-    /* ---------- SE ENCIENDE SOLA AL ABRIR ----------
-       James, 22-09: "ponle efecto al hero". El que abre la ficha y no baja
-       tiene que ver alumbrar igual. Durante los primeros 2,2 s manda esta
-       animación: el patio pasa de día a noche, las diez ampolletas prenden
-       en secuencia y un destello recorre la guirnalda. Después suelta el
-       mando al scroll. Si el cliente baja antes, se corta y no estorba. */
-    var arrancando = !lento;
-    var t0 = 0;
+    function limpiar() { relojes.forEach(clearTimeout); relojes = []; }
 
-    /* deja el hero encendido del todo, sin animar. Es el estado final y el
-       que vale: la ficha nunca puede quedarse a medio prender. */
-    function encendidoTotal() {
-      arrancando = false;
-      if (noche) noche.style.setProperty('--gu-cae', '1');
-      for (var i = 0; i < puntos.length; i++) puntos[i].classList.add('on');
+    /* ---------- ENCENDER / APAGAR ----------
+       Lo maneja el cliente. Al encender, el patio pasa de día a noche en
+       2,4 s y las ampolletas prenden de izquierda a derecha, una cada
+       110 ms, como cuando la corriente recorre el cable. Al apagar,
+       vuelve a ser de día: puede repetirlo las veces que quiera. */
+    function cambiar(on) {
+      encendida = on;
+      limpiar();
+      hero.classList.add('gu-anim');
+      hero.classList.toggle('gu-on', on);
+      if (noche) noche.style.setProperty('--gu-cae', on ? '1' : '0');
+      if (sw) sw.setAttribute('aria-pressed', on ? 'true' : 'false');
+
+      amps.forEach(function (a, i) {
+        var espera = on ? 260 + i * 110 : (amps.length - i) * 45;
+        relojes.push(setTimeout(function () { a.classList.toggle('on', on); }, espera));
+      });
     }
 
-    function prender(ahora) {
-      if (!t0) t0 = ahora;
-      var t = Math.min(1, (ahora - t0) / 2200);
-      /* ease-out: prende rápido y asienta lento, como una lámpara de verdad */
-      var e = 1 - Math.pow(1 - t, 3);
-      if (noche) noche.style.setProperty('--gu-cae', (0.35 + e * 0.65).toFixed(3));
-      var n = Math.round(e * AMPOLLETAS);
-      for (var i = 0; i < puntos.length; i++) puntos[i].classList.toggle('on', i < n);
-      if (t < 1 && arrancando) requestAnimationFrame(prender);
-      else { arrancando = false; pintar(); }
-    }
+    if (sw) sw.addEventListener('click', function () { cambiar(!encendida); });
 
-    /* 🔴 22-09, visto EN VIVO y no en local: el hero se quedaba de DÍA, con
-       cero ampolletas. requestAnimationFrame NO corre mientras la pestaña
-       está en segundo plano, así que si el cliente abre la ficha y mira otra
-       cosa un segundo, el encendido nunca terminaba y quedaba congelado en el
-       0.35 del arranque. Y como `arrancando` seguía en true, `pintar` se iba
-       sin hacer nada y el scroll tampoco lo salvaba.
-       Dos redes: si la pestaña arranca oculta ni se intenta animar, y pase lo
-       que pase, a los 2,8 s el hero queda encendido igual. */
-    if (document.hidden) arrancando = false;
-    setTimeout(function () { if (arrancando) { encendidoTotal(); pintar(); } }, 2800);
-
-    function pintar() {
-      pedido = false;
-      if (arrancando) return;   /* el encendido manda hasta que termine */
-      var alto = document.documentElement.scrollHeight - window.innerHeight;
-      var y = window.pageYOffset || document.documentElement.scrollTop;
-
-      /* ya quedó de noche al abrir: de acá en adelante el scroll solo
-         termina de asentarla, nunca la devuelve al día */
-      var caida = Math.min(1, y / (window.innerHeight * 1.5));
-      if (noche) noche.style.setProperty('--gu-cae', Math.max(0.92, 0.35 + caida * 0.65).toFixed(3));
-
-      /* las ampolletas sí marcan el avance de TODA la página */
-      var avance = alto > 0 ? Math.min(1, y / alto) : 1;
-      var encendidas = Math.max(AMPOLLETAS, Math.round(avance * AMPOLLETAS));
-      for (var i = 0; i < puntos.length; i++) {
-        puntos[i].classList.toggle('on', i < encendidas);
-      }
-    }
-
+    /* Si el cliente baja sin tocar el interruptor, igual se enciende sola
+       al llegar al final del hero: el que no juega no se queda sin ver el
+       producto encendido. Una sola vez, y después manda él. */
+    var yaSola = false;
     function alScroll() {
-      /* si el cliente baja mientras prende, el encendido se corta: mandan
-         sus dedos, no la animación */
-      if ((window.pageYOffset || 0) > 40) arrancando = false;
-      if (pedido) return;
-      pedido = true;
-      requestAnimationFrame(pintar);
+      if (yaSola || encendida) return;
+      var r = hero.getBoundingClientRect();
+      if (r.bottom < window.innerHeight * 0.75) { yaSola = true; cambiar(true); }
     }
-
     window.addEventListener('scroll', alScroll, { passive: true });
-    window.addEventListener('resize', alScroll, { passive: true });
 
-    hero.classList.add('gu-lista');         /* el CSS ya puede esconder el título */
-    if (arrancando) {
-      /* un respiro para que las dos fotos estén pintadas antes de cruzarlas */
-      setTimeout(function () {
-        if (!arrancando) return;
-        hero.classList.add('gu-prendida');  /* dispara resplandor y destello */
-        requestAnimationFrame(prender);
-      }, 220);
-    } else {
-      hero.classList.add('gu-prendida');
-      encendidoTotal();                     /* nada de quedarse a medio prender */
-      pintar();
+    /* si el sistema pide poco movimiento, se muestra encendida y listo */
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      hero.classList.add('gu-on');
+      if (noche) noche.style.setProperty('--gu-cae', '1');
+      amps.forEach(function (a) { a.classList.add('on'); });
+      encendida = true;
     }
 
-    /* si la pestaña estaba oculta y el cliente vuelve a ella, que la
-       encuentre encendida, no a medias */
-    document.addEventListener('visibilitychange', function () {
-      if (!document.hidden && arrancando) { encendidoTotal(); pintar(); }
-    });
-
-    /* La regla, el momento y las tarjetas entran al aparecer.
-       🔴 El CSS las deja VISIBLES: acá se esconden con .gu-pre justo antes de
-       observarlas, y solo si hay IntersectionObserver. Así, si este archivo no
-       corre o el navegador es viejo, la página se ve completa igual en vez de
-       dejar una sección en blanco. Si algo ya está en pantalla al cargar, se
-       marca visible de inmediato y no se esconde nunca. */
-    var sel = '.gu-blq,.gu-fi,.gu-mom';
+    /* ---------- las secciones entran al aparecer ----------
+       🔴 El CSS las deja VISIBLES: acá se esconden con .gu-pre justo antes
+       de observarlas. Si este archivo no corre, la página se ve completa
+       igual en vez de dejar una sección en blanco. */
+    var sel = '.gu-fi,.gu-mom,.gu-tramo';
     if (!('IntersectionObserver' in window)) return;
-
     var obs = new IntersectionObserver(function (filas) {
       filas.forEach(function (f) {
         if (!f.isIntersecting) return;
@@ -327,18 +269,20 @@
         f.target.classList.add('vis');
         obs.unobserve(f.target);
       });
-    }, { threshold: 0.22 });
-
+    /* 🔴 rootMargin de 300px y threshold 0: la sección se revela ANTES de
+       entrar en pantalla. Con threshold 0.2 había que tenerla ya encima para
+       que apareciera, y bajando rápido con el dedo se veía el contenido a
+       medio aparecer, casi invisible. Vale más que la animación se la pierda
+       alguien a que el cliente vea un hueco. */
+    }, { threshold: 0, rootMargin: '300px 0px 300px 0px' });
     [].forEach.call(document.querySelectorAll(sel), function (el) {
       var r = el.getBoundingClientRect();
-      if (r.top < window.innerHeight * 0.9) { el.classList.add('vis'); return; }
+      if (r.top < window.innerHeight * 1.2) { el.classList.add('vis'); return; }
       el.classList.add('gu-pre');
       obs.observe(el);
     });
   }
 
-  /* ficha.js pinta de forma asíncrona: se reintenta hasta que aparezca
-     .arriba2, y se corta a los 6 segundos para no dejar un timer vivo. */
   var intentos = 0;
   var reloj = setInterval(function () {
     if (montar() || ++intentos > 120) {
