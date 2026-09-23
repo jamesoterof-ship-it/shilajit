@@ -229,6 +229,14 @@
     var arrancando = !lento;
     var t0 = 0;
 
+    /* deja el hero encendido del todo, sin animar. Es el estado final y el
+       que vale: la ficha nunca puede quedarse a medio prender. */
+    function encendidoTotal() {
+      arrancando = false;
+      if (noche) noche.style.setProperty('--gu-cae', '1');
+      for (var i = 0; i < puntos.length; i++) puntos[i].classList.add('on');
+    }
+
     function prender(ahora) {
       if (!t0) t0 = ahora;
       var t = Math.min(1, (ahora - t0) / 2200);
@@ -240,6 +248,17 @@
       if (t < 1 && arrancando) requestAnimationFrame(prender);
       else { arrancando = false; pintar(); }
     }
+
+    /* 🔴 22-09, visto EN VIVO y no en local: el hero se quedaba de DÍA, con
+       cero ampolletas. requestAnimationFrame NO corre mientras la pestaña
+       está en segundo plano, así que si el cliente abre la ficha y mira otra
+       cosa un segundo, el encendido nunca terminaba y quedaba congelado en el
+       0.35 del arranque. Y como `arrancando` seguía en true, `pintar` se iba
+       sin hacer nada y el scroll tampoco lo salvaba.
+       Dos redes: si la pestaña arranca oculta ni se intenta animar, y pase lo
+       que pase, a los 2,8 s el hero queda encendido igual. */
+    if (document.hidden) arrancando = false;
+    setTimeout(function () { if (arrancando) { encendidoTotal(); pintar(); } }, 2800);
 
     function pintar() {
       pedido = false;
@@ -282,8 +301,15 @@
       }, 220);
     } else {
       hero.classList.add('gu-prendida');
+      encendidoTotal();                     /* nada de quedarse a medio prender */
       pintar();
     }
+
+    /* si la pestaña estaba oculta y el cliente vuelve a ella, que la
+       encuentre encendida, no a medias */
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden && arrancando) { encendidoTotal(); pintar(); }
+    });
 
     /* La regla, el momento y las tarjetas entran al aparecer.
        🔴 El CSS las deja VISIBLES: acá se esconden con .gu-pre justo antes de
