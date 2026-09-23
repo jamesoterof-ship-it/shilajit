@@ -89,7 +89,7 @@
   }
 
   function bloqueFotos() {
-    return '<div class="gu-fichas gu-clara">' + FOTOS.map(function (f, i) {
+    return '<div class="gu-fichas gu-oscura">' + FOTOS.map(function (f, i) {
       return '<figure class="gu-fi" style="--i:' + i + '">' +
         '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="1000" height="750">' +
         '<figcaption>' +
@@ -112,7 +112,7 @@
   }
 
   function bloqueCinta() {
-    return '<section class="gu-sec gu-blq gu-clara">' +
+    return '<section class="gu-sec gu-blq gu-oscura">' +
       '<span class="gu-rot">Lo que nadie te dice</span>' +
       '<h2 class="gu-h2">¿Cuánto son <em>diez metros?</em></h2>' +
       '<p class="gu-sub">Es la duda de todos antes de comprar. Diez metros no es un número: es cruzar una terraza completa de lado a lado, y que todavía te sobre cable.</p>' +
@@ -158,24 +158,25 @@
     var html =
       /* la escena mide dos pantallas y media; el hero va pegado arriba y el
          patio atardece mientras el cliente la recorre con el dedo */
-      '<div class="gu-escena">' +
-        '<div class="gu-hero">' +
-          '<img class="gu-capa" src="img/guirnalda-dia.webp?v=1" width="1024" height="1536" fetchpriority="high"' +
-            ' alt="Terraza con la guirnalda de diez ampolletas colgada de la pérgola, de día y apagada">' +
-          '<img class="gu-capa gu-noche-img" src="img/guirnalda-noche.webp?v=1" width="1024" height="1536"' +
-            ' alt="La misma terraza de noche, con las diez ampolletas encendidas con luz cálida">' +
-          '<div class="gu-vineta" aria-hidden="true"></div>' +
-          '<div class="gu-glow" aria-hidden="true"></div>' +
-          cable(360, 42, 26) +
-          '<div class="gu-sobre">' +
-            '<span class="gu-rot">Diez metros · diez ampolletas · energía solar</span>' +
-            '<h1 class="gu-h1">Tu patio de noche,<em>por fin.</em></h1>' +
-            '<p class="gu-frase">' +
-              '<span class="gu-f1">De día tu terraza se ve linda. De noche no se ve nada.</span>' +
-              '<span class="gu-f2">Diez ampolletas encendidas, y el patio es otro lugar.</span>' +
-            '</p>' +
-            '<span class="gu-baja"><i></i>Desliza y se enciende</span>' +
-          '</div>' +
+      /* 🔴 EL HERO ES UN VIDEO. James: "ibas a hacer un puto video".
+         Antes eran las dos fotos cruzándose con el scroll, y ese cruce se
+         rompió tres veces: se quedaba de día, o las dos se veían a medias.
+         El video del día a la noche no depende de nada: arranca solo, va en
+         bucle y el efecto se ve siempre.
+
+         Los TEXTOS NO van quemados en el video: van acá en HTML, encima,
+         para que entren en cascada. Es lo que pidió. */
+      '<div class="gu-hero">' +
+        '<video class="gu-video" autoplay muted loop playsinline preload="auto"' +
+          ' poster="img/guirnalda-noche.webp?v=1"' +
+          ' aria-label="La misma terraza de día y de noche: las diez ampolletas de la guirnalda se encienden al caer la tarde">' +
+          '<source src="img/guirnalda-hero.mp4?v=1" type="video/mp4">' +
+        '</video>' +
+        '<div class="gu-vineta" aria-hidden="true"></div>' +
+        '<div class="gu-sobre">' +
+          '<span class="gu-rot">Diez metros · diez ampolletas · energía solar</span>' +
+          '<h1 class="gu-h1">Tu patio de noche,<em>por fin.</em></h1>' +
+          '<p class="gu-frase">De día tu terraza se ve linda. De noche no se ve nada.</p>' +
         '</div>' +
       '</div>' +
       '<section class="gu-sec gu-oscura">' +
@@ -211,54 +212,10 @@
   }
 
   function animar() {
-    var escena = document.querySelector('.gu-escena');
-    var hero = document.querySelector('.gu-hero');
-    if (!hero || !escena) return;
-    var noche = hero.querySelector('.gu-noche-img');
-    var amps = [].slice.call(hero.querySelectorAll('.gu-cable .gu-amp'));
-    var pedido = false;
-
-    /* ---------- EL ATARDECER, CON EL SCROLL ----------
-       James, 22-09: "eso no debe tener switch, sino el efecto al momento de
-       hacer scroll". El avance sale de cuanto lleva recorrido de la escena:
-       0 es pleno dia y 1 es de noche con las diez ampolletas prendidas.
-       Se lee y se escribe en el mismo cuadro, con rAF, para no trabajar de
-       mas ni provocar reflows. */
-    function pintar() {
-      pedido = false;
-      var caja = escena.getBoundingClientRect();
-      var recorrido = caja.height - hero.offsetHeight;
-      var avance = recorrido > 0 ? (-caja.top) / recorrido : 1;
-      avance = Math.max(0, Math.min(1, avance));
-
-      /* la noche se completa al 80% del recorrido: el ultimo tramo queda
-         para que el cliente se quede mirando el patio ya encendido */
-      var luz = Math.min(1, avance / 0.8);
-      if (noche) noche.style.setProperty('--gu-cae', luz.toFixed(3));
-
-      var n = Math.round(luz * AMPOLLETAS);
-      for (var i = 0; i < amps.length; i++) amps[i].classList.toggle('on', i < n);
-
-      hero.classList.toggle('gu-mov', avance > 0.02);   /* esconde el "desliza" */
-      hero.classList.toggle('gu-on', luz > 0.55);       /* cambia la frase */
-    }
-
-    function alScroll() {
-      if (pedido) return;
-      pedido = true;
-      requestAnimationFrame(pintar);
-    }
-    window.addEventListener('scroll', alScroll, { passive: true });
-    window.addEventListener('resize', alScroll, { passive: true });
-    pintar();
-
-    /* si el sistema pide poco movimiento, se muestra encendida y listo */
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      if (noche) noche.style.setProperty('--gu-cae', '1');
-      amps.forEach(function (a) { a.classList.add('on'); });
-      hero.classList.add('gu-on', 'gu-mov');
-    }
-
+    /* El hero ya no necesita JavaScript: es un video que corre solo. Lo que
+       queda es la entrada de las secciones al aparecer.
+       El CSS las deja VISIBLES y aca se esconden con .gu-pre justo antes de
+       observarlas: si este archivo no corre, la pagina se ve completa igual. */
     /* ---------- las secciones entran al aparecer ----------
        🔴 El CSS las deja VISIBLES: acá se esconden con .gu-pre justo antes
        de observarlas. Si este archivo no corre, la página se ve completa

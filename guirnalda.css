@@ -484,3 +484,275 @@
 .p-guirnalda .gu-frase span {
   text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 2px 18px rgba(0,0,0,.75);
 }
+
+/* ============================================================
+   ARREGLOS DEL 22-09 · lo que James mostro con capturas
+   ============================================================ */
+
+/* 🔴 1 · LAS LETRAS CORTADAS CONTRA EL BORDE.
+   Para estirar las bandas use padding con calc(50vw - 50%), y en el
+   telefono eso dejaba el texto pegado al borde y a veces saliendose por
+   la izquierda. Se cambia por lo simple y seguro: la banda se estira con
+   margen negativo y el contenido lleva un padding FIJO de 20 px. */
+.p-guirnalda .gu-oscura {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box;
+}
+.p-guirnalda .gu-clara {
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+/* la imagen del antes y despues si va de borde a borde, sin padding */
+.p-guirnalda .gu-mom.gu-oscura { padding-left: 0 !important; padding-right: 0 !important; }
+.p-guirnalda .gu-mom.gu-oscura .gu-rot,
+.p-guirnalda .gu-mom.gu-oscura .gu-h2,
+.p-guirnalda .gu-mom.gu-oscura .gu-sub { padding-left: 20px; padding-right: 20px; }
+
+/* 🔴 2 · LA FRASE DEL HERO: una sola, en flujo normal.
+   Antes eran dos superpuestas con position:absolute cruzandose por
+   opacidad, y en el telefono se veian ENCIMADAS. */
+.p-guirnalda .gu-frase {
+  position: static;
+  min-height: 0;
+  margin: 0 0 14px;
+  max-width: 34ch;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.95), 0 2px 20px rgba(0,0,0,.8);
+}
+
+/* 🔴 3 · el aviso de deslizar, legible sobre la foto */
+.p-guirnalda .gu-baja {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.95);
+}
+
+/* 🔴 4 · la viñeta del hero mas fuerte abajo: el texto va sobre la foto y
+   con el patio de dia el cuadro esta claro. Sin esto no se lee nada. */
+.p-guirnalda .gu-hero .gu-vineta {
+  background:
+    linear-gradient(to top, rgba(4,7,12,.97) 0%, rgba(4,7,12,.82) 22%, rgba(4,7,12,.3) 48%, rgba(4,7,12,.05) 68%, rgba(4,7,12,.3) 100%),
+    radial-gradient(120% 70% at 50% 8%, transparent 32%, rgba(4,7,12,.5) 100%);
+}
+
+/* ============================================================
+   EL HERO, RECOMPUESTO · 22-09
+   James, con la captura delante: "mira el hero cómo se ve vacío",
+   "no ves las putas proporciones, no tiene simetría", "a las letras
+   ponles efecto".
+
+   Lo que estaba mal, y se ve clarísimo en su captura:
+     · dos tercios de foto VACÍOS arriba y todo apelotonado abajo
+     · el bloque pegado al borde izquierdo, sin márgenes iguales
+     · las dos frases superpuestas, ilegibles
+     · las letras entraban de golpe, sin nada
+
+   Ahora: el texto va CENTRADO, con el mismo aire a los dos lados, el
+   bloque se sienta en el tercio inferior con respiro arriba y abajo, y
+   cada línea entra escalonada al cargar.
+   ============================================================ */
+
+.p-guirnalda .gu-hero .gu-sobre {
+  padding: 0 24px 40px;
+  text-align: center;              /* simetría: mismo aire a los dos lados */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.p-guirnalda .gu-hero .gu-rot { margin: 0; }
+.p-guirnalda .gu-h1 { margin: 0; }
+.p-guirnalda .gu-frase {
+  position: static;
+  min-height: 0;
+  margin: 0;
+  max-width: 30ch;                 /* renglones parejos, no una línea larga y otra corta */
+  font-size: 16.5px;
+  line-height: 1.5;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.95), 0 2px 20px rgba(0,0,0,.85);
+}
+.p-guirnalda .gu-baja {
+  margin-top: 4px;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.95);
+  flex-direction: column;
+  gap: 7px;
+}
+
+/* el degradado de abajo sube más: sostiene el bloque de texto y de paso
+   llena ese vacío que se veía en la mitad de la foto */
+.p-guirnalda .gu-hero .gu-vineta {
+  background:
+    linear-gradient(to top, rgba(4,7,12,.97) 0%, rgba(4,7,12,.86) 26%, rgba(4,7,12,.42) 52%, rgba(4,7,12,.06) 74%, rgba(4,7,12,.34) 100%),
+    radial-gradient(130% 75% at 50% 6%, transparent 30%, rgba(4,7,12,.55) 100%);
+}
+
+/* ---------- las letras entran ----------
+   Escalonadas, de abajo hacia arriba, apenas carga. No dependen del
+   scroll: si el cliente no baja, igual las ve entrar. */
+@keyframes gu-entra {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.p-guirnalda .gu-hero .gu-sobre > * {
+  opacity: 0;
+  animation: gu-entra .7s cubic-bezier(.22,.9,.3,1) forwards;
+}
+.p-guirnalda .gu-hero .gu-rot   { animation-delay: .15s; }
+.p-guirnalda .gu-h1             { animation-delay: .3s; }
+.p-guirnalda .gu-frase          { animation-delay: .5s; }
+.p-guirnalda .gu-baja           { animation-delay: .7s; }
+
+/* si el sistema pide poco movimiento, se ven puestas y ya */
+@media (prefers-reduced-motion: reduce) {
+  .p-guirnalda .gu-hero .gu-sobre > * { opacity: 1; animation: none; }
+}
+
+/* 🔴 LAS LETRAS CORTADAS CONTRA EL BORDE.
+   Para estirar las bandas a todo el ancho usé padding con calc(50vw - 50%),
+   y en el teléfono eso dejaba el texto pegado al borde y a veces saliéndose
+   por la izquierda (las dos capturas que mandó James). Se cambia por lo
+   simple y a prueba de fallos: la banda se estira con margen negativo y el
+   contenido lleva un padding FIJO. */
+.p-guirnalda .gu-oscura {
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+/* la pieza de antes y después sí va de borde a borde; su texto no */
+.p-guirnalda .gu-mom.gu-oscura { padding-left: 0; padding-right: 0; }
+.p-guirnalda .gu-mom.gu-oscura > .gu-rot,
+.p-guirnalda .gu-mom.gu-oscura > .gu-h2,
+.p-guirnalda .gu-mom.gu-oscura > .gu-sub { padding-left: 20px; padding-right: 20px; }
+/* el hero maneja su propio aire */
+.p-guirnalda .gu-escena { padding-left: 0; padding-right: 0; }
+
+/* las tres fotos del producto, ahora en negro */
+.p-guirnalda .gu-fichas.gu-oscura { padding-top: 40px; padding-bottom: 40px; }
+
+/* 🔴 CIERRE DEL BORDE. Medido en el navegador: en la banda del antes y
+   después el rótulo, el título y el texto seguían en izq=0, pegados al
+   filo. Venía de que dejé varias reglas de padding peleando entre ellas.
+   Esta es la última y manda: la banda no lleva padding —su imagen va de
+   borde a borde— y TODO lo que no sea imagen lleva sus 20 px. */
+.p-guirnalda .gu-mom.gu-oscura > *:not(img) {
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+.p-guirnalda .gu-mom.gu-oscura > img { padding: 0; }
+
+/* ============================================================
+   EL ANCHO, RESUELTO DE RAÍZ · 22-09
+   James lo señaló tres veces con capturas: letras cortadas contra el
+   borde izquierdo y, peor, líneas que se salían por la derecha.
+
+   La causa: para estirar las bandas a todo el ancho usaba
+   `margin: 0 calc(50% - 50vw); width: 100vw`. Eso saca al elemento de la
+   columna de lectura, y a partir de ahí el padding que le pongas nunca
+   coincide con el margen de la página: o queda corto, o el contenido se
+   desborda. Estuve parchando encima cuatro veces.
+
+   La técnica correcta: el elemento NO se mueve ni cambia de ancho —se
+   queda en la columna de la tienda, con su margen de siempre— y lo que
+   se estira es SOLO EL FONDO, con una sombra gigante recortada a los
+   lados. El texto no se puede salir porque nunca sale de su columna.
+   ============================================================ */
+.p-guirnalda .gu-oscura {
+  /* se anula todo lo anterior */
+  margin-left: 0;
+  margin-right: 0;
+  width: auto;
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+  /* el fondo se derrama a los lados, el contenido no */
+  box-shadow: 0 0 0 100vmax var(--gu-noche);
+  clip-path: inset(0 -100vmax);
+}
+/* la imagen del antes y después sí se derrama, que para eso es la pieza */
+.p-guirnalda .gu-mom.gu-oscura > img {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+.p-guirnalda .gu-mom.gu-oscura > *:not(img) { padding-left: 0; padding-right: 0; }
+
+/* el hero es el único que va de verdad de borde a borde, y no lleva texto
+   que se pueda cortar: el suyo va centrado con su propio aire */
+.p-guirnalda .gu-escena {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 100vw;
+  box-shadow: none;
+  clip-path: none;
+}
+
+/* ============================================================
+   EL HERO DEFINITIVO · 22-09
+   James, en orden:
+     "ibas a hacer un puto video"        -> es un VIDEO, no dos fotos cruzándose
+     "no le pongas franja abajo"         -> el texto va DENTRO del video
+     "no tan alto, un 82%"               -> 82svh, no 92
+     "los textos aparte, con cascada"    -> en HTML encima, entrando escalonados
+   Y del rechazo anterior: NI UN RADIO, de borde a borde.
+   ============================================================ */
+
+.p-guirnalda .gu-hero {
+  position: relative;
+  /* de borde a borde, sin esquinas redondas */
+  margin: 0 calc(50% - 50vw) 0;
+  width: 100vw;
+  max-width: 100vw;
+  border-radius: 0;
+  overflow: hidden;
+  /* 82% de la pantalla: ni tapa el precio ni deja el hueco de antes */
+  height: 82svh;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: var(--gu-noche);
+  /* se anula lo que traían las versiones anteriores */
+  box-shadow: none;
+  clip-path: none;
+  padding: 0;
+}
+@supports not (height: 82svh) { .p-guirnalda .gu-hero { height: 82vh; } }
+
+/* el video llena el hueco, recortado al centro */
+.p-guirnalda .gu-hero .gu-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  z-index: 0;
+}
+
+/* la viñeta sostiene el texto sobre el video */
+.p-guirnalda .gu-hero .gu-vineta {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(4,7,12,.96) 0%, rgba(4,7,12,.8) 24%, rgba(4,7,12,.32) 52%, rgba(4,7,12,.04) 76%, rgba(4,7,12,.3) 100%);
+}
+
+/* el texto: dentro del video, centrado y con márgenes iguales */
+.p-guirnalda .gu-hero .gu-sobre {
+  position: relative;
+  z-index: 3;
+  padding: 0 24px 34px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+}
