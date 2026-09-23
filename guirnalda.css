@@ -779,3 +779,25 @@
 /* la barra lateral de la cita y las viñetas, en ámbar sobre el negro */
 .p-guirnalda #prod section.desc blockquote,
 .p-guirnalda #prod section.desc .cita { border-left-color: var(--gu-ambar); }
+
+/* 🔴 LA FRANJA BLANCA ENTRE BANDAS.
+   James: "¿ese espacio para qué?". Entre una banda negra y la siguiente
+   se colaba una tira blanca: era el margen que la tienda le pone a cada
+   bloque, que el fondo derramado no cubre.
+   Se quitan los márgenes entre secciones oscuras y el aire se hace con
+   padding, que sí queda dentro del negro. */
+.p-guirnalda .gu-oscura,
+.p-guirnalda #prod section.desc {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+/* el aire ahora es interno: cada banda respira por dentro */
+.p-guirnalda .gu-sec.gu-oscura { padding-top: 42px; padding-bottom: 38px; }
+.p-guirnalda .gu-caps.gu-oscura { padding-top: 8px; padding-bottom: 30px; }
+.p-guirnalda .gu-mom.gu-oscura { padding-top: 42px; padding-bottom: 0; }
+.p-guirnalda .gu-fichas.gu-oscura { padding-top: 34px; padding-bottom: 38px; }
+
+/* y si la tienda mete un bloque suyo con margen entre dos negras,
+   que al menos no se vea el corte */
+.p-guirnalda #prod > .bloque:has(+ .gu-oscura),
+.p-guirnalda #prod > .gu-oscura + .bloque { margin-top: 0; }
