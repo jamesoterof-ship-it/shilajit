@@ -756,3 +756,26 @@
   align-items: center;
   gap: 13px;
 }
+
+/* 🔴 LA SECCIÓN DEL PRODUCTO, EN NEGRO.
+   James mandó la captura: los cinco puntos con sus rombos quedaban sobre
+   blanco mientras todo el resto estaba en negro, y cortaba el ritmo.
+   Es `section.desc` de la tienda: la descripción, los puntos y las tres
+   fotos, que ya estaban oscuras. Ahora la sección entera va en negro. */
+.p-guirnalda #prod section.desc {
+  background: var(--gu-noche);
+  box-shadow: 0 0 0 100vmax var(--gu-noche);
+  clip-path: inset(0 -100vmax);
+  padding-top: 40px;
+  padding-bottom: 8px;
+}
+.p-guirnalda #prod section.desc p,
+.p-guirnalda #prod section.desc li { color: var(--gu-texto); }
+.p-guirnalda #prod section.desc h2,
+.p-guirnalda #prod section.desc h3,
+.p-guirnalda #prod section.desc b { color: var(--gu-crema); }
+.p-guirnalda #prod section.desc .eyebrow,
+.p-guirnalda #prod section.desc .rot { color: var(--gu-ambar); }
+/* la barra lateral de la cita y las viñetas, en ámbar sobre el negro */
+.p-guirnalda #prod section.desc blockquote,
+.p-guirnalda #prod section.desc .cita { border-left-color: var(--gu-ambar); }
