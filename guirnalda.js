@@ -179,7 +179,7 @@
           /* 🔴 James: "no entiendo esto". La frase decia "de noche no se ve
    nada" MIENTRAS el video muestra el patio encendido: el texto
    contradecia la imagen. Ahora dice lo que el cliente esta viendo. */
-            '<p class="gu-frase">Diez ampolletas de luz cálida, sin un cable ni un enchufe a la vista.</p>' +
+            '<p class="gu-frase">Diez metros de luz cálida que funcionan con el sol, sin enchufe.</p>' +
         '</div>' +
       '</div>' +
       '<section class="gu-sec gu-oscura">' +
