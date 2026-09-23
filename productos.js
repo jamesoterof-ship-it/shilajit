@@ -343,7 +343,7 @@ window.PRODUCTOS = [
     /* el video limpio de la ficha: sin subtítulos ni placa, y con la cinta
        de JAYE GROUP corriendo encima de la franja difuminada. ?v=2 para que
        nadie coma el de antes desde la caché. */
-    video: 'img/gui-ficha-v3.mp4',
+    video: 'img/gui-ficha-v4.mp4',
     heroDia: 'img/guirnalda-dia.webp?v=1',
     heroNoche: 'img/guirnalda-noche.webp?v=1',
     /* sin comparador deslizante: la pieza de James (gui-sec-antes.webp) ya trae
