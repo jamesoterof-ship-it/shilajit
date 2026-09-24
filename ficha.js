@@ -1167,7 +1167,19 @@
          llevan el MISMO identificador y Meta los junta en uno. Asi se
          recupera lo que el navegador no alcanza a avisar (bloqueadores,
          Safari, el que cierra la pagina) sin contar de mas. */
-      event_id: window.jayePixel ? window.jayePixel.id() : '',
+      /* 24-09: la tienda NO define window.jayePixel (solo inicializa fbq en el
+         index), asi que esto se iba VACIO y pasaba justo lo que avisa el
+         comentario de arriba: el servidor caia a wa-<id>, el navegador mandaba
+         otro sin identificador y Meta contaba DOS compras por cada venta. El
+         23-09 registro 109 compras cuando hubo 105 ventas en todo el dia, y
+         con esos numeros inflados dejo de encontrar a quien mostrarle y corto
+         la entrega. Si no hay jayePixel se genera uno aqui, y es el MISMO que
+         se le pasa al fbq mas abajo. */
+      event_id: (function () {
+        if (window.jayePixel) return window.jayePixel.id();
+        if (!window._jayeEvId) window._jayeEvId = 'web-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+        return window._jayeEvId;
+      })(),
       fbp: window.jayePixel ? window.jayePixel.fbp() : '',
       fbc: window.jayePixel ? window.jayePixel.fbc() : '',
       ua: navigator.userAgent,
@@ -1222,7 +1234,9 @@
           /* MISMO identificador que viajo en el pedido: asi, cuando el
              servidor mande esta compra tambien, Meta las junta en una sola */
           if (window.jayePixel) window.jayePixel.track('Purchase', _c, _pedido.event_id);
-          else fbq('track', 'Purchase', _c);
+          /* 24-09: el tercer parametro de fbq es {eventID}. Sin el, este aviso
+             y el que manda el servidor son dos compras distintas para Meta. */
+          else fbq('track', 'Purchase', _c, { eventID: _pedido.event_id });
         } catch (e) { /* que un bloqueador de anuncios no tumbe la confirmacion */ }
       }
       $('pedir').innerHTML = '<div class="listo"><h3>Pedido recibido</h3>'
