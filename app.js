@@ -380,7 +380,9 @@ var _checkout=false;
       if(N8N){ var telWA=(form.codpais.value+"").replace(/\D/g,"")+telLimpio();
         fetch(N8N,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({ customer:{phone:telWA}, shipping_address:{first_name:nombre.split(" ")[0],address1:dir,province:form.region.value,city:form.comuna.value,address2:form.referencia.value.trim(),country_code:form.codpais.value}, order_number:"JG-"+String(Date.now()).slice(-6), line_items:[{title:PRODUCTO,quantity:qty}], total_price:String(total) })}).catch(function(){}); window._trackVenta&&window._trackVenta(telWA); }
       if(abSent) sendSheet(Object.assign(formData(),{tipo:"abandonado",estado:"COMPLETADO"}));
-      fbUser(); fb("Purchase",{content_name:PRODUCTO,value:total,currency:C.pais.moneda});
+      /* 24-09: sin eventID, una recarga de la pagina de gracias contaba
+         otra compra. Con un id estable por pedido, Meta la cuenta una vez. */
+      fbUser(); if(window.fbq) try{ fbq("track","Purchase",{content_name:PRODUCTO,value:total,currency:C.pais.moneda},{eventID:(window._jayeEvId = window._jayeEvId || ('web-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8)))}); }catch(e){}
       form.style.display="none"; $("#packs").style.display="none"; document.querySelector(".summary").style.display="none";
       set("okName",nombre.split(" ")[0]); $("#okMsg").style.display="block"; $("#okMsg").scrollIntoView({behavior:"smooth",block:"center"});
       if(C.upsell && C.upsell.precio>0) abrirUpsell(nombre.split(" ")[0], (form.codpais.value+"").replace(/[^0-9]/g,"")+telLimpio());
@@ -484,7 +486,8 @@ function abrirUpsell(nombre, telWA){
     fetch(C.upsellWebhook,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({telefono:telWA})})
       .then(function(r){return r.json();}).catch(function(){return {};})
       .then(function(){
-        fb("Purchase",{content_name:U.nombre,value:U.precio,currency:C.pais.moneda});
+        /* 24-09: el upsell va en el MISMO pedido, no es compra nueva */
+        fb("AddToCart",{content_name:U.nombre,value:U.precio,currency:C.pais.moneda});
         ov.querySelector(".upcard").innerHTML='<h3 style="margin:18px 0 8px;color:#2e9e4f">✅ ¡Agregado a tu pedido!</h3><p class="sub">Tu '+U.nombre+' va en el mismo envío. Pagas todo junto al recibir.</p><button class="upsi" id="upOk">Listo</button>';
         ov.querySelector("#upOk").addEventListener("click",function(){ ov.remove(); });
       });

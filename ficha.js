@@ -1612,7 +1612,11 @@ function abrirUpsell(nombre, telWA, upsell) {
       body: JSON.stringify({ telefono: telWA, cantidad: String(cant) }) })
       .catch(function () { /* si falla el aviso, el pedido base ya esta a salvo */ })
       .then(function () {
-        fb('Purchase', { content_name: U.nombre, value: precio, currency: 'CLP' });
+        /* 24-09: esto disparaba Purchase, pero el upsell se AGREGA al mismo
+           pedido (el montador lo mete en la misma orden de Dropi), asi que
+           Meta contaba una compra que no existia. AddToCart es lo que pasa
+           de verdad y no ensucia la optimizacion por Purchase. */
+        fb('AddToCart', { content_name: U.nombre, value: precio, currency: 'CLP' });
         ov.querySelector('.upcard').innerHTML =
           '<div class="cab"><h3>\u00a1Agregado a tu pedido!</h3></div>'
           + '<p class="sub">Tu ' + U.nombre + ' va en el mismo env\u00edo. '

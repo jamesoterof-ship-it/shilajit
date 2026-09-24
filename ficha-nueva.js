@@ -1122,11 +1122,14 @@
       if (window.fbq && !window._compraEnviada) {
         window._compraEnviada = true;
         try {
+          /* 24-09: iba sin eventID, asi que una recarga de la pagina de
+             gracias contaba otra compra y el aviso del servidor se sumaba
+             como una tercera. Con un id estable por pedido, Meta las junta. */
           fbq('track', 'Purchase', {
             value: k.precio, currency: 'CLP',
             content_name: p.nombre, content_ids: [p.id],
             content_type: 'product', num_items: k.cant,
-          });
+          }, { eventID: (window._jayeEvId = window._jayeEvId || ('web-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8))) });
         } catch (e) { /* que un bloqueador de anuncios no tumbe la confirmacion */ }
       }
       $('pedir').innerHTML = '<div class="listo"><h3>Pedido recibido</h3>'
@@ -1451,7 +1454,8 @@ function abrirUpsell(nombre, telWA, upsell) {
       body: JSON.stringify({ telefono: telWA, cantidad: String(cant) }) })
       .catch(function () { /* si falla el aviso, el pedido base ya esta a salvo */ })
       .then(function () {
-        fb('Purchase', { content_name: U.nombre, value: precio, currency: 'CLP' });
+        /* 24-09: el upsell va en el MISMO pedido, no es compra nueva */
+        fb('AddToCart', { content_name: U.nombre, value: precio, currency: 'CLP' });
         ov.querySelector('.upcard').innerHTML =
           '<div class="cab"><h3>\u00a1Agregado a tu pedido!</h3></div>'
           + '<p class="sub">Tu ' + U.nombre + ' va en el mismo env\u00edo. '
