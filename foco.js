@@ -93,6 +93,25 @@
   /* un solo elemento dibuja las cuatro esquinas del visor (CSS) */
   var MIRA = '<span class="fo-mira" aria-hidden="true"></span>';
 
+  /* el título: líneas con máscara y palabras que caen en cascada.
+     Una línea que termina en 1 va en el color de acento. */
+  function cascada(lineas, ini, paso) {
+    var n = 0;
+    return lineas.map(function (l) {
+      var acento = l[l.length - 1] === 1;
+      var pals = l.filter(function (w) { return w !== 1; }).map(function (w) {
+        return '<span class="fo-pal" style="--d:' + (ini + paso * n++).toFixed(2) + 's">' + esc(w) + '</span>';
+      }).join(' ');
+      return '<span class="fo-ln">' + (acento ? '<em>' + pals + '</em>' : pals) + '</span>';
+    }).join('');
+  }
+  /* la frase: palabra por palabra, más rápido y más suave que el título */
+  function palabras(txt, ini, paso) {
+    return txt.split(' ').map(function (w, i) {
+      return '<span class="fo-pw" style="--d:' + (ini + paso * i).toFixed(2) + 's">' + esc(w) + '</span>';
+    }).join(' ');
+  }
+
   /* ---------------- HERO ---------------- */
   function hero() {
     var chispas = '';
@@ -120,12 +139,12 @@
       '</div>' +
       '<div class="fo-sobre">' +
         '<span class="fo-rot fo-deco" data-txt="Se carga con el sol · se enciende solo">Se carga con el sol · se enciende solo</span>' +
+        /* 🔴 CASCADA (James 25-09: "las letras tienen que entrar de cascada").
+           Cada PALABRA cae desde arriba dentro de su línea, una detrás de otra. */
         '<h1 class="fo-h1">' +
-          '<span class="fo-ln"><span class="fo-li" style="--d:.25s">Tu entrada</span></span>' +
-          '<span class="fo-ln"><span class="fo-li" style="--d:.4s">iluminada,</span></span>' +
-          '<span class="fo-ln"><em class="fo-li" style="--d:.55s">sin pagar luz.</em></span>' +
+          cascada([['Tu', 'entrada'], ['iluminada,'], ['sin', 'pagar', 'luz.', 1]], 0.2, 0.11) +
         '</h1>' +
-        '<p class="fo-frase">De día se carga con el sol. De noche se enciende cuando alguien se acerca. Y como parece una cámara, nadie se acerca dos veces.</p>' +
+        '<p class="fo-frase">' + palabras('De día se carga con el sol. De noche se enciende cuando alguien se acerca. Y como parece una cámara, nadie se acerca dos veces.', 0.95, 0.025) + '</p>' +
       '</div>' +
       '<a class="fo-baja" href="#fo-cifras" aria-label="Bajar a ver el foco"><span></span></a>' +
     '</div>' +
@@ -345,22 +364,25 @@
   function contar() {
     var fila = document.querySelector('.fo-med');
     if (!fila || QUIETO || !('IntersectionObserver' in window)) return;
+    /* 🔴 CONTEO PROGRESIVO (James 25-09: "ponle efectos a los números").
+       Más lento para que se vea subir, y al llegar la cifra da un golpe de
+       luz (.fo-fin). Con setTimeout: no se congela como requestAnimationFrame. */
+    function terminar(el) { el.classList.add('fo-fin'); }
     function subir(el, hasta, antes) {
-      var ini = null, dur = 1600;
-      function paso(t) {
-        if (ini === null) ini = t;
-        var p = Math.min((t - ini) / dur, 1);
+      var ini = Date.now(), dur = 2200;
+      var t = setInterval(function () {
+        var p = Math.min((Date.now() - ini) / dur, 1);
         el.textContent = (antes || '') + Math.round(hasta * (1 - Math.pow(1 - p, 3)));
-        if (p < 1) requestAnimationFrame(paso);
-      }
-      requestAnimationFrame(paso);
+        if (p >= 1) { clearInterval(t); el.textContent = (antes || '') + hasta; terminar(el); }
+      }, 30);
     }
+    /* los ceros no pueden "subir" a cero: giran como un contador y frenan en 0 */
     function rodillo(el, antes) {
-      var i = 0, t = setInterval(function () {
+      var i = 0, total = 28, t = setInterval(function () {
         i++;
-        el.textContent = (antes || '') + (i >= 14 ? '0' : Math.floor(Math.random() * 9) + 1);
-        if (i >= 14) clearInterval(t);
-      }, 55);
+        el.textContent = (antes || '') + (i >= total ? '0' : Math.floor(Math.random() * 9) + 1);
+        if (i >= total) { clearInterval(t); terminar(el); }
+      }, 70);
     }
     var obs = new IntersectionObserver(function (vs) {
       vs.forEach(function (v) {
@@ -372,7 +394,7 @@
             var antes = b.getAttribute('data-antes') || '';
             if (b.getAttribute('data-rodillo')) rodillo(b, antes);
             else subir(b, Number(b.getAttribute('data-hasta')), antes);
-          }, i * 140);
+          }, i * 260);
         });
       });
     }, { threshold: 0.4 });
