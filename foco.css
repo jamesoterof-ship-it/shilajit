@@ -267,7 +267,65 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--fo-linea) 22%, var(--fo-linea) 78%, transparent);
 }
-.p-foco .fo-oscura { background: var(--fo-fondo); color: var(--fo-tenue); }
+/* 🔴 LAS BANDAS OSCURAS VAN A SANGRE, igual que en la guirnalda.
+   Solo ponían background y el blanco de la tienda asomaba por los lados;
+   además el margen que la tienda le da a cada bloque dejaba una franja
+   muerta entre una banda y la siguiente, y el botón "QUIERO ESE CAMBIO"
+   quedaba flotando en tierra de nadie entre lo claro y lo oscuro.
+   Esto es lo mismo que James ya había hecho corregir en la guirnalda:
+   "la ficha entera es de noche, sin cajas negras flotando sobre blanco". */
+.p-foco .fo-oscura,
+.p-foco #prod section.desc,
+.p-foco #prod .ba-sec {
+  position: relative;
+  margin-left: calc(50% - var(--fo-vw, 100vw) / 2);
+  margin-right: calc(50% - var(--fo-vw, 100vw) / 2);
+  width: var(--fo-vw, 100vw);
+  max-width: var(--fo-vw, 100vw);
+  padding-left: max(20px, calc(var(--fo-vw, 100vw) / 2 - 50% + 20px));
+  padding-right: max(20px, calc(var(--fo-vw, 100vw) / 2 - 50% + 20px));
+  background: var(--fo-fondo);
+  background-image: radial-gradient(85% 55% at 50% 0%, rgba(224,115,77,.10) 0%, transparent 62%);
+  color: var(--fo-tenue);
+}
+/* los textos, SOLO dentro de la banda */
+.p-foco .fo-oscura p,
+.p-foco .fo-oscura li,
+.p-foco #prod section.desc p,
+.p-foco #prod section.desc li,
+.p-foco #prod .ba-sec p { color: var(--fo-tenue); }
+.p-foco .fo-oscura h1, .p-foco .fo-oscura h2, .p-foco .fo-oscura h3,
+.p-foco .fo-oscura b, .p-foco .fo-oscura strong,
+.p-foco #prod section.desc h2, .p-foco #prod section.desc h3,
+.p-foco #prod section.desc b,
+.p-foco #prod .ba-sec h2, .p-foco #prod .ba-sec h3 { color: var(--fo-crema); }
+.p-foco #prod section.desc .eyebrow,
+.p-foco #prod section.desc .rot,
+.p-foco #prod .ba-sec .eyebrow,
+.p-foco #prod .ba-sec .rot { color: var(--fo-luz2); }
+.p-foco #prod section.desc blockquote,
+.p-foco #prod section.desc .cita { border-left-color: var(--fo-luz); }
+
+/* el filo de luz donde la banda toca lo claro */
+.p-foco .fo-oscura::before,
+.p-foco #prod .ba-sec::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(224,115,77,.45) 25%, rgba(224,115,77,.45) 75%, transparent);
+}
+.p-foco .fo-oscura + .fo-oscura::before { display: none; }
+
+/* 🔴 FUERA LA FRANJA MUERTA entre bandas: el aire va por dentro, con
+   padding, que sí queda pintado; el margen no. */
+.p-foco .fo-oscura,
+.p-foco #prod section.desc,
+.p-foco #prod .ba-sec { margin-top: 0; margin-bottom: 0; }
+.p-foco #prod > .bloque:has(+ .fo-oscura),
+.p-foco #prod > .bloque:has(+ .ba-sec),
+.p-foco #prod > .fo-oscura + .bloque,
+.p-foco #prod > .ba-sec + .bloque { margin-top: 0; }
 
 .fo-h2 {
   margin: 10px 0 14px;
@@ -373,6 +431,55 @@
   .fo-apil { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; align-items: start; }
   .fo-apil > .fo-rot, .fo-apil > .fo-h2 { grid-column: 1 / -1; }
   .fo-ap { width: 100%; max-width: 100%; margin-left: 0; }
+}
+
+/* ============================================================
+   🔴 EFECTO EN LOS BOTONES (James, 24-09: "le pongas efecto también a
+   los botones"). Tres capas, todas sobre el botón que la ficha ya trae:
+     · un brillo que lo cruza cada tanto, como la luz del foco al pasar
+     · un latido suave del halo, para que el ojo vuelva ahí
+     · al apretarlo se hunde, que es el acuse de que respondió
+   Solo transform y opacity: no encarece el desplazamiento de la página.
+   ============================================================ */
+.p-foco #prod .cta,
+.p-foco #prod button[class*="cta"],
+.p-foco #prod a[class*="cta"],
+.p-foco #prod .comprar,
+.p-foco .form .btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .18s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease;
+  animation: fo-btn-late 3.4s ease-in-out 1.2s infinite;
+}
+.p-foco #prod .cta::after,
+.p-foco #prod .comprar::after,
+.p-foco .form .btn::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: -42%;
+  width: 34%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.42), transparent);
+  transform: skewX(-18deg);
+  animation: fo-btn-brillo 3.4s ease-in-out 1.2s infinite;
+}
+@keyframes fo-btn-brillo {
+  0%        { left: -42%; }
+  38%, 100% { left: 128%; }
+}
+@keyframes fo-btn-late {
+  0%, 100% { box-shadow: 0 10px 26px rgba(224,115,77,.32), 0 0 0 0 rgba(224,115,77,.42); }
+  50%      { box-shadow: 0 12px 30px rgba(224,115,77,.42), 0 0 0 8px rgba(224,115,77,0); }
+}
+.p-foco #prod .cta:active,
+.p-foco #prod .comprar:active,
+.p-foco .form .btn:active { transform: scale(.975); }
+
+@media (prefers-reduced-motion: reduce) {
+  .p-foco #prod .cta, .p-foco #prod .comprar, .p-foco .form .btn { animation: none; }
+  .p-foco #prod .cta::after, .p-foco #prod .comprar::after, .p-foco .form .btn::after { display: none; }
 }
 
 /* ---------- el ciclo en tres pasos ---------- */
@@ -654,3 +761,18 @@
    cubre. Se quita el margen y el aire se hace por dentro, con padding. */
 .p-foco .fo-oscura,
 .p-foco #prod section.desc { margin-top: 0; margin-bottom: 0; }
+
+/* 🔴 LA FRANJA DEL BOTÓN que se sacó de la sección de antes y después.
+   Queda en su propio espacio, entre esa sección y la descripción, con el
+   mismo fondo de noche para que no se abra un hueco blanco. */
+.p-foco .fo-cta-franja {
+  margin-left: calc(50% - var(--fo-vw, 100vw) / 2);
+  margin-right: calc(50% - var(--fo-vw, 100vw) / 2);
+  width: var(--fo-vw, 100vw);
+  max-width: var(--fo-vw, 100vw);
+  background: var(--fo-fondo);
+  padding: 26px 20px 30px;
+  display: flex;
+  justify-content: center;
+}
+.p-foco .fo-cta-franja .cta { width: 100%; max-width: 420px; }

@@ -246,10 +246,29 @@
          con LA MISMA FOTO — el camino y las dos apiladas.
          Las dos mías se fueron. Queda la de la ficha, y se sube acá arriba,
          al sitio donde la guirnalda pone su momento. */
-      var ba = cont.querySelector('.ba-sec');
-      if (ba) desc.insertAdjacentElement('beforebegin', ba);
-
+      /* primero los tres pasos... */
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
+      /* ...y el antes/después va DETRÁS de ellos, pegado a la descripción.
+         James, 24-09: "quítalo de ahí y lo pones entre las dos secciones
+         esas que te mandé" — entre "Cómo trabaja" y "Qué es y para qué
+         sirve". Antes iba arriba del todo y el botón de la ficha quedaba
+         colgando entre lo claro y lo oscuro. */
+      var ba = cont.querySelector('.ba-sec');
+      if (ba) {
+        desc.insertAdjacentElement('beforebegin', ba);
+        /* 🔴 EL BOTÓN SALE DE LA SECCIÓN. James, 24-09: "el botón que
+           tienes en la de antes y después, quítalo de ahí y lo pones
+           entre las dos secciones". Venía metido dentro de la banda del
+           antes/después; ahora queda suelto en su propia franja, entre esa
+           sección y la descripción. */
+        var boton = ba.querySelector('.cta');
+        if (boton) {
+          var franja = document.createElement('div');
+          franja.className = 'fo-cta-franja';
+          franja.appendChild(boton);
+          ba.insertAdjacentElement('afterend', franja);
+        }
+      }
 
       /* las fotos van DENTRO de la descripción, detrás del primer párrafo,
          exactamente como las pone la guirnalda */
