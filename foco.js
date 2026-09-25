@@ -224,6 +224,14 @@
       /* orden: primero CÓMO trabaja, después la PRUEBA de las dos fotos,
          al final las características. Nunca pegados al precio: ahí la
          ficha ya pone su botón y quedarían dos botones seguidos. */
+      /* 🔴 EL VIDEO VA PRIMERO. James, 24-09: "¿dónde está el video?" — y
+         tenía razón: la ficha lo deja en su sitio de siempre, que en esta
+         página caía al 41% (6.065 px de scroll). Nadie baja tanto.
+         Ahora va apenas pasa el precio: el cliente ve cuánto vale, y lo
+         primero que encuentra después es el video real del foco. */
+      var vid = cont.querySelector('.vid-wrap');
+      if (vid) desc.insertAdjacentElement('beforebegin', vid);
+
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
       desc.insertAdjacentHTML('beforebegin', bloqueParDiaNoche());
       desc.insertAdjacentHTML('beforebegin', bloqueFotos());
