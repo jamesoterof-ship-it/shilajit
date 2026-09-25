@@ -270,6 +270,41 @@
         }
       }
 
+      /* 🔴 LA LISTA DE VIÑETAS PASA A SER TARJETAS. James, 24-09: "esto se
+         ve feo, hazlo una sección aparte y que sea interactiva como una
+         tarjeta". Era una lista de puntos pegada dentro de la descripción.
+         Se saca, se convierte en tarjetas que responden al tocarlas y se
+         pone en su propia sección. La segunda lista, que es idéntica y
+         estaba repetida más abajo, se va. */
+      var listas = cont.querySelectorAll('section.desc ul');
+      if (listas.length) {
+        var puntos = [];
+        listas[0].querySelectorAll('li').forEach(function (li) {
+          puntos.push(li.textContent.trim());
+        });
+        if (puntos.length) {
+          var ico2 = ['sol', 'ojo', 'escudo', 'agua', 'llave', 'casa'];
+          var html2 = '<section class="fo-sec fo-oscura fo-tarj">' +
+            '<span class="fo-rot">Lo que trae</span>' +
+            '<h2 class="fo-h2">Todo esto,<em>en un solo aparato.</em></h2>' +
+            '<div class="fo-grid">' +
+            puntos.map(function (t, i) {
+              var p = t.split(/:\s|\s·\s/);
+              var tit = p[0], sub = p.slice(1).join(' · ');
+              return '<button type="button" class="fo-tar fo-pre" style="--i:' + i + '">' +
+                '<span class="fo-tar-ico">' + ico(ico2[i % ico2.length]) + '</span>' +
+                '<b>' + esc(tit) + '</b>' +
+                (sub ? '<span>' + esc(sub) + '</span>' : '') +
+              '</button>';
+            }).join('') +
+            '</div></section>';
+          listas[0].insertAdjacentHTML('beforebegin', html2);
+          listas[0].remove();
+          /* la copia repetida de más abajo sobra */
+          if (listas[1]) listas[1].remove();
+        }
+      }
+
       /* las fotos van DENTRO de la descripción, detrás del primer párrafo,
          exactamente como las pone la guirnalda */
       var pd = desc.querySelector('p');
