@@ -809,18 +809,6 @@
    bandas a sangre tomó un padding lateral grande. Acá lo rompen y van
    de borde a borde.
    ============================================================ */
-.p-foco #prod section.desc .fo-fichas {
-  margin-left: calc(50% - var(--fo-vw, 100vw) / 2);
-  margin-right: calc(50% - var(--fo-vw, 100vw) / 2);
-  width: var(--fo-vw, 100vw);
-  max-width: var(--fo-vw, 100vw);
-}
-.p-foco .fo-fi img {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 0 18px;
-}
-.p-foco .fo-fi figcaption { padding: 0 20px; }
 
 /* el efecto: la foto entra con un zoom que se asienta, un barrido de luz
    cálida que la cruza una vez —como el foco alumbrándola al pasar— y el
@@ -837,7 +825,6 @@
 }
 
 @media (min-width: 820px) {
-  .p-foco #prod section.desc .fo-fichas { margin-left: 0; margin-right: 0; width: 100%; max-width: 100%; }
 }
 
 /* ============================================================
@@ -941,7 +928,6 @@
 /* 🔴 LAS FOTOS, A TODO EL ANCHO. Vivían dentro de section.desc, que con
    las bandas a sangre tomó 40 px de padding lateral y las dejaba en 290
    de 350. Acá lo anulan. */
-.p-foco #prod section.desc .fo-fichas { padding-left: 0; padding-right: 0; }
 
 /* ============================================================
    🔴 LA BANDA DE LOS TRES NÚMEROS, MÁS COMPACTA · 24-09
@@ -963,24 +949,114 @@
    de página". Las había mandado de borde a borde y pegadas al filo se
    ven ordinarias. Vuelven adentro, con aire a los lados.
    ============================================================ */
-.p-foco #prod section.desc .fo-fichas {
-  margin-left: 0;
-  margin-right: 0;
-  width: auto;
-  max-width: 100%;
-  padding-left: 0;
-  padding-right: 0;
-}
-.p-foco .fo-fi {
-  padding-left: 0;
-  padding-right: 0;
-}
-.p-foco .fo-fi img {
-  width: 100%;
-  border-radius: 14px;
-}
-.p-foco .fo-fi figcaption { padding: 0; }
-.p-foco .fo-fi + .fo-fi::before { left: 0; right: 0; }
 /* 20 px a cada lado, el mismo aire que lleva el resto de la página */
-.p-foco #prod section.desc .fo-fichas { padding-left: 20px; padding-right: 20px; }
-.p-foco .fo-fi + .fo-fi::before { left: 20px; right: 20px; }
+
+/* ============================================================
+   🔴 LOS DESTELLOS DEL HERO · 24-09
+   James: "esos efectos ponselos al hero", señalando los brillos que tiene
+   el metraje del producto. Veintiséis puntos de luz repartidos al azar
+   que titilan con su propio ritmo. Son CSS puro: no pesan ni un KB.
+   ============================================================ */
+.fo-hero .fo-chispas {
+  position: absolute; inset: 0; z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.fo-hero .fo-chispas i {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 1px rgba(255,246,224,.9);
+  opacity: 0;
+  transform: scale(var(--s));
+  animation: fo-chispa var(--t) ease-in-out var(--r) infinite;
+}
+@keyframes fo-chispa {
+  0%, 100% { opacity: 0;   transform: scale(calc(var(--s) * .3)); }
+  45%      { opacity: .95; transform: scale(var(--s)); }
+  62%      { opacity: .35; transform: scale(calc(var(--s) * .8)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fo-hero .fo-chispas { display: none; }
+}
+
+/* el margen de las fotos, igual al del antes/después que él señaló */
+/* quedaban 10 px de más: el contenedor ya aportaba su parte */
+
+/* ============================================================
+   🔴 LAS TARJETAS DE FOTO: MÁS ANCHAS, PERO NO A SANGRE · 24-09
+   James: "no ves cómo se ve muy apretada, tienes que hacerla más ancha
+   pero que tampoco sea del ancho de la pantalla".
+   Estaban en 321 de 375 (27 px de margen) y encima la foto medía 345 —
+   más que su propia tarjeta— así que se le comían los bordes.
+   Ahora: 12 px de margen a cada lado y la foto exactamente del ancho de
+   la tarjeta, sin desbordar.
+   ============================================================ */
+/* el zoom de entrada se queda DENTRO de la tarjeta: antes sobresalía y
+   recortaba la foto por los lados */
+.p-foco.fo-anima .fo-fi img { transform: scale(1.05); transform-origin: center; }
+.p-foco.fo-anima .fo-fi.fo-in img { transform: none; }
+/* section.desc ya aporta 20 px de padding: con -8 la tarjeta queda a 12 px
+   del borde, que es el ancho que pidió — más ancha, pero sin tocar el filo */
+/* 🔴 FUERA EL ZOOM DE LA FOTO. Con scale la imagen medía 366 dentro de una
+   tarjeta de 351 y se le comían los bordes — justo lo que él venía
+   señalando. La foto se ve COMPLETA; el efecto lo dan el barrido de luz y
+   la entrada del texto, que no deforman nada. */
+.p-foco.fo-anima .fo-fi img,
+.p-foco.fo-anima .fo-fi.fo-in img { transform: none; }
+
+/* ============================================================
+   🔴 EL ANCHO DEFINITIVO DE LAS TARJETAS DE FOTO · 24-09
+   De tanto ir y venir quedaron reglas encimadas (7 px de padding aquí,
+   12 de margen allá, -8 más abajo) y el resultado daba 31 px de margen.
+   Esta es la única que manda, y va al final:
+   la tarjeta pega 12 px al borde de la pantalla, ni más ni menos.
+   ============================================================ */
+
+/* ============================================================
+   🔴 LAS TARJETAS DE FOTO · definición ÚNICA · 24-09
+   De tanto ajuste quedaron 26 bloques encimados que se contradecían y el
+   margen salía descuadrado (31 a la izquierda, 47 a la derecha). Se
+   borraron todos. Esta es la única regla que las define.
+
+   James: "más ancha, pero que tampoco sea del ancho de la pantalla".
+   La tarjeta pega 12 px al borde. section.desc ya aporta 20 px de padding,
+   así que el -8 la lleva justo a esos 12.
+   La foto va COMPLETA, sin zoom: con scale medía más que su tarjeta y se
+   le comían los bordes, que es lo que él venía señalando.
+   ============================================================ */
+.p-foco #prod .fo-fichas {
+  padding: 22px 0 36px;
+  margin-left: -19px;
+  margin-right: -19px;
+}
+.p-foco #prod .fo-fi {
+  margin: 0;
+  padding: 0 0 30px;
+  overflow: hidden;
+  position: relative;
+}
+.p-foco #prod .fo-fi + .fo-fi { padding-top: 30px; }
+.p-foco #prod .fo-fi + .fo-fi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fo-linea) 22%, var(--fo-linea) 78%, transparent);
+}
+.p-foco #prod .fo-fi img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 0 18px;
+  display: block;
+  border-radius: 14px;
+  transform: none;          /* la foto se ve entera, sin recorte */
+}
+.p-foco #prod .fo-fi figcaption { padding: 0 2px; }
+/* 🔴 las fichas ya no son "banda oscura": esa clase les metía el margen
+   negativo a 100vw y dejaba el margen descuadrado (31 a la izquierda,
+   7 a la derecha). Llevan su fondo propio y su margen parejo. */
+.p-foco #prod .fo-fichas { background: var(--fo-fondo); }

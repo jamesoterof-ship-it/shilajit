@@ -116,7 +116,7 @@
      Mismo patrón que la guirnalda: foto a sangre y el texto debajo,
      entrando de a una mientras el cliente baja. */
   function bloqueFotos() {
-    return '<div class="fo-fichas fo-oscura">' + FOTOS.map(function (f, i) {
+    return '<div class="fo-fichas">' + FOTOS.map(function (f, i) {
       return '<figure class="fo-fi fo-pre" style="--i:' + i + '">' +
         '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="900" height="900">' +
         '<figcaption>' +
@@ -185,6 +185,21 @@
         /* el destello del sol sobre el panel: en la parte de DÍA el hero
            estaba muerto porque el resplandor y el haz solo salen de noche */
         '<div class="fo-sol" aria-hidden="true"></div>' +
+        /* 🔴 LOS DESTELLOS. James, 24-09: "esos efectos ponselos al hero",
+           señalando los brillos que tiene el metraje del producto. Son
+           puntos de luz que titilan sobre la escena, más vivos cuando el
+           foco está encendido. Se dibujan con CSS, no pesan nada. */
+        '<div class="fo-chispas" aria-hidden="true">' +
+          (function () {
+            var d = '';
+            for (var i = 0; i < 26; i++) {
+              d += '<i style="--x:' + (Math.random() * 100).toFixed(1) + '%;--y:' +
+                   (8 + Math.random() * 84).toFixed(1) + '%;--t:' + (1.6 + Math.random() * 3.2).toFixed(2) +
+                   's;--r:' + (Math.random() * 4).toFixed(2) + 's;--s:' + (1 + Math.random() * 1.8).toFixed(2) + '"></i>';
+            }
+            return d;
+          })() +
+        '</div>' +
         '<div class="fo-vineta" aria-hidden="true"></div>' +
         /* 🔴 LAS LETRAS ENTRAN EN CASCADA. James: "que lleguen en cascada".
            Cada pieza tiene su propio retardo (--d) y sube sola al cargar.

@@ -504,7 +504,14 @@
      Antes salian los 6 y ahi iban la ducha y el cepillo, que casi no rotan:
      ocupaban el espacio de los que si venden. En la pagina PRINCIPAL siguen
      saliendo todos — este recorte es solo en la ficha del producto. */
-  var MAS_VENDIDOS = ['organizador', 'lentes', 'foco', 'cargador'];
+  /* 24-09 · James, en la ficha del foco: "acá pon la guirnalda y saca la
+     almohada". Entra la GUIRNALDA, que está en campaña. Antes eran cuatro
+     y, cuando el producto que se ve era uno de ellos, quedaban tres y el
+     hueco lo rellenaba el primero de la lista general: ahí se colaba la
+     almohada, que no está pauteada. Con cinco nombres el relleno ya no
+     hace falta. OJO: esto vale para las trece fichas, no solo para el
+     foco. */
+  var MAS_VENDIDOS = ['organizador', 'lentes', 'foco', 'cargador', 'guirnalda'];
   var otros = TODOS
     .filter(function (x) { return x.id !== p.id && MAS_VENDIDOS.indexOf(x.id) >= 0; })
     .sort(function (a, b) { return MAS_VENDIDOS.indexOf(a.id) - MAS_VENDIDOS.indexOf(b.id); })
