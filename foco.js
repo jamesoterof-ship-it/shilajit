@@ -131,22 +131,6 @@
   /* ---------- las dos fotos, lado a lado ----------
      La misma esquina, la misma casa: apagado de día y encendido de noche.
      Es la prueba de lo que el video ya mostró arriba. */
-  function bloqueParDiaNoche() {
-    return '<section class="fo-sec fo-oscura">' +
-      '<span class="fo-rot">La misma esquina</span>' +
-      '<h2 class="fo-h2">De día no molesta.<em>De noche no pasa nadie.</em></h2>' +
-      '<div class="fo-par">' +
-        '<figure class="fo-pre">' +
-          '<img src="img/foco-dia.webp?v=1" alt="El foco solar apagado en la esquina de la casa, a plena luz del día, con el panel solar recibiendo el sol" loading="lazy">' +
-          '<figcaption><b>Mediodía</b>Cargando en silencio</figcaption>' +
-        '</figure>' +
-        '<figure class="fo-pre">' +
-          '<img src="img/foco-noche.webp?v=1" alt="El mismo foco de noche con los LED encendidos iluminando la entrada de la casa" loading="lazy">' +
-          '<figcaption><b>Once de la noche</b>Alguien se acercó</figcaption>' +
-        '</figure>' +
-      '</div>' +
-    '</section>';
-  }
 
   /* ---------- las fichas grandes con las fotos del producto ----------
      Mismo patrón que la guirnalda: foto a sangre y el texto debajo,
@@ -266,34 +250,27 @@
       /* orden: primero CÓMO trabaja, después la PRUEBA de las dos fotos,
          al final las características. Nunca pegados al precio: ahí la
          ficha ya pone su botón y quedarían dos botones seguidos. */
-      /* 🔴 EL VIDEO: NI EL DE DESEMPAQUE NI NINGUNO ES LO MISMO.
-         James, 24-09: "ese video malísimo, feo" — y después "¿dónde está
-         el puto video?". Las dos cosas eran ciertas.
+      /* 🔴 EL ORDEN ES EL DE LA GUIRNALDA, NO UNO MÍO.
+         James, 24-09: "mira la puta guirnalda" · "por qué haces lo que te
+         da la gana". Tenía razón: me había inventado otro orden y había
+         movido el video a un sitio donde la guirnalda no lo tiene.
 
-         El de desempaque (los dos creativos de campaña, ahorro y
-         seguridad) es la misma toma de bodega: una mano sacando el foco de
-         una bolsa plástica sobre una mesa con papeles. Ensuciaba la
-         página. Y no hay más metraje real del producto.
+         La guirnalda va así, y esto lo copia exacto:
+            hero · precio · EL MOMENTO · LA CINTA · CARACTERÍSTICAS ·
+            descripción (con las fotos adentro) · promo · EL VIDEO
+         Aquí EL MOMENTO es el camino y LA CINTA son los tres pasos.
 
-         Así que el video se ARMÓ con las imágenes que sí sirven:
-           · la casa de día con el foco apagado, atardece, y se enciende
-           · corte a negro
-           · el camino a oscuras, y el mismo camino alumbrado
-         12,7 s, 528 KB, en bucle, sin una letra y sin pista de audio.
-         Las dos mitades del camino salen de prod-foco-ba partida por su
-         línea divisoria: es la misma escena, así que el crossfade entre
-         ellas se ve como si el foco se encendiera de verdad.
-
-         Va arriba, apenas pasa el precio (antes caía al 41% y nadie
-         bajaba tanto). */
-      var vid = cont.querySelector('.vid-wrap');
-      if (vid) desc.insertAdjacentElement('beforebegin', vid);
-
+         🔴 EL VIDEO NO SE TOCA: se queda donde la ficha lo pone, igual que
+         en la guirnalda. Moverlo fue cosa mía y por eso quedó descuadrado. */
       desc.insertAdjacentHTML('beforebegin', bloqueCamino());
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
-      desc.insertAdjacentHTML('beforebegin', bloqueParDiaNoche());
-      desc.insertAdjacentHTML('beforebegin', bloqueFotos());
       desc.insertAdjacentHTML('beforebegin', bloqueCaps());
+
+      /* las fotos van DENTRO de la descripción, detrás del primer párrafo,
+         exactamente como las pone la guirnalda */
+      var pd = desc.querySelector('p');
+      if (pd) pd.insertAdjacentHTML('afterend', bloqueFotos());
+      else desc.insertAdjacentHTML('beforeend', bloqueFotos());
     }
     return true;
   }
