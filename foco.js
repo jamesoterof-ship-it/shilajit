@@ -228,6 +228,8 @@
         /* el resplandor nace donde están los LED y respira al ritmo del
            video: cuando el foco se enciende, el hero se enciende con él */
         '<div class="fo-glow" aria-hidden="true"></div>' +
+        /* el haz: se abre desde los LED cuando el foco enciende */
+        '<div class="fo-haz" aria-hidden="true"></div>' +
         '<div class="fo-vineta" aria-hidden="true"></div>' +
         /* 🔴 LAS LETRAS ENTRAN EN CASCADA. James: "que lleguen en cascada".
            Cada pieza tiene su propio retardo (--d) y sube sola al cargar.
@@ -264,18 +266,28 @@
       /* orden: primero CÓMO trabaja, después la PRUEBA de las dos fotos,
          al final las características. Nunca pegados al precio: ahí la
          ficha ya pone su botón y quedarían dos botones seguidos. */
-      /* 🔴 EL VIDEO DE DESEMPAQUE SE VA. James, 24-09: "ese video malísimo,
-         feo". Y es cierto: los dos creativos de campaña (ahorro y
-         seguridad) son la misma toma de bodega — una mano sacando el foco
-         de una bolsa plástica sobre una mesa con papeles. Ensucia la
-         página y no vende nada.
-         No se reemplaza por otro porque NO HAY otro: es el único metraje
-         que existe del producto. El video de la página es el del hero.
-         En su lugar va, aquí arriba, el antes/después del camino: de noche
-         a oscuras contra el mismo camino iluminado. Esa sí cuenta la
-         historia en un segundo. */
+      /* 🔴 EL VIDEO: NI EL DE DESEMPAQUE NI NINGUNO ES LO MISMO.
+         James, 24-09: "ese video malísimo, feo" — y después "¿dónde está
+         el puto video?". Las dos cosas eran ciertas.
+
+         El de desempaque (los dos creativos de campaña, ahorro y
+         seguridad) es la misma toma de bodega: una mano sacando el foco de
+         una bolsa plástica sobre una mesa con papeles. Ensuciaba la
+         página. Y no hay más metraje real del producto.
+
+         Así que el video se ARMÓ con las imágenes que sí sirven:
+           · la casa de día con el foco apagado, atardece, y se enciende
+           · corte a negro
+           · el camino a oscuras, y el mismo camino alumbrado
+         12,7 s, 528 KB, en bucle, sin una letra y sin pista de audio.
+         Las dos mitades del camino salen de prod-foco-ba partida por su
+         línea divisoria: es la misma escena, así que el crossfade entre
+         ellas se ve como si el foco se encendiera de verdad.
+
+         Va arriba, apenas pasa el precio (antes caía al 41% y nadie
+         bajaba tanto). */
       var vid = cont.querySelector('.vid-wrap');
-      if (vid) vid.remove();
+      if (vid) desc.insertAdjacentElement('beforebegin', vid);
 
       desc.insertAdjacentHTML('beforebegin', bloqueCamino());
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
@@ -284,6 +296,37 @@
       desc.insertAdjacentHTML('beforebegin', bloqueCaps());
     }
     return true;
+  }
+
+  /* 🔴 PARALLAX DEL HERO. James: "efecto al hero".
+     El video se queda atrás mientras el texto sube: el hero se hunde en
+     vez de irse de golpe. Va con requestAnimationFrame y solo toca
+     transform, así que no obliga al navegador a recalcular la página. */
+  function parallax() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var hero = document.querySelector('.fo-hero');
+    var vid = document.querySelector('.fo-video');
+    var sobre = document.querySelector('.fo-sobre');
+    if (!hero || !vid) return;
+    var pidiendo = false;
+    function pintar() {
+      pidiendo = false;
+      var y = window.scrollY;
+      var alto = hero.offsetHeight;
+      if (y > alto) return;                    /* fuera de pantalla: no se toca */
+      var t = y / alto;                        /* 0 arriba del todo, 1 al salir */
+      vid.style.transform = 'translate3d(0,' + (y * 0.32) + 'px,0) scale(' + (1 + t * 0.05) + ')';
+      if (sobre) {
+        sobre.style.transform = 'translate3d(0,' + (y * -0.12) + 'px,0)';
+        sobre.style.opacity = String(Math.max(0, 1 - t * 1.5));
+      }
+    }
+    window.addEventListener('scroll', function () {
+      if (pidiendo) return;
+      pidiendo = true;
+      requestAnimationFrame(pintar);
+    }, { passive: true });
+    pintar();
   }
 
   function animar() {
@@ -309,7 +352,7 @@
   /* ficha.js pinta #prod de forma asíncrona: se espera a que exista */
   var intentos = 0;
   (function esperar() {
-    if (montar()) { animar(); return; }
+    if (montar()) { animar(); parallax(); return; }
     if (++intentos > 60) return;
     setTimeout(esperar, 100);
   })();

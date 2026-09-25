@@ -108,6 +108,32 @@
   .fo-hero .fo-glow { animation: none; opacity: .5; }
 }
 
+/* 🔴 EL HAZ DE LUZ. Se abre desde los LED hacia abajo y a la izquierda,
+   en el mismo instante en que el foco se enciende en el video. Es un cono
+   recortado con clip-path, no una imagen: pesa cero. */
+.fo-hero .fo-haz {
+  position: absolute;
+  left: -22%; top: 46%;
+  width: 118%; height: 62%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(255deg, rgba(255,242,215,.4) 0%, rgba(255,214,150,.13) 34%, transparent 68%);
+  clip-path: polygon(96% 6%, 100% 20%, 12% 100%, 0 78%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  filter: blur(9px);
+  animation: fo-haz-late 9.3s linear infinite;
+}
+@keyframes fo-haz-late {
+  0%, 26%  { opacity: 0; transform: scaleX(.86); }
+  43%      { opacity: .95; transform: scaleX(1); }
+  66%      { opacity: .8;  transform: scaleX(1.02); }
+  81%, 100%{ opacity: 0; transform: scaleX(.86); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fo-hero .fo-haz { animation: none; opacity: .45; }
+}
+
 /* la viñeta hunde ARRIBA para que el texto se lea sobre el cielo, y deja
    el producto limpio en la mitad de abajo */
 .fo-hero .fo-vineta {
@@ -419,6 +445,69 @@
 .p-foco.fo-anima .fo-paso.fo-pre:nth-child(2) { transition-delay: .09s; }
 .p-foco.fo-anima .fo-paso.fo-pre:nth-child(3) { transition-delay: .18s; }
 .p-foco.fo-anima .fo-par figure.fo-pre:nth-child(2) { transition-delay: .1s; }
+
+/* ---------- 🔴 EFECTO EN LAS TARJETAS DE FOTOS ----------
+   James: "ponle efecto a las tarjetas de las fotos". Entran con un zoom
+   que se asienta y un barrido de luz que cruza la foto una sola vez, como
+   si el foco la alumbrara al pasar. El texto entra detrás de la imagen. */
+.p-foco.fo-anima .fo-fi { opacity: 1; transform: none; }   /* la ficha no se esconde entera */
+.p-foco.fo-anima .fo-fi img,
+.p-foco.fo-anima .fo-camino img,
+.p-foco.fo-anima .fo-par img {
+  opacity: 0;
+  transform: scale(1.07);
+  transition: opacity .9s cubic-bezier(.16,.84,.3,1), transform 1.25s cubic-bezier(.16,.84,.3,1);
+}
+.p-foco.fo-anima .fo-fi.fo-in img,
+.p-foco.fo-anima .fo-camino .fo-in img,
+.p-foco.fo-anima .fo-par .fo-in img { opacity: 1; transform: none; }
+
+.p-foco.fo-anima .fo-fi figcaption > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1);
+}
+.p-foco.fo-anima .fo-fi.fo-in figcaption > * { opacity: 1; transform: none; }
+.p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(1) { transition-delay: .28s; }
+.p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(2) { transition-delay: .38s; }
+.p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(3) { transition-delay: .48s; }
+
+/* 🔴 EL ZOOM SE ENCIERRA. El scale(1.07) de la entrada renderizaba las
+   fotos a 372 px cuando la pantalla mide 348: se salían por el borde y
+   devolvían el scroll horizontal que acababa de arreglar. El recorte va
+   en el contenedor, no en la imagen. */
+.p-foco .fo-fi,
+.p-foco .fo-camino figure,
+.p-foco .fo-par figure { overflow: hidden; }
+
+/* el barrido de luz: cruza la foto UNA vez cuando aparece */
+.fo-fi figure, .fo-fi { position: relative; }
+.p-foco .fo-fi::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: var(--fo-alto-img, 100%);
+  pointer-events: none;
+  background: linear-gradient(104deg, transparent 38%, rgba(255,231,200,.16) 48%, rgba(255,231,200,.03) 56%, transparent 66%);
+  opacity: 0;
+  transform: translateX(-60%);
+}
+.p-foco.fo-anima .fo-fi.fo-in::after {
+  animation: fo-barrido 1.5s cubic-bezier(.3,.6,.3,1) .35s 1 both;
+}
+@keyframes fo-barrido {
+  0%   { opacity: 0; transform: translateX(-60%); }
+  18%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(60%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-foco.fo-anima .fo-fi img,
+  .p-foco.fo-anima .fo-camino img,
+  .p-foco.fo-anima .fo-par img,
+  .p-foco.fo-anima .fo-fi figcaption > * { opacity: 1 !important; transform: none !important; transition: none; }
+  .p-foco.fo-anima .fo-fi.fo-in::after { animation: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .p-foco.fo-anima .fo-pre { opacity: 1 !important; transform: none !important; transition: none; }
