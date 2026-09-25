@@ -1,0 +1,357 @@
+/* ============================================================
+   FOCO SOLAR TIPO CÁMARA · estilos propios de la ficha.
+   Solo aplican con <body class="p-foco">, que pone foco.js.
+
+   ACENTO: el salmón #E0734D que el foco ya tenía en productos.js, medido
+   de sus propios creativos. La guirnalda es ámbar cálido y serif italiana;
+   este es salmón y sans condensada, para que Meta no lea los dos anuncios
+   como el mismo creativo.
+
+   🔴 El hero va A SANGRE y SIN UN SOLO border-radius (regla de James: un
+   hero con esquinas redondas parece una tarjeta).
+   🔴 Los textos del hero van ARRIBA, no abajo: eso es lo que pidió que
+   cambiara respecto de la guirnalda. Por eso la viñeta oscurece la parte
+   de arriba y no la de abajo.
+   ============================================================ */
+
+.p-foco {
+  --fo-noche:  #0a0d14;
+  --fo-fondo:  #10141c;
+  /* 🔴 EL ACENTO NO SE INVENTA. James, 24-09: "le cambiaste el color, la
+     página tiene que llevar el mismo color". Había puesto un azul mío y
+     partía la página en dos: las tres imágenes del producto están
+     rotuladas en naranja y la ficha ya traía su color definido.
+     Este es ESE: productos.js -> acento: '#E0734D', "salmón, medido de
+     sus propios creativos". */
+  --fo-luz:    #e0734d;
+  --fo-luz2:   #f0946f;   /* el mismo, más claro, para el texto pequeño */
+  --fo-crema:  #f3f0ec;
+  --fo-tenue:  #a49c92;
+  --fo-linea:  rgba(224,115,77,.20);
+  --fo-disp:   'Archivo', 'Sora', system-ui, sans-serif;
+}
+
+.p-foco .fo-rot,
+.p-foco .fo-h1,
+.p-foco .fo-h2,
+.p-foco .fo-med b,
+.p-foco .fo-paso h3,
+.p-foco .fo-cap b {
+  font-family: var(--fo-disp);
+}
+
+.p-foco .fo-rot {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--fo-luz2);
+  margin: 0 0 11px;
+}
+
+/* ============================================================
+   1 · EL HERO: A SANGRE, SIN RADIO, VIDEO DETRÁS Y TEXTO ARRIBA
+   ============================================================ */
+
+.fo-hero {
+  position: relative;
+  /* 🔴 A SANGRE: se come el margen lateral de la tienda. Sin radio. */
+  margin: 0 calc(50% - 50vw);
+  width: 100vw;
+  max-width: 100vw;
+  min-height: 92svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;   /* 🔴 ARRIBA, no abajo */
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--fo-noche);
+}
+@supports not (min-height: 92svh) { .fo-hero { min-height: 92vh; } }
+
+.fo-hero .fo-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;   /* el producto queda bajo el texto */
+  display: block;
+  border-radius: 0;
+  z-index: 0;
+}
+
+/* la viñeta hunde ARRIBA para que el texto se lea sobre el cielo, y deja
+   el producto limpio en la mitad de abajo */
+.fo-hero .fo-vineta {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      rgba(8,7,5,.94) 0%,
+      rgba(8,7,5,.78) 22%,
+      rgba(8,7,5,.3)  44%,
+      rgba(8,7,5,0)   62%,
+      rgba(8,7,5,.55) 100%),
+    radial-gradient(120% 60% at 50% 100%, transparent 38%, rgba(8,7,5,.45) 100%);
+}
+
+.fo-hero .fo-sobre {
+  position: relative;
+  z-index: 3;
+  padding: 26px 20px 0;
+}
+
+.fo-h1 {
+  margin: 0 0 14px;
+  font-size: clamp(38px, 12vw, 66px);
+  font-weight: 800;
+  line-height: .98;
+  letter-spacing: -.035em;
+  color: #fff;
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(0,0,0,.65);
+}
+.fo-h1 em {
+  display: block;
+  font-style: normal;
+  color: var(--fo-luz);
+}
+
+.fo-frase {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #d5e3f4;
+  text-shadow: 0 2px 18px rgba(0,0,0,.7);
+}
+
+@media (min-width: 820px) {
+  .fo-hero .fo-sobre { padding: 46px 32px 0; max-width: 1080px; margin: 0 auto; width: 100%; }
+  .fo-frase { max-width: 44ch; font-size: 17.5px; }
+}
+
+/* ---------- LA CASCADA DEL HERO ----------
+   🔴 James: "las letras que lleguen en cascada". Cada pieza sube y aparece
+   con su propio retardo (--d), una detrás de la otra, apenas carga.
+   No depende de JavaScript: es una animación de CSS que arranca sola.
+   Si el navegador no la corre, el texto queda visible igual. */
+.p-foco .fo-casc {
+  display: block;
+  animation: fo-sube .85s cubic-bezier(.16,.84,.3,1) both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes fo-sube {
+  from { opacity: 0; transform: translateY(26px); filter: blur(5px); }
+  to   { opacity: 1; transform: none;             filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .p-foco .fo-casc { animation: none; }
+}
+
+/* ============================================================
+   2 · SECCIONES
+   ============================================================ */
+
+.fo-sec { margin: 0; padding: 48px 0 42px; position: relative; }
+.fo-sec > .fo-rot,
+.fo-sec > .fo-h2,
+.fo-sec > .fo-sub { padding: 0 20px; }
+.fo-sec + .fo-sec::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20px; right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fo-linea) 22%, var(--fo-linea) 78%, transparent);
+}
+.p-foco .fo-oscura { background: var(--fo-fondo); color: var(--fo-tenue); }
+
+.fo-h2 {
+  margin: 10px 0 14px;
+  font-size: clamp(29px, 8.2vw, 44px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  color: var(--fo-crema);
+  text-wrap: balance;
+}
+.fo-h2 em { display: block; font-style: normal; color: var(--fo-luz); }
+
+.fo-sub {
+  margin: 0 0 26px;
+  font-size: 16.5px;
+  line-height: 1.66;
+  color: var(--fo-tenue);
+  max-width: 46ch;
+}
+
+/* ---------- los tres números ---------- */
+.fo-med { display: flex; align-items: flex-start; margin: 28px 0 0; padding: 0 12px; }
+.fo-med div { flex: 1; text-align: center; position: relative; }
+.fo-med div + div::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10%; bottom: 10%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--fo-linea), transparent);
+}
+.fo-med b {
+  display: block;
+  font-size: clamp(36px, 11.5vw, 56px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: var(--fo-luz);
+  font-variant-numeric: tabular-nums;
+}
+.fo-med span {
+  display: block;
+  margin-top: 9px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--fo-tenue);
+  letter-spacing: .04em;
+}
+
+/* ---------- el ciclo en tres pasos ---------- */
+.fo-pasos { display: flex; flex-direction: column; gap: 2px; margin-top: 26px; }
+.fo-paso { padding: 24px 20px; border-top: 1px solid var(--fo-linea); }
+.fo-paso:first-child { border-top: 0; }
+.fo-paso-n {
+  display: flex; align-items: center; gap: 9px;
+  margin-bottom: 11px;
+  font-size: 11.5px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--fo-luz);
+}
+.fo-paso h3 {
+  margin: 0 0 9px;
+  font-size: clamp(21px, 5.6vw, 27px);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.12;
+  color: var(--fo-crema);
+}
+.fo-paso p { margin: 0; font-size: 15.5px; line-height: 1.62; color: var(--fo-tenue); max-width: 48ch; }
+
+.fo-ico {
+  width: 19px; height: 19px; flex: 0 0 auto;
+  fill: none; stroke: var(--fo-luz); stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+@media (min-width: 820px) {
+  .fo-pasos { flex-direction: row; gap: 0; }
+  .fo-paso { flex: 1; border-top: 0; border-left: 1px solid var(--fo-linea); }
+  .fo-paso:first-child { border-left: 0; }
+}
+
+/* ---------- las dos fotos, día y noche ---------- */
+.fo-par { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: 24px; }
+.fo-par figure { margin: 0; position: relative; overflow: hidden; background: var(--fo-noche); }
+.fo-par img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 3 / 4; }
+.fo-par figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 26px 13px 13px;
+  font-size: 11.5px; line-height: 1.35; color: #cfdcec;
+  background: linear-gradient(to top, rgba(8,7,5,.92), transparent);
+}
+.fo-par figcaption b {
+  display: block;
+  font-family: var(--fo-disp);
+  font-size: 13.5px; font-weight: 800; letter-spacing: -.01em;
+  color: var(--fo-luz);
+  margin-bottom: 2px;
+}
+
+/* ---------- las fichas grandes con las fotos del producto ----------
+   La foto va a sangre, de borde a borde, y el texto debajo. Sin radios y
+   sin cajas flotando: mismo criterio que el hero. */
+.fo-fichas { padding: 8px 0 44px; }
+.fo-fi {
+  margin: 0;
+  padding: 0 0 34px;
+  position: relative;
+}
+.fo-fi + .fo-fi { padding-top: 34px; }
+.fo-fi + .fo-fi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20px; right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fo-linea) 22%, var(--fo-linea) 78%, transparent);
+}
+.fo-fi img {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 calc(50% - 50vw) 20px;
+  height: auto;
+  display: block;
+  border-radius: 0;
+}
+.fo-fi figcaption { padding: 0 20px; }
+.fo-fi figcaption b {
+  display: block;
+  font-family: var(--fo-disp);
+  font-size: clamp(22px, 6vw, 30px);
+  font-weight: 800;
+  letter-spacing: -.025em;
+  line-height: 1.1;
+  color: var(--fo-crema);
+  margin: 0 0 10px;
+}
+.fo-fi figcaption p {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.62;
+  color: var(--fo-tenue);
+  max-width: 48ch;
+}
+
+@media (min-width: 820px) {
+  .fo-fi { display: grid; grid-template-columns: 1.05fr .95fr; gap: 34px; align-items: center; max-width: 1080px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+  .fo-fi img { width: 100%; max-width: 100%; margin: 0; }
+  .fo-fi figcaption { padding: 0; }
+  .fo-fi:nth-child(even) img { order: 2; }
+}
+
+/* ---------- las cuatro características ---------- */
+.fo-caps { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--fo-linea); }
+.fo-cap {
+  background: var(--fo-fondo);
+  padding: 22px 16px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 7px;
+}
+.fo-cap b {
+  font-size: 14.5px; font-weight: 800; letter-spacing: -.01em;
+  color: var(--fo-crema);
+}
+.fo-cap span { font-size: 12.5px; line-height: 1.45; color: var(--fo-tenue); }
+.fo-cap .fo-ico { width: 22px; height: 22px; }
+
+@media (min-width: 820px) {
+  .fo-caps { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================================================
+   3 · ENTRADA AL APARECER
+   🔴 Por defecto TODO se ve. foco.js agrega .fo-anima al body justo antes
+   de observar: si el archivo no corre, la página se ve completa igual en
+   vez de dejar secciones en blanco.
+   ============================================================ */
+.p-foco.fo-anima .fo-pre {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.p-foco.fo-anima .fo-pre.fo-in { opacity: 1; transform: none; }
+.p-foco.fo-anima .fo-paso.fo-pre:nth-child(2) { transition-delay: .09s; }
+.p-foco.fo-anima .fo-paso.fo-pre:nth-child(3) { transition-delay: .18s; }
+.p-foco.fo-anima .fo-par figure.fo-pre:nth-child(2) { transition-delay: .1s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .p-foco.fo-anima .fo-pre { opacity: 1 !important; transform: none !important; transition: none; }
+  .fo-hero .fo-video { display: none; }
+  .fo-hero { background: var(--fo-noche) center/cover no-repeat url('img/foco-hero-poster.webp?v=1'); }
+}
