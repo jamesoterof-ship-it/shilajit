@@ -91,46 +91,6 @@
     return '<svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true">' + (ICONOS[k] || '') + '</svg>';
   }
 
-  /* ---------- EL CAMINO: la pieza fuerte ----------
-     La imagen que ya estaba hecha (prod-foco-ba): el mismo camino de
-     entrada, a oscuras y alumbrado. Va a sangre y grande, apenas pasa el
-     precio, porque es lo que explica el producto sin leer una palabra. */
-  function bloqueCamino() {
-    return '<section class="fo-camino fo-oscura">' +
-      '<div class="fo-camino-txt">' +
-        '<span class="fo-rot">La misma entrada, la misma noche</span>' +
-        '<h2 class="fo-h2">Llegar a oscuras<em>o llegar viendo.</em></h2>' +
-      '</div>' +
-      '<figure class="fo-pre">' +
-        '<img src="img/prod-foco-ba.webp?v=1" loading="lazy" width="900" height="900"' +
-        ' alt="El mismo camino de entrada a una casa: a la izquierda de noche sin luz, a la derecha alumbrado por el foco solar montado en el poste">' +
-      '</figure>' +
-    '</section>';
-  }
-
-  /* ---------- LAS DOS FOTOS, UNA ARRIBA Y OTRA ABAJO ----------
-     James, 24-09: "pones las dos fotos antes y después abajo arriba".
-     Apiladas, no lado a lado: en el teléfono dos fotos en fila quedan
-     estrechas y no se ve nada. Así cada una ocupa el ancho completo y el
-     cliente baja de una a la otra, que es el mismo gesto de que anochezca.
-     Es la misma casa y el mismo ángulo, así que la comparación es real. */
-  function bloqueApiladas() {
-    return '<section class="fo-sec fo-oscura fo-apil">' +
-      '<span class="fo-rot">La misma casa, el mismo rincón</span>' +
-      '<h2 class="fo-h2">Se carga de día.<em>Alumbra de noche.</em></h2>' +
-      '<figure class="fo-ap fo-pre">' +
-        '<img src="img/foco-dia.webp?v=1" loading="lazy" width="1024" height="1536"' +
-        ' alt="El foco solar apagado en la esquina de la casa a plena luz del día, con el panel recibiendo el sol">' +
-        '<figcaption><b>ANTES</b><span>Mediodía · cargando con el sol</span></figcaption>' +
-      '</figure>' +
-      '<figure class="fo-ap fo-pre">' +
-        '<img src="img/foco-noche.webp?v=1" loading="lazy" width="1024" height="1536"' +
-        ' alt="El mismo foco de noche con los LED encendidos alumbrando la entrada de la casa">' +
-        '<figcaption><b>DESPUÉS</b><span>De noche · alguien se acercó</span></figcaption>' +
-      '</figure>' +
-    '</section>';
-  }
-
   /* ---------- el ciclo: día → sensor → disuasión ---------- */
   function bloqueCiclo() {
     return '<section class="fo-sec fo-oscura fo-ciclo">' +
@@ -151,9 +111,6 @@
     '</section>';
   }
 
-  /* ---------- las dos fotos, lado a lado ----------
-     La misma esquina, la misma casa: apagado de día y encendido de noche.
-     Es la prueba de lo que el video ya mostró arriba. */
 
   /* ---------- las fichas grandes con las fotos del producto ----------
      Mismo patrón que la guirnalda: foto a sangre y el texto debajo,
@@ -294,8 +251,17 @@
 
          🔴 EL VIDEO NO SE TOCA: se queda donde la ficha lo pone, igual que
          en la guirnalda. Moverlo fue cosa mía y por eso quedó descuadrado. */
-      desc.insertAdjacentHTML('beforebegin', bloqueCamino());
-      desc.insertAdjacentHTML('beforebegin', bloqueApiladas());
+      /* 🔴 UNA SOLA SECCIÓN DE ANTES Y DESPUÉS, Y ES LA QUE YA EXISTÍA.
+         James, 24-09: "tres secciones de antes y después, ¿es para burlarte
+         de mí?". Tenía toda la razón y el error fue mío de principio a fin:
+         la ficha YA trae su bloque .ba-sec con la imagen prod-foco-ba
+         ("EL ANTES Y DESPUÉS QUE SE NOTA"), y yo le monté encima otras dos
+         con LA MISMA FOTO — el camino y las dos apiladas.
+         Las dos mías se fueron. Queda la de la ficha, y se sube acá arriba,
+         al sitio donde la guirnalda pone su momento. */
+      var ba = cont.querySelector('.ba-sec');
+      if (ba) desc.insertAdjacentElement('beforebegin', ba);
+
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
       desc.insertAdjacentHTML('beforebegin', bloqueCaps());
 
