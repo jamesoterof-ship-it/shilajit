@@ -1060,3 +1060,8 @@
    negativo a 100vw y dejaba el margen descuadrado (31 a la izquierda,
    7 a la derecha). Llevan su fondo propio y su margen parejo. */
 .p-foco #prod .fo-fichas { background: var(--fo-fondo); }
+/* 🔴 AIRE ENTRE LAS TARJETAS. James: "parece que estuviese una montada
+   arriba de otra". Quedaban pegadas: 30 px abajo y 30 arriba no alcanzan
+   cuando la foto de una termina donde empieza la siguiente. */
+.p-foco #prod .fo-fi { padding-bottom: 46px; }
+.p-foco #prod .fo-fi + .fo-fi { padding-top: 46px; }

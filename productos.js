@@ -319,7 +319,7 @@ window.PRODUCTOS = [
        VIDEO_foco_seguridad_916, recortado a la banda del metraje. SIN el
        titulo de arriba, SIN la pildora de precio, SIN los subtitulos y SIN
        audio (no lleva pista de sonido). */
-    video: 'img/foco-ficha.mp4?v=3',
+    video: 'img/foco-ficha.mp4?v=4',
     acento: '#E0734D',   /* salmon, medido de sus propios creativos */
     desc: 'Es un foco solar LED con forma de cámara de seguridad. Tiene 77 leds, sensor de movimiento que lo enciende solo cuando alguien pasa, control remoto incluido, y es resistente al agua para usar afuera. Funciona con energía solar: se carga de día y alumbra de noche, sin cables, sin electricista y sin subir la cuenta de la luz. Como parece una cámara de verdad, también sirve para espantar a quien se acerque. Ideal para patio, entrada, bodega, taller o parcela. Se instala en 10 minutos: se atornilla a la pared y listo.',
     puntos: [
