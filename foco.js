@@ -91,6 +91,23 @@
     return '<svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true">' + (ICONOS[k] || '') + '</svg>';
   }
 
+  /* ---------- EL CAMINO: la pieza fuerte ----------
+     La imagen que ya estaba hecha (prod-foco-ba): el mismo camino de
+     entrada, a oscuras y alumbrado. Va a sangre y grande, apenas pasa el
+     precio, porque es lo que explica el producto sin leer una palabra. */
+  function bloqueCamino() {
+    return '<section class="fo-camino fo-oscura">' +
+      '<div class="fo-camino-txt">' +
+        '<span class="fo-rot">La misma entrada, la misma noche</span>' +
+        '<h2 class="fo-h2">Llegar a oscuras<em>o llegar viendo.</em></h2>' +
+      '</div>' +
+      '<figure class="fo-pre">' +
+        '<img src="img/prod-foco-ba.webp?v=1" loading="lazy" width="900" height="900"' +
+        ' alt="El mismo camino de entrada a una casa: a la izquierda de noche sin luz, a la derecha alumbrado por el foco solar montado en el poste">' +
+      '</figure>' +
+    '</section>';
+  }
+
   /* ---------- el ciclo: día → sensor → disuasión ---------- */
   function bloqueCiclo() {
     return '<section class="fo-sec fo-oscura fo-ciclo">' +
@@ -98,7 +115,10 @@
       '<h2 class="fo-h2">Se encarga solo,<em>de día y de noche.</em></h2>' +
       '<div class="fo-pasos">' +
         CICLO.map(function (p, i) {
+          /* el número grande al fondo y la línea que los encadena: deja de
+             ser texto suelto sobre negro y se lee como una secuencia */
           return '<div class="fo-paso fo-pre">' +
+            '<span class="fo-paso-cifra" aria-hidden="true">' + (i + 1) + '</span>' +
             '<div class="fo-paso-n">' + ico(p[0]) + '<span>' + esc(p[1]) + '</span></div>' +
             '<h3>' + esc(p[2]) + '</h3>' +
             '<p>' + esc(p[3]) + '</p>' +
@@ -165,6 +185,23 @@
 
     document.body.classList.add('p-foco');
 
+    /* 🔴 EL ANCHO REAL, NO 100vw.
+       Las piezas a sangre usaban width:100vw, y 100vw INCLUYE la barra de
+       scroll: en este navegador son 356 px contra 348 de pantalla, así que
+       la página se corría 8 px y se podía arrastrar de lado. Se veía en el
+       hero y en el antes/después, con el texto cortado a la derecha.
+       Acá se mide el ancho de verdad y se guarda en --fo-vw; el CSS usa esa
+       variable. Se vuelve a medir al girar el teléfono.
+       OJO: la guirnalda arrastra el mismo bug (también da 356 contra 348),
+       pero eso se toca aparte: un cambio por vez. */
+    var medirAncho = function () {
+      document.documentElement.style.setProperty(
+        '--fo-vw', document.documentElement.clientWidth + 'px');
+    };
+    medirAncho();
+    window.addEventListener('resize', medirAncho);
+    window.addEventListener('orientationchange', medirAncho);
+
     /* la display. Va acá y no en el HTML para no cargarla en las otras
        fichas, que no la usan. Condensada y firme: el foco es seguridad,
        no es la serif romántica de la guirnalda. */
@@ -188,6 +225,9 @@
           ' aria-label="La misma casa de día y de noche: el foco se carga con el sol y al oscurecer se enciende e ilumina la entrada">' +
           '<source src="img/foco-hero.mp4?v=1" type="video/mp4">' +
         '</video>' +
+        /* el resplandor nace donde están los LED y respira al ritmo del
+           video: cuando el foco se enciende, el hero se enciende con él */
+        '<div class="fo-glow" aria-hidden="true"></div>' +
         '<div class="fo-vineta" aria-hidden="true"></div>' +
         /* 🔴 LAS LETRAS ENTRAN EN CASCADA. James: "que lleguen en cascada".
            Cada pieza tiene su propio retardo (--d) y sube sola al cargar.
@@ -224,14 +264,20 @@
       /* orden: primero CÓMO trabaja, después la PRUEBA de las dos fotos,
          al final las características. Nunca pegados al precio: ahí la
          ficha ya pone su botón y quedarían dos botones seguidos. */
-      /* 🔴 EL VIDEO VA PRIMERO. James, 24-09: "¿dónde está el video?" — y
-         tenía razón: la ficha lo deja en su sitio de siempre, que en esta
-         página caía al 41% (6.065 px de scroll). Nadie baja tanto.
-         Ahora va apenas pasa el precio: el cliente ve cuánto vale, y lo
-         primero que encuentra después es el video real del foco. */
+      /* 🔴 EL VIDEO DE DESEMPAQUE SE VA. James, 24-09: "ese video malísimo,
+         feo". Y es cierto: los dos creativos de campaña (ahorro y
+         seguridad) son la misma toma de bodega — una mano sacando el foco
+         de una bolsa plástica sobre una mesa con papeles. Ensucia la
+         página y no vende nada.
+         No se reemplaza por otro porque NO HAY otro: es el único metraje
+         que existe del producto. El video de la página es el del hero.
+         En su lugar va, aquí arriba, el antes/después del camino: de noche
+         a oscuras contra el mismo camino iluminado. Esa sí cuenta la
+         historia en un segundo. */
       var vid = cont.querySelector('.vid-wrap');
-      if (vid) desc.insertAdjacentElement('beforebegin', vid);
+      if (vid) vid.remove();
 
+      desc.insertAdjacentHTML('beforebegin', bloqueCamino());
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
       desc.insertAdjacentHTML('beforebegin', bloqueParDiaNoche());
       desc.insertAdjacentHTML('beforebegin', bloqueFotos());

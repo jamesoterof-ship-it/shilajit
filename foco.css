@@ -57,9 +57,9 @@
 .fo-hero {
   position: relative;
   /* 🔴 A SANGRE: se come el margen lateral de la tienda. Sin radio. */
-  margin: 0 calc(50% - 50vw);
-  width: 100vw;
-  max-width: 100vw;
+  margin: 0 calc(50% - var(--fo-vw, 100vw) / 2);
+  width: var(--fo-vw, 100vw);
+  max-width: var(--fo-vw, 100vw);
   min-height: 92svh;
   display: flex;
   flex-direction: column;
@@ -80,6 +80,32 @@
   display: block;
   border-radius: 0;
   z-index: 0;
+}
+
+/* 🔴 EL RESPLANDOR. James: "ningún efecto tiene ese hero".
+   Nace justo donde están los LED del foco en el video y late al ritmo del
+   ciclo: el video dura 9,3 s (día 0-2,4 · se enciende 2,4-4 · noche 4-6,2
+   · se apaga 6,2-7,5 · día otra vez). El resplandor sigue esos tiempos, así
+   que el hero se enciende junto con el foco en vez de quedarse quieto. */
+.fo-hero .fo-glow {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(42% 26% at 46% 62%, rgba(255,238,205,.55) 0%, rgba(255,196,120,.2) 44%, transparent 72%),
+    radial-gradient(90% 46% at 46% 66%, rgba(224,115,77,.22) 0%, transparent 64%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: fo-late 9.3s linear infinite;
+}
+@keyframes fo-late {
+  0%    { opacity: 0; }
+  26%   { opacity: 0; }      /* de día: apagado */
+  43%   { opacity: 1; }      /* se enciende con el video */
+  66%   { opacity: .88; }    /* de noche: encendido, respirando */
+  81%   { opacity: 0; }      /* se apaga y vuelve el día */
+  100%  { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fo-hero .fo-glow { animation: none; opacity: .5; }
 }
 
 /* la viñeta hunde ARRIBA para que el texto se lea sobre el cielo, y deja
@@ -214,10 +240,54 @@
   letter-spacing: .04em;
 }
 
+/* ---------- EL CAMINO: la pieza fuerte, a sangre ---------- */
+.fo-camino { padding: 44px 0 0; position: relative; }
+.fo-camino-txt { padding: 0 20px 24px; }
+.fo-camino figure { margin: 0; }
+.fo-camino img {
+  width: var(--fo-vw, 100vw);
+  max-width: var(--fo-vw, 100vw);
+  margin: 0 calc(50% - var(--fo-vw, 100vw) / 2);
+  height: auto;
+  display: block;
+  border-radius: 0;
+}
+@media (min-width: 820px) {
+  .fo-camino-txt { max-width: 1080px; margin: 0 auto; }
+  .fo-camino img { width: 100%; max-width: 1080px; margin: 0 auto; }
+}
+
 /* ---------- el ciclo en tres pasos ---------- */
 .fo-pasos { display: flex; flex-direction: column; gap: 2px; margin-top: 26px; }
-.fo-paso { padding: 24px 20px; border-top: 1px solid var(--fo-linea); }
+.fo-paso {
+  padding: 26px 20px 26px 54px;
+  border-top: 1px solid var(--fo-linea);
+  position: relative;
+  overflow: hidden;
+}
 .fo-paso:first-child { border-top: 0; }
+
+/* la cifra grande al fondo y la línea que encadena los tres pasos: así se
+   leen como una secuencia y no como tres párrafos sueltos sobre negro */
+.fo-paso-cifra {
+  position: absolute;
+  left: 8px; top: 20px;
+  font-family: var(--fo-disp);
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--fo-linea);
+  pointer-events: none;
+}
+.fo-paso::after {
+  content: '';
+  position: absolute;
+  left: 25px; top: 74px; bottom: -2px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--fo-linea), transparent);
+}
+.fo-paso:last-child::after { display: none; }
 .fo-paso-n {
   display: flex; align-items: center; gap: 9px;
   margin-bottom: 11px;
@@ -283,9 +353,9 @@
   background: linear-gradient(90deg, transparent, var(--fo-linea) 22%, var(--fo-linea) 78%, transparent);
 }
 .fo-fi img {
-  width: 100vw;
-  max-width: 100vw;
-  margin: 0 calc(50% - 50vw) 20px;
+  width: var(--fo-vw, 100vw);
+  max-width: var(--fo-vw, 100vw);
+  margin: 0 calc(50% - var(--fo-vw, 100vw) / 2) 20px;
   height: auto;
   display: block;
   border-radius: 0;
