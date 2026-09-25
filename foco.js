@@ -128,18 +128,6 @@
     }).join('') + '</div>';
   }
 
-  /* ---------- las cuatro características ---------- */
-  function bloqueCaps() {
-    return '<section class="fo-sec fo-oscura">' +
-      '<div class="fo-caps">' +
-        CAPS.map(function (c) {
-          return '<div class="fo-cap fo-pre">' + ico(c[0]) +
-            '<b>' + esc(c[1]) + '</b><span>' + esc(c[2]) + '</span></div>';
-        }).join('') +
-      '</div>' +
-    '</section>';
-  }
-
   function montar() {
     var cont = document.getElementById('prod');
     if (!cont) return false;
@@ -211,7 +199,6 @@
         '</div>' +
       '</div>' +
       '<section class="fo-sec fo-oscura">' +
-        '<p class="fo-sub">Un foco solar con forma de cámara de seguridad, para dejar puesto afuera. El panel se carga con el sol, así que no se enchufa a la corriente y no te sube la cuenta de la luz. Se atornilla a la pared y no necesitas electricista.</p>' +
         /* 🔴 CONTEO ASCENDENTE (James, 24-09: "ponle conteo ascendente").
            data-hasta es el número real; data-antes y data-desp son el
            símbolo y el sufijo, que no se cuentan. Los dos ceros no pueden
@@ -263,7 +250,6 @@
       if (ba) desc.insertAdjacentElement('beforebegin', ba);
 
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
-      desc.insertAdjacentHTML('beforebegin', bloqueCaps());
 
       /* las fotos van DENTRO de la descripción, detrás del primer párrafo,
          exactamente como las pone la guirnalda */
