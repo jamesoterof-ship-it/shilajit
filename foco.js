@@ -108,6 +108,29 @@
     '</section>';
   }
 
+  /* ---------- LAS DOS FOTOS, UNA ARRIBA Y OTRA ABAJO ----------
+     James, 24-09: "pones las dos fotos antes y después abajo arriba".
+     Apiladas, no lado a lado: en el teléfono dos fotos en fila quedan
+     estrechas y no se ve nada. Así cada una ocupa el ancho completo y el
+     cliente baja de una a la otra, que es el mismo gesto de que anochezca.
+     Es la misma casa y el mismo ángulo, así que la comparación es real. */
+  function bloqueApiladas() {
+    return '<section class="fo-sec fo-oscura fo-apil">' +
+      '<span class="fo-rot">La misma casa, el mismo rincón</span>' +
+      '<h2 class="fo-h2">Se carga de día.<em>Alumbra de noche.</em></h2>' +
+      '<figure class="fo-ap fo-pre">' +
+        '<img src="img/foco-dia.webp?v=1" loading="lazy" width="1024" height="1536"' +
+        ' alt="El foco solar apagado en la esquina de la casa a plena luz del día, con el panel recibiendo el sol">' +
+        '<figcaption><b>ANTES</b><span>Mediodía · cargando con el sol</span></figcaption>' +
+      '</figure>' +
+      '<figure class="fo-ap fo-pre">' +
+        '<img src="img/foco-noche.webp?v=1" loading="lazy" width="1024" height="1536"' +
+        ' alt="El mismo foco de noche con los LED encendidos alumbrando la entrada de la casa">' +
+        '<figcaption><b>DESPUÉS</b><span>De noche · alguien se acercó</span></figcaption>' +
+      '</figure>' +
+    '</section>';
+  }
+
   /* ---------- el ciclo: día → sensor → disuasión ---------- */
   function bloqueCiclo() {
     return '<section class="fo-sec fo-oscura fo-ciclo">' +
@@ -214,6 +237,9 @@
         '<div class="fo-glow" aria-hidden="true"></div>' +
         /* el haz: se abre desde los LED cuando el foco enciende */
         '<div class="fo-haz" aria-hidden="true"></div>' +
+        /* el destello del sol sobre el panel: en la parte de DÍA el hero
+           estaba muerto porque el resplandor y el haz solo salen de noche */
+        '<div class="fo-sol" aria-hidden="true"></div>' +
         '<div class="fo-vineta" aria-hidden="true"></div>' +
         /* 🔴 LAS LETRAS ENTRAN EN CASCADA. James: "que lleguen en cascada".
            Cada pieza tiene su propio retardo (--d) y sube sola al cargar.
@@ -229,10 +255,16 @@
       '</div>' +
       '<section class="fo-sec fo-oscura">' +
         '<p class="fo-sub">Un foco solar con forma de cámara de seguridad, para dejar puesto afuera. El panel se carga con el sol, así que no se enchufa a la corriente y no te sube la cuenta de la luz. Se atornilla a la pared y no necesitas electricista.</p>' +
+        /* 🔴 CONTEO ASCENDENTE (James, 24-09: "ponle conteo ascendente").
+           data-hasta es el número real; data-antes y data-desp son el
+           símbolo y el sufijo, que no se cuentan. Los dos ceros no pueden
+           "subir" a cero, así que hacen un rodillo de dígitos que aterriza
+           en 0: se ve el conteo y no se afirma ninguna cifra que no sea
+           dato del producto. */
         '<div class="fo-med">' +
-          '<div><b>$0</b><span>de cuenta de luz</span></div>' +
-          '<div><b>77</b><span>LED encendidos</span></div>' +
-          '<div><b>0</b><span>cables que instalar</span></div>' +
+          '<div><b data-hasta="0" data-antes="$" data-rodillo="1">$0</b><span>de cuenta de luz</span></div>' +
+          '<div><b data-hasta="77">77</b><span>LED encendidos</span></div>' +
+          '<div><b data-hasta="0" data-rodillo="1">0</b><span>cables que instalar</span></div>' +
         '</div>' +
       '</section>';
 
@@ -263,6 +295,7 @@
          🔴 EL VIDEO NO SE TOCA: se queda donde la ficha lo pone, igual que
          en la guirnalda. Moverlo fue cosa mía y por eso quedó descuadrado. */
       desc.insertAdjacentHTML('beforebegin', bloqueCamino());
+      desc.insertAdjacentHTML('beforebegin', bloqueApiladas());
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
       desc.insertAdjacentHTML('beforebegin', bloqueCaps());
 
@@ -306,6 +339,101 @@
     pintar();
   }
 
+  /* 🔴 LA CASCADA ESPERA A QUE LA PÁGINA ESTÉ LISTA.
+     James: "te pedí efecto de estas letras y nada". El efecto existía pero
+     terminaba a los 1,6 s, mientras el video de 608 KB todavía cargaba: él
+     llegaba siempre tarde y veía el texto ya asentado.
+
+     Acá se esconde el texto (.fo-arranca) y se suelta (.fo-listo) recién
+     cuando el hero tiene algo que mostrar: el primer fotograma del video,
+     o el póster. Así la cascada ocurre DELANTE del cliente.
+
+     CANDADO: el texto solo se esconde desde JavaScript, y hay un plazo de
+     1,2 s que lo suelta pase lo que pase. Si el video no carga nunca, el
+     título igual aparece. */
+  function cascada() {
+    var hero = document.querySelector('.fo-hero');
+    var vid = document.querySelector('.fo-video');
+    if (!hero) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    document.body.classList.add('fo-arranca');
+    var soltado = false;
+    function soltar() {
+      if (soltado) return;
+      soltado = true;
+      /* dos cuadros de margen: que el navegador alcance a pintar el texto
+         escondido antes de animarlo, o se salta la animación entera */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { document.body.classList.add('fo-listo'); });
+      });
+    }
+    if (vid) {
+      if (vid.readyState >= 2) soltar();
+      else vid.addEventListener('loadeddata', soltar, { once: true });
+    }
+    setTimeout(soltar, 1200);        /* pase lo que pase, el texto aparece */
+  }
+
+  /* 🔴 EL CONTEO DE LOS TRES NÚMEROS.
+     Arranca cuando la fila entra en pantalla, no al cargar: si contara
+     antes, el cliente vería el número ya quieto (el mismo error que tenía
+     la cascada del hero).
+     El 77 sube de 0 a 77 con CountUp, que ya está cargado en la ficha.
+     Los dos ceros no pueden subir a cero: hacen un rodillo de dígitos que
+     frena en 0 — se ve el conteo sin afirmar ninguna cifra inventada.
+     CANDADO: el número final ya está escrito en el HTML, así que si esto
+     no corre se lee igual. */
+  function contar() {
+    var fila = document.querySelector('.fo-med');
+    if (!fila || !('IntersectionObserver' in window)) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    /* 🔴 EL CONTEO SE HACE ACÁ, NO CON CountUp.
+       producto.html carga lib/countup.umd.js, pero esa build NO deja nada
+       en window.CountUp: al probarlo daba "undefined" y el 77 se quedaba
+       quieto mientras los otros dos sí giraban. Son doce líneas y no
+       depende de nadie. */
+    function subir(el, hasta, antes) {
+      var ini = null, dur = 1700;
+      function paso(t) {
+        if (ini === null) ini = t;
+        var p = Math.min((t - ini) / dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);          /* frena al final */
+        el.textContent = (antes || '') + Math.round(hasta * e);
+        if (p < 1) requestAnimationFrame(paso);
+        else el.textContent = (antes || '') + hasta;
+      }
+      requestAnimationFrame(paso);
+    }
+
+    function rodillo(el, antes) {
+      var giros = 14, i = 0;
+      var t = setInterval(function () {
+        i++;
+        el.textContent = (antes || '') + (i >= giros ? '0' : Math.floor(Math.random() * 9) + 1);
+        if (i >= giros) clearInterval(t);
+      }, 55);
+    }
+
+    var obs = new IntersectionObserver(function (filas) {
+      filas.forEach(function (f) {
+        if (!f.isIntersecting) return;
+        obs.unobserve(f.target);
+        f.target.querySelectorAll('b[data-hasta]').forEach(function (b, i) {
+          var hasta = Number(b.getAttribute('data-hasta'));
+          var antes = b.getAttribute('data-antes') || '';
+          setTimeout(function () {
+            if (b.getAttribute('data-rodillo')) { rodillo(b, antes); return; }
+            subir(b, hasta, antes);
+          }, i * 140);
+        });
+      });
+    }, { threshold: 0.45 });
+    obs.observe(fila);
+  }
+
   function animar() {
     /* El hero no necesita JavaScript: es un video que corre solo. Esto es
        solo la entrada de las secciones al aparecer.
@@ -329,7 +457,7 @@
   /* ficha.js pinta #prod de forma asíncrona: se espera a que exista */
   var intentos = 0;
   (function esperar() {
-    if (montar()) { animar(); parallax(); return; }
+    if (montar()) { animar(); parallax(); cascada(); contar(); return; }
     if (++intentos > 60) return;
     setTimeout(esperar, 100);
   })();
