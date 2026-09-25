@@ -28,6 +28,11 @@
   --fo-crema:  #f3f0ec;
   --fo-tenue:  #a49c92;
   --fo-linea:  rgba(224,115,77,.20);
+  /* 24-09: el fondo de las tarjetas de las fichas. Un punto mas claro que
+     --fo-fondo, lo justo para que la tarjeta se despegue sin aclarar la
+     seccion ni romper el modo noche de la pagina. */
+  --fo-tarjeta: #171d28;
+  --fo-borde:   rgba(255,255,255,.09);
   --fo-disp:   'Archivo', 'Sora', system-ui, sans-serif;
 }
 
@@ -449,31 +454,35 @@
 }
 
 /* ---------- las fichas grandes con las fotos del producto ----------
-   La foto va a sangre, de borde a borde, y el texto debajo. Sin radios y
-   sin cajas flotando: mismo criterio que el hero. */
-.fo-fichas { padding: 8px 0 44px; }
+   24-09 (James): "esta seccion debe ser toda oscura y las tarjetas se deben
+   notar, asi no". Antes la foto iba a sangre y el texto suelto debajo, sin
+   nada que los agrupara: sobre el fondo oscuro no se leia donde empezaba y
+   donde terminaba cada ficha. Ahora cada una es una TARJETA de verdad, con su
+   fondo un punto mas claro que la seccion, su borde y su esquina redondeada.
+   La foto vive DENTRO de la tarjeta, no a sangre. */
+.fo-fichas { padding: 22px 16px 40px; }
 .fo-fi {
-  margin: 0;
-  padding: 0 0 34px;
+  margin: 0 0 18px;
+  padding: 0 0 22px;
   position: relative;
+  background: var(--fo-tarjeta);
+  border: 1px solid var(--fo-borde);
+  border-radius: 18px;
+  overflow: hidden;                      /* la foto se recorta con la esquina */
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .45);
 }
-.fo-fi + .fo-fi { padding-top: 34px; }
-.fo-fi + .fo-fi::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 20px; right: 20px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--fo-linea) 22%, var(--fo-linea) 78%, transparent);
-}
+/* la linea que separaba las fichas ya no hace falta: las separa la tarjeta */
+.fo-fi + .fo-fi { padding-top: 0; }
+.fo-fi + .fo-fi::before { display: none; }
 .fo-fi img {
-  width: var(--fo-vw, 100vw);
-  max-width: var(--fo-vw, 100vw);
-  margin: 0 calc(50% - var(--fo-vw, 100vw) / 2) 20px;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 0 18px;
   height: auto;
   display: block;
   border-radius: 0;
 }
-.fo-fi figcaption { padding: 0 20px; }
+.fo-fi figcaption { padding: 0 18px; }
 .fo-fi figcaption b {
   display: block;
   font-family: var(--fo-disp);
@@ -493,9 +502,15 @@
 }
 
 @media (min-width: 820px) {
-  .fo-fi { display: grid; grid-template-columns: 1.05fr .95fr; gap: 34px; align-items: center; max-width: 1080px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
-  .fo-fi img { width: 100%; max-width: 100%; margin: 0; }
-  .fo-fi figcaption { padding: 0; }
+  /* en pantalla grande la tarjeta se parte en dos: la foto a un lado, pegada
+     al borde, y el texto al otro con aire. La foto alterna de lado. */
+  .fo-fi {
+    display: grid; grid-template-columns: 1.05fr .95fr; gap: 0;
+    align-items: center; max-width: 1080px; margin: 0 auto 22px;
+    padding: 0; overflow: hidden;
+  }
+  .fo-fi img { width: 100%; max-width: 100%; margin: 0; height: 100%; object-fit: cover; }
+  .fo-fi figcaption { padding: 34px 38px; }
   .fo-fi:nth-child(even) img { order: 2; }
 }
 
@@ -601,3 +616,35 @@
   .fo-hero .fo-video { display: none; }
   .fo-hero { background: var(--fo-noche) center/cover no-repeat url('img/foco-hero-poster.webp?v=1'); }
 }
+
+/* ============================================================
+   🔴 LA SECCIÓN DEL PRODUCTO, TODA OSCURA.
+   James, 24-09: "esta sección debe ser toda oscura y las tarjetas se deben
+   notar, así no". `section.desc` venía PARTIDA EN TRES: el título y el
+   párrafo sobre blanco, el bloque de las fichas en oscuro, y la lista de
+   puntos otra vez en blanco. Cortaba el ritmo justo en la mitad de la página.
+   Es el mismo caso que ya se resolvió en la guirnalda, así que va con la
+   misma receta: el fondo se derrama a los lados con box-shadow + clip-path,
+   porque la sección vive dentro del contenedor angosto de la tienda y un
+   background normal dejaría las orillas blancas.
+   ============================================================ */
+.p-foco #prod section.desc {
+  background: var(--fo-fondo);
+  box-shadow: 0 0 0 100vmax var(--fo-fondo);
+  clip-path: inset(0 -100vmax);
+  padding-top: 38px;
+  padding-bottom: 8px;
+}
+.p-foco #prod section.desc p,
+.p-foco #prod section.desc li { color: var(--fo-tenue); }
+.p-foco #prod section.desc h2,
+.p-foco #prod section.desc h3,
+.p-foco #prod section.desc b { color: var(--fo-crema); }
+.p-foco #prod section.desc .eyebrow,
+.p-foco #prod section.desc .rot { color: var(--fo-luz2); }
+
+/* la tira blanca que se colaba entre una banda oscura y la siguiente: es el
+   margen que la tienda le pone a cada bloque, y el fondo derramado no lo
+   cubre. Se quita el margen y el aire se hace por dentro, con padding. */
+.p-foco .fo-oscura,
+.p-foco #prod section.desc { margin-top: 0; margin-bottom: 0; }
