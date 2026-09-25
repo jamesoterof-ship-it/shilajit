@@ -179,7 +179,7 @@
         '<video class="fo-video" autoplay muted loop playsinline preload="none"' +
           ' poster="img/foco-hero-poster.webp?v=1"' +
           ' aria-label="La misma casa de día y de noche: el foco se carga con el sol y al oscurecer se enciende e ilumina la entrada">' +
-          '<source src="img/foco-hero.mp4?v=2" type="video/mp4">' +
+          '<source src="img/foco-hero.mp4?v=3" type="video/mp4">' +
         '</video>' +
         /* el resplandor nace donde están los LED y respira al ritmo del
            video: cuando el foco se enciende, el hero se enciende con él */
