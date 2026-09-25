@@ -295,7 +295,7 @@ window.PRODUCTOS = [
   {
     id: 'foco', unidad: 'uno', promo: 3,
     fotosResenas: ['img/resenas-foco/rf1.webp?v=1','img/resenas-foco/rf2.webp?v=1','img/resenas-foco/rf3.webp?v=1','img/resenas-foco/rf4.webp?v=1','img/resenas-foco/rf5.webp?v=1','img/resenas-foco/rf6.webp?v=1','img/resenas-foco/rf7.webp?v=1','img/resenas-foco/rf8.webp?v=1','img/resenas-foco/rf9.webp?v=1'],
-    antesDespues: 'img/prod-foco-ba.webp?v=1',
+    antesDespues: 'img/prod-foco-ba.webp?v=2',
     antesDespuesSub: 'El mismo camino, la misma noche: a oscuras y con el foco encendido por el sensor.',
     /* preguntas DEL PRODUCTO; las de despacho van detras, iguales para todos */
     preguntas: [
@@ -313,8 +313,8 @@ window.PRODUCTOS = [
     nombre: 'Foco Solar Tipo Cámara',
     sub: '77 leds, sensor de movimiento y control remoto',
     categoria: 'Hogar',
-    foto: 'img/prod-foco.webp?v=1',
-    fotos: ['img/prod-foco.webp', 'img/prod-foco-2.webp', 'img/prod-foco-3.webp'],
+    foto: 'img/prod-foco.webp?v=2',
+    fotos: ['img/prod-foco.webp?v=2', 'img/prod-foco-2.webp?v=2', 'img/prod-foco-3.webp?v=2'],
     /* el video limpio de la ficha: sale del creativo de campaña
        VIDEO_foco_seguridad_916, recortado a la banda del metraje. SIN el
        titulo de arriba, SIN la pildora de precio, SIN los subtitulos y SIN

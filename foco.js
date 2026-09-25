@@ -65,15 +65,15 @@
        prod-foco-2  -> el sol cargando el panel, y la caja del proveedor
        prod-foco-3  -> las medidas y los dos giros del soporte */
   var FOTOS = [
-    ['img/prod-foco.webp?v=1',
+    ['img/prod-foco.webp?v=2',
      'El foco solar encendido en la pared de una casa de noche, con el detalle de los LED, el sensor y el control remoto',
      'Lo que hace', 'Alumbra la entrada completa',
      'Los LED se encienden juntos y el chorro de luz cubre el frente de la casa. Abajo, el sensor de movimiento y el control remoto que viene en la caja.'],
-    ['img/prod-foco-2.webp?v=1',
+    ['img/prod-foco-2.webp?v=2',
      'El panel solar del foco recibiendo el sol, junto a la caja del producto que indica 77 SMD LED',
      'De dónde sale la luz', 'El sol de todo el día, guardado',
      'El panel de arriba carga mientras tú no estás. No se enchufa a la corriente: por eso no le suma nada a la cuenta de la luz.'],
-    ['img/prod-foco-3.webp?v=1',
+    ['img/prod-foco-3.webp?v=2',
      'Medidas del foco: 20 cm de largo, 8 de alto y 11 de profundidad, y el soporte que gira 360 grados y se inclina 90',
      'Dónde lo pones', '20 cm que apuntan a donde quieras',
      'El soporte gira 360° de lado a lado y se inclina 90° arriba y abajo. Lo atornillas donde te sirva y lo dejas apuntando a la puerta, al portón o al pasaje.'],
@@ -172,7 +172,11 @@
          Los TEXTOS NO van quemados en el video: van acá, encima, y ARRIBA
          (la guirnalda los lleva abajo; esto es lo que él pidió cambiar). */
       '<div class="fo-hero">' +
-        '<video class="fo-video" autoplay muted loop playsinline preload="auto"' +
+        /* 🔴 preload="none": el video NO se baja al abrir. Primero entra el
+           póster (12 KB) y el cliente ya ve el producto; el video llega
+           después, cuando la página terminó de cargar. Con preload="auto"
+           se traía 224 KB compitiendo con la primera pantalla. */
+        '<video class="fo-video" autoplay muted loop playsinline preload="none"' +
           ' poster="img/foco-hero-poster.webp?v=1"' +
           ' aria-label="La misma casa de día y de noche: el foco se carga con el sol y al oscurecer se enciende e ilumina la entrada">' +
           '<source src="img/foco-hero.mp4?v=2" type="video/mp4">' +
@@ -389,11 +393,16 @@
         requestAnimationFrame(function () { document.body.classList.add('fo-listo'); });
       });
     }
+    /* con preload="none" el video no empieza solo: se enciende cuando la
+       página ya cargó, para que no compita con la primera pantalla */
     if (vid) {
-      if (vid.readyState >= 2) soltar();
-      else vid.addEventListener('loadeddata', soltar, { once: true });
+      var prender = function () {
+        try { vid.preload = 'auto'; vid.load(); var p = vid.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+      };
+      if (document.readyState === 'complete') setTimeout(prender, 400);
+      else window.addEventListener('load', function () { setTimeout(prender, 400); });
     }
-    setTimeout(soltar, 1200);        /* pase lo que pase, el texto aparece */
+    setTimeout(soltar, 700);         /* el texto entra con el póster, sin esperar al video */
   }
 
   /* 🔴 EL CONTEO DE LOS TRES NÚMEROS.
