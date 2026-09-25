@@ -1,0 +1,450 @@
+/* ============================================================
+   MÁSCARA FLAMENCO · estilos propios. Solo con <body class="p-mascara">.
+   Hecho el 25-09. Concepto "camerino": negro + dorado #D8A52E (acento de
+   productos.js), Bodoni Moda cursiva (revista de moda) + Jost en rótulos.
+   🔴 Hero a sangre, sin radio. Letras ARRIBA sobre negro, video ABAJO:
+      las letras no tapan los ojos (el producto).
+   🔴 Nada queda escondido si el JS no corre.
+   ============================================================ */
+
+.p-mascara {
+  --ma-negro: #0b0908;
+  --ma-fondo: #110e0c;
+  --ma-panel: #1a1512;
+  --ma-oro:   #d8a52e;
+  --ma-oro2:  #f0c867;
+  --ma-rosa:  #e7b59a;
+  --ma-crema: #f6efe6;
+  --ma-tenue: #b7ab9e;
+  --ma-borde: rgba(216,165,46,.22);
+  --ma-disp:  'Bodoni Moda', 'Didot', Georgia, serif;
+  --ma-rotf:  'Jost', 'Futura', system-ui, sans-serif;
+  --ma-ease:  cubic-bezier(.2,.8,.2,1);
+}
+
+.p-mascara .ma-rot {
+  display: block;
+  margin: 0 0 12px;
+  font-family: var(--ma-rotf);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--ma-oro2);
+}
+.p-mascara #prod .ma-h2 {
+  margin: 0 0 14px;
+  font-family: var(--ma-disp);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(32px, 9vw, 50px);
+  line-height: 1.04;
+  letter-spacing: -.01em;
+  color: var(--ma-crema);
+  text-wrap: balance;
+}
+.p-mascara #prod .ma-h2 em { display: block; font-weight: 700; color: var(--ma-oro); }
+.p-mascara .ma-ico {
+  width: 22px; height: 22px;
+  fill: none; stroke: var(--ma-oro2); stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ============================================================
+   1 · HERO — letras arriba sobre negro, video abajo
+   ============================================================ */
+.ma-hero {
+  position: relative;
+  margin: 0 calc(50% - var(--ma-vw, 100vw) / 2);
+  width: var(--ma-vw, 100vw);
+  max-width: var(--ma-vw, 100vw);
+  min-height: 92svh;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--ma-negro);
+}
+@supports not (min-height: 92svh) { .ma-hero { min-height: 92vh; } }
+
+.ma-hero .ma-video {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  top: 34%;
+  width: 100%; height: 66%;
+  object-fit: cover;
+  object-position: 50% 62%;
+  display: block;
+  border-radius: 0;
+  z-index: 0;
+  will-change: transform;
+}
+/* la foto se acerca despacio (solo transform) */
+.p-mascara .ma-hero .ma-img { animation: ma-acerca 18s ease-in-out infinite alternate; transform-origin: 60% 60%; }
+@keyframes ma-acerca { from { transform: scale(1); } to { transform: scale(1.09); } }
+/* el video nace del negro: un fundido sobre su borde de arriba */
+.ma-hero .ma-funde {
+  position: absolute; left: 0; right: 0; top: calc(34% - 3px); height: 26%;
+  z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, var(--ma-negro) 0%, rgba(11,9,8,.7) 38%, rgba(11,9,8,0) 100%);
+}
+.ma-hero::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 18%;
+  z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, rgba(11,9,8,.55), transparent);
+}
+
+/* las ampolletas del camerino: se encienden en fila */
+.ma-hero .ma-focos {
+  position: absolute; top: 16px; left: 22px; right: 22px; z-index: 3;
+  display: flex; justify-content: space-between;
+  pointer-events: none;
+}
+.ma-hero .ma-focos i {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: #fff4d6;
+  box-shadow: 0 0 10px 3px rgba(255,212,130,.75), 0 0 22px 6px rgba(216,165,46,.35);
+  animation: ma-titila 3.2s ease-in-out calc(var(--n) * .23s) infinite;
+}
+@keyframes ma-titila { 0%,100% { opacity: 1; } 50% { opacity: .72; } }
+.p-mascara.ma-arranca .ma-focos i { background: #3a2f24; box-shadow: none; animation: none; }
+.p-mascara.ma-listo .ma-focos i {
+  animation: ma-enciende .45s ease-out calc(.1s + var(--n) * .11s) both, ma-titila 3.2s ease-in-out calc(1.4s + var(--n) * .23s) infinite;
+}
+@keyframes ma-enciende {
+  0%   { background: #3a2f24; box-shadow: none; transform: scale(.8); }
+  60%  { background: #fff; box-shadow: 0 0 16px 6px rgba(255,220,150,.95), 0 0 30px 10px rgba(216,165,46,.5); transform: scale(1.15); }
+  100% { background: #fff4d6; box-shadow: 0 0 10px 3px rgba(255,212,130,.75), 0 0 22px 6px rgba(216,165,46,.35); transform: scale(1); }
+}
+
+/* polvo dorado que sube despacio sobre el video */
+.ma-hero .ma-polvo { position: absolute; left: 0; right: 0; top: 34%; bottom: 0; z-index: 2; pointer-events: none; }
+.ma-hero .ma-polvo i {
+  position: absolute; bottom: -6px; left: var(--x);
+  width: 3px; height: 3px; border-radius: 50%;
+  background: #ffe2a0;
+  box-shadow: 0 0 6px 1px rgba(255,207,112,.9);
+  opacity: 0;
+  animation: ma-sube var(--t) linear var(--r) infinite;
+}
+@keyframes ma-sube {
+  0%   { opacity: 0;  transform: translate3d(0,0,0) scale(var(--s)); }
+  12%  { opacity: .9; }
+  100% { opacity: 0;  transform: translate3d(14px,-52vh,0) scale(calc(var(--s) * .5)); }
+}
+
+.ma-hero .ma-sobre { position: relative; z-index: 4; padding: 46px 24px 0; }
+.p-mascara #prod .ma-h1 {
+  margin: 0 0 14px;
+  font-family: var(--ma-disp);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(33px, 9.6vw, 70px);
+  line-height: 1.02;
+  letter-spacing: -.012em;
+  color: var(--ma-crema);
+  text-transform: none;
+}
+.p-mascara #prod .ma-h1 .ma-ln { display: block; }
+.p-mascara #prod .ma-h1 em { font-style: italic; font-weight: 700; color: var(--ma-oro); }
+.p-mascara #prod .ma-h1 .ma-pal { display: inline-block; white-space: nowrap; }
+.p-mascara #prod .ma-h1 .ma-le { display: inline-block; }
+.p-mascara #prod .ma-frase {
+  margin: 0;
+  max-width: 32ch;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #e6d9ca;
+}
+.p-mascara #prod .ma-frase .ma-pw { display: inline-block; }
+
+/* la cascada LETRA POR LETRA (solo si el JS puso .ma-arranca) */
+.p-mascara.ma-arranca #prod .ma-h1 .ma-le { opacity: 0; transform: translateY(-.55em) rotate(-10deg); }
+.p-mascara.ma-arranca #prod .ma-frase .ma-pw { opacity: 0; transform: translateY(8px); }
+.p-mascara.ma-listo #prod .ma-h1 .ma-le {
+  opacity: 1; transform: none;
+  transition: opacity .45s ease var(--d, 0s), transform .7s cubic-bezier(.3,1.4,.5,1) var(--d, 0s);
+}
+.p-mascara.ma-listo #prod .ma-frase .ma-pw {
+  opacity: 1; transform: none;
+  transition: opacity .5s ease var(--d, 0s), transform .6s var(--ma-ease) var(--d, 0s);
+}
+
+@media (min-width: 820px) {
+  .ma-hero .ma-sobre { padding: 64px 40px 0; max-width: 1080px; margin: 0 auto; }
+  .ma-hero .ma-focos { left: calc(50% - 500px); right: calc(50% - 500px); }
+}
+
+/* ============================================================
+   2 · BANDAS OSCURAS a sangre + el separador (hilo dorado con rombo)
+   ============================================================ */
+.p-mascara .ma-oscura {
+  position: relative;
+  margin: 0 calc(50% - var(--ma-vw, 100vw) / 2);
+  width: var(--ma-vw, 100vw);
+  max-width: var(--ma-vw, 100vw);
+  padding: 58px max(20px, calc(var(--ma-vw, 100vw) / 2 - 50% + 20px)) 54px;
+  background: var(--ma-fondo);
+  color: var(--ma-tenue);
+}
+.p-mascara .ma-oscura::before {
+  content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ma-borde) 20%, var(--ma-borde) 80%, transparent);
+}
+.p-mascara .ma-oscura::after {
+  content: ''; position: absolute; top: -4px; left: 50%;
+  width: 8px; height: 8px; margin-left: -4px;
+  background: var(--ma-oro);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px rgba(216,165,46,.6);
+}
+.p-mascara .ma-hero + .ma-oscura::before,
+.p-mascara .ma-hero + .ma-oscura::after { display: none; }
+.p-mascara #prod > .bloque:has(+ .ma-oscura),
+.p-mascara #prod > .ma-oscura + .bloque { margin-top: 0; }
+
+/* ---------- cifras ---------- */
+.p-mascara .ma-cifras { padding-top: 30px; padding-bottom: 32px; }
+.p-mascara .ma-med { display: grid; grid-template-columns: repeat(3, 1fr); }
+.p-mascara .ma-med > div {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 4px 6px;
+}
+.p-mascara .ma-med > div + div::before {
+  content: ''; position: absolute; left: 0; top: 12%; bottom: 12%; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--ma-borde), transparent);
+}
+.p-mascara .ma-med b {
+  font-family: var(--ma-disp);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(40px, 12vw, 60px);
+  line-height: 1;
+  color: var(--ma-oro);
+  font-variant-numeric: tabular-nums;
+}
+.p-mascara .ma-med b.ma-fin { animation: ma-cifra 1.1s ease-out 1; }
+@keyframes ma-cifra {
+  0%   { transform: scale(1.22); text-shadow: 0 0 22px rgba(240,200,103,.95), 0 0 44px rgba(216,165,46,.6); }
+  100% { transform: scale(1);    text-shadow: 0 0 0 rgba(216,165,46,0); }
+}
+.p-mascara .ma-med span {
+  margin-top: 8px;
+  font-family: var(--ma-rotf);
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  color: var(--ma-tenue);
+  max-width: 13ch;
+}
+
+/* ============================================================
+   3 · CÓMO SE APLICA — numerales grandes + la pincelada dorada
+   ============================================================ */
+.p-mascara .ma-pasos { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 30px; }
+.p-mascara .ma-paso { display: grid; grid-template-columns: 58px 1fr; gap: 14px; align-items: start; }
+.p-mascara .ma-num {
+  font-family: var(--ma-disp);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: .85;
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--ma-oro);
+}
+.p-mascara #prod .ma-paso h3 {
+  position: relative;
+  display: inline-block;
+  margin: 2px 0 10px;
+  font-family: var(--ma-disp);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.1;
+  color: var(--ma-crema);
+}
+/* la pincelada: se dibuja de izquierda a derecha bajo el título */
+.p-mascara .ma-trazo {
+  position: absolute; left: -4px; right: -10px; bottom: -3px; height: 9px;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(216,165,46,.85), rgba(240,200,103,.55) 70%, rgba(216,165,46,.15));
+  border-radius: 60% 40% 55% 45% / 70% 60% 40% 30%;
+  transform-origin: left center;
+  transform: scaleX(1);
+}
+.p-mascara #prod .ma-paso h3 { z-index: 0; isolation: isolate; }
+.p-mascara .ma-paso p { margin: 0; font-size: 15.5px; line-height: 1.62; color: var(--ma-tenue); max-width: 46ch; }
+.p-mascara.ma-anima .ma-paso.ma-pre .ma-trazo { transform: scaleX(0); }
+.p-mascara.ma-anima .ma-paso.ma-pre.ma-in .ma-trazo {
+  transform: scaleX(1);
+  transition: transform .9s cubic-bezier(.6,0,.2,1) calc(.35s + var(--i, 0) * .12s);
+}
+
+/* ============================================================
+   4 · ANTES/DESPUÉS de la ficha — oscuro, con un brillo que lo cruza
+   ============================================================ */
+.p-mascara #prod .ba-sec,
+.p-mascara .ma-cta-franja { background: var(--ma-fondo); box-shadow: 0 0 0 100vmax var(--ma-fondo); clip-path: inset(0 -100vmax); }
+.p-mascara #prod .ba-sec { margin-top: 0; margin-bottom: 0; padding-top: 56px; }
+.p-mascara #prod .ba-sec .eyebrow { font-family: var(--ma-rotf); letter-spacing: .24em; color: var(--ma-oro2); }
+.p-mascara #prod .ba-sec .tit2 {
+  font-family: var(--ma-disp); font-style: italic; font-weight: 600;
+  color: var(--ma-crema); letter-spacing: -.01em;
+}
+.p-mascara #prod .ba-sec .sub2 { color: var(--ma-tenue); }
+.p-mascara #prod .ba-img { position: relative; overflow: hidden; border-radius: 14px; }
+.p-mascara #prod .ba-img .ma-brillo {
+  position: absolute; top: 0; bottom: 0; left: 0; width: 40%; z-index: 2; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,236,190,.45), transparent);
+  transform: translateX(-130%) skewX(-12deg);
+}
+.p-mascara.ma-anima #prod .ba-img.ma-in .ma-brillo { animation: ma-cruza 1.6s ease-in-out .3s 1; }
+@keyframes ma-cruza { to { transform: translateX(330%) skewX(-12deg); } }
+
+.p-mascara .ma-cta-franja {
+  margin: 0 calc(50% - var(--ma-vw, 100vw) / 2);
+  width: var(--ma-vw, 100vw);
+  max-width: var(--ma-vw, 100vw);
+  padding: 8px 20px 40px;
+  display: flex; justify-content: center;
+}
+.p-mascara .ma-cta-franja .cta { width: 100%; max-width: 420px; }
+
+/* ============================================================
+   5 · LO QUE LA HACE DISTINTA — tarjetas con brillo de espejo
+   ============================================================ */
+/* overflow-x: clip: las tarjetas entran desde los lados y, antes de aparecer,
+   empujaban la página 10 px (se podía arrastrar de lado). clip no crea scroll. */
+.p-mascara .ma-trae {
+  overflow-x: clip;
+  padding-left: max(12px, calc(var(--ma-vw, 100vw) / 2 - 50% + 12px));
+  padding-right: max(12px, calc(var(--ma-vw, 100vw) / 2 - 50% + 12px));
+}
+.p-mascara .ma-trae > .ma-rot,
+.p-mascara #prod .ma-trae > .ma-h2 { margin-left: 8px; margin-right: 8px; }
+.p-mascara .ma-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 22px; }
+.p-mascara .ma-tar {
+  position: relative; overflow: hidden; isolation: isolate;
+  appearance: none; -webkit-appearance: none;
+  display: grid; grid-template-columns: 46px 1fr; align-items: center; gap: 14px;
+  width: 100%; min-height: 74px;
+  padding: 16px 18px;
+  border: 1px solid var(--ma-borde);
+  border-radius: 16px;
+  background: linear-gradient(150deg, #1f1915, #14100d);
+  text-align: left; font: inherit; color: inherit; cursor: pointer;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .2s var(--ma-ease), border-color .3s ease;
+}
+.p-mascara .ma-tar::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(170px circle at var(--mx, 50%) var(--my, 50%), rgba(240,200,103,.28), rgba(231,181,154,.08) 45%, transparent 65%);
+  opacity: 0; transition: opacity .3s ease;
+}
+.p-mascara .ma-tar:hover::before,
+.p-mascara .ma-tar.ma-luz::before { opacity: 1; }
+.p-mascara .ma-tar:hover,
+.p-mascara .ma-tar.ma-luz { border-color: rgba(216,165,46,.6); }
+.p-mascara .ma-tar:active { transform: scale(.985); }
+.p-mascara .ma-tar:focus-visible { outline: 2px solid var(--ma-oro); outline-offset: 2px; }
+.p-mascara .ma-tar-ico {
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(216,165,46,.12);
+  border: 1px solid rgba(216,165,46,.3);
+}
+.p-mascara #prod .ma-tar b {
+  font-family: var(--ma-disp); font-style: italic; font-weight: 600;
+  font-size: 18px; line-height: 1.25; color: var(--ma-crema);
+}
+@media (min-width: 620px) { .p-mascara .ma-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ============================================================
+   6 · DESCRIPCIÓN oscura con las fotos (telón de camerino)
+   ============================================================ */
+.p-mascara #prod section.desc {
+  margin-top: 0; margin-bottom: 0;
+  position: relative;
+  padding-top: 58px; padding-bottom: 24px;
+  background: var(--ma-fondo);
+  box-shadow: 0 0 0 100vmax var(--ma-fondo);
+  clip-path: inset(0 -100vmax);
+}
+.p-mascara #prod section.desc p,
+.p-mascara #prod section.desc li { color: var(--ma-tenue); }
+.p-mascara #prod section.desc h2,
+.p-mascara #prod section.desc h3,
+.p-mascara #prod section.desc b { color: var(--ma-crema); }
+.p-mascara #prod section.desc .eyebrow { font-family: var(--ma-rotf); letter-spacing: .24em; color: var(--ma-oro2); }
+.p-mascara #prod section.desc .tit2 { font-family: var(--ma-disp); font-style: italic; font-weight: 600; }
+
+.p-mascara #prod .ma-fichas { display: grid; gap: 38px; margin: 28px -4px 20px; }
+.p-mascara #prod .ma-fi { margin: 0; }
+.p-mascara #prod .ma-foto {
+  position: relative; overflow: hidden;
+  border-radius: 16px;
+  background: var(--ma-panel);
+  box-shadow: 0 18px 40px rgba(0,0,0,.5), 0 0 0 1px var(--ma-borde);
+}
+.p-mascara #prod .ma-foto img { display: block; width: 100%; height: auto; margin: 0; border-radius: 0; }
+/* el telón: dos hojas que se abren hacia los lados (sin JS, ya abiertas) */
+.p-mascara #prod .ma-telon {
+  position: absolute; top: 0; bottom: 0; width: 50.5%; z-index: 3; pointer-events: none;
+  background: linear-gradient(90deg, #2a1f18, #16110e);
+}
+.p-mascara #prod .ma-t1 { left: 0;  transform: translateX(-101%); }
+.p-mascara #prod .ma-t2 { right: 0; transform: translateX(101%); background: linear-gradient(270deg, #2a1f18, #16110e); }
+.p-mascara.ma-anima #prod .ma-fi.ma-pre .ma-telon { transform: none; }
+.p-mascara.ma-anima #prod .ma-fi.ma-pre.ma-in .ma-t1 { transform: translateX(-101%); transition: transform .9s cubic-bezier(.7,0,.2,1) .1s; }
+.p-mascara.ma-anima #prod .ma-fi.ma-pre.ma-in .ma-t2 { transform: translateX(101%);  transition: transform .9s cubic-bezier(.7,0,.2,1) .1s; }
+.p-mascara #prod .ma-fi figcaption { padding: 18px 6px 0; }
+.p-mascara #prod .ma-fi figcaption .ma-rot { margin-bottom: 8px; }
+.p-mascara #prod .ma-fi figcaption b {
+  display: block; margin: 0 0 8px;
+  font-family: var(--ma-disp); font-style: italic; font-weight: 600;
+  font-size: 25px; line-height: 1.15; color: var(--ma-crema);
+}
+.p-mascara #prod .ma-fi figcaption p { margin: 0; font-size: 15.5px; line-height: 1.62; }
+
+/* ============================================================
+   7 · ENTRADAS AL BAJAR (las tarjetas entran alternadas, de cada lado)
+   ============================================================ */
+.p-mascara.ma-anima .ma-rev.ma-pre { transform: translateY(24px); opacity: .25; }
+.p-mascara.ma-anima .ma-tar.ma-pre:nth-child(odd)  { transform: translateX(-22px); }
+.p-mascara.ma-anima .ma-tar.ma-pre:nth-child(even) { transform: translateX(22px); }
+.p-mascara.ma-anima .ma-rev.ma-pre.ma-in {
+  transform: none; opacity: 1;
+  transition: transform .75s var(--ma-ease) calc(var(--i, 0) * .08s), opacity .6s ease calc(var(--i, 0) * .08s);
+}
+
+/* ============================================================
+   8 · BOTONES: brillo dorado que cruza + se hunden al tocar
+   ============================================================ */
+.p-mascara #prod .cta,
+.p-mascara .form .btn {
+  position: relative; overflow: hidden; isolation: isolate;
+  transition: transform .18s var(--ma-ease);
+}
+.p-mascara #prod .cta::after,
+.p-mascara .form .btn::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: -42%; width: 34%;
+  z-index: -1; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,236,190,.45), transparent);
+  transform: skewX(-18deg);
+  animation: ma-btn 3.6s ease-in-out 1.4s infinite;
+}
+@keyframes ma-btn { 0% { left: -42%; } 38%, 100% { left: 128%; } }
+.p-mascara #prod .cta:active,
+.p-mascara .form .btn:active { transform: scale(.975); }
+
+/* ============================================================
+   9 · MOVIMIENTO REDUCIDO
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .ma-hero .ma-focos i { animation: none; }
+  .ma-hero .ma-polvo { display: none; }
+  .p-mascara .ma-hero .ma-img { animation: none; }
+  .p-mascara #prod .ba-img .ma-brillo { display: none; }
+  .p-mascara #prod .cta::after, .p-mascara .form .btn::after { display: none; }
+}
