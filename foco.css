@@ -1,74 +1,94 @@
 /* ============================================================
-   FOCO SOLAR TIPO CÁMARA · estilos propios de la ficha.
-   Solo aplican con <body class="p-foco">, que pone foco.js.
+   FOCO SOLAR TIPO CÁMARA · estilos propios. Solo con <body class="p-foco">.
+   REHECHO DE CERO el 25-09: una sola definición por pieza (el anterior
+   tenía 1.067 líneas de parches encimados que se contradecían).
 
-   ACENTO: el salmón #E0734D que el foco ya tenía en productos.js, medido
-   de sus propios creativos. La guirnalda es ámbar cálido y serif italiana;
-   este es salmón y sans condensada, para que Meta no lea los dos anuncios
-   como el mismo creativo.
-
-   🔴 El hero va A SANGRE y SIN UN SOLO border-radius (regla de James: un
-   hero con esquinas redondas parece una tarjeta).
-   🔴 Los textos del hero van ARRIBA, no abajo: eso es lo que pidió que
-   cambiara respecto de la guirnalda. Por eso la viñeta oscurece la parte
-   de arriba y no la de abajo.
+   Concepto "modo vigilancia": el visor de una cámara de seguridad.
+   Letra Chakra Petch (técnica), distinta de la guirnalda (serif) y de
+   las demás fichas. Acento: #E0734D, el de productos.js (no se inventa).
+   🔴 Hero a sangre y SIN radio · textos ARRIBA.
+   🔴 Nada se esconde con opacity 0 si el JS no corre.
    ============================================================ */
 
 .p-foco {
-  --fo-noche:  #0a0d14;
-  --fo-fondo:  #10141c;
-  /* 🔴 EL ACENTO NO SE INVENTA. James, 24-09: "le cambiaste el color, la
-     página tiene que llevar el mismo color". Había puesto un azul mío y
-     partía la página en dos: las tres imágenes del producto están
-     rotuladas en naranja y la ficha ya traía su color definido.
-     Este es ESE: productos.js -> acento: '#E0734D', "salmón, medido de
-     sus propios creativos". */
+  --fo-noche:  #07090d;
+  --fo-fondo:  #0d1117;
+  --fo-panel:  #141a23;
   --fo-luz:    #e0734d;
-  --fo-luz2:   #f0946f;   /* el mismo, más claro, para el texto pequeño */
-  --fo-crema:  #f3f0ec;
-  --fo-tenue:  #a49c92;
-  --fo-linea:  rgba(224,115,77,.20);
-  /* 24-09: el fondo de las tarjetas de las fichas. Un punto mas claro que
-     --fo-fondo, lo justo para que la tarjeta se despegue sin aclarar la
-     seccion ni romper el modo noche de la pagina. */
-  --fo-tarjeta: #171d28;
-  --fo-borde:   rgba(255,255,255,.09);
-  --fo-disp:   'Archivo', 'Sora', system-ui, sans-serif;
+  --fo-luz2:   #f29a74;
+  --fo-crema:  #f4f1ec;
+  --fo-tenue:  #aaa39b;
+  --fo-borde:  rgba(255,255,255,.09);
+  --fo-linea:  rgba(224,115,77,.24);
+  --fo-disp:   'Chakra Petch', 'Rajdhani', system-ui, sans-serif;
+  --fo-ease:   cubic-bezier(.2,.8,.2,1);
 }
 
-.p-foco .fo-rot,
-.p-foco .fo-h1,
-.p-foco .fo-h2,
-.p-foco .fo-med b,
-.p-foco .fo-paso h3,
-.p-foco .fo-cap b {
-  font-family: var(--fo-disp);
-}
-
+/* ---------- piezas comunes ---------- */
 .p-foco .fo-rot {
   display: block;
-  font-size: 11.5px;
+  margin: 0 0 12px;
+  font-family: var(--fo-disp);
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: .17em;
+  letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--fo-luz2);
-  margin: 0 0 11px;
+}
+.p-foco .fo-h2 {
+  margin: 0 0 14px;
+  font-family: var(--fo-disp);
+  font-size: clamp(30px, 8.6vw, 46px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  color: var(--fo-crema);
+  text-wrap: balance;
+}
+.p-foco .fo-h2 em { display: block; font-style: normal; color: var(--fo-luz); }
+
+.p-foco .fo-ico {
+  width: 20px; height: 20px;
+  fill: none;
+  stroke: var(--fo-luz);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* las cuatro esquinas del visor, dibujadas con 8 degradados en UN elemento */
+.p-foco .fo-mira {
+  --c: rgba(255,255,255,.85);
+  --l: 18px;
+  --g: 2px;
+  position: absolute;
+  inset: 10px;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--c), var(--c)) top left    / var(--l) var(--g) no-repeat,
+    linear-gradient(var(--c), var(--c)) top left    / var(--g) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) top right   / var(--l) var(--g) no-repeat,
+    linear-gradient(var(--c), var(--c)) top right   / var(--g) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--g) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / var(--g) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right/ var(--l) var(--g) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right/ var(--g) var(--l) no-repeat;
 }
 
 /* ============================================================
-   1 · EL HERO: A SANGRE, SIN RADIO, VIDEO DETRÁS Y TEXTO ARRIBA
+   1 · EL HERO — el video día→noche (no se toca) + el visor
    ============================================================ */
-
 .fo-hero {
   position: relative;
-  /* 🔴 A SANGRE: se come el margen lateral de la tienda. Sin radio. */
   margin: 0 calc(50% - var(--fo-vw, 100vw) / 2);
   width: var(--fo-vw, 100vw);
   max-width: var(--fo-vw, 100vw);
   min-height: 92svh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;   /* 🔴 ARRIBA, no abajo */
+  justify-content: flex-start;
   overflow: hidden;
   border-radius: 0;
   background: var(--fo-noche);
@@ -76,22 +96,18 @@
 @supports not (min-height: 92svh) { .fo-hero { min-height: 92vh; } }
 
 .fo-hero .fo-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
   object-fit: cover;
-  object-position: 50% 58%;   /* el producto queda bajo el texto */
+  object-position: 50% 58%;
   display: block;
   border-radius: 0;
   z-index: 0;
+  will-change: transform;
 }
 
-/* 🔴 EL RESPLANDOR. James: "ningún efecto tiene ese hero".
-   Nace justo donde están los LED del foco en el video y late al ritmo del
-   ciclo: el video dura 9,3 s (día 0-2,4 · se enciende 2,4-4 · noche 4-6,2
-   · se apaga 6,2-7,5 · día otra vez). El resplandor sigue esos tiempos, así
-   que el hero se enciende junto con el foco en vez de quedarse quieto. */
+/* el resplandor, el haz y el sol van sincronizados con el ciclo del video
+   (9,3 s: día 0-2,4 · enciende 2,4-4 · noche 4-6,2 · apaga 6,2-7,5) */
 .fo-hero .fo-glow {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
@@ -101,55 +117,28 @@
   opacity: 0;
   animation: fo-late 9.3s linear infinite;
 }
-@keyframes fo-late {
-  0%    { opacity: 0; }
-  26%   { opacity: 0; }      /* de día: apagado */
-  43%   { opacity: 1; }      /* se enciende con el video */
-  66%   { opacity: .88; }    /* de noche: encendido, respirando */
-  81%   { opacity: 0; }      /* se apaga y vuelve el día */
-  100%  { opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .fo-hero .fo-glow { animation: none; opacity: .5; }
-}
+@keyframes fo-late { 0%,26% {opacity:0} 43% {opacity:1} 66% {opacity:.88} 81%,100% {opacity:0} }
 
-/* 🔴 EL HAZ DE LUZ. Se abre desde los LED hacia abajo y a la izquierda,
-   en el mismo instante en que el foco se enciende en el video. Es un cono
-   recortado con clip-path, no una imagen: pesa cero. */
 .fo-hero .fo-haz {
-  position: absolute;
-  left: -22%; top: 46%;
+  position: absolute; left: -22%; top: 46%;
   width: 118%; height: 62%;
-  z-index: 1;
-  pointer-events: none;
+  z-index: 1; pointer-events: none;
   background: linear-gradient(255deg, rgba(255,242,215,.4) 0%, rgba(255,214,150,.13) 34%, transparent 68%);
   clip-path: polygon(96% 6%, 100% 20%, 12% 100%, 0 78%);
   mix-blend-mode: screen;
-  opacity: 0;
   filter: blur(9px);
+  opacity: 0;
   animation: fo-haz-late 9.3s linear infinite;
 }
 @keyframes fo-haz-late {
-  0%, 26%  { opacity: 0; transform: scaleX(.86); }
-  43%      { opacity: .95; transform: scaleX(1); }
-  66%      { opacity: .8;  transform: scaleX(1.02); }
-  81%, 100%{ opacity: 0; transform: scaleX(.86); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .fo-hero .fo-haz { animation: none; opacity: .45; }
+  0%,26% {opacity:0; transform:scaleX(.86)} 43% {opacity:.95; transform:scaleX(1)}
+  66% {opacity:.8; transform:scaleX(1.02)} 81%,100% {opacity:0; transform:scaleX(.86)}
 }
 
-/* 🔴 EL DESTELLO DEL SOL, para la parte de DÍA.
-   El resplandor y el haz solo salen de noche (del segundo 4 al 7,5 del
-   ciclo), así que la mitad del tiempo el hero estaba quieto y James lo
-   pillaba justo ahí. Esto es el sol pegando en el panel solar: brilla
-   mientras el foco está apagado y se va cuando cae la noche. */
 .fo-hero .fo-sol {
-  position: absolute;
-  left: 30%; top: 40%;
+  position: absolute; left: 30%; top: 40%;
   width: 46%; height: 20%;
-  z-index: 1;
-  pointer-events: none;
+  z-index: 1; pointer-events: none;
   background: radial-gradient(50% 50% at 50% 50%, rgba(255,255,255,.7) 0%, rgba(255,246,214,.28) 38%, transparent 72%);
   mix-blend-mode: screen;
   filter: blur(7px);
@@ -157,911 +146,486 @@
   animation: fo-sol-brilla 9.3s linear infinite;
 }
 @keyframes fo-sol-brilla {
-  0%   { opacity: .35; transform: scale(.9); }
-  12%  { opacity: .95; transform: scale(1.06); }   /* destella en el panel */
-  22%  { opacity: .5;  transform: scale(.95); }
-  33%  { opacity: 0;   transform: scale(.9); }     /* cae la noche */
-  84%  { opacity: 0; }
-  100% { opacity: .35; transform: scale(.9); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .fo-hero .fo-sol { animation: none; opacity: .4; }
+  0% {opacity:.35; transform:scale(.9)} 12% {opacity:.95; transform:scale(1.06)}
+  22% {opacity:.5; transform:scale(.95)} 33%,84% {opacity:0; transform:scale(.9)} 100% {opacity:.35; transform:scale(.9)}
 }
 
-/* la viñeta hunde ARRIBA para que el texto se lea sobre el cielo, y deja
-   el producto limpio en la mitad de abajo */
+/* los destellos que pidió James el 24-09 */
+.fo-hero .fo-chispas { position: absolute; inset: 0; z-index: 2; pointer-events: none; mix-blend-mode: screen; }
+.fo-hero .fo-chispas i {
+  position: absolute; left: var(--x); top: var(--y);
+  width: 3px; height: 3px; border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 1px rgba(255,246,224,.9);
+  opacity: 0;
+  animation: fo-chispa var(--t) ease-in-out var(--r) infinite;
+}
+@keyframes fo-chispa {
+  0%,100% {opacity:0; transform:scale(calc(var(--s) * .3))}
+  45% {opacity:.95; transform:scale(var(--s))}
+  62% {opacity:.35; transform:scale(calc(var(--s) * .8))}
+}
+
+/* oscurece ARRIBA para leer el texto sobre el cielo */
 .fo-hero .fo-vineta {
-  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background:
-    linear-gradient(to bottom,
-      rgba(8,7,5,.94) 0%,
-      rgba(8,7,5,.78) 22%,
-      rgba(8,7,5,.3)  44%,
-      rgba(8,7,5,0)   62%,
-      rgba(8,7,5,.55) 100%),
-    radial-gradient(120% 60% at 50% 100%, transparent 38%, rgba(8,7,5,.45) 100%);
+    linear-gradient(to bottom, rgba(6,7,10,.93) 0%, rgba(6,7,10,.8) 30%, rgba(6,7,10,.5) 50%, rgba(6,7,10,0) 68%, rgba(6,7,10,.6) 100%);
 }
 
-.fo-hero .fo-sobre {
-  position: relative;
-  z-index: 3;
-  padding: 26px 20px 0;
+/* el visor: esquinas grandes y la barra de estado */
+.fo-hero .fo-visor { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.fo-hero .fo-visor .fo-mira { inset: 12px; --l: 26px; --c: rgba(255,255,255,.7); }
+.fo-hero .fo-estado {
+  position: absolute; top: 22px; left: 26px;
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--fo-disp);
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+}
+.fo-hero .fo-estado.fo-der { left: auto; right: 26px; color: rgba(255,255,255,.62); }
+.fo-hero .fo-estado i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--fo-luz);
+  box-shadow: 0 0 0 0 rgba(224,115,77,.7);
+  animation: fo-pulso 1.8s ease-out infinite;
+}
+@keyframes fo-pulso {
+  0%   { box-shadow: 0 0 0 0 rgba(224,115,77,.7); }
+  70%  { box-shadow: 0 0 0 9px rgba(224,115,77,0); }
+  100% { box-shadow: 0 0 0 0 rgba(224,115,77,0); }
 }
 
-.fo-h1 {
-  margin: 0 0 14px;
-  font-size: clamp(38px, 12vw, 66px);
-  font-weight: 800;
-  line-height: .98;
-  letter-spacing: -.035em;
+.fo-hero .fo-sobre { position: relative; z-index: 4; padding: 62px 26px 0; will-change: transform; }
+.fo-hero .fo-rot { color: var(--fo-luz2); margin-bottom: 14px; min-height: 1.3em; }
+
+.p-foco #prod .fo-h1 {
+  margin: 0 0 16px;
+  font-family: var(--fo-disp);
+  font-size: clamp(40px, 12.4vw, 76px);
+  font-weight: 700;
+  line-height: .96;
+  letter-spacing: -.012em;
+  text-transform: uppercase;
   color: #fff;
-  text-wrap: balance;
-  text-shadow: 0 2px 30px rgba(0,0,0,.65);
+  text-shadow: 0 2px 30px rgba(0,0,0,.6);
 }
-.fo-h1 em {
-  display: block;
-  font-style: normal;
-  color: var(--fo-luz);
-}
+.p-foco #prod .fo-h1 .fo-ln { display: block; overflow: hidden; padding-bottom: .05em; }
+.p-foco #prod .fo-h1 .fo-li { display: inline-block; }
+.p-foco #prod .fo-h1 em { font-style: normal; color: var(--fo-luz); }
 
-.fo-frase {
+.p-foco #prod .fo-frase {
   margin: 0;
   max-width: 34ch;
   font-size: 16px;
   line-height: 1.55;
-  color: #d5e3f4;
-  text-shadow: 0 2px 18px rgba(0,0,0,.7);
+  color: #e4ddd5;
+  text-shadow: 0 2px 16px rgba(0,0,0,.75);
+}
+
+/* la flecha que invita a bajar */
+.fo-hero .fo-baja {
+  position: absolute; left: 50%; bottom: 22px; z-index: 4;
+  width: 26px; height: 40px; margin-left: -13px;
+  border: 1.5px solid rgba(255,255,255,.55); border-radius: 14px;
+}
+.fo-hero .fo-baja span {
+  position: absolute; left: 50%; top: 8px;
+  width: 4px; height: 8px; margin-left: -2px; border-radius: 2px;
+  background: #fff;
+  animation: fo-baja 1.8s var(--fo-ease) infinite;
+}
+@keyframes fo-baja { 0% {transform:translateY(0); opacity:1} 70% {transform:translateY(14px); opacity:0} 100% {transform:translateY(0); opacity:0} }
+
+/* ---- la entrada del hero (solo si el JS puso .fo-arranca) ---- */
+.p-foco.fo-arranca #prod .fo-h1 .fo-li { transform: translateY(108%); }
+.p-foco.fo-arranca #prod .fo-frase { opacity: 0; transform: translateY(14px); }
+.p-foco.fo-arranca .fo-visor { opacity: 0; transform: scale(1.06); }
+.p-foco.fo-listo #prod .fo-h1 .fo-li {
+  transform: none;
+  transition: transform .95s cubic-bezier(.16,.9,.24,1) var(--d, 0s);
+}
+.p-foco.fo-listo #prod .fo-frase {
+  opacity: 1; transform: none;
+  transition: opacity .8s ease .85s, transform .8s var(--fo-ease) .85s;
+}
+.p-foco.fo-listo .fo-visor {
+  opacity: 1; transform: none;
+  transition: opacity .9s ease .1s, transform 1.1s var(--fo-ease) .1s;
 }
 
 @media (min-width: 820px) {
-  .fo-hero .fo-sobre { padding: 46px 32px 0; max-width: 1080px; margin: 0 auto; width: 100%; }
-  .fo-frase { max-width: 44ch; font-size: 17.5px; }
-}
-
-/* ---------- LA CASCADA DEL HERO ----------
-   🔴 James, 24-09: "te pedí efecto de estas letras y nada".
-   El efecto SÍ estaba, pero arrancaba al leer el CSS y terminaba a los
-   1,6 s: mientras el video de 608 KB cargaba, la cascada ya había pasado
-   y él siempre llegaba tarde. Un efecto que nadie alcanza a ver no existe.
-
-   Ahora NO arranca sola: espera a que foco.js ponga .fo-listo en el body,
-   y eso pasa cuando el hero ya está pintado. Además es más larga y con
-   más recorrido, para que se note.
-
-   🔴 CANDADO: si foco.js no corre, .fo-listo no llega nunca y el texto
-   quedaría invisible. Por eso el estado por defecto es VISIBLE, y solo se
-   esconde cuando el body tiene .fo-arranca, que también lo pone el JS. */
-.p-foco .fo-casc { display: block; }
-
-.p-foco.fo-arranca .fo-casc {
-  opacity: 0;
-  transform: translateY(34px);
-  filter: blur(7px);
-}
-.p-foco.fo-listo .fo-casc {
-  animation: fo-sube 1.15s cubic-bezier(.16,.86,.28,1) both;
-  animation-delay: var(--d, 0s);
-}
-@keyframes fo-sube {
-  from { opacity: 0; transform: translateY(34px); filter: blur(7px); }
-  60%  { opacity: 1; }
-  to   { opacity: 1; transform: none;             filter: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .p-foco.fo-arranca .fo-casc { opacity: 1; transform: none; filter: none; }
-  .p-foco.fo-listo .fo-casc { animation: none; }
+  .fo-hero .fo-sobre { padding: 84px 40px 0; max-width: 1080px; margin: 0 auto; width: 100%; }
+  .p-foco #prod .fo-frase { max-width: 44ch; font-size: 17.5px; }
 }
 
 /* ============================================================
-   2 · SECCIONES
+   2 · LAS BANDAS OSCURAS (a sangre) y el ritmo entre secciones
    ============================================================ */
-
-.fo-sec { margin: 0; padding: 48px 0 42px; position: relative; }
-.fo-sec > .fo-rot,
-.fo-sec > .fo-h2,
-.fo-sec > .fo-sub { padding: 0 20px; }
-.fo-sec + .fo-sec::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 20px; right: 20px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--fo-linea) 22%, var(--fo-linea) 78%, transparent);
-}
-/* 🔴 LAS BANDAS OSCURAS VAN A SANGRE, igual que en la guirnalda.
-   Solo ponían background y el blanco de la tienda asomaba por los lados;
-   además el margen que la tienda le da a cada bloque dejaba una franja
-   muerta entre una banda y la siguiente, y el botón "QUIERO ESE CAMBIO"
-   quedaba flotando en tierra de nadie entre lo claro y lo oscuro.
-   Esto es lo mismo que James ya había hecho corregir en la guirnalda:
-   "la ficha entera es de noche, sin cajas negras flotando sobre blanco". */
-.p-foco .fo-oscura,
-.p-foco #prod section.desc {
+.p-foco .fo-oscura {
   position: relative;
-  margin-left: calc(50% - var(--fo-vw, 100vw) / 2);
-  margin-right: calc(50% - var(--fo-vw, 100vw) / 2);
+  margin: 0 calc(50% - var(--fo-vw, 100vw) / 2);
   width: var(--fo-vw, 100vw);
   max-width: var(--fo-vw, 100vw);
-  padding-left: max(20px, calc(var(--fo-vw, 100vw) / 2 - 50% + 20px));
-  padding-right: max(20px, calc(var(--fo-vw, 100vw) / 2 - 50% + 20px));
+  padding: 58px max(20px, calc(var(--fo-vw, 100vw) / 2 - 50% + 20px)) 54px;
   background: var(--fo-fondo);
-  background-image: radial-gradient(85% 55% at 50% 0%, rgba(224,115,77,.10) 0%, transparent 62%);
   color: var(--fo-tenue);
 }
-/* los textos, SOLO dentro de la banda */
-.p-foco .fo-oscura p,
-.p-foco .fo-oscura li,
-.p-foco #prod section.desc p,
-.p-foco #prod section.desc li { color: var(--fo-tenue); }
-.p-foco .fo-oscura h1, .p-foco .fo-oscura h2, .p-foco .fo-oscura h3,
-.p-foco .fo-oscura b, .p-foco .fo-oscura strong,
-.p-foco #prod section.desc h2, .p-foco #prod section.desc h3,
-.p-foco #prod section.desc b { color: var(--fo-crema); }
-.p-foco #prod section.desc .eyebrow,
-.p-foco #prod section.desc .rot { color: var(--fo-luz2); }
-.p-foco #prod section.desc blockquote,
-.p-foco #prod section.desc .cita { border-left-color: var(--fo-luz); }
-
-/* el filo de luz donde la banda toca lo claro */
+/* el espacio entre secciones: una línea de luz con una marca de visor al
+   centro, en vez de pegarlas o de abrir una franja blanca */
 .p-foco .fo-oscura::before {
   content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(224,115,77,.45) 25%, rgba(224,115,77,.45) 75%, transparent);
+  position: absolute; top: 0; left: 20px; right: 20px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--fo-linea) 20%, var(--fo-linea) 80%, transparent);
 }
-.p-foco .fo-oscura + .fo-oscura::before { display: none; }
-
-/* 🔴 FUERA LA FRANJA MUERTA entre bandas: el aire va por dentro, con
-   padding, que sí queda pintado; el margen no. */
-.p-foco .fo-oscura,
-.p-foco #prod section.desc { margin-top: 0; margin-bottom: 0; }
-.p-foco #prod > .bloque:has(+ .fo-oscura),
-.p-foco #prod > .bloque:has(+ .ba-sec),
-.p-foco #prod > .fo-oscura + .bloque,
-.p-foco #prod > .ba-sec + .bloque { margin-top: 0; }
-
-.fo-h2 {
-  margin: 10px 0 14px;
-  font-size: clamp(29px, 8.2vw, 44px);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -.03em;
-  color: var(--fo-crema);
-  text-wrap: balance;
-}
-.fo-h2 em { display: block; font-style: normal; color: var(--fo-luz); }
-
-.fo-sub {
-  margin: 0 0 26px;
-  font-size: 16.5px;
-  line-height: 1.66;
-  color: var(--fo-tenue);
-  max-width: 46ch;
-}
-
-/* ---------- los tres números ---------- */
-.fo-med { display: flex; align-items: flex-start; margin: 28px 0 0; padding: 0 12px; }
-.fo-med div { flex: 1; text-align: center; position: relative; }
-.fo-med div + div::before {
+.p-foco .fo-oscura::after {
   content: '';
-  position: absolute;
-  left: 0; top: 10%; bottom: 10%;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--fo-linea), transparent);
+  position: absolute; top: -5px; left: 50%;
+  width: 11px; height: 11px; margin-left: -5.5px;
+  background:
+    linear-gradient(var(--fo-luz), var(--fo-luz)) center / 11px 1.5px no-repeat,
+    linear-gradient(var(--fo-luz), var(--fo-luz)) center / 1.5px 11px no-repeat;
+  opacity: .8;
 }
-.fo-med b {
-  display: block;
-  font-size: clamp(36px, 11.5vw, 56px);
-  font-weight: 800;
+.p-foco .fo-hero + .fo-oscura::before,
+.p-foco .fo-hero + .fo-oscura::after { display: none; }
+.p-foco #prod > .bloque:has(+ .fo-oscura),
+.p-foco #prod > .fo-oscura + .bloque { margin-top: 0; }
+
+/* ---------- las cifras ---------- */
+.p-foco .fo-cifras { padding-top: 34px; padding-bottom: 36px; }
+.p-foco .fo-intro {
+  margin: 0 0 24px;
+  max-width: 46ch;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--fo-tenue);
+}
+.p-foco .fo-med { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.p-foco .fo-med > div {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20px 6px 16px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.035);
+  text-align: center;
+}
+.p-foco .fo-med .fo-mira { inset: 0; --l: 11px; --c: rgba(224,115,77,.75); }
+.p-foco .fo-med b {
+  font-family: var(--fo-disp);
+  font-size: clamp(32px, 9.4vw, 48px);
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -.04em;
   color: var(--fo-luz);
   font-variant-numeric: tabular-nums;
 }
-.fo-med span {
-  display: block;
-  margin-top: 9px;
-  font-size: 12px;
-  line-height: 1.4;
+.p-foco .fo-med span {
+  margin-top: 8px;
+  font-size: 11.5px;
+  line-height: 1.35;
+  letter-spacing: .03em;
   color: var(--fo-tenue);
-  letter-spacing: .04em;
+  max-width: 13ch;
 }
 
-/* ---------- EL CAMINO: la pieza fuerte, a sangre ---------- */
-.fo-camino { padding: 44px 0 0; position: relative; }
-.fo-camino-txt { padding: 0 20px 24px; }
-.fo-camino figure { margin: 0; }
-.fo-camino img {
-  width: var(--fo-vw, 100vw);
-  max-width: var(--fo-vw, 100vw);
-  margin: 0 calc(50% - var(--fo-vw, 100vw) / 2);
-  height: auto;
-  display: block;
-  border-radius: 0;
+/* ============================================================
+   3 · CÓMO TRABAJA — la línea de tiempo que se enciende
+   ============================================================ */
+.p-foco .fo-linea { position: relative; margin-top: 30px; padding-left: 54px; }
+.p-foco .fo-riel {
+  position: absolute; left: 19px; top: 8px; bottom: 8px; width: 2px;
+  background: rgba(255,255,255,.1);
+  border-radius: 2px;
 }
-@media (min-width: 820px) {
-  .fo-camino-txt { max-width: 1080px; margin: 0 auto; }
-  .fo-camino img { width: 100%; max-width: 1080px; margin: 0 auto; }
+.p-foco .fo-riel i {
+  position: absolute; inset: 0;
+  background: linear-gradient(var(--fo-luz), #ffc3a6);
+  box-shadow: 0 0 14px rgba(224,115,77,.8);
+  border-radius: 2px;
+  transform-origin: top;
+  transform: scaleY(1);          /* sin JS: encendida entera */
 }
-
-/* ---------- LAS DOS FOTOS APILADAS: ANTES ARRIBA, DESPUÉS ABAJO ----------
-   A sangre y una encima de la otra. En el teléfono dos fotos en fila
-   quedan estrechas; así cada una ocupa el ancho entero. */
-.fo-apil { padding-bottom: 0; }
-.fo-ap {
-  margin: 22px 0 0;
-  position: relative;
-  overflow: hidden;
-  width: var(--fo-vw, 100vw);
-  max-width: var(--fo-vw, 100vw);
-  margin-left: calc(50% - var(--fo-vw, 100vw) / 2);
+.p-foco .fo-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 36px; }
+.p-foco .fo-paso { position: relative; }
+.p-foco .fo-nodo {
+  position: absolute; left: -54px; top: -4px;
+  width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--fo-panel);
+  border: 1.5px solid rgba(255,255,255,.16);
+  transition: background .4s ease, border-color .4s ease, box-shadow .5s ease, transform .4s var(--fo-ease);
 }
-.fo-ap img { width: 100%; height: auto; display: block; border-radius: 0; }
-.fo-ap figcaption {
-  position: absolute;
-  left: 0; top: 0;
-  padding: 16px 18px 26px;
-  width: 100%;
-  background: linear-gradient(to bottom, rgba(8,7,5,.82), transparent);
-}
-.fo-ap figcaption b {
-  display: inline-block;
-  font-family: var(--fo-disp);
-  font-size: 11.5px; font-weight: 800;
-  letter-spacing: .18em;
-  color: #fff;
+.p-foco .fo-paso.fo-on .fo-nodo {
   background: var(--fo-luz);
-  padding: 5px 12px;
-  margin-bottom: 8px;
-}
-.fo-ap figcaption span {
-  display: block;
-  font-size: 13px;
-  color: #e6ded6;
-  text-shadow: 0 2px 12px rgba(0,0,0,.8);
-}
-@media (min-width: 820px) {
-  .fo-apil { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; align-items: start; }
-  .fo-apil > .fo-rot, .fo-apil > .fo-h2 { grid-column: 1 / -1; }
-  .fo-ap { width: 100%; max-width: 100%; margin-left: 0; }
-}
-
-/* ============================================================
-   🔴 EFECTO EN LOS BOTONES (James, 24-09: "le pongas efecto también a
-   los botones"). Tres capas, todas sobre el botón que la ficha ya trae:
-     · un brillo que lo cruza cada tanto, como la luz del foco al pasar
-     · un latido suave del halo, para que el ojo vuelva ahí
-     · al apretarlo se hunde, que es el acuse de que respondió
-   Solo transform y opacity: no encarece el desplazamiento de la página.
-   ============================================================ */
-.p-foco #prod .cta,
-.p-foco #prod button[class*="cta"],
-.p-foco #prod a[class*="cta"],
-.p-foco #prod .comprar,
-.p-foco .form .btn {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  transition: transform .18s cubic-bezier(.2,.7,.2,1), box-shadow .3s ease;
-  animation: fo-btn-late 3.4s ease-in-out 1.2s infinite;
-}
-.p-foco #prod .cta::after,
-.p-foco #prod .comprar::after,
-.p-foco .form .btn::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0; left: -42%;
-  width: 34%;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(100deg, transparent, rgba(255,255,255,.42), transparent);
-  transform: skewX(-18deg);
-  animation: fo-btn-brillo 3.4s ease-in-out 1.2s infinite;
-}
-@keyframes fo-btn-brillo {
-  0%        { left: -42%; }
-  38%, 100% { left: 128%; }
-}
-@keyframes fo-btn-late {
-  0%, 100% { box-shadow: 0 10px 26px rgba(224,115,77,.32), 0 0 0 0 rgba(224,115,77,.42); }
-  50%      { box-shadow: 0 12px 30px rgba(224,115,77,.42), 0 0 0 8px rgba(224,115,77,0); }
-}
-.p-foco #prod .cta:active,
-.p-foco #prod .comprar:active,
-.p-foco .form .btn:active { transform: scale(.975); }
-
-@media (prefers-reduced-motion: reduce) {
-  .p-foco #prod .cta, .p-foco #prod .comprar, .p-foco .form .btn { animation: none; }
-  .p-foco #prod .cta::after, .p-foco #prod .comprar::after, .p-foco .form .btn::after { display: none; }
-}
-
-/* ---------- el ciclo en tres pasos ---------- */
-.fo-pasos { display: flex; flex-direction: column; gap: 2px; margin-top: 26px; }
-.fo-paso {
-  padding: 26px 20px 26px 54px;
-  border-top: 1px solid var(--fo-linea);
-  position: relative;
-  overflow: hidden;
-}
-.fo-paso:first-child { border-top: 0; }
-
-/* la cifra grande al fondo y la línea que encadena los tres pasos: así se
-   leen como una secuencia y no como tres párrafos sueltos sobre negro */
-.fo-paso-cifra {
-  position: absolute;
-  left: 8px; top: 20px;
-  font-family: var(--fo-disp);
-  font-size: 46px;
-  font-weight: 800;
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--fo-linea);
-  pointer-events: none;
-}
-.fo-paso::after {
-  content: '';
-  position: absolute;
-  left: 25px; top: 74px; bottom: -2px;
-  width: 1px;
-  background: linear-gradient(to bottom, var(--fo-linea), transparent);
-}
-.fo-paso:last-child::after { display: none; }
-.fo-paso-n {
-  display: flex; align-items: center; gap: 9px;
-  margin-bottom: 11px;
-  font-size: 11.5px; font-weight: 600;
-  letter-spacing: .14em; text-transform: uppercase;
-  color: var(--fo-luz);
-}
-.fo-paso h3 {
-  margin: 0 0 9px;
-  font-size: clamp(21px, 5.6vw, 27px);
-  font-weight: 800;
-  letter-spacing: -.02em;
-  line-height: 1.12;
-  color: var(--fo-crema);
-}
-.fo-paso p { margin: 0; font-size: 15.5px; line-height: 1.62; color: var(--fo-tenue); max-width: 48ch; }
-
-.fo-ico {
-  width: 19px; height: 19px; flex: 0 0 auto;
-  fill: none; stroke: var(--fo-luz); stroke-width: 1.6;
-  stroke-linecap: round; stroke-linejoin: round;
-}
-
-@media (min-width: 820px) {
-  .fo-pasos { flex-direction: row; gap: 0; }
-  .fo-paso { flex: 1; border-top: 0; border-left: 1px solid var(--fo-linea); }
-  .fo-paso:first-child { border-left: 0; }
-}
-
-/* ---------- las dos fotos, día y noche ---------- */
-.fo-par { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: 24px; }
-.fo-par figure { margin: 0; position: relative; overflow: hidden; background: var(--fo-noche); }
-.fo-par img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 3 / 4; }
-.fo-par figcaption {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  padding: 26px 13px 13px;
-  font-size: 11.5px; line-height: 1.35; color: #cfdcec;
-  background: linear-gradient(to top, rgba(8,7,5,.92), transparent);
-}
-.fo-par figcaption b {
-  display: block;
-  font-family: var(--fo-disp);
-  font-size: 13.5px; font-weight: 800; letter-spacing: -.01em;
-  color: var(--fo-luz);
-  margin-bottom: 2px;
-}
-
-/* ---------- las fichas grandes con las fotos del producto ----------
-   24-09 (James): "esta seccion debe ser toda oscura y las tarjetas se deben
-   notar, asi no". Antes la foto iba a sangre y el texto suelto debajo, sin
-   nada que los agrupara: sobre el fondo oscuro no se leia donde empezaba y
-   donde terminaba cada ficha. Ahora cada una es una TARJETA de verdad, con su
-   fondo un punto mas claro que la seccion, su borde y su esquina redondeada.
-   La foto vive DENTRO de la tarjeta, no a sangre. */
-.fo-fichas { padding: 22px 16px 40px; }
-.fo-fi {
-  margin: 0 0 18px;
-  padding: 0 0 22px;
-  position: relative;
-  background: var(--fo-tarjeta);
-  border: 1px solid var(--fo-borde);
-  border-radius: 18px;
-  overflow: hidden;                      /* la foto se recorta con la esquina */
-  box-shadow: 0 12px 34px rgba(0, 0, 0, .45);
-}
-/* la linea que separaba las fichas ya no hace falta: las separa la tarjeta */
-.fo-fi + .fo-fi { padding-top: 0; }
-.fo-fi + .fo-fi::before { display: none; }
-.fo-fi img {
-  width: 100%;
-  max-width: 100%;
-  margin: 0 0 18px;
-  height: auto;
-  display: block;
-  border-radius: 0;
-}
-.fo-fi figcaption { padding: 0 18px; }
-.fo-fi figcaption b {
-  display: block;
-  font-family: var(--fo-disp);
-  font-size: clamp(22px, 6vw, 30px);
-  font-weight: 800;
-  letter-spacing: -.025em;
-  line-height: 1.1;
-  color: var(--fo-crema);
-  margin: 0 0 10px;
-}
-.fo-fi figcaption p {
-  margin: 0;
-  font-size: 15.5px;
-  line-height: 1.62;
-  color: var(--fo-tenue);
-  max-width: 48ch;
-}
-
-@media (min-width: 820px) {
-  /* en pantalla grande la tarjeta se parte en dos: la foto a un lado, pegada
-     al borde, y el texto al otro con aire. La foto alterna de lado. */
-  .fo-fi {
-    display: grid; grid-template-columns: 1.05fr .95fr; gap: 0;
-    align-items: center; max-width: 1080px; margin: 0 auto 22px;
-    padding: 0; overflow: hidden;
-  }
-  .fo-fi img { width: 100%; max-width: 100%; margin: 0; height: 100%; object-fit: cover; }
-  .fo-fi figcaption { padding: 34px 38px; }
-  .fo-fi:nth-child(even) img { order: 2; }
-}
-
-/* ---------- las cuatro características ---------- */
-.fo-caps { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--fo-linea); }
-.fo-cap {
-  background: var(--fo-fondo);
-  padding: 22px 16px;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 7px;
-}
-.fo-cap b {
-  font-size: 14.5px; font-weight: 800; letter-spacing: -.01em;
-  color: var(--fo-crema);
-}
-.fo-cap span { font-size: 12.5px; line-height: 1.45; color: var(--fo-tenue); }
-.fo-cap .fo-ico { width: 22px; height: 22px; }
-
-@media (min-width: 820px) {
-  .fo-caps { grid-template-columns: repeat(4, 1fr); }
-}
-
-/* ============================================================
-   3 · ENTRADA AL APARECER
-   🔴 Por defecto TODO se ve. foco.js agrega .fo-anima al body justo antes
-   de observar: si el archivo no corre, la página se ve completa igual en
-   vez de dejar secciones en blanco.
-   ============================================================ */
-/* 🔴 NUNCA SE ESCONDE EL CONTENIDO CON opacity 0.
-   Lo tenía así y ocho bloques —el camino, las dos fotos apiladas, los tres
-   pasos y las características— se quedaban INVISIBLES aunque el cliente ya
-   hubiera pasado por ellos: del 11% al 27% de la página en blanco. Probado
-   a mano: ni poniéndoles la clase .fo-in volvían a aparecer.
-
-   Ahora el bloque SIEMPRE se ve. Lo único que se anima es que sube a su
-   sitio. Si nada de esto corre, la página se ve completa igual. Una
-   sección invisible es mucho peor que una sección sin animación. */
-.p-foco.fo-anima .fo-pre {
-  transform: translateY(20px);
-  transition: transform .75s cubic-bezier(.2,.7,.2,1);
-}
-.p-foco.fo-anima .fo-pre.fo-in { transform: none; }
-.p-foco.fo-anima .fo-paso.fo-pre:nth-child(2) { transition-delay: .09s; }
-.p-foco.fo-anima .fo-paso.fo-pre:nth-child(3) { transition-delay: .18s; }
-.p-foco.fo-anima .fo-par figure.fo-pre:nth-child(2) { transition-delay: .1s; }
-
-/* ---------- 🔴 EFECTO EN LAS TARJETAS DE FOTOS ----------
-   James: "ponle efecto a las tarjetas de las fotos". Entran con un zoom
-   que se asienta y un barrido de luz que cruza la foto una sola vez, como
-   si el foco la alumbrara al pasar. El texto entra detrás de la imagen. */
-.p-foco.fo-anima .fo-fi { opacity: 1; transform: none; }   /* la ficha no se esconde entera */
-.p-foco.fo-anima .fo-fi img,
-.p-foco.fo-anima .fo-camino img,
-.p-foco.fo-anima .fo-par img {
+  border-color: var(--fo-luz);
+  box-shadow: 0 0 0 6px rgba(224,115,77,.16), 0 0 26px rgba(224,115,77,.6);
   transform: scale(1.06);
-  transition: transform 1.25s cubic-bezier(.16,.84,.3,1);
 }
-.p-foco.fo-anima .fo-fi.fo-in img,
-.p-foco.fo-anima .fo-camino .fo-in img,
-.p-foco.fo-anima .fo-par .fo-in img { transform: none; }
-
-.p-foco.fo-anima .fo-fi figcaption > * {
-  transform: translateY(14px);
-  transition: transform .6s cubic-bezier(.2,.7,.2,1);
+.p-foco .fo-paso.fo-on .fo-nodo .fo-ico { stroke: #fff; }
+.p-foco .fo-paso-n {
+  display: block;
+  font-family: var(--fo-disp);
+  font-size: 11.5px; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--fo-luz2);
+  margin: 0 0 6px;
 }
-.p-foco.fo-anima .fo-fi.fo-in figcaption > * { transform: none; }
-.p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(1) { transition-delay: .28s; }
-.p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(2) { transition-delay: .38s; }
-.p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(3) { transition-delay: .48s; }
-
-/* 🔴 EL ZOOM SE ENCIERRA. El scale(1.07) de la entrada renderizaba las
-   fotos a 372 px cuando la pantalla mide 348: se salían por el borde y
-   devolvían el scroll horizontal que acababa de arreglar. El recorte va
-   en el contenedor, no en la imagen. */
-.p-foco .fo-fi,
-.p-foco .fo-camino figure,
-.p-foco .fo-par figure { overflow: hidden; }
-
-/* el barrido de luz: cruza la foto UNA vez cuando aparece */
-.fo-fi figure, .fo-fi { position: relative; }
-.p-foco .fo-fi::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: var(--fo-alto-img, 100%);
-  pointer-events: none;
-  background: linear-gradient(104deg, transparent 38%, rgba(255,231,200,.16) 48%, rgba(255,231,200,.03) 56%, transparent 66%);
-  opacity: 0;
-  transform: translateX(-60%);
+.p-foco .fo-paso h3 {
+  margin: 0 0 8px;
+  font-family: var(--fo-disp);
+  font-size: 23px; font-weight: 700;
+  line-height: 1.12;
+  text-transform: uppercase;
+  color: var(--fo-crema);
+  transition: color .4s ease;
 }
-.p-foco.fo-anima .fo-fi.fo-in::after {
-  animation: fo-barrido 1.5s cubic-bezier(.3,.6,.3,1) .35s 1 both;
-}
-@keyframes fo-barrido {
-  0%   { opacity: 0; transform: translateX(-60%); }
-  18%  { opacity: 1; }
-  100% { opacity: 0; transform: translateX(60%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .p-foco.fo-anima .fo-fi img,
-  .p-foco.fo-anima .fo-camino img,
-  .p-foco.fo-anima .fo-par img,
-  .p-foco.fo-anima .fo-fi figcaption > * { opacity: 1 !important; transform: none !important; transition: none; }
-  .p-foco.fo-anima .fo-fi.fo-in::after { animation: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .p-foco.fo-anima .fo-pre { opacity: 1 !important; transform: none !important; transition: none; }
-  .fo-hero .fo-video { display: none; }
-  .fo-hero { background: var(--fo-noche) center/cover no-repeat url('img/foco-hero-poster.webp?v=1'); }
-}
+.p-foco .fo-paso p { margin: 0; font-size: 15.5px; line-height: 1.62; color: var(--fo-tenue); max-width: 46ch; }
 
 /* ============================================================
-   🔴 LA SECCIÓN DEL PRODUCTO, TODA OSCURA.
-   James, 24-09: "esta sección debe ser toda oscura y las tarjetas se deben
-   notar, así no". `section.desc` venía PARTIDA EN TRES: el título y el
-   párrafo sobre blanco, el bloque de las fichas en oscuro, y la lista de
-   puntos otra vez en blanco. Cortaba el ritmo justo en la mitad de la página.
-   Es el mismo caso que ya se resolvió en la guirnalda, así que va con la
-   misma receta: el fondo se derrama a los lados con box-shadow + clip-path,
-   porque la sección vive dentro del contenedor angosto de la tienda y un
-   background normal dejaría las orillas blancas.
+   4 · EL ANTES/DESPUÉS (el de la ficha) — claro, con visor y barrido
+   La imagen termina en su franja blanca de iconos: por eso la sección
+   va CLARA (si va oscura queda la línea blanca que James odió).
    ============================================================ */
-.p-foco #prod section.desc {
-  background: var(--fo-fondo);
-  box-shadow: 0 0 0 100vmax var(--fo-fondo);
-  clip-path: inset(0 -100vmax);
-  padding-top: 38px;
-  padding-bottom: 8px;
+.p-foco #prod .ba-sec,
+.p-foco .fo-cta-franja { background: #fff; background-image: none; }
+.p-foco #prod .ba-sec { margin-bottom: 0; }
+.p-foco #prod .ba-sec .eyebrow { font-family: var(--fo-disp); letter-spacing: .2em; color: #b3512c; }
+.p-foco #prod .ba-sec .tit2 {
+  font-family: var(--fo-disp);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -.005em;
+  color: #15130f;
 }
-.p-foco #prod section.desc p,
-.p-foco #prod section.desc li { color: var(--fo-tenue); }
-.p-foco #prod section.desc h2,
-.p-foco #prod section.desc h3,
-.p-foco #prod section.desc b { color: var(--fo-crema); }
-.p-foco #prod section.desc .eyebrow,
-.p-foco #prod section.desc .rot { color: var(--fo-luz2); }
+.p-foco #prod .ba-sec .sub2 { color: #55504a; }
+.p-foco #prod .ba-img { position: relative; overflow: hidden; }
+.p-foco #prod .ba-img .fo-mira { inset: 10px; --c: rgba(255,255,255,.9); }
+.p-foco #prod .ba-img .fo-scan {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 72%, rgba(224,115,77,.2));
+  opacity: 0;
+  transform: translateY(-100%);
+}
+.p-foco #prod .ba-img .fo-scan::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: var(--fo-luz);
+  box-shadow: 0 0 18px 5px rgba(224,115,77,.55);
+}
+.p-foco.fo-anima #prod .ba-img.fo-in .fo-scan { animation: fo-scan 2.2s cubic-bezier(.45,0,.3,1) .25s 1 both; }
+@keyframes fo-scan {
+  0%   { opacity: 1; transform: translateY(-100%); }
+  82%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(0); }
+}
 
-/* la tira blanca que se colaba entre una banda oscura y la siguiente: es el
-   margen que la tienda le pone a cada bloque, y el fondo derramado no lo
-   cubre. Se quita el margen y el aire se hace por dentro, con padding. */
-.p-foco .fo-oscura,
-.p-foco #prod section.desc { margin-top: 0; margin-bottom: 0; }
-
-/* 🔴 LA FRANJA DEL BOTÓN que se sacó de la sección de antes y después.
-   Queda en su propio espacio, entre esa sección y la descripción, con el
-   mismo fondo de noche para que no se abra un hueco blanco. */
+/* el botón suelto entre el antes/después y lo que sigue */
 .p-foco .fo-cta-franja {
-  margin-left: calc(50% - var(--fo-vw, 100vw) / 2);
-  margin-right: calc(50% - var(--fo-vw, 100vw) / 2);
+  margin: 0 calc(50% - var(--fo-vw, 100vw) / 2);
   width: var(--fo-vw, 100vw);
   max-width: var(--fo-vw, 100vw);
-  background: var(--fo-fondo);
-  padding: 26px 20px 30px;
+  padding: 6px 20px 38px;
   display: flex;
   justify-content: center;
 }
 .p-foco .fo-cta-franja .cta { width: 100%; max-width: 420px; }
 
 /* ============================================================
-   🔴 ARREGLOS DE LOS TRES NÚMEROS · 24-09
-   James: "esto por qué lo cambiaste, se ve feo".
-   Al poner las bandas a sangre metí dos reglas nuevas que los rompieron:
-     · `.fo-oscura b { color: crema }` pisó el salmón de las cifras y
-       quedaron blancas
-     · el padding lateral de la banda apretó las tres columnas y los pies
-       se leían corridos: "de cuenta de luz LED encendidos"
-   Estas reglas van al final y son las que mandan.
+   5 · LO QUE TRAE — tarjetas con linterna
+   🔴 NO de borde a borde: 12 px de aire a cada lado.
    ============================================================ */
-.p-foco .fo-oscura .fo-med b { color: var(--fo-luz); }
-.p-foco .fo-oscura .fo-med span { color: var(--fo-tenue); }
-
-.p-foco .fo-med {
-  gap: 14px;
-  padding: 0;
-  margin-top: 34px;
-  align-items: stretch;
+.p-foco .fo-trae { padding-left: max(12px, calc(var(--fo-vw, 100vw) / 2 - 50% + 12px)); padding-right: max(12px, calc(var(--fo-vw, 100vw) / 2 - 50% + 12px)); }
+.p-foco .fo-trae > .fo-rot,
+.p-foco .fo-trae > .fo-h2,
+.p-foco .fo-trae > .fo-pista { margin-left: 8px; margin-right: 8px; }
+.p-foco .fo-pista {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 0; margin-bottom: 0;
+  font-size: 13px; color: var(--fo-tenue);
 }
-.p-foco .fo-med div { padding: 0 4px; }
-.p-foco .fo-med div + div::before { left: -7px; }
-.p-foco .fo-med span {
-  margin-top: 11px;
-  font-size: 11.5px;
-  line-height: 1.35;
-  max-width: 13ch;
-  margin-left: auto;
-  margin-right: auto;
-  letter-spacing: .02em;
+.p-foco .fo-pista::before {
+  content: ''; width: 18px; height: 1.5px; background: var(--fo-luz);
 }
-.p-foco .fo-med b { font-size: clamp(32px, 10vw, 52px); }
-
-/* ============================================================
-   🔴 LAS TARJETAS DE LAS FOTOS: MÁS ANCHAS Y CON EFECTO · 24-09
-   James: "estas tarjetas más anchas y que se vean con efectos".
-   Quedaron angostas porque viven dentro de section.desc, que con las
-   bandas a sangre tomó un padding lateral grande. Acá lo rompen y van
-   de borde a borde.
-   ============================================================ */
-
-/* el efecto: la foto entra con un zoom que se asienta, un barrido de luz
-   cálida que la cruza una vez —como el foco alumbrándola al pasar— y el
-   texto detrás, escalonado */
-.p-foco.fo-anima .fo-fi img { transform: scale(1.08); }
-.p-foco.fo-anima .fo-fi.fo-in img { transform: none; }
-.p-foco.fo-anima .fo-fi figcaption > * { transform: translateY(18px); }
-.p-foco.fo-anima .fo-fi.fo-in figcaption > * { transform: none; }
-
-.p-foco .fo-fi::after {
-  height: auto;
-  bottom: 0;
-  background: linear-gradient(104deg, transparent 34%, rgba(255,226,196,.22) 46%, rgba(255,226,196,.05) 56%, transparent 68%);
-}
-
-@media (min-width: 820px) {
-}
-
-/* ============================================================
-   🔴 LA LÍNEA BLANCA FEA · 24-09
-   James: "esa línea blanca ahí que se ve feísimo".
-   La imagen del antes/después (prod-foco-ba) TERMINA en una banda blanca
-   —la de los cuatro iconos— y yo la había metido en una banda negra: el
-   choque dejaba una tira blanca entre la foto y el botón. Medido: la
-   escena acaba en y=729 y de ahí abajo es blanco, así que recortarla
-   habría cortado el foco por la mitad.
-   Se resuelve al revés: esa sección y la franja del botón van CLARAS,
-   como en la guirnalda, que alterna oscuras y claras a propósito.
-   ============================================================ */
-.p-foco #prod .ba-sec,
-.p-foco .fo-cta-franja {
-  background: #fff;
-  background-image: none;
-}
-.p-foco #prod .ba-sec h2,
-.p-foco #prod .ba-sec h3,
-.p-foco #prod .ba-sec b { color: #17150f; }
-.p-foco #prod .ba-sec p { color: #55504a; }
-.p-foco #prod .ba-sec .eyebrow,
-.p-foco #prod .ba-sec .rot { color: #b3512c; }   /* salmón oscurecido: legible sobre blanco */
-.p-foco .fo-cta-franja { padding-top: 4px; padding-bottom: 34px; }
-
-/* ============================================================
-   🔴 LAS TARJETAS INTERACTIVAS · 24-09
-   James: "hazlo una sección aparte y que sea interactiva como una
-   tarjeta". Era una lista de viñetas metida dentro de la descripción.
-   Cada punto es ahora una tarjeta que se levanta al tocarla, se le
-   enciende el borde y el icono se ilumina.
-   ============================================================ */
-.p-foco .fo-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin-top: 26px;
-}
+.p-foco .fo-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 22px; }
 .p-foco .fo-tar {
-  appearance: none;
-  -webkit-appearance: none;
-  text-align: left;
-  font: inherit;
-  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  appearance: none; -webkit-appearance: none;
   display: grid;
-  grid-template-columns: 42px 1fr;
+  grid-template-columns: 46px 1fr;
   grid-template-rows: auto auto;
   align-items: center;
   gap: 2px 14px;
-  padding: 17px 18px;
+  width: 100%;
+  min-height: 78px;
+  padding: 16px 18px;
   border: 1px solid var(--fo-borde);
-  border-radius: 14px;
-  background: var(--fo-tarjeta);
-  transition: transform .22s cubic-bezier(.2,.7,.2,1), border-color .25s ease, box-shadow .3s ease, background .25s ease;
+  border-radius: 16px;
+  background: linear-gradient(155deg, #19212c, #11161e);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .2s var(--fo-ease), border-color .3s ease;
 }
+/* la linterna: un haz que sigue el dedo */
+.p-foco .fo-tar::before {
+  content: '';
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(190px circle at var(--mx, 50%) var(--my, 50%), rgba(224,115,77,.3), transparent 62%);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+/* el barrido del sensor: cruza cada tarjeta una vez al aparecer */
+.p-foco .fo-tar::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0; left: 0; width: 45%; z-index: -1; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,210,185,.16), transparent);
+  transform: translateX(-120%);
+}
+.p-foco.fo-anima .fo-tar.fo-in::after { animation: fo-barrido 1.1s ease-out calc(.2s + var(--i, 0) * .12s) 1; }
+@keyframes fo-barrido { to { transform: translateX(260%); } }
+
+.p-foco .fo-tar:hover::before,
+.p-foco .fo-tar.fo-luz::before { opacity: 1; }
+.p-foco .fo-tar:hover,
+.p-foco .fo-tar.fo-luz { border-color: rgba(224,115,77,.55); }
+.p-foco .fo-tar:active { transform: scale(.985); }
+.p-foco .fo-tar:focus-visible { outline: 2px solid var(--fo-luz); outline-offset: 2px; }
+
 .p-foco .fo-tar-ico {
   grid-row: 1 / 3;
-  display: grid;
-  place-items: center;
-  width: 42px; height: 42px;
-  border-radius: 11px;
-  background: color-mix(in srgb, var(--fo-luz) 14%, transparent);
-  transition: background .25s ease, transform .3s cubic-bezier(.2,1.4,.4,1);
-}
-.p-foco .fo-tar .fo-ico { width: 21px; height: 21px; }
-.p-foco .fo-tar b {
-  font-family: var(--fo-disp);
-  font-size: 15px; font-weight: 800; letter-spacing: -.01em;
-  color: var(--fo-crema);
-  line-height: 1.25;
-}
-.p-foco .fo-tar > span:not(.fo-tar-ico) {
-  font-size: 13px; line-height: 1.45;
-  color: var(--fo-tenue);
-}
-/* al tocarla o pasar por encima: se levanta y se enciende */
-.p-foco .fo-tar:hover,
-.p-foco .fo-tar:focus-visible,
-.p-foco .fo-tar:active {
-  transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--fo-luz) 55%, transparent);
-  background: color-mix(in srgb, var(--fo-luz) 7%, var(--fo-tarjeta));
-  box-shadow: 0 12px 28px rgba(0,0,0,.4), 0 0 0 1px color-mix(in srgb, var(--fo-luz) 22%, transparent);
-  outline: none;
+  display: grid; place-items: center;
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: rgba(224,115,77,.12);
+  transition: background .3s ease, transform .35s cubic-bezier(.2,1.4,.4,1);
 }
 .p-foco .fo-tar:hover .fo-tar-ico,
-.p-foco .fo-tar:focus-visible .fo-tar-ico,
-.p-foco .fo-tar:active .fo-tar-ico {
-  background: color-mix(in srgb, var(--fo-luz) 34%, transparent);
-  transform: scale(1.09) rotate(-5deg);
+.p-foco .fo-tar.fo-luz .fo-tar-ico { background: rgba(224,115,77,.3); transform: scale(1.08); }
+.p-foco .fo-tar b {
+  font-family: var(--fo-disp);
+  font-size: 16px; font-weight: 700;
+  line-height: 1.2;
+  color: var(--fo-crema);
 }
-.p-foco .fo-tar:active { transform: translateY(-1px) scale(.99); }
-/* entran escalonadas */
-.p-foco.fo-anima .fo-tar { transition-delay: calc(var(--i, 0) * .05s); }
+.p-foco .fo-tar-sub { font-size: 13.5px; line-height: 1.4; color: var(--fo-tenue); }
 
-@media (min-width: 620px) {
-  .p-foco .fo-grid { grid-template-columns: 1fr 1fr; }
-}
-
-/* 🔴 LAS FOTOS, A TODO EL ANCHO. Vivían dentro de section.desc, que con
-   las bandas a sangre tomó 40 px de padding lateral y las dejaba en 290
-   de 350. Acá lo anulan. */
+@media (min-width: 620px) { .p-foco .fo-grid { grid-template-columns: 1fr 1fr; } }
 
 /* ============================================================
-   🔴 LA BANDA DE LOS TRES NÚMEROS, MÁS COMPACTA · 24-09
-   James: "esto está muy ancho, no ves lo ordinario que se ve".
-   La banda tomaba el alto de una sección completa (48+42 px de padding)
-   para tres cifras: quedaba un cajón negro medio vacío. Se aprieta a la
-   altura de lo que lleva dentro y los tres pies se alinean arriba, para
-   que el que se parte en dos líneas no descuadre a los otros.
+   6 · LA DESCRIPCIÓN — oscura entera, con las fotos adentro
    ============================================================ */
-.p-foco .fo-sec.fo-oscura:has(.fo-med) { padding-top: 26px; padding-bottom: 26px; }
-.p-foco .fo-med { margin-top: 0; align-items: start; }
-.p-foco .fo-med div { display: flex; flex-direction: column; align-items: center; }
-.p-foco .fo-med b { font-size: clamp(30px, 8.6vw, 44px); line-height: 1; }
-.p-foco .fo-med span { margin-top: 8px; min-height: 2.7em; }
-
-/* ============================================================
-   🔴 LAS FOTOS NO VAN A SANGRE · 24-09
-   James: "para qué del mismo ancho, déjalo espacio, no del mismo ancho
-   de página". Las había mandado de borde a borde y pegadas al filo se
-   ven ordinarias. Vuelven adentro, con aire a los lados.
-   ============================================================ */
-/* 20 px a cada lado, el mismo aire que lleva el resto de la página */
-
-/* ============================================================
-   🔴 LOS DESTELLOS DEL HERO · 24-09
-   James: "esos efectos ponselos al hero", señalando los brillos que tiene
-   el metraje del producto. Veintiséis puntos de luz repartidos al azar
-   que titilan con su propio ritmo. Son CSS puro: no pesan ni un KB.
-   ============================================================ */
-.fo-hero .fo-chispas {
-  position: absolute; inset: 0; z-index: 2;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-.fo-hero .fo-chispas i {
-  position: absolute;
-  left: var(--x); top: var(--y);
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 6px 1px rgba(255,246,224,.9);
-  opacity: 0;
-  transform: scale(var(--s));
-  animation: fo-chispa var(--t) ease-in-out var(--r) infinite;
-}
-@keyframes fo-chispa {
-  0%, 100% { opacity: 0;   transform: scale(calc(var(--s) * .3)); }
-  45%      { opacity: .95; transform: scale(var(--s)); }
-  62%      { opacity: .35; transform: scale(calc(var(--s) * .8)); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .fo-hero .fo-chispas { display: none; }
-}
-
-/* el margen de las fotos, igual al del antes/después que él señaló */
-/* quedaban 10 px de más: el contenedor ya aportaba su parte */
-
-/* ============================================================
-   🔴 LAS TARJETAS DE FOTO: MÁS ANCHAS, PERO NO A SANGRE · 24-09
-   James: "no ves cómo se ve muy apretada, tienes que hacerla más ancha
-   pero que tampoco sea del ancho de la pantalla".
-   Estaban en 321 de 375 (27 px de margen) y encima la foto medía 345 —
-   más que su propia tarjeta— así que se le comían los bordes.
-   Ahora: 12 px de margen a cada lado y la foto exactamente del ancho de
-   la tarjeta, sin desbordar.
-   ============================================================ */
-/* el zoom de entrada se queda DENTRO de la tarjeta: antes sobresalía y
-   recortaba la foto por los lados */
-.p-foco.fo-anima .fo-fi img { transform: scale(1.05); transform-origin: center; }
-.p-foco.fo-anima .fo-fi.fo-in img { transform: none; }
-/* section.desc ya aporta 20 px de padding: con -8 la tarjeta queda a 12 px
-   del borde, que es el ancho que pidió — más ancha, pero sin tocar el filo */
-/* 🔴 FUERA EL ZOOM DE LA FOTO. Con scale la imagen medía 366 dentro de una
-   tarjeta de 351 y se le comían los bordes — justo lo que él venía
-   señalando. La foto se ve COMPLETA; el efecto lo dan el barrido de luz y
-   la entrada del texto, que no deforman nada. */
-.p-foco.fo-anima .fo-fi img,
-.p-foco.fo-anima .fo-fi.fo-in img { transform: none; }
-
-/* ============================================================
-   🔴 EL ANCHO DEFINITIVO DE LAS TARJETAS DE FOTO · 24-09
-   De tanto ir y venir quedaron reglas encimadas (7 px de padding aquí,
-   12 de margen allá, -8 más abajo) y el resultado daba 31 px de margen.
-   Esta es la única que manda, y va al final:
-   la tarjeta pega 12 px al borde de la pantalla, ni más ni menos.
-   ============================================================ */
-
-/* ============================================================
-   🔴 LAS TARJETAS DE FOTO · definición ÚNICA · 24-09
-   De tanto ajuste quedaron 26 bloques encimados que se contradecían y el
-   margen salía descuadrado (31 a la izquierda, 47 a la derecha). Se
-   borraron todos. Esta es la única regla que las define.
-
-   James: "más ancha, pero que tampoco sea del ancho de la pantalla".
-   La tarjeta pega 12 px al borde. section.desc ya aporta 20 px de padding,
-   así que el -8 la lleva justo a esos 12.
-   La foto va COMPLETA, sin zoom: con scale medía más que su tarjeta y se
-   le comían los bordes, que es lo que él venía señalando.
-   ============================================================ */
-.p-foco #prod .fo-fichas {
-  padding: 22px 0 36px;
-  margin-left: -19px;
-  margin-right: -19px;
-}
-.p-foco #prod .fo-fi {
-  margin: 0;
-  padding: 0 0 30px;
-  overflow: hidden;
+.p-foco #prod section.desc {
+  margin-top: 0; margin-bottom: 0;
   position: relative;
+  padding-top: 58px; padding-bottom: 24px;
+  background: var(--fo-fondo);
+  box-shadow: 0 0 0 100vmax var(--fo-fondo);
+  clip-path: inset(0 -100vmax);
 }
-.p-foco #prod .fo-fi + .fo-fi { padding-top: 30px; }
-.p-foco #prod .fo-fi + .fo-fi::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--fo-linea) 22%, var(--fo-linea) 78%, transparent);
+.p-foco #prod section.desc p,
+.p-foco #prod section.desc li { color: var(--fo-tenue); }
+.p-foco #prod section.desc h2,
+.p-foco #prod section.desc h3,
+.p-foco #prod section.desc b { color: var(--fo-crema); }
+.p-foco #prod section.desc .eyebrow {
+  font-family: var(--fo-disp); letter-spacing: .2em; color: var(--fo-luz2);
 }
-.p-foco #prod .fo-fi img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  margin: 0 0 18px;
+.p-foco #prod section.desc .tit2 {
+  font-family: var(--fo-disp);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -.005em;
+}
+
+/* las fotos: 12 px del borde (desc ya trae 20 de padding) */
+.p-foco #prod .fo-fichas { display: grid; gap: 38px; margin: 28px -4px 20px; }
+.p-foco #prod .fo-fi { margin: 0; }
+.p-foco #prod .fo-foto {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--fo-panel);
+  box-shadow: 0 18px 40px rgba(0,0,0,.45);
+}
+.p-foco #prod .fo-foto img { display: block; width: 100%; height: auto; margin: 0; border-radius: 0; }
+.p-foco #prod .fo-foto .fo-mira { --c: rgba(255,255,255,.8); }
+/* el obturador: una lámina que sube y deja ver la foto (sin JS no existe) */
+.p-foco #prod .fo-obt {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: linear-gradient(180deg, #1b2330, var(--fo-panel));
+  transform: translateY(-101%);
+}
+.p-foco.fo-anima #prod .fo-fi.fo-pre .fo-obt { transform: none; }
+.p-foco.fo-anima #prod .fo-fi.fo-pre.fo-in .fo-obt {
+  transform: translateY(-101%);
+  transition: transform .85s cubic-bezier(.75,0,.2,1) .1s;
+}
+.p-foco #prod .fo-fi figcaption { padding: 18px 6px 0; }
+.p-foco #prod .fo-fi figcaption .fo-rot { margin-bottom: 8px; }
+.p-foco #prod .fo-fi figcaption b {
   display: block;
-  border-radius: 14px;
-  transform: none;          /* la foto se ve entera, sin recorte */
+  margin: 0 0 8px;
+  font-family: var(--fo-disp);
+  font-size: 22px; font-weight: 700;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--fo-crema);
 }
-.p-foco #prod .fo-fi figcaption { padding: 0 2px; }
-/* 🔴 las fichas ya no son "banda oscura": esa clase les metía el margen
-   negativo a 100vw y dejaba el margen descuadrado (31 a la izquierda,
-   7 a la derecha). Llevan su fondo propio y su margen parejo. */
-.p-foco #prod .fo-fichas { background: var(--fo-fondo); }
-/* 🔴 AIRE ENTRE LAS TARJETAS. James: "parece que estuviese una montada
-   arriba de otra". Quedaban pegadas: 30 px abajo y 30 arriba no alcanzan
-   cuando la foto de una termina donde empieza la siguiente. */
-.p-foco #prod .fo-fi { padding-bottom: 46px; }
-.p-foco #prod .fo-fi + .fo-fi { padding-top: 46px; }
+.p-foco #prod .fo-fi figcaption p { margin: 0; font-size: 15.5px; line-height: 1.62; }
+
+/* ============================================================
+   7 · ENTRADAS AL BAJAR (solo transform; nunca opacity 0 permanente)
+   ============================================================ */
+.p-foco.fo-anima .fo-rev.fo-pre { transform: translateY(26px); opacity: .25; }
+.p-foco.fo-anima .fo-rev.fo-pre.fo-in {
+  transform: none; opacity: 1;
+  transition: transform .75s var(--fo-ease) calc(var(--i, 0) * .07s), opacity .6s ease calc(var(--i, 0) * .07s);
+}
+
+/* ============================================================
+   8 · LOS BOTONES: brillo que cruza + halo que late + se hunden al tocar
+   ============================================================ */
+.p-foco #prod .cta,
+.p-foco #prod .comprar,
+.p-foco .form .btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .18s var(--fo-ease), box-shadow .3s ease;
+  animation: fo-btn-late 3.4s ease-in-out 1.2s infinite;
+}
+.p-foco #prod .cta::after,
+.p-foco #prod .comprar::after,
+.p-foco .form .btn::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0; left: -42%; width: 34%;
+  z-index: -1; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.42), transparent);
+  transform: skewX(-18deg);
+  animation: fo-btn-brillo 3.4s ease-in-out 1.2s infinite;
+}
+@keyframes fo-btn-brillo { 0% {left:-42%} 38%,100% {left:128%} }
+@keyframes fo-btn-late {
+  0%,100% { box-shadow: 0 10px 26px rgba(224,115,77,.32), 0 0 0 0 rgba(224,115,77,.42); }
+  50%     { box-shadow: 0 12px 30px rgba(224,115,77,.42), 0 0 0 8px rgba(224,115,77,0); }
+}
+.p-foco #prod .cta:active,
+.p-foco #prod .comprar:active,
+.p-foco .form .btn:active { transform: scale(.975); }
+
+/* ============================================================
+   9 · MOVIMIENTO REDUCIDO: todo quieto y visible
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .fo-hero .fo-glow, .fo-hero .fo-haz, .fo-hero .fo-sol { animation: none; opacity: .45; }
+  .fo-hero .fo-chispas, .fo-hero .fo-baja { display: none; }
+  .fo-hero .fo-estado i { animation: none; }
+  .p-foco .fo-tar::after, .p-foco #prod .ba-img .fo-scan { display: none; }
+  .p-foco #prod .cta, .p-foco #prod .comprar, .p-foco .form .btn { animation: none; }
+  .p-foco #prod .cta::after, .p-foco #prod .comprar::after, .p-foco .form .btn::after { display: none; }
+}

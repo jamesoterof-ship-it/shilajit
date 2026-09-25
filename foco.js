@@ -1,36 +1,35 @@
 /* ============================================================
-   FOCO SOLAR TIPO CÁMARA · el diseño propio, montado sobre la ficha.
-   Hecho el 24-09 con el mismo molde que la guirnalda.
+   FOCO SOLAR TIPO CÁMARA · diseño propio, montado sobre la ficha.
+   REHECHO el 25-09 desde cero ("hazlo bien, que no quede pesada,
+   organízala bien, efectos buenos, letras diferentes, no siempre lo mismo").
 
-   Lo que pidió James, y cómo se resuelve cada cosa:
-     · "hazla como la guirnalda, con un video de día y de noche"
-       -> EL HERO ES UN VIDEO (img/foco-hero.mp4): arranca de día con el
-          foco apagado, cae la noche y los LED se encienden. Va en bucle,
-          arranca solo y no depende de que el cliente toque nada.
-     · "las letras no las montes en el video, las montas después"
-       -> los textos van acá en HTML, encima del video. Cambiarlos no
-          obliga a rehacer el video.
-     · "que vayan en la parte de ARRIBA, no en la de abajo"
-       -> a diferencia de la guirnalda, que las lleva abajo, acá el
-          bloque va pegado arriba y la viñeta se oscurece arriba en vez
-          de abajo, para que se lean sobre el cielo.
-     · "no quiero que el cliente tenga que entender nada"
-       -> sin interruptor y sin nada que tocar. Se ve solo.
+   CONCEPTO: "modo vigilancia". El foco parece una cámara de seguridad, así
+   que la página se ve como el visor de una: esquinas de encuadre, un
+   indicador de sensor, letra técnica (Chakra Petch) y efectos que cuentan
+   lo que el producto hace:
+     · hero      -> EL MISMO VIDEO día→noche (a James le gusta, no se toca).
+                    Encima: marco de visor, rótulo que se decodifica y el
+                    título que entra por máscara, línea por línea.
+     · cifras    -> conteo ascendente (lo pidió el 24-09).
+     · pasos     -> una línea de tiempo que se ENCIENDE mientras bajas.
+     · antes/dsp -> el barrido del sensor la recorre una vez.
+     · lo que trae -> tarjetas con un haz de linterna que sigue el dedo.
+     · fotos     -> se abren como un obturador.
 
-   El hero va A SANGRE y sin un solo border-radius (regla suya: un hero
-   con esquinas redondas parece una tarjeta).
+   ORDEN (parecido a la guirnalda, sin ser idéntico):
+     hero · cifras · precio · cómo trabaja · antes/después · botón ·
+     lo que trae · descripción (con las fotos) · promo · video · formulario
+   Reglas de James que se mantienen: hero a sangre y sin radio, textos
+   ARRIBA, un solo antes/después (el de la ficha), el botón suelto entre
+   el antes/después y lo que sigue, tarjetas que NO van de borde a borde.
 
-   Acento propio: azul noche + el blanco frío de los LED. La guirnalda usa
-   ámbar cálido; este tiene que verse distinto para que Meta no lea los
-   dos anuncios como el mismo.
+   LO QUE SE AFIRMA sale de productos.js: 77 LED, sensor de movimiento,
+   control remoto, resistente al agua, energía solar, se instala sin
+   electricista. NO graba (no es una cámara de verdad): por eso el visor
+   no lleva "REC" ni nada que sugiera grabación.
 
-   Corre DESPUÉS de ficha.js. Si el producto no es el foco se va sin hacer
-   nada. No toca el encabezado (.top) ni el pie (.pie).
-
-   OJO CON LO QUE SE AFIRMA: la ficha de productos.js dice sensor de
-   movimiento, control remoto, resistente al agua y 77 LED. No se agrega
-   nada que no esté ahí: ni cuántas horas dura la carga, ni metros de
-   alcance, ni que grabe (NO graba, no es una cámara de verdad).
+   Candado de siempre: TODO se ve aunque este archivo falle. Lo que se
+   anima se esconde recién acá, justo antes de observarlo.
    ============================================================ */
 (function () {
   'use strict';
@@ -40,37 +39,27 @@
   }
   if (slug() !== 'foco') return;
 
+  var QUIETO = false;
+  try { QUIETO = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
-  /* los tres bloques de "cómo funciona": el día, la noche y el susto */
   var CICLO = [
-    ['sol', 'Todo el día', 'Se carga con el sol',
+    ['sol', 'De día', 'Se carga con el sol',
      'El panel de arriba junta sol mientras tú no estás. No va enchufado a nada, así que no le suma un peso a la cuenta de la luz.'],
     ['ojo', 'Cuando alguien pasa', 'Se enciende solo',
-     'El sensor de movimiento lo prende de golpe con los 77 LED al máximo. No hay que salir a encender nada ni acordarse de apagarlo.'],
+     'El sensor de movimiento lo prende de golpe con los 77 LED. No hay que salir a encender nada ni acordarse de apagarlo.'],
     ['escudo', 'Y el que venía', 'Se devuelve',
      'Tiene forma de cámara de vigilancia. No graba, pero el que se estaba acercando no lo sabe: ve la luz encima y la cámara apuntándolo.'],
   ];
 
-  var CAPS = [
-    ['sol',  'Energía solar',        'Sin enchufe ni cuenta de luz'],
-    ['ojo',  'Sensor de movimiento', 'Se enciende cuando alguien pasa'],
-    ['agua', 'Resiste la lluvia',    'Hecho para estar afuera'],
-    ['llave','Control remoto',       'Incluido en la caja'],
-  ];
-
-  /* Las fotos que ya estaban hechas para este producto. Los textos salen de
-     lo que se ve EN cada una, no de lo que a mí se me ocurra:
-       prod-foco    -> la casa de noche con el foco encendido y los cuatro sellos
-       prod-foco-2  -> el sol cargando el panel, y la caja del proveedor
-       prod-foco-3  -> las medidas y los dos giros del soporte */
   var FOTOS = [
     ['img/prod-foco.webp?v=2',
      'El foco solar encendido en la pared de una casa de noche, con el detalle de los LED, el sensor y el control remoto',
      'Lo que hace', 'Alumbra la entrada completa',
      'Los LED se encienden juntos y el chorro de luz cubre el frente de la casa. Abajo, el sensor de movimiento y el control remoto que viene en la caja.'],
     ['img/prod-foco-2.webp?v=2',
-     'El panel solar del foco recibiendo el sol, junto a la caja del producto que indica 77 SMD LED',
+     'El panel solar del foco recibiendo el sol, junto a la caja del producto',
      'De dónde sale la luz', 'El sol de todo el día, guardado',
      'El panel de arriba carga mientras tú no estás. No se enchufa a la corriente: por eso no le suma nada a la cuenta de la luz.'],
     ['img/prod-foco-3.webp?v=2',
@@ -84,41 +73,122 @@
     ojo:    '<path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>',
     escudo: '<path d="M12 2 4 5v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/>',
     agua:   '<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',
-    llave:  '<rect x="6" y="2.5" width="12" height="19" rx="3"/><circle cx="10" cy="8" r="1.1"/><circle cx="14" cy="8" r="1.1"/><circle cx="10" cy="12" r="1.1"/><circle cx="14" cy="12" r="1.1"/><circle cx="12" cy="17" r="1.3"/>',
+    llave:  '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.1-.4-.4-2.1z"/>',
+    led:    '<rect x="3" y="6" width="18" height="12" rx="3"/><circle cx="8" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="16" cy="12" r="1.3"/>',
   };
-
   function ico(k) {
-    return '<svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true">' + (ICONOS[k] || '') + '</svg>';
+    return '<svg class="fo-ico" viewBox="0 0 24 24" aria-hidden="true">' + (ICONOS[k] || ICONOS.led) + '</svg>';
+  }
+  /* el icono sale de lo que dice la tarjeta, no del orden */
+  function icoDe(t) {
+    t = t.toLowerCase();
+    if (t.indexOf('led') >= 0 || t.indexOf('sensor') >= 0) return 'led';
+    if (t.indexOf('solar') >= 0 || t.indexOf('sol ') >= 0) return 'sol';
+    if (t.indexOf('cámara') >= 0 || t.indexOf('camara') >= 0) return 'escudo';
+    if (t.indexOf('agua') >= 0) return 'agua';
+    if (t.indexOf('instala') >= 0 || t.indexOf('electricista') >= 0) return 'llave';
+    return 'led';
   }
 
-  /* ---------- el ciclo: día → sensor → disuasión ---------- */
+  /* un solo elemento dibuja las cuatro esquinas del visor (CSS) */
+  var MIRA = '<span class="fo-mira" aria-hidden="true"></span>';
+
+  /* ---------------- HERO ---------------- */
+  function hero() {
+    var chispas = '';
+    for (var i = 0; i < 16; i++) {
+      chispas += '<i style="--x:' + (Math.random() * 100).toFixed(1) + '%;--y:' +
+        (30 + Math.random() * 64).toFixed(1) + '%;--t:' + (1.8 + Math.random() * 3).toFixed(2) +
+        's;--r:' + (Math.random() * 4).toFixed(2) + 's;--s:' + (1 + Math.random() * 1.6).toFixed(2) + '"></i>';
+    }
+    return '<div class="fo-hero">' +
+      /* preload="none": primero el póster, el video llega cuando la página ya cargó */
+      '<video class="fo-video" autoplay muted loop playsinline preload="none"' +
+        ' poster="img/foco-hero-poster.webp?v=1"' +
+        ' aria-label="La misma casa de día y de noche: el foco se carga con el sol y al oscurecer se enciende e ilumina la entrada">' +
+        '<source src="img/foco-hero.mp4?v=3" type="video/mp4">' +
+      '</video>' +
+      '<div class="fo-glow" aria-hidden="true"></div>' +
+      '<div class="fo-haz" aria-hidden="true"></div>' +
+      '<div class="fo-sol" aria-hidden="true"></div>' +
+      '<div class="fo-chispas" aria-hidden="true">' + chispas + '</div>' +
+      '<div class="fo-vineta" aria-hidden="true"></div>' +
+      /* el visor: esquinas + la barra de estado de arriba */
+      '<div class="fo-visor" aria-hidden="true">' + MIRA +
+        '<span class="fo-estado"><i></i>Sensor activo</span>' +
+        '<span class="fo-estado fo-der">77 LED · solar</span>' +
+      '</div>' +
+      '<div class="fo-sobre">' +
+        '<span class="fo-rot fo-deco" data-txt="Se carga con el sol · se enciende solo">Se carga con el sol · se enciende solo</span>' +
+        '<h1 class="fo-h1">' +
+          '<span class="fo-ln"><span class="fo-li" style="--d:.25s">Tu entrada</span></span>' +
+          '<span class="fo-ln"><span class="fo-li" style="--d:.4s">iluminada,</span></span>' +
+          '<span class="fo-ln"><em class="fo-li" style="--d:.55s">sin pagar luz.</em></span>' +
+        '</h1>' +
+        '<p class="fo-frase">De día se carga con el sol. De noche se enciende cuando alguien se acerca. Y como parece una cámara, nadie se acerca dos veces.</p>' +
+      '</div>' +
+      '<a class="fo-baja" href="#fo-cifras" aria-label="Bajar a ver el foco"><span></span></a>' +
+    '</div>' +
+    '<section class="fo-sec fo-oscura fo-cifras" id="fo-cifras">' +
+      '<p class="fo-intro">Un foco con forma de cámara de seguridad: 77 LED, sensor de movimiento y panel solar. Se instala en la pared sin cables ni electricista, y trae control remoto.</p>' +
+      '<div class="fo-med">' +
+        '<div>' + MIRA + '<b data-hasta="0" data-antes="$" data-rodillo="1">$0</b><span>de cuenta de luz</span></div>' +
+        '<div>' + MIRA + '<b data-hasta="77">77</b><span>LED encendidos</span></div>' +
+        '<div>' + MIRA + '<b data-hasta="0" data-rodillo="1">0</b><span>cables que instalar</span></div>' +
+      '</div>' +
+    '</section>';
+  }
+
+  /* ---------------- CÓMO TRABAJA: la línea de tiempo ---------------- */
   function bloqueCiclo() {
     return '<section class="fo-sec fo-oscura fo-ciclo">' +
       '<span class="fo-rot">Cómo trabaja, sin que hagas nada</span>' +
-      '<h2 class="fo-h2">Se encarga solo,<em>de día y de noche.</em></h2>' +
-      '<div class="fo-pasos">' +
+      '<h2 class="fo-h2">Se encarga solo, <em>de día y de noche.</em></h2>' +
+      '<div class="fo-linea">' +
+        '<span class="fo-riel" aria-hidden="true"><i></i></span>' +
+        '<ol class="fo-pasos">' +
         CICLO.map(function (p, i) {
-          /* el número grande al fondo y la línea que los encadena: deja de
-             ser texto suelto sobre negro y se lee como una secuencia */
-          return '<div class="fo-paso fo-pre">' +
-            '<span class="fo-paso-cifra" aria-hidden="true">' + (i + 1) + '</span>' +
-            '<div class="fo-paso-n">' + ico(p[0]) + '<span>' + esc(p[1]) + '</span></div>' +
+          return '<li class="fo-paso">' +
+            '<span class="fo-nodo" aria-hidden="true">' + ico(p[0]) + '</span>' +
+            '<span class="fo-paso-n">0' + (i + 1) + ' · ' + esc(p[1]) + '</span>' +
             '<h3>' + esc(p[2]) + '</h3>' +
             '<p>' + esc(p[3]) + '</p>' +
-          '</div>';
+          '</li>';
+        }).join('') +
+        '</ol>' +
+      '</div>' +
+    '</section>';
+  }
+
+  /* ---------------- LO QUE TRAE: tarjetas con linterna ---------------- */
+  function bloqueTrae(puntos) {
+    return '<section class="fo-sec fo-oscura fo-trae">' +
+      '<span class="fo-rot">Lo que trae</span>' +
+      '<h2 class="fo-h2">Todo esto, <em>en un solo aparato.</em></h2>' +
+      '<p class="fo-pista">Pasa el dedo por las tarjetas</p>' +
+      '<div class="fo-grid">' +
+        puntos.map(function (t, i) {
+          var p = t.split(/:\s|\s·\s/);
+          var tit = p[0], sub = p.slice(1).join(' · ');
+          return '<button type="button" class="fo-tar fo-rev" style="--i:' + i + '">' +
+            '<span class="fo-tar-ico">' + ico(icoDe(t)) + '</span>' +
+            '<b>' + esc(tit) + '</b>' +
+            (sub ? '<span class="fo-tar-sub">' + esc(sub) + '</span>' : '') +
+          '</button>';
         }).join('') +
       '</div>' +
     '</section>';
   }
 
-
-  /* ---------- las fichas grandes con las fotos del producto ----------
-     Mismo patrón que la guirnalda: foto a sangre y el texto debajo,
-     entrando de a una mientras el cliente baja. */
+  /* ---------------- LAS FOTOS: obturador ---------------- */
   function bloqueFotos() {
-    return '<div class="fo-fichas">' + FOTOS.map(function (f, i) {
-      return '<figure class="fo-fi fo-pre" style="--i:' + i + '">' +
-        '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="900" height="900">' +
+    return '<div class="fo-fichas">' + FOTOS.map(function (f) {
+      return '<figure class="fo-fi fo-rev">' +
+        '<div class="fo-foto">' +
+          '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="900" height="900">' +
+          MIRA +
+          '<span class="fo-obt" aria-hidden="true"></span>' +
+        '</div>' +
         '<figcaption>' +
           '<span class="fo-rot">' + esc(f[2]) + '</span>' +
           '<b>' + esc(f[3]) + '</b>' +
@@ -137,149 +207,43 @@
 
     document.body.classList.add('p-foco');
 
-    /* 🔴 EL ANCHO REAL, NO 100vw.
-       Las piezas a sangre usaban width:100vw, y 100vw INCLUYE la barra de
-       scroll: en este navegador son 356 px contra 348 de pantalla, así que
-       la página se corría 8 px y se podía arrastrar de lado. Se veía en el
-       hero y en el antes/después, con el texto cortado a la derecha.
-       Acá se mide el ancho de verdad y se guarda en --fo-vw; el CSS usa esa
-       variable. Se vuelve a medir al girar el teléfono.
-       OJO: la guirnalda arrastra el mismo bug (también da 356 contra 348),
-       pero eso se toca aparte: un cambio por vez. */
-    var medirAncho = function () {
-      document.documentElement.style.setProperty(
-        '--fo-vw', document.documentElement.clientWidth + 'px');
+    /* el ancho real, no 100vw (100vw incluye la barra de scroll y corría la página 8 px) */
+    var medir = function () {
+      document.documentElement.style.setProperty('--fo-vw', document.documentElement.clientWidth + 'px');
     };
-    medirAncho();
-    window.addEventListener('resize', medirAncho);
-    window.addEventListener('orientationchange', medirAncho);
+    medir();
+    window.addEventListener('resize', medir);
+    window.addEventListener('orientationchange', medir);
 
-    /* la display. Va acá y no en el HTML para no cargarla en las otras
-       fichas, que no la usan. Condensada y firme: el foco es seguridad,
-       no es la serif romántica de la guirnalda. */
+    /* la letra: SOLO esta ficha la carga */
     if (!document.getElementById('fo-fuente')) {
       var l = document.createElement('link');
       l.id = 'fo-fuente';
       l.rel = 'stylesheet';
-      l.href = 'https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&display=swap';
+      l.href = 'https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&display=swap';
       document.head.appendChild(l);
     }
 
-    var html =
-      /* 🔴 EL HERO ES UN VIDEO, igual que en la guirnalda: arranca solo,
-         va en bucle y el cambio de día a noche se ve siempre, sin que el
-         cliente tenga que tocar ni entender nada.
-         Los TEXTOS NO van quemados en el video: van acá, encima, y ARRIBA
-         (la guirnalda los lleva abajo; esto es lo que él pidió cambiar). */
-      '<div class="fo-hero">' +
-        /* 🔴 preload="none": el video NO se baja al abrir. Primero entra el
-           póster (12 KB) y el cliente ya ve el producto; el video llega
-           después, cuando la página terminó de cargar. Con preload="auto"
-           se traía 224 KB compitiendo con la primera pantalla. */
-        '<video class="fo-video" autoplay muted loop playsinline preload="none"' +
-          ' poster="img/foco-hero-poster.webp?v=1"' +
-          ' aria-label="La misma casa de día y de noche: el foco se carga con el sol y al oscurecer se enciende e ilumina la entrada">' +
-          '<source src="img/foco-hero.mp4?v=3" type="video/mp4">' +
-        '</video>' +
-        /* el resplandor nace donde están los LED y respira al ritmo del
-           video: cuando el foco se enciende, el hero se enciende con él */
-        '<div class="fo-glow" aria-hidden="true"></div>' +
-        /* el haz: se abre desde los LED cuando el foco enciende */
-        '<div class="fo-haz" aria-hidden="true"></div>' +
-        /* el destello del sol sobre el panel: en la parte de DÍA el hero
-           estaba muerto porque el resplandor y el haz solo salen de noche */
-        '<div class="fo-sol" aria-hidden="true"></div>' +
-        /* 🔴 LOS DESTELLOS. James, 24-09: "esos efectos ponselos al hero",
-           señalando los brillos que tiene el metraje del producto. Son
-           puntos de luz que titilan sobre la escena, más vivos cuando el
-           foco está encendido. Se dibujan con CSS, no pesan nada. */
-        '<div class="fo-chispas" aria-hidden="true">' +
-          (function () {
-            var d = '';
-            for (var i = 0; i < 26; i++) {
-              d += '<i style="--x:' + (Math.random() * 100).toFixed(1) + '%;--y:' +
-                   (8 + Math.random() * 84).toFixed(1) + '%;--t:' + (1.6 + Math.random() * 3.2).toFixed(2) +
-                   's;--r:' + (Math.random() * 4).toFixed(2) + 's;--s:' + (1 + Math.random() * 1.8).toFixed(2) + '"></i>';
-            }
-            return d;
-          })() +
-        '</div>' +
-        '<div class="fo-vineta" aria-hidden="true"></div>' +
-        /* 🔴 LAS LETRAS ENTRAN EN CASCADA. James: "que lleguen en cascada".
-           Cada pieza tiene su propio retardo (--d) y sube sola al cargar.
-           El h1 se parte en dos líneas que entran una detrás de la otra. */
-        '<div class="fo-sobre">' +
-          '<span class="fo-rot fo-casc" style="--d:.15s">Se carga con el sol · 77 LED · sensor de movimiento</span>' +
-          '<h1 class="fo-h1">' +
-            '<span class="fo-casc" style="--d:.34s">Tu entrada iluminada,</span>' +
-            '<em class="fo-casc" style="--d:.52s">sin pagar luz.</em>' +
-          '</h1>' +
-          '<p class="fo-frase fo-casc" style="--d:.74s">De día se carga con el sol. De noche se enciende cuando alguien se acerca. Y como parece una cámara, nadie se acerca dos veces.</p>' +
-        '</div>' +
-      '</div>' +
-      '<section class="fo-sec fo-oscura">' +
-        /* 🔴 CONTEO ASCENDENTE (James, 24-09: "ponle conteo ascendente").
-           data-hasta es el número real; data-antes y data-desp son el
-           símbolo y el sufijo, que no se cuentan. Los dos ceros no pueden
-           "subir" a cero, así que hacen un rodillo de dígitos que aterriza
-           en 0: se ve el conteo y no se afirma ninguna cifra que no sea
-           dato del producto. */
-        '<div class="fo-med">' +
-          '<div><b data-hasta="0" data-antes="$" data-rodillo="1">$0</b><span>de cuenta de luz</span></div>' +
-          '<div><b data-hasta="77">77</b><span>LED encendidos</span></div>' +
-          '<div><b data-hasta="0" data-rodillo="1">0</b><span>cables que instalar</span></div>' +
-        '</div>' +
-      '</section>';
-
-    arriba.insertAdjacentHTML('beforebegin', html);
-    /* la galería cuadrada de la ficha sobra: el hero ya muestra el producto */
+    arriba.insertAdjacentHTML('beforebegin', hero());
     ['.gal', '.miniz'].forEach(function (s) {
       var el = arriba.querySelector(s);
       if (el) el.remove();
     });
-    var sec = cont.querySelector('.fo-sec');
-    if (sec) sec.insertAdjacentElement('afterend', arriba);
+    var cifras = cont.querySelector('.fo-cifras');
+    if (cifras) cifras.insertAdjacentElement('afterend', arriba);
 
     var desc = cont.querySelector('section.desc');
     if (desc) {
-      /* orden: primero CÓMO trabaja, después la PRUEBA de las dos fotos,
-         al final las características. Nunca pegados al precio: ahí la
-         ficha ya pone su botón y quedarían dos botones seguidos. */
-      /* 🔴 EL ORDEN ES EL DE LA GUIRNALDA, NO UNO MÍO.
-         James, 24-09: "mira la puta guirnalda" · "por qué haces lo que te
-         da la gana". Tenía razón: me había inventado otro orden y había
-         movido el video a un sitio donde la guirnalda no lo tiene.
-
-         La guirnalda va así, y esto lo copia exacto:
-            hero · precio · EL MOMENTO · LA CINTA · CARACTERÍSTICAS ·
-            descripción (con las fotos adentro) · promo · EL VIDEO
-         Aquí EL MOMENTO es el camino y LA CINTA son los tres pasos.
-
-         🔴 EL VIDEO NO SE TOCA: se queda donde la ficha lo pone, igual que
-         en la guirnalda. Moverlo fue cosa mía y por eso quedó descuadrado. */
-      /* 🔴 UNA SOLA SECCIÓN DE ANTES Y DESPUÉS, Y ES LA QUE YA EXISTÍA.
-         James, 24-09: "tres secciones de antes y después, ¿es para burlarte
-         de mí?". Tenía toda la razón y el error fue mío de principio a fin:
-         la ficha YA trae su bloque .ba-sec con la imagen prod-foco-ba
-         ("EL ANTES Y DESPUÉS QUE SE NOTA"), y yo le monté encima otras dos
-         con LA MISMA FOTO — el camino y las dos apiladas.
-         Las dos mías se fueron. Queda la de la ficha, y se sube acá arriba,
-         al sitio donde la guirnalda pone su momento. */
-      /* primero los tres pasos... */
+      /* 1) cómo trabaja */
       desc.insertAdjacentHTML('beforebegin', bloqueCiclo());
-      /* ...y el antes/después va DETRÁS de ellos, pegado a la descripción.
-         James, 24-09: "quítalo de ahí y lo pones entre las dos secciones
-         esas que te mandé" — entre "Cómo trabaja" y "Qué es y para qué
-         sirve". Antes iba arriba del todo y el botón de la ficha quedaba
-         colgando entre lo claro y lo oscuro. */
+
+      /* 2) el antes/después de la ficha (uno solo) con visor y barrido */
       var ba = cont.querySelector('.ba-sec');
       if (ba) {
         desc.insertAdjacentElement('beforebegin', ba);
-        /* 🔴 EL BOTÓN SALE DE LA SECCIÓN. James, 24-09: "el botón que
-           tienes en la de antes y después, quítalo de ahí y lo pones
-           entre las dos secciones". Venía metido dentro de la banda del
-           antes/después; ahora queda suelto en su propia franja, entre esa
-           sección y la descripción. */
+        var img = ba.querySelector('.ba-img');
+        if (img) img.insertAdjacentHTML('beforeend', MIRA + '<span class="fo-scan" aria-hidden="true"></span>');
+        /* 3) el botón sale de la sección y queda en su propia franja */
         var boton = ba.querySelector('.cta');
         if (boton) {
           var franja = document.createElement('div');
@@ -289,43 +253,17 @@
         }
       }
 
-      /* 🔴 LA LISTA DE VIÑETAS PASA A SER TARJETAS. James, 24-09: "esto se
-         ve feo, hazlo una sección aparte y que sea interactiva como una
-         tarjeta". Era una lista de puntos pegada dentro de la descripción.
-         Se saca, se convierte en tarjetas que responden al tocarlas y se
-         pone en su propia sección. La segunda lista, que es idéntica y
-         estaba repetida más abajo, se va. */
-      var listas = cont.querySelectorAll('section.desc ul');
+      /* 4) lo que trae: la lista de la ficha pasa a tarjetas, en su propia
+         sección ANTES de la descripción (donde la guirnalda pone las suyas) */
+      var listas = desc.querySelectorAll('ul');
       if (listas.length) {
         var puntos = [];
-        listas[0].querySelectorAll('li').forEach(function (li) {
-          puntos.push(li.textContent.trim());
-        });
-        if (puntos.length) {
-          var ico2 = ['sol', 'ojo', 'escudo', 'agua', 'llave', 'casa'];
-          var html2 = '<section class="fo-sec fo-oscura fo-tarj">' +
-            '<span class="fo-rot">Lo que trae</span>' +
-            '<h2 class="fo-h2">Todo esto,<em>en un solo aparato.</em></h2>' +
-            '<div class="fo-grid">' +
-            puntos.map(function (t, i) {
-              var p = t.split(/:\s|\s·\s/);
-              var tit = p[0], sub = p.slice(1).join(' · ');
-              return '<button type="button" class="fo-tar fo-pre" style="--i:' + i + '">' +
-                '<span class="fo-tar-ico">' + ico(ico2[i % ico2.length]) + '</span>' +
-                '<b>' + esc(tit) + '</b>' +
-                (sub ? '<span>' + esc(sub) + '</span>' : '') +
-              '</button>';
-            }).join('') +
-            '</div></section>';
-          listas[0].insertAdjacentHTML('beforebegin', html2);
-          listas[0].remove();
-          /* la copia repetida de más abajo sobra */
-          if (listas[1]) listas[1].remove();
-        }
+        listas[0].querySelectorAll('li').forEach(function (li) { puntos.push(li.textContent.trim()); });
+        [].forEach.call(listas, function (u) { u.remove(); });
+        if (puntos.length) desc.insertAdjacentHTML('beforebegin', bloqueTrae(puntos));
       }
 
-      /* las fotos van DENTRO de la descripción, detrás del primer párrafo,
-         exactamente como las pone la guirnalda */
+      /* 5) las fotos, dentro de la descripción tras el primer párrafo */
       var pd = desc.querySelector('p');
       if (pd) pd.insertAdjacentHTML('afterend', bloqueFotos());
       else desc.insertAdjacentHTML('beforeend', bloqueFotos());
@@ -333,189 +271,197 @@
     return true;
   }
 
-  /* 🔴 PARALLAX DEL HERO. James: "efecto al hero".
-     El video se queda atrás mientras el texto sube: el hero se hunde en
-     vez de irse de golpe. Va con requestAnimationFrame y solo toca
-     transform, así que no obliga al navegador a recalcular la página. */
+  /* ---------------- EFECTOS ---------------- */
+
+  /* el hero: el video se enciende después de cargar la página, y el texto
+     entra DELANTE del cliente (no antes de que alcance a verlo) */
+  function entradaHero() {
+    var vid = document.querySelector('.fo-video');
+    if (vid) {
+      /* 🔴 SIN vid.load(): con "autoplay" el navegador ya lo está bajando, y
+         load() lo pedía otra vez (medido: 147 KB x 2). Solo se le da play. */
+      var prender = function () {
+        try { if (vid.paused) { var p = vid.play(); if (p && p.catch) p.catch(function () {}); } } catch (e) {}
+      };
+      if (document.readyState === 'complete') setTimeout(prender, 300);
+      else window.addEventListener('load', function () { setTimeout(prender, 300); });
+    }
+    if (QUIETO) return;
+    document.body.classList.add('fo-arranca');
+    /* 🔴 SIN requestAnimationFrame: si la pestaña no está al frente el
+       navegador lo congela y el título se quedaba ESCONDIDO (medido: 9 s
+       en "arranca"). Un setTimeout siempre corre; el offsetWidth obliga a
+       pintar el estado escondido antes de soltarlo, para que se vea subir. */
+    setTimeout(function () {
+      void document.body.offsetWidth;
+      document.body.classList.add('fo-listo');
+      decodificar(document.querySelector('.fo-deco'));
+    }, 450);
+  }
+
+  /* el rótulo se "decodifica" como la pantalla de un equipo: letras al azar
+     que se van asentando de izquierda a derecha */
+  function decodificar(el) {
+    if (!el) return;
+    var fin = el.getAttribute('data-txt') || el.textContent;
+    var abc = 'ABCDEFGHJKLMNPRSTUVXYZ0123456789#/';
+    var n = 0, total = 22;
+    var t = setInterval(function () {
+      n++;
+      var hecho = Math.floor(fin.length * n / total);
+      var s = '';
+      for (var i = 0; i < fin.length; i++) {
+        var c = fin.charAt(i);
+        s += (i < hecho || c === ' ' || c === '·') ? c : abc.charAt(Math.floor(Math.random() * abc.length));
+      }
+      el.textContent = s;
+      if (n >= total) { clearInterval(t); el.textContent = fin; }
+    }, 42);
+  }
+
+  /* el hero se hunde un poco al bajar (solo transform) */
   function parallax() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (QUIETO) return;
     var hero = document.querySelector('.fo-hero');
     var vid = document.querySelector('.fo-video');
     var sobre = document.querySelector('.fo-sobre');
     if (!hero || !vid) return;
-    var pidiendo = false;
+    var pide = false;
     function pintar() {
-      pidiendo = false;
-      var y = window.scrollY;
-      var alto = hero.offsetHeight;
-      if (y > alto) return;                    /* fuera de pantalla: no se toca */
-      var t = y / alto;                        /* 0 arriba del todo, 1 al salir */
-      vid.style.transform = 'translate3d(0,' + (y * 0.32) + 'px,0) scale(' + (1 + t * 0.05) + ')';
-      if (sobre) {
-        sobre.style.transform = 'translate3d(0,' + (y * -0.12) + 'px,0)';
-        sobre.style.opacity = String(Math.max(0, 1 - t * 1.5));
-      }
+      pide = false;
+      var y = window.scrollY, alto = hero.offsetHeight;
+      if (y > alto) return;
+      vid.style.transform = 'translate3d(0,' + (y * 0.28).toFixed(1) + 'px,0) scale(' + (1 + y / alto * 0.05).toFixed(3) + ')';
+      if (sobre) sobre.style.transform = 'translate3d(0,' + (y * -0.1).toFixed(1) + 'px,0)';
     }
     window.addEventListener('scroll', function () {
-      if (pidiendo) return;
-      pidiendo = true;
+      if (pide) return;
+      pide = true;
       requestAnimationFrame(pintar);
     }, { passive: true });
-    pintar();
   }
 
-  /* 🔴 LA CASCADA ESPERA A QUE LA PÁGINA ESTÉ LISTA.
-     James: "te pedí efecto de estas letras y nada". El efecto existía pero
-     terminaba a los 1,6 s, mientras el video de 608 KB todavía cargaba: él
-     llegaba siempre tarde y veía el texto ya asentado.
-
-     Acá se esconde el texto (.fo-arranca) y se suelta (.fo-listo) recién
-     cuando el hero tiene algo que mostrar: el primer fotograma del video,
-     o el póster. Así la cascada ocurre DELANTE del cliente.
-
-     CANDADO: el texto solo se esconde desde JavaScript, y hay un plazo de
-     1,2 s que lo suelta pase lo que pase. Si el video no carga nunca, el
-     título igual aparece. */
-  function cascada() {
-    var hero = document.querySelector('.fo-hero');
-    var vid = document.querySelector('.fo-video');
-    if (!hero) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    document.body.classList.add('fo-arranca');
-    var soltado = false;
-    function soltar() {
-      if (soltado) return;
-      soltado = true;
-      /* dos cuadros de margen: que el navegador alcance a pintar el texto
-         escondido antes de animarlo, o se salta la animación entera */
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { document.body.classList.add('fo-listo'); });
-      });
-    }
-    /* con preload="none" el video no empieza solo: se enciende cuando la
-       página ya cargó, para que no compita con la primera pantalla */
-    if (vid) {
-      var prender = function () {
-        try { vid.preload = 'auto'; vid.load(); var p = vid.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {}
-      };
-      if (document.readyState === 'complete') setTimeout(prender, 400);
-      else window.addEventListener('load', function () { setTimeout(prender, 400); });
-    }
-    setTimeout(soltar, 700);         /* el texto entra con el póster, sin esperar al video */
-  }
-
-  /* 🔴 EL CONTEO DE LOS TRES NÚMEROS.
-     Arranca cuando la fila entra en pantalla, no al cargar: si contara
-     antes, el cliente vería el número ya quieto (el mismo error que tenía
-     la cascada del hero).
-     El 77 sube de 0 a 77 con CountUp, que ya está cargado en la ficha.
-     Los dos ceros no pueden subir a cero: hacen un rodillo de dígitos que
-     frena en 0 — se ve el conteo sin afirmar ninguna cifra inventada.
-     CANDADO: el número final ya está escrito en el HTML, así que si esto
-     no corre se lee igual. */
+  /* conteo ascendente de las cifras, cuando la fila entra en pantalla */
   function contar() {
     var fila = document.querySelector('.fo-med');
-    if (!fila || !('IntersectionObserver' in window)) return;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
-
-    /* 🔴 EL CONTEO SE HACE ACÁ, NO CON CountUp.
-       producto.html carga lib/countup.umd.js, pero esa build NO deja nada
-       en window.CountUp: al probarlo daba "undefined" y el 77 se quedaba
-       quieto mientras los otros dos sí giraban. Son doce líneas y no
-       depende de nadie. */
+    if (!fila || QUIETO || !('IntersectionObserver' in window)) return;
     function subir(el, hasta, antes) {
-      var ini = null, dur = 1700;
+      var ini = null, dur = 1600;
       function paso(t) {
         if (ini === null) ini = t;
         var p = Math.min((t - ini) / dur, 1);
-        var e = 1 - Math.pow(1 - p, 3);          /* frena al final */
-        el.textContent = (antes || '') + Math.round(hasta * e);
+        el.textContent = (antes || '') + Math.round(hasta * (1 - Math.pow(1 - p, 3)));
         if (p < 1) requestAnimationFrame(paso);
-        else el.textContent = (antes || '') + hasta;
       }
       requestAnimationFrame(paso);
     }
-
     function rodillo(el, antes) {
-      var giros = 14, i = 0;
-      var t = setInterval(function () {
+      var i = 0, t = setInterval(function () {
         i++;
-        el.textContent = (antes || '') + (i >= giros ? '0' : Math.floor(Math.random() * 9) + 1);
-        if (i >= giros) clearInterval(t);
+        el.textContent = (antes || '') + (i >= 14 ? '0' : Math.floor(Math.random() * 9) + 1);
+        if (i >= 14) clearInterval(t);
       }, 55);
     }
-
-    var obs = new IntersectionObserver(function (filas) {
-      filas.forEach(function (f) {
-        if (!f.isIntersecting) return;
-        obs.unobserve(f.target);
-        f.target.querySelectorAll('b[data-hasta]').forEach(function (b, i) {
-          var hasta = Number(b.getAttribute('data-hasta'));
-          var antes = b.getAttribute('data-antes') || '';
+    var obs = new IntersectionObserver(function (vs) {
+      vs.forEach(function (v) {
+        if (!v.isIntersecting) return;
+        obs.unobserve(v.target);
+        v.target.classList.add('fo-on');
+        v.target.querySelectorAll('b[data-hasta]').forEach(function (b, i) {
           setTimeout(function () {
-            if (b.getAttribute('data-rodillo')) { rodillo(b, antes); return; }
-            subir(b, hasta, antes);
+            var antes = b.getAttribute('data-antes') || '';
+            if (b.getAttribute('data-rodillo')) rodillo(b, antes);
+            else subir(b, Number(b.getAttribute('data-hasta')), antes);
           }, i * 140);
         });
       });
-    }, { threshold: 0.45 });
+    }, { threshold: 0.4 });
     obs.observe(fila);
   }
 
-  function animar() {
-    /* El hero no necesita JavaScript: es un video que corre solo. Esto es
-       solo la entrada de las secciones al aparecer.
-       🔴 El CSS las deja VISIBLES: acá se esconden con .fo-pre justo antes
-       de observarlas. Si este archivo no corre, la página se ve completa
-       igual en vez de dejar una sección en blanco. */
-    if (!('IntersectionObserver' in window)) return;
-    var filas = document.querySelectorAll('.fo-pre');
-    if (!filas.length) return;
-    document.body.classList.add('fo-anima');
+  /* la línea de tiempo se ENCIENDE mientras el cliente baja: el riel se
+     llena y cada paso se prende cuando el riel lo alcanza */
+  function lineaDeTiempo() {
+    var ol = document.querySelector('.fo-linea');
+    var fill = ol && ol.querySelector('.fo-riel i');
+    if (!ol || !fill) return;
+    var pasos = ol.querySelectorAll('.fo-paso');
+    if (QUIETO) { fill.style.transform = 'scaleY(1)'; pasos.forEach(function (p) { p.classList.add('fo-on'); }); return; }
+    var pide = false;
+    function pintar() {
+      pide = false;
+      var r = ol.getBoundingClientRect();
+      var foco = window.innerHeight * 0.62;
+      var p = Math.max(0, Math.min(1, (foco - r.top) / r.height));
+      fill.style.transform = 'scaleY(' + p.toFixed(3) + ')';
+      pasos.forEach(function (li) {
+        var y = li.offsetTop + 14;
+        li.classList.toggle('fo-on', p * r.height >= y);
+      });
+    }
+    function pedir() { if (!pide) { pide = true; requestAnimationFrame(pintar); } }
+    window.addEventListener('scroll', pedir, { passive: true });
+    window.addEventListener('resize', pedir);
+    pintar();
+  }
 
-    /* 🔴 threshold 0: basta con que ASOME. Con el 0,12 que tenía antes, al
-       bajar rápido el observador no alcanzaba a dispararse y ocho bloques
-       —el camino, las dos fotos apiladas, los tres pasos y las cuatro
-       características— se quedaban INVISIBLES para siempre. Medido: del
-       11% al 27% de la página en blanco. */
-    var obs = new IntersectionObserver(function (vistas) {
-      vistas.forEach(function (v) {
+  /* la linterna: un haz sigue el dedo (o el mouse) por encima de la tarjeta */
+  function linterna() {
+    document.querySelectorAll('.fo-tar').forEach(function (t) {
+      function mover(e) {
+        var p = e.touches ? e.touches[0] : e;
+        var r = t.getBoundingClientRect();
+        t.style.setProperty('--mx', (p.clientX - r.left).toFixed(0) + 'px');
+        t.style.setProperty('--my', (p.clientY - r.top).toFixed(0) + 'px');
+      }
+      t.addEventListener('pointermove', mover, { passive: true });
+      t.addEventListener('touchmove', mover, { passive: true });
+      t.addEventListener('pointerdown', function (e) { mover(e); t.classList.add('fo-luz'); });
+      t.addEventListener('pointerleave', function () { t.classList.remove('fo-luz'); });
+      t.addEventListener('pointerup', function () { setTimeout(function () { t.classList.remove('fo-luz'); }, 650); });
+    });
+  }
+
+  /* entrada de tarjetas, fotos y antes/después al aparecer.
+     🔴 Nunca se esconde nada con opacity 0: se prepara recién acá, y una
+     red de seguridad muestra todo lo que ya quedó a la vista. */
+  function revelar() {
+    if (QUIETO || !('IntersectionObserver' in window)) return;
+    var els = document.querySelectorAll('.fo-rev, .ba-img, .fo-cifras');
+    document.body.classList.add('fo-anima');
+    var obs = new IntersectionObserver(function (vs) {
+      vs.forEach(function (v) {
         if (!v.isIntersecting) return;
         v.target.classList.add('fo-in');
         obs.unobserve(v.target);
       });
-    }, { rootMargin: '0px 0px -4% 0px', threshold: 0 });
-    filas.forEach(function (f) { obs.observe(f); });
-
-    /* 🔴 RED DE SEGURIDAD. Aunque el observador falle o se lo salte, esto
-       barre en cada scroll y muestra todo lo que ya quedó a la vista o por
-       encima. Una sección invisible es peor que una sección sin animación. */
-    var pendiente = false;
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+    els.forEach(function (e) {
+      if (e.getBoundingClientRect().top < window.innerHeight * 0.9) { e.classList.add('fo-in'); return; }
+      e.classList.add('fo-pre');
+      obs.observe(e);
+    });
+    var pide = false;
     function barrer() {
-      pendiente = false;
-      var alto = window.innerHeight;
+      pide = false;
       var quedan = 0;
       document.querySelectorAll('.fo-pre:not(.fo-in)').forEach(function (e) {
-        if (e.getBoundingClientRect().top < alto * 0.97) e.classList.add('fo-in');
+        if (e.getBoundingClientRect().top < window.innerHeight) e.classList.add('fo-in');
         else quedan++;
       });
       if (!quedan) window.removeEventListener('scroll', pedir);
     }
-    function pedir() {
-      if (pendiente) return;
-      pendiente = true;
-      requestAnimationFrame(barrer);
-    }
+    function pedir() { if (!pide) { pide = true; requestAnimationFrame(barrer); } }
     window.addEventListener('scroll', pedir, { passive: true });
-    setTimeout(barrer, 900);
   }
 
   /* ficha.js pinta #prod de forma asíncrona: se espera a que exista */
   var intentos = 0;
   (function esperar() {
-    if (montar()) { animar(); parallax(); cascada(); contar(); return; }
+    if (montar()) {
+      entradaHero(); parallax(); contar(); lineaDeTiempo(); linterna(); revelar();
+      return;
+    }
     if (++intentos > 60) return;
     setTimeout(esperar, 100);
   })();
