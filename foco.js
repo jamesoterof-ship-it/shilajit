@@ -444,14 +444,42 @@
     var filas = document.querySelectorAll('.fo-pre');
     if (!filas.length) return;
     document.body.classList.add('fo-anima');
+
+    /* 🔴 threshold 0: basta con que ASOME. Con el 0,12 que tenía antes, al
+       bajar rápido el observador no alcanzaba a dispararse y ocho bloques
+       —el camino, las dos fotos apiladas, los tres pasos y las cuatro
+       características— se quedaban INVISIBLES para siempre. Medido: del
+       11% al 27% de la página en blanco. */
     var obs = new IntersectionObserver(function (vistas) {
       vistas.forEach(function (v) {
         if (!v.isIntersecting) return;
         v.target.classList.add('fo-in');
         obs.unobserve(v.target);
       });
-    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+    }, { rootMargin: '0px 0px -4% 0px', threshold: 0 });
     filas.forEach(function (f) { obs.observe(f); });
+
+    /* 🔴 RED DE SEGURIDAD. Aunque el observador falle o se lo salte, esto
+       barre en cada scroll y muestra todo lo que ya quedó a la vista o por
+       encima. Una sección invisible es peor que una sección sin animación. */
+    var pendiente = false;
+    function barrer() {
+      pendiente = false;
+      var alto = window.innerHeight;
+      var quedan = 0;
+      document.querySelectorAll('.fo-pre:not(.fo-in)').forEach(function (e) {
+        if (e.getBoundingClientRect().top < alto * 0.97) e.classList.add('fo-in');
+        else quedan++;
+      });
+      if (!quedan) window.removeEventListener('scroll', pedir);
+    }
+    function pedir() {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(barrer);
+    }
+    window.addEventListener('scroll', pedir, { passive: true });
+    setTimeout(barrer, 900);
   }
 
   /* ficha.js pinta #prod de forma asíncrona: se espera a que exista */

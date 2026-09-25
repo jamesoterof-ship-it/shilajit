@@ -538,12 +538,20 @@
    de observar: si el archivo no corre, la página se ve completa igual en
    vez de dejar secciones en blanco.
    ============================================================ */
+/* 🔴 NUNCA SE ESCONDE EL CONTENIDO CON opacity 0.
+   Lo tenía así y ocho bloques —el camino, las dos fotos apiladas, los tres
+   pasos y las características— se quedaban INVISIBLES aunque el cliente ya
+   hubiera pasado por ellos: del 11% al 27% de la página en blanco. Probado
+   a mano: ni poniéndoles la clase .fo-in volvían a aparecer.
+
+   Ahora el bloque SIEMPRE se ve. Lo único que se anima es que sube a su
+   sitio. Si nada de esto corre, la página se ve completa igual. Una
+   sección invisible es mucho peor que una sección sin animación. */
 .p-foco.fo-anima .fo-pre {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+  transform: translateY(20px);
+  transition: transform .75s cubic-bezier(.2,.7,.2,1);
 }
-.p-foco.fo-anima .fo-pre.fo-in { opacity: 1; transform: none; }
+.p-foco.fo-anima .fo-pre.fo-in { transform: none; }
 .p-foco.fo-anima .fo-paso.fo-pre:nth-child(2) { transition-delay: .09s; }
 .p-foco.fo-anima .fo-paso.fo-pre:nth-child(3) { transition-delay: .18s; }
 .p-foco.fo-anima .fo-par figure.fo-pre:nth-child(2) { transition-delay: .1s; }
@@ -556,20 +564,18 @@
 .p-foco.fo-anima .fo-fi img,
 .p-foco.fo-anima .fo-camino img,
 .p-foco.fo-anima .fo-par img {
-  opacity: 0;
-  transform: scale(1.07);
-  transition: opacity .9s cubic-bezier(.16,.84,.3,1), transform 1.25s cubic-bezier(.16,.84,.3,1);
+  transform: scale(1.06);
+  transition: transform 1.25s cubic-bezier(.16,.84,.3,1);
 }
 .p-foco.fo-anima .fo-fi.fo-in img,
 .p-foco.fo-anima .fo-camino .fo-in img,
-.p-foco.fo-anima .fo-par .fo-in img { opacity: 1; transform: none; }
+.p-foco.fo-anima .fo-par .fo-in img { transform: none; }
 
 .p-foco.fo-anima .fo-fi figcaption > * {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1);
+  transform: translateY(14px);
+  transition: transform .6s cubic-bezier(.2,.7,.2,1);
 }
-.p-foco.fo-anima .fo-fi.fo-in figcaption > * { opacity: 1; transform: none; }
+.p-foco.fo-anima .fo-fi.fo-in figcaption > * { transform: none; }
 .p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(1) { transition-delay: .28s; }
 .p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(2) { transition-delay: .38s; }
 .p-foco.fo-anima .fo-fi.fo-in figcaption > :nth-child(3) { transition-delay: .48s; }
