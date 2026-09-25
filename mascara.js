@@ -44,17 +44,20 @@
     ['Todo el día', 'Es a prueba de agua: aguanta lluvia, lágrimas y el día completo sin correrse. En la noche sale con agua tibia.'],
   ];
 
+  /* 🔴 25-09 James: "repetiste la misma del hero abajo, no tiene variedad".
+     Las fotos de abajo NO pueden ser el camerino del hero: salen de las otras
+     fotos limpias de la landing vieja de nad (card2, card3, duo). */
   var FOTOS = [
-    ['img/ma-camerino.webp?v=1',
-     'La máscara Flamenco Mega Volume en su envase oro rosa frente a un espejo de camerino, con una mujer aplicándosela al fondo',
-     'La máscara', 'Mega Volume, en oro rosa',
-     'El envase y su cepillo: las cerdas peinan pestaña por pestaña, por eso da volumen sin grumos.'],
-    ['img/ma-tocador.webp?v=1',
-     'Una mujer aplicándose la máscara frente a un espejo de camerino iluminado',
-     'Cómo se usa', 'Dos pasadas frente al espejo',
+    ['img/ma-ojo.webp?v=1',
+     'Primer plano de un ojo con el cepillo de la máscara peinando las pestañas',
+     'El cepillo', 'Peina pestaña por pestaña',
+     'Las cerdas separan cada pestaña y las microfibras la alargan: volumen sin grumos ni pestañas pegadas.'],
+    ['img/ma-aplica.webp?v=1',
+     'Una mujer aplicándose la máscara Flamenco en su casa, con los envases frente a ella',
+     'Cómo se usa', 'Dos pasadas, en tu casa',
      'Una capa para alargar y otra para dar volumen. Sin extensiones, sin postizas y sin pegamento.'],
-    ['img/ma-producto.webp?v=1',
-     'El cepillo de la máscara Flamenco Mega Volume junto a su envase',
+    ['img/ma-duo.webp?v=1',
+     'La máscara Flamenco Mega Volume Waterproof con su cepillo',
      'Por qué no se corre', 'A prueba de agua',
      'Aguanta el día entero, la lluvia y las lágrimas. Y cuando quieras sacarla, basta con agua tibia.'],
   ];
@@ -163,7 +166,7 @@
     return '<div class="ma-fichas">' + FOTOS.map(function (f) {
       return '<figure class="ma-fi ma-rev">' +
         '<div class="ma-foto">' +
-          '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="900" height="' + (f[0].indexOf('camerino') >= 0 ? 1350 : 900) + '">' +
+          '<img src="' + f[0] + '" alt="' + esc(f[1]) + '" loading="lazy" width="900" height="900">' +
           '<span class="ma-telon ma-t1" aria-hidden="true"></span><span class="ma-telon ma-t2" aria-hidden="true"></span>' +
         '</div>' +
         '<figcaption><span class="ma-rot">' + esc(f[2]) + '</span><b>' + esc(f[3]) + '</b><p>' + esc(f[4]) + '</p></figcaption>' +
