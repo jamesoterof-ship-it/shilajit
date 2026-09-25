@@ -942,3 +942,17 @@
    las bandas a sangre tomó 40 px de padding lateral y las dejaba en 290
    de 350. Acá lo anulan. */
 .p-foco #prod section.desc .fo-fichas { padding-left: 0; padding-right: 0; }
+
+/* ============================================================
+   🔴 LA BANDA DE LOS TRES NÚMEROS, MÁS COMPACTA · 24-09
+   James: "esto está muy ancho, no ves lo ordinario que se ve".
+   La banda tomaba el alto de una sección completa (48+42 px de padding)
+   para tres cifras: quedaba un cajón negro medio vacío. Se aprieta a la
+   altura de lo que lleva dentro y los tres pies se alinean arriba, para
+   que el que se parte en dos líneas no descuadre a los otros.
+   ============================================================ */
+.p-foco .fo-sec.fo-oscura:has(.fo-med) { padding-top: 26px; padding-bottom: 26px; }
+.p-foco .fo-med { margin-top: 0; align-items: start; }
+.p-foco .fo-med div { display: flex; flex-direction: column; align-items: center; }
+.p-foco .fo-med b { font-size: clamp(30px, 8.6vw, 44px); line-height: 1; }
+.p-foco .fo-med span { margin-top: 8px; min-height: 2.7em; }
