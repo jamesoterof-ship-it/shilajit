@@ -18,8 +18,8 @@
    Corre DESPUES de ficha.js. Si el producto no es la guirnalda se va sin
    hacer nada. No toca el encabezado (.top) ni el pie (.pie).
 
-   OJO: no se afirma que se encienda sola al anochecer ni cuántas horas
-   dura. Eso no está confirmado con el proveedor.
+   Duración de la luz: alrededor de 8 horas por noche (investigado; James
+   26-09: "si demora ocho horas, se demora ocho horas").
    ============================================================ */
 (function () {
   'use strict';
