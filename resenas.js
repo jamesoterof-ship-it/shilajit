@@ -620,3 +620,1291 @@
   window.RESENAS_PROMEDIO = (window.RESENAS.reduce(function (a, r) { return a + r.estrellas; }, 0)
                              / window.RESENAS.length).toFixed(1);
 })();
+
+/* ============================================================
+   BÁLSAMO DE COLÁGENO ROSETIMES · 29-09-2026
+   Las 158 opiniones del bálsamo de la tienda de España (mismo producto, mismas
+   fotos de compradores en img/rev/), tal cual (James: "la página de España tiene la foto").
+   Con foto primero (15), después las de solo texto.
+   ============================================================ */
+window.RESENAS = (window.RESENAS || []).concat([
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me encanta el aspecto práctico de la aplicación realizada de manera uniforme con un tubo aplicador; es precisa, uniforme y rápida. El aplicador permite aplicar una capa fina que es muy hidratante y suave. Proporciona un cutis radiante y saludable, con menos líneas finas y arrugas. Recomendaría este producto varias veces. sin desperdicio. Muy ligero y nada grasoso. Aromas suaves de talco para bebés. un producto básico antes del maquillaje y por la noche después del cuidado de la piel. Los paquetes múltiples o conjuntos son muy ventajosos. El tamaño es ideal para un bolso de mano o una bolsa de cosméticos.",
+  "estrellas": 5,
+  "fecha": "11/01/2026",
+  "foto": "img/rev/r01.webp"
+ },
+ {
+  "nombre": "a***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "tal como se describe el producto correcto y en buen estado, deja una buena sensación en la piel y no tiene mal olor es el tercero que compro, llegada super rápida",
+  "estrellas": 5,
+  "fecha": "24/12/2025",
+  "foto": "img/rev/r04.webp"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "es la segunda vez que lo compro, ha llegado muy rápido y además me encanta lo bien que deja la piel, lo aconsejo tanto para hombres como para mujeres va muy bien.",
+  "estrellas": 5,
+  "fecha": "17/02/2026",
+  "foto": "img/rev/r07.webp"
+ },
+ {
+  "nombre": "R***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente bálsamo recomiendo su compra, muchas gracias vendedor.",
+  "estrellas": 5,
+  "fecha": "12/12/2025",
+  "foto": "img/rev/r09.webp"
+ },
+ {
+  "nombre": "c***o",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Súper hidratante este bálsamo. Es el segundo que compro.",
+  "estrellas": 5,
+  "fecha": "04/10/2025",
+  "foto": "img/rev/r10.webp"
+ },
+ {
+  "nombre": "L***o",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "🗨 El paquete fue recibido 12 días después del pago. El embalaje es bueno: una caja de cartón envuelta en film herméticamente sellado. El embalaje indica un peso de 9 gramos. También hay una fecha de fabricación del 22/11/2025, así como una fecha de caducidad del 21/11/2028. Se enumeran los ingredientes de lo que está hecho, pero no tengo conocimientos en este asunto. El bálsamo tiene la forma de un tubo de lápiz labial ligeramente más grande. Altura: 10 cm, diámetro: 2,5 cm. El bálsamo en sí se expande un poco más, aproximadamente 3 cm. El olor no es fuerte, es suave y agradable. Se siente grasoso en la piel, pero no la apelmaza. Probablemente debería usarse por la noche. Lo llevaré al trabajo y lo probaré. Si surge algún problema, actualizaré la reseña.",
+  "estrellas": 5,
+  "fecha": "09/01/2026",
+  "foto": "img/rev/r12.webp"
+ },
+ {
+  "nombre": "R***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente producto, recomiendo su compra, llegó dentro del tiempo estimado, muchas gracias al vendedor 😀",
+  "estrellas": 5,
+  "fecha": "09/12/2025",
+  "foto": "img/rev/r17.webp"
+ },
+ {
+  "nombre": "c***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Buen hidratante precio excelente recomendada",
+  "estrellas": 5,
+  "fecha": "09/10/2025",
+  "foto": "img/rev/r24.webp"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "ya lo he pedido anteriormente es muy bueno te hidrsta mucho",
+  "estrellas": 5,
+  "fecha": "08/02/2026",
+  "foto": "img/rev/r33.webp"
+ },
+ {
+  "nombre": "L***l",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "gracias llego rápido este es el segundo que pido me gusto mucho",
+  "estrellas": 5,
+  "fecha": "07/10/2025",
+  "foto": "img/rev/r35.webp"
+ },
+ {
+  "nombre": "M***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Queda por probar pera la presentación es muy bonita y tiene un olor suave y agradable 💖",
+  "estrellas": 5,
+  "fecha": "10/11/2025",
+  "foto": "img/rev/r37.webp"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Esta es la segunda vez que los compro, me encantan.",
+  "estrellas": 5,
+  "fecha": "24/04/2026",
+  "foto": "img/rev/r38.webp"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente y muy efectiva .",
+  "estrellas": 5,
+  "fecha": "02/06/2026",
+  "foto": "img/rev/r40.webp"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Llegó hoy, no tuve tiempo de evaluar el producto, pero el vendedor es confiable y es tal como se describe en el anuncio. Después de unos días, planeo regresar para evaluar el producto. Llegó después del plazo establecido por el vendedor debido al mal servicio del servicio postal aquí en Brasil, especialmente en Itajaí. Sin embargo, el vendedor lo envió dentro del tiempo esperado. Compré dos de inmediato para que la espera y el precio valieran la pena.",
+  "estrellas": 5,
+  "fecha": "06/05/2026",
+  "foto": "img/rev/r45.webp"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "para llevar en el bolso me gusta hidrata la parte de la piel seca no me da olor",
+  "estrellas": 3,
+  "fecha": "26/09/2025",
+  "foto": "img/rev/r55.webp"
+ },
+ {
+  "nombre": "K***n",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "tercera vez que pido, siento que ya no puedo vivir sin el, es súper cremosito y humectante, de verdad lo recomiendo muchísimo, tengo piel mixta y muy delicada, y no me ha causado ningún brote ni alergia.",
+  "estrellas": 5,
+  "fecha": "20/11/2025"
+ },
+ {
+  "nombre": "A***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "¡Bálsamo en barra muy bueno! El empaque es bonito y está bien diseñado, aproximadamente un 50% más grande que un lápiz labial normal. Ofrece un hermoso efecto de piel de cristal con un acabado luminoso y se siente agradable al contacto con la piel. Los ingredientes son buenos, quizás no extraordinarios, pero más que adecuados, especialmente para pieles más jóvenes. En general, un excelente producto por el precio, perfecto para llevar en tu bolso y realizar retoques rápidos.",
+  "estrellas": 5,
+  "fecha": "02/11/2025"
+ },
+ {
+  "nombre": "A***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Genial, tiene una textura transparente que es súper nutritiva, pero al mismo tiempo se transforma en una base muy ligera e hidratante.",
+  "estrellas": 5,
+  "fecha": "11/11/2025"
+ },
+ {
+  "nombre": "s***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Bastante bueno no puedo decir si hace su función porque llevo poco tiempo utilizándolo pero la textura es bastante bueno y ligera no es como otras cremas en barras que se sienten secas al ponerlas o se sienten pesadas en la piel está en cambio una vez que te la pones y masajeas en la cara desaparece suavemente sin dejarte una sensación de pesadez bastante fácil de utilizar pero trae muy poco producto lo volvería a comprar",
+  "estrellas": 5,
+  "fecha": "28/05/2026"
+ },
+ {
+  "nombre": "Т***к",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Hidrata y suaviza, dejando una sensación agradable en los labios. Hermoso tono sutil 😊. Calma los labios 👄, hidrata bien y restaura 👌. Lo recomiendo 😉.",
+  "estrellas": 5,
+  "fecha": "21/12/2025"
+ },
+ {
+  "nombre": "f***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Esta no es la primera vez que hago un pedido. Me gusta mucho este producto. Tiene un aroma agradable. Después de aplicarlo, la piel se ve mejor y más hidratada. Primero aplico mi crema hidratante facial, y una vez que se absorbe bien, aplico este de colágeno en mi rostro y cuello por la mañana.",
+  "estrellas": 5,
+  "fecha": "05/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me encanta es mi tercera compra de este producto. Muy hidratante para cara cuello y escote. Lo utilizo por las noches despues de la limpieza facial. Por la mañana piel jugosa y buena cara",
+  "estrellas": 5,
+  "fecha": "23/12/2025"
+ },
+ {
+  "nombre": "I***n",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Utilizo esto como un paso de cuidado de la piel para la zona debajo de los ojos mientras me maquillo, y sinceramente funciona. Es hidratante y se adapta muy bien a tu piel. Disminuye mis líneas finas y arrugas cuando me aplico corrector.",
+  "estrellas": 5,
+  "fecha": "25/03/2026"
+ },
+ {
+  "nombre": "m***m",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "me ha gustado el efecto que da y la hidratación que proporciona. Como rutina fácil diaria o antes del maquillaje para que el corrector quede hidratado. La tienda Kiko la tiene igual muchísimo más cara",
+  "estrellas": 5,
+  "fecha": "01/12/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "aproveche la promo de 2 piezas, por qué el que tengo ya se me estaba terminando, lo pedí dudando un poco, ya que el que tengo es de otra marca también de Ali, pero no me arrepiento de haberlo cambiado, pague por 2 lo que había pagado por 1 de otra marca y además llega más cantidad, la sensación en los labios es hidratante y ligera, tiene un poco de olor a perfume nada desagradable, es hermoso el empaque, llegó bien sellado 10/10 lo ame",
+  "estrellas": 5,
+  "fecha": "23/12/2025"
+ },
+ {
+  "nombre": "K***n",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Lo super recomiendo, me encanta, como hidratante en cara, ojeras, como base de maquillaje, como balsamo de labios, el que compre primero ya casi me lo acabo así que pedí dos más, porque me encanta para todo!!!",
+  "estrellas": 5,
+  "fecha": "10/11/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "El artículo llegó muy rápido, especialmente considerando que el pedido coincidió con el Año Nuevo Chino. Agradable y de aroma suave. Hidratante y se desliza fácilmente sin ser grasoso. Me encanta el tono de color que produce. Un imprescindible para quienes viven en un país donde la piel tiende a deshidratarse.",
+  "estrellas": 5,
+  "fecha": "01/03/2026"
+ },
+ {
+  "nombre": "M***R",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Te deja brillando como el sol pero me gusta, totalmente efecto glowy. Ahora en invierno se me seca demasiado la piel, sirve perfecto para sellar la crema hidratante y preparar la piel para el maquillaje. Recomiendo por su facil aplicacion, sirve para toda la cara incluso los labios, huele rico",
+  "estrellas": 5,
+  "fecha": "12/07/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "es la tercera vez que compro y compraré muchos más mi piel está muy suave y mi madre tiene rosácea y no se puede poner según que producto por qué le hace daño y justo este le va muy bien le ha dejado la piel bien hidratada y suave. lo usamos todos los de la casa mi hermano también, lo recomiendo hasta para los hombres.",
+  "estrellas": 5,
+  "fecha": "09/07/2026"
+ },
+ {
+  "nombre": "i***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Súper grande muy bueno ,ya lo usé y deja un olor y los labios muy hidratados",
+  "estrellas": 5,
+  "fecha": "27/10/2025"
+ },
+ {
+  "nombre": "S***h",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Huelen super bien y hidratan - mejor si la cara es un poco mojada porque asi los aceites se absorben mejor - eso se aplica a cualquier producto de aceite corporal o facial. Hay poco producto pero suficiente para lo que cuesta - es perfecto para cuando te vas de viaje y quieres llevar menos cosas en el equipaje.",
+  "estrellas": 5,
+  "fecha": "21/10/2025"
+ },
+ {
+  "nombre": "Y***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy hidratante y con un aroma muy agradable. La piel es muy suave donde la he utilizado.",
+  "estrellas": 5,
+  "fecha": "08/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "me gusta para hidratar y dar brillo a mi rostro,queda una sensación suave y con brillo en mi piel,lo volveré a comprar. llegó el día que se acordó",
+  "estrellas": 4,
+  "fecha": "01/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Hidrata y es rápido de usar, además es perfecto para llevar en tu bolso.",
+  "estrellas": 5,
+  "fecha": "23/11/2025"
+ },
+ {
+  "nombre": "Ю***а",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Aunque huele bien, parece grasoso, pero se absorbe fácilmente. Parece que se agotará rápido. Llegó rápidamente y, después de una semana de uso, solo he tenido impresiones positivas. Es conveniente de usar.",
+  "estrellas": 5,
+  "fecha": "09/12/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "llegó perfecto y nada más abrirlo lo probé,la curiosidad mató al gato jeje pero si funciona me gusta .lo recomiendo sin duda",
+  "estrellas": 5,
+  "fecha": "14/04/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Volveré a pedir el bálsamo. muy bien. Llegó antes de la fecha especificada, en buenas condiciones. Recomiendo. gracias vendedor.",
+  "estrellas": 5,
+  "fecha": "27/10/2025"
+ },
+ {
+  "nombre": "A***z",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me encantó es muy humectante volveré a pedir otro la entrega fue súper rápida Es de buena calidad yo lo recomiendo",
+  "estrellas": 5,
+  "fecha": "29/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Los amooo, siempre los compro, me encantan para humectar. lo recomiendo muchísimo.",
+  "estrellas": 5,
+  "fecha": "05/07/2026"
+ },
+ {
+  "nombre": "K***n",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Este producto me encanta!! ya lo he comprado varias veces porque me gusta mucho, recomendadisimo.",
+  "estrellas": 5,
+  "fecha": "11/12/2025"
+ },
+ {
+  "nombre": "4***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "lo recomiendo totalmente para ti que eres poco cuidada con tu rostro excelente producto para hidratación",
+  "estrellas": 5,
+  "fecha": "10/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "La presentación es preciosa, y el producto es genial, no es pesado ni te acalora así que es perfecto en primavera y verano humectando y dejando un acabado ligero",
+  "estrellas": 5,
+  "fecha": "13/03/2026"
+ },
+ {
+  "nombre": "d***e",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Pedido realizado el 25 de diciembre y recibido hoy. Entrega ultrarrápida 🙏 Son perfectos, huelen genial y dejan la piel muy suave. Veremos en los próximos días, pero soy optimista. Gracias al vendedor por la rapidez y la calidad 🤗.",
+  "estrellas": 5,
+  "fecha": "03/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente producto, recomiendo su compra, tengo varios meses usando esta marca del producto, vino bien empaquetado, buena calidad, buen embalaje, muchas gracias vendedor, seguiré comprando, ya que ahora es una rutina de uso y cumple con la descripción del producto 😀",
+  "estrellas": 5,
+  "fecha": "23/06/2026"
+ },
+ {
+  "nombre": "t***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy satisfecho con este producto, es una compra recurrente. Gran precio por 2 artículos",
+  "estrellas": 5,
+  "fecha": "11/10/2025"
+ },
+ {
+  "nombre": "R***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente producto, recomiendo su compra, llegó dentro del tiempo estimado, muchas gracias al vendedor 😀",
+  "estrellas": 5,
+  "fecha": "30/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente producto, lo recomiendo ampliamente 👌",
+  "estrellas": 5,
+  "fecha": "08/10/2025"
+ },
+ {
+  "nombre": "j***j",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Utilizo esto como base para aplicar mi maquillaje, y parece funcionar muy bien.",
+  "estrellas": 5,
+  "fecha": "24/02/2026"
+ },
+ {
+  "nombre": "a***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy agradable y humectante, con un aroma suave que no es abrumador (tengo la nariz muy sensible a los aromas). Un aroma muy suave a rosa/floral. La piel queda muy hidratada y suave después de usarlo, pero no me deja una sensación grasosa, lo cual es genial.",
+  "estrellas": 5,
+  "fecha": "12/11/2025"
+ },
+ {
+  "nombre": "N***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Genial, tal como se describe, hidratante para la piel y los ojos.",
+  "estrellas": 5,
+  "fecha": "24/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "He comprado esto varias veces y me lo he puesto en el cuello; es muy hidratante. buen producto",
+  "estrellas": 5,
+  "fecha": "07/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente para piel madura que desea textura ligera y natural, cpbertura media, se ajusta a cualquier tono de piel.",
+  "estrellas": 5,
+  "fecha": "09/11/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Es una barrita con aspecto de vaselina , al aplicarla tiene buen olor ( no mucho) y resulta agradable .Queda un aspecto glow y la piel lo absorbe, no queda como una capa impermeable sino que hidrata.De momento me gusta y me resulta agradable",
+  "estrellas": 5,
+  "fecha": "24/05/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Super hidratante, excelente para los ojos",
+  "estrellas": 5,
+  "fecha": "10/03/2026"
+ },
+ {
+  "nombre": "E***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "es la segunda vez que pido uno, es hidratante",
+  "estrellas": 5,
+  "fecha": "13/12/2025"
+ },
+ {
+  "nombre": "A***z",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "super hidratante es la segunda vez que compro lo recomiendo",
+  "estrellas": 5,
+  "fecha": "07/01/2026"
+ },
+ {
+  "nombre": "L***R",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy hidratante, no irrita ni pica, ligero aroma (agradable) que no molesta. Lo he probado en el contorno de los ojos",
+  "estrellas": 5,
+  "fecha": "10/10/2025"
+ },
+ {
+  "nombre": "j***j",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Segunda compra. Lo uso para difuminar mi base de maquillaje, es realmente bueno y funciona muy bien para mí.",
+  "estrellas": 5,
+  "fecha": "27/02/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "está barra es una maravilla, la uso no solo para la cara, también para las manos,hidrata mucho",
+  "estrellas": 5,
+  "fecha": "06/02/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy práctico de usar y cabe perfectamente en el neceser.",
+  "estrellas": 5,
+  "fecha": "27/03/2026"
+ },
+ {
+  "nombre": "a***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "es excelente , solo debes usar un poco pero no es KOREANO! ES CHINO su origen",
+  "estrellas": 5,
+  "fecha": "15/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Es muy hidratante, pero se siente pesado y grasoso en la piel. Se siente muy bien en los labios. Suelo tener los codos muy secos, así que probé un poco y funcionó de maravilla (solo un toque extra :))",
+  "estrellas": 5,
+  "fecha": "25/11/2025"
+ },
+ {
+  "nombre": "J***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me encantó esta crema en forma de rodillo, ya la probé y se siente maravillosa en la piel 👍👍👍👍 La recomiendo.",
+  "estrellas": 4,
+  "fecha": "14/02/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Perfecto, hidrató muy bien mi rostro, me encantó, solo que el olor no es muy agradable, pero todo llegó en buen estado.",
+  "estrellas": 5,
+  "fecha": "27/08/2026"
+ },
+ {
+  "nombre": "s***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "¡Súper! Hermoso en los pómulos.",
+  "estrellas": 5,
+  "fecha": "31/12/2025"
+ },
+ {
+  "nombre": "E***.",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy hidratante, usado en zona ojera no irritante",
+  "estrellas": 5,
+  "fecha": "14/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Producto práctico, ideal para llevar en el bolso, hidrata bien, y tiene un empaque hermoso.",
+  "estrellas": 5,
+  "fecha": "15/09/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Los uso mucho y también los regalo; hidratan muy bien.",
+  "estrellas": 4,
+  "fecha": "18/03/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Aroma muy ligero y agradable. La saturación del color no está presente, es más como un protector de piel graso en barra.",
+  "estrellas": 5,
+  "fecha": "30/11/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me encanta este producto... es mi segunda compra y funciona de maravilla... compra más, te va a encantar. 💓",
+  "estrellas": 5,
+  "fecha": "02/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me gusta y lo uso a diario",
+  "estrellas": 4,
+  "fecha": "08/12/2025"
+ },
+ {
+  "nombre": "K***n",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Tiene buen tamaño, se siento rico en la piel te la deja brillosita, me gustó la textura, lo volvería a comprar.",
+  "estrellas": 5,
+  "fecha": "12/10/2025"
+ },
+ {
+  "nombre": "L***n",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Tenía muchas ganas de tener este producto ya he probado este tipo de productos y me gusta mucho",
+  "estrellas": 5,
+  "fecha": "10/05/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Todo estuvo bien con la compra, volvería a comprar. Me gustó el producto.",
+  "estrellas": 5,
+  "fecha": "08/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "todavía no lo e probado pero este vendedor se merece un10000 rápido bien envuelto todo perfecto y rápido sind duda comprare todo el",
+  "estrellas": 5,
+  "fecha": "31/05/2026"
+ },
+ {
+  "nombre": "M***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Súper, maravilloso para mi piel seca y mixta. Estoy muy satisfecho, gracias 🤌🏻💕",
+  "estrellas": 5,
+  "fecha": "21/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "el pedido llegó rapidísimo, la textura, es ligera y cremosa, se extiende fácilmente y el olor muy sutil también.",
+  "estrellas": 5,
+  "fecha": "10/06/2026"
+ },
+ {
+  "nombre": "E***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente producto, mi piel está radiante y bien hidratada. Estoy muy contenta con él, me siento como si tuviera 30 años cuando me miro en el espejo. Este verano cumpliré 51.",
+  "estrellas": 5,
+  "fecha": "08/06/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Esta es la tercera vez que hago un pedido. Estoy satisfecho con el producto. Realmente hidrata la piel.",
+  "estrellas": 5,
+  "fecha": "06/03/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Lápiz labial moderno y elegante para todas las ocasiones, perfecto para los labios. Entrega rápida. Empaque impecable.",
+  "estrellas": 5,
+  "fecha": "04/03/2026"
+ },
+ {
+  "nombre": "n***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Estimado vendedor, muchas gracias por la rápida entrega, el paquete llegó en perfectas condiciones. Estoy muy satisfecho con esto.",
+  "estrellas": 5,
+  "fecha": "20/12/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "me gustó, hidrata bastante bien. deja la piel muy suave, tiene un aroma delicioso",
+  "estrellas": 5,
+  "fecha": "12/03/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy buena calidad y cumple con lo que promete.",
+  "estrellas": 5,
+  "fecha": "14/03/2026"
+ },
+ {
+  "nombre": "a***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Buena textura eh hidratación",
+  "estrellas": 5,
+  "fecha": "30/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Tiene un olor muy rico y es humectante",
+  "estrellas": 5,
+  "fecha": "13/05/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Tiene buena pinta. Huele bien. Tamaño adecuado al precio.",
+  "estrellas": 5,
+  "fecha": "29/05/2026"
+ },
+ {
+  "nombre": "C***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente producto, mi piel ha mejorado, se ve más joven y fresca.",
+  "estrellas": 5,
+  "fecha": "08/03/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Llevo muchísimos años comprando en AliExpress y estoy encantada",
+  "estrellas": 5,
+  "fecha": "21/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Realmente me gusta, hidrata y da un toque agradable de luminosidad.",
+  "estrellas": 5,
+  "fecha": "10/10/2025"
+ },
+ {
+  "nombre": "M***o",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "¡Ya lo compré y me gustó mucho! Ahora estoy comprando el par nuevamente.",
+  "estrellas": 5,
+  "fecha": "11/12/2025"
+ },
+ {
+  "nombre": "l***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Representa perfectamente lo que indicó el vendedor. Lo recomiendo.",
+  "estrellas": 5,
+  "fecha": "10/02/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me encantó el producto. La entrega fue súper rápida. 5 estrellas",
+  "estrellas": 5,
+  "fecha": "11/05/2026"
+ },
+ {
+  "nombre": "E***m",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Está muy bien,el color no sube mucho se mantiene bien",
+  "estrellas": 5,
+  "fecha": "26/11/2025"
+ },
+ {
+  "nombre": "W***n",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy buen aplicador para usar. El aplicador se extiende bien y se siente genial.",
+  "estrellas": 5,
+  "fecha": "21/05/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Aún no probado en la piel, pero según las reseñas parece muy bueno.",
+  "estrellas": 5,
+  "fecha": "19/11/2025"
+ },
+ {
+  "nombre": "A***n",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Funciona bien, altamente recomendado.",
+  "estrellas": 5,
+  "fecha": "19/05/2026"
+ },
+ {
+  "nombre": "M***o",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excepcional desde el primer uso",
+  "estrellas": 5,
+  "fecha": "02/12/2025"
+ },
+ {
+  "nombre": "Н***р",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Gran producto, aroma agradable, textura agradable.",
+  "estrellas": 5,
+  "fecha": "25/10/2025"
+ },
+ {
+  "nombre": "a***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Un aroma ligero y agradable, funciona muy bien.",
+  "estrellas": 5,
+  "fecha": "12/04/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "estoy muy contenta con el articulo",
+  "estrellas": 5,
+  "fecha": "04/02/2026"
+ },
+ {
+  "nombre": "m***t",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "muy satisfecha con el producto",
+  "estrellas": 5,
+  "fecha": "23/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me encanta este producto.",
+  "estrellas": 5,
+  "fecha": "18/02/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente bálsamo para la piel 🌟 🌟 🌟 🌟 🌟",
+  "estrellas": 5,
+  "fecha": "16/02/2026"
+ },
+ {
+  "nombre": "a***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Es muy agradable, me gusta.",
+  "estrellas": 5,
+  "fecha": "30/09/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente humectante. Me encanta.",
+  "estrellas": 5,
+  "fecha": "27/05/2026"
+ },
+ {
+  "nombre": "C***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Me encantooo me deja la piel húmeda e hidratada",
+  "estrellas": 5,
+  "fecha": "18/12/2025"
+ },
+ {
+  "nombre": "M***l",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Bastante bien. Recomendado",
+  "estrellas": 5,
+  "fecha": "03/01/2026"
+ },
+ {
+  "nombre": "s***e",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Producto excelente, envío muy rápido, es mi segundo pedido.",
+  "estrellas": 5,
+  "fecha": "31/10/2025"
+ },
+ {
+  "nombre": "I***o",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Se siente genial en la cara",
+  "estrellas": 5,
+  "fecha": "17/04/2026"
+ },
+ {
+  "nombre": "n***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Super hidratante y huele muy bien",
+  "estrellas": 5,
+  "fecha": "16/12/2025"
+ },
+ {
+  "nombre": "m***t",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "satisfecha con el producto",
+  "estrellas": 5,
+  "fecha": "09/12/2025"
+ },
+ {
+  "nombre": "T***S",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Práctico, fácil de usar y muy bueno",
+  "estrellas": 5,
+  "fecha": "08/07/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "se siente liviana y muy rica",
+  "estrellas": 5,
+  "fecha": "07/08/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente producto, altamente recomendado 🙂",
+  "estrellas": 5,
+  "fecha": "08/05/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Un producto calidad-precio increíble,la entrega fantastica,un chico muy amable y mono me lo dió en mano.",
+  "estrellas": 4,
+  "fecha": "07/07/2026"
+ },
+ {
+  "nombre": "Х***а",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Aún no lo he usado, pero está bien empaquetado y tiene buena apariencia; veremos cómo funciona en la práctica.",
+  "estrellas": 5,
+  "fecha": "23/12/2025"
+ },
+ {
+  "nombre": "c***y",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Muy bueno, excelente relación calidad-precio",
+  "estrellas": 5,
+  "fecha": "31/05/2026"
+ },
+ {
+  "nombre": "o***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Un producto que vale cada centavo",
+  "estrellas": 5,
+  "fecha": "08/12/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Recomiendo a este vendedor.",
+  "estrellas": 5,
+  "fecha": "21/04/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "llegó en perfectas condiciones",
+  "estrellas": 5,
+  "fecha": "11/03/2026"
+ },
+ {
+  "nombre": "a***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "¡Parece genial! ¡Solo lo he usado un par de veces! ¡Me gusta mucho!",
+  "estrellas": 4,
+  "fecha": "05/06/2026"
+ },
+ {
+  "nombre": "Z***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Bastante hidratante, aunque no dura mucho tiempo.",
+  "estrellas": 5,
+  "fecha": "09/11/2025"
+ },
+ {
+  "nombre": "k***o",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "llegaron bien, muy buenos",
+  "estrellas": 4,
+  "fecha": "15/10/2025"
+ },
+ {
+  "nombre": "b***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "da mucho brillo hidrata mucho",
+  "estrellas": 4,
+  "fecha": "10/11/2025"
+ },
+ {
+  "nombre": "S***t",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Estos productos ayudan a suavizar la piel y, la verdad, me encanta que realmente funcionen.",
+  "estrellas": 5,
+  "fecha": "01/04/2026"
+ },
+ {
+  "nombre": "D***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "¡Gracias de nuevo, vendedores! ¡Esto es tan hidratante! ! 🌸 🌸",
+  "estrellas": 5,
+  "fecha": "07/12/2025"
+ },
+ {
+  "nombre": "A***z",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "barras super hidratantes es la segunda vez que compro",
+  "estrellas": 5,
+  "fecha": "07/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Paquete recibido. Aún no lo he probado, pero tiene muy buena pinta y huele bien. Espero obtener buenos resultados.",
+  "estrellas": 5,
+  "fecha": "05/05/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Acabo de probarlo y es un buen bálsamo hidratante. Veremos cómo funciona en unas semanas. Llegó como un par, tal como se describía.",
+  "estrellas": 5,
+  "fecha": "11/06/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Estoy muy, muy feliz con el producto, y que Dios bendiga al vendedor por mí, porque ni siquiera esperaba que fuera exactamente lo que vi en la plataforma. Me encanta",
+  "estrellas": 5,
+  "fecha": "09/09/2026"
+ },
+ {
+  "nombre": "T***g",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Huele bien, compré 2 del mismo tamaño. como se muestra en las imágenes. La entrega fue rápida.",
+  "estrellas": 5,
+  "fecha": "18/11/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Es un producto realmente muy bueno.",
+  "estrellas": 5,
+  "fecha": "02/11/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Estoy satisfecho con esto, gracias. vendedor",
+  "estrellas": 5,
+  "fecha": "26/06/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "llegó a tiempo, aún no lo uso pero lo probaré y subiré mi opinión del producto",
+  "estrellas": 5,
+  "fecha": "24/02/2026"
+ },
+ {
+  "nombre": "C***y",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Bálsamo facial de alta calidad",
+  "estrellas": 5,
+  "fecha": "10/06/2026"
+ },
+ {
+  "nombre": "l***l",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "El paquete llegó rápido y en buen estado.",
+  "estrellas": 5,
+  "fecha": "07/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Llegó bien empaquetado, en buen estado.",
+  "estrellas": 5,
+  "fecha": "12/01/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "es la primera vez que compro, leí y se oye prometedor, llegaron mis 4 productos, ansiosa por probarlos, muchas gracias Aliexpress y al vendedor",
+  "estrellas": 4,
+  "fecha": "29/03/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Producto tal como se describe. Buena relación calidad-precio.",
+  "estrellas": 5,
+  "fecha": "15/01/2026"
+ },
+ {
+  "nombre": "J***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "No me llegó nunca pero me devolvieron el dinero pero tengo que decir que el producto es muy bueno ya que otras beses lo e comprado",
+  "estrellas": 5,
+  "fecha": "10/05/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "rápido y en buenas condiciones lo probaré para ver que tal",
+  "estrellas": 5,
+  "fecha": "27/05/2026"
+ },
+ {
+  "nombre": "E***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Entrega rápida. Aroma muy agradable. Primera vez comprando.",
+  "estrellas": 4,
+  "fecha": "04/01/2026"
+ },
+ {
+  "nombre": "S***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Excelente servicio y entrega.",
+  "estrellas": 5,
+  "fecha": "15/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Gracias. Llegó en excelentes condiciones.",
+  "estrellas": 5,
+  "fecha": "30/09/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "El artículo llego bien y rápido a Chile... hidrata bastante...",
+  "estrellas": 4,
+  "fecha": "08/10/2025"
+ },
+ {
+  "nombre": "v***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Fantástico, excelente, potente hidrante.",
+  "estrellas": 5,
+  "fecha": "21/02/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Recibido en buen estado. Aún no lo ha probado.",
+  "estrellas": 5,
+  "fecha": "02/12/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Llegó con el embalaje dañado, pero está en perfectas condiciones.",
+  "estrellas": 5,
+  "fecha": "16/07/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "llego en perfecto estado lo probare",
+  "estrellas": 5,
+  "fecha": "14/11/2025"
+ },
+ {
+  "nombre": "i***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "❤️❤️❤️❤️❤️❤️❤️❤️❤️🥰🥰🥰🥰🥰♥️♥️♥️♥️♥️♥️",
+  "estrellas": 5,
+  "fecha": "23/03/2026"
+ },
+ {
+  "nombre": "C***z",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "gracias llego bien el producto",
+  "estrellas": 5,
+  "fecha": "25/01/2026"
+ },
+ {
+  "nombre": "C***s",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Recibido, pero aún no lo he probado. Buen embalaje. Envío rápido.",
+  "estrellas": 5,
+  "fecha": "30/10/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Aún no lo he probado, pero se ve muy bien.",
+  "estrellas": 5,
+  "fecha": "03/10/2025"
+ },
+ {
+  "nombre": "M***a",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Llego muy rápido,aún no lo e probado.",
+  "estrellas": 5,
+  "fecha": "12/05/2026"
+ },
+ {
+  "nombre": "E***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "espero k vaya bien, aún no lo probe",
+  "estrellas": 5,
+  "fecha": "21/11/2025"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Aún no lo he usado, pero parece ser bueno.",
+  "estrellas": 5,
+  "fecha": "07/05/2026"
+ },
+ {
+  "nombre": "Anónimo",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "Es como en la foto, no lo he probado.",
+  "estrellas": 5,
+  "fecha": "08/09/2026"
+ },
+ {
+  "nombre": "o***r",
+  "comuna": "",
+  "producto": "Bálsamo de Colágeno Rosetimes",
+  "texto": "¡Vaya, un producto de misiles!",
+  "estrellas": 5,
+  "fecha": "21/11/2025"
+ }
+]);
