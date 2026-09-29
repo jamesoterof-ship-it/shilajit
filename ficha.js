@@ -52,7 +52,7 @@
     else { try { window._CMP = localStorage.getItem('_cmp') || ''; } catch (e) { window._CMP = ''; } }
   } catch (e) { window._CMP = ''; }
 
-  var id = new URLSearchParams(location.search).get('p');
+  var id = window.__P || new URLSearchParams(location.search).get('p');
   var TODOS = window.PRODUCTOS || [];
   var p = TODOS.find(function (x) { return x.id === id; });
   var cont = $('prod');

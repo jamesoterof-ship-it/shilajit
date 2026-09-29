@@ -2,6 +2,24 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
+<script>
+/* LINK CORTO EN LA BARRA (James, 29-09: "esos links largos no los pongas, te queda prohibido").
+   La ficha es UNA (producto.html?p=id), pero la barra tiene que mostrar jayegroup.com.co/id.
+   Se guarda el id en window.__P (lo leen ficha.js y los scripts de cada producto) y se
+   reescribe la barra SIN recargar. Se deja /id sin barra final para que las rutas relativas
+   (img/, *.js) sigan resolviendo contra la raíz y los #anclas no salgan de la página.
+   Los demás parámetros (cmp, fbclid, utm) se conservan: atan la venta al anuncio. */
+(function () {
+  try {
+    var q = new URLSearchParams(location.search), p = q.get('p') || '';
+    window.__P = p;
+    if (p && /^[a-z0-9-]+$/.test(p) && /producto.html$/.test(location.pathname)) {
+      q.delete('p'); var r = q.toString();
+      history.replaceState(history.state, '', '/' + p + (r ? '?' + r : '') + location.hash);
+    }
+  } catch (e) {}
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jaye Group Chile · Producto</title>
 <meta name="description" content="Envío gratis a todo Chile y pagas cuando lo recibes.">
@@ -1118,7 +1136,7 @@ window.jayePixel = (function () {
 <script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=31"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha.js?v=239"></script>
+<script src="ficha.js?v=240"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->
@@ -1126,15 +1144,15 @@ window.jayePixel = (function () {
   <script src="lib/ScrollTrigger.min.js"></script>
   <script src="lib/countup.umd.js"></script>
 <script src="efectos-ficha.js?v=23"></script>
-<script src="organizador.js?v=23"></script>
-<script src="clorofila.js?v=23"></script>
-<script src="lymphoria.js?v=23"></script>
-<script src="antena.js?v=8"></script>
-<script src="cargador.js?v=23"></script>
-<script src="guirnalda.js?v=30"></script>
-<script src="foco.js?v=20"></script>
-<script src="mascara.js?v=2"></script>
-<script src="balsamo.js?v=1"></script>
+<script src="organizador.js?v=24"></script>
+<script src="clorofila.js?v=24"></script>
+<script src="lymphoria.js?v=24"></script>
+<script src="antena.js?v=9"></script>
+<script src="cargador.js?v=24"></script>
+<script src="guirnalda.js?v=31"></script>
+<script src="foco.js?v=21"></script>
+<script src="mascara.js?v=3"></script>
+<script src="balsamo.js?v=2"></script>
 <script>
 /* ---- el video del producto NO se baja al abrir la pagina ----
    Antes iba con preload="auto": el celular se traia los 2,1 MB de una,

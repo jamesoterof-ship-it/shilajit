@@ -30,7 +30,7 @@
   'use strict';
 
   function slug() {
-    try { return new URLSearchParams(location.search).get('p') || ''; } catch (e) { return ''; }
+    try { return window.__P || new URLSearchParams(location.search).get('p') || ''; } catch (e) { return ''; }
   }
   /* En Chile la tienda tiene varios productos y el slug SIEMPRE viene en la
      URL. Aquí la página es de UN SOLO producto y se abre en la raíz, sin

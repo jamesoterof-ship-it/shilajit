@@ -29,7 +29,7 @@
   'use strict';
 
   function slug() {
-    try { return new URLSearchParams(location.search).get('p') || ''; } catch (e) { return ''; }
+    try { return window.__P || new URLSearchParams(location.search).get('p') || ''; } catch (e) { return ''; }
   }
   if (slug() !== 'mascara') return;
 
