@@ -275,7 +275,24 @@
       tema: { osc: '#2F343C', med: '#7A5C43', btnA: '#3E4450', btnB: '#8A6A4E',
               texto: '#2F343C', borde: '#dcdfe4', suave: '#f4f5f7', foto: '#2a2d33',
               sombra: '62,68,80' },
-      opciones: [{ cant: 1, precio: 7990 }, { cant: 2, precio: 11990 }] }
+      opciones: [{ cant: 1, precio: 7990 }, { cant: 2, precio: 11990 }] },
+    /* Bálsamo de colágeno Rosetimes -> Shampoo Batana (Dropi 126537). MISMO
+       proveedor (Importadora Oferfly), así que va en la misma caja y no paga
+       flete aparte. Costo 3.000. James, 29-09: «que complemente, no que sea
+       idéntico» (cara con el bálsamo, cabello con el shampoo) y «a nueve mil»:
+       una sola opción. El precio vive también en el flujo n8n «Upsell Shampoo
+       Batana»: cambiar los dos. 🔴 COSMÉTICO: se habla de apariencia y cuidado
+       del cabello, no de curar la caída ni de crecimiento garantizado. */
+    balsamo: { nombre: 'Shampoo Batana',
+      webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-batana',
+      foto: 'img/batana.webp',
+      beneficios: ['Con aceite de batana, el clásico para el cabello', 'Limpia y deja el pelo más suave y con brillo',
+        'Para todo tipo de cabello', 'Va en el mismo envío, sin flete'],
+      /* los tonos salen del propio envase (café y ámbar del aceite de batana) */
+      tema: { osc: '#3E2A1A', med: '#8A5A2B', btnA: '#5C3D22', btnB: '#A8753F',
+              texto: '#3E2A1A', borde: '#e6d9cc', suave: '#f8f4ef', foto: '#2c1d12',
+              sombra: '92,61,34' },
+      opciones: [{ cant: 1, precio: 9000 }] }
   };
   /* la ventana post-compra vive fuera de este bloque, por eso se exponen */
   window.UPSELLS = UPSELLS;
