@@ -166,7 +166,7 @@ window.PRODUCTOS = [
     /* ---- Fotos de clientes: VACIO. No tenemos clientes en España todavia y
        en la UE no se pueden mostrar testimonios que no sean reales
        (Directiva UE 2019/2161). Se llena cuando haya pedidos entregados. ---- */
-    fotosResenas: [],
+    fotosResenas: ['img/rev/r01.webp','img/rev/r04.webp','img/rev/r07.webp','img/rev/r09.webp','img/rev/r10.webp','img/rev/r12.webp','img/rev/r17.webp','img/rev/r24.webp','img/rev/r33.webp','img/rev/r35.webp','img/rev/r37.webp','img/rev/r38.webp','img/rev/r40.webp','img/rev/r45.webp','img/rev/r55.webp'],
     antesDespues: '',
 
     /* ---- PRECIOS aprobados por James el 29-09-2026 (Chile): 20.500 / 27.500 / 36.500.
@@ -182,6 +182,8 @@ window.PRODUCTOS = [
     popular: 1,
 
   },
+
+
 
 
   {
