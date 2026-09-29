@@ -1,0 +1,784 @@
+/* ============================================================
+   MÁSCARA FLAMENCO · estilos propios. Solo con <body class="p-balsamo">.
+   Hecho el 25-09. Concepto "camerino": negro + dorado #D8A52E (acento de
+   productos.js), Bodoni Moda cursiva (revista de moda) + Jost en rótulos.
+   🔴 Hero a sangre, sin radio. Letras ARRIBA sobre negro, video ABAJO:
+      las letras no tapan los ojos (el producto).
+   🔴 Nada queda escondido si el JS no corre.
+   ============================================================ */
+
+.p-balsamo {
+  --ba-base:    #FBF4F0;   /* crema: el fondo de todo */
+  --ba-suave:   #F7EAE7;   /* rosa muy suave: el fondo de las franjas */
+  --ba-tarjeta: #FFFFFF;   /* tarjetas en blanco, con borde rosa */
+  --ba-oro:   #E8BE62;   /* el oro DEL ENVASE, medido sobre la foto */
+  --ba-oro2:  #f0c867;   /* solo destellos */
+  --ba-oroTxt:#8A6210;   /* el oro para TEXTO: el claro sobre crema da 1,49:1 y no se lee */
+  --ba-rosa:  #C9808B;   /* rosa fuerte: sobre fondo claro hace falta este, no el palido */
+  --ba-texto:   #3B2B2A;   /* marron: el texto */
+  --ba-texto2:  #6E5A56;   /* secundario, contraste 5,9:1 sobre el crema */
+  --ba-borde: rgba(201,128,139,.30);
+  --ba-disp:  'Bodoni Moda', 'Didot', Georgia, serif;
+  --ba-rotf:  'Jost', 'Futura', system-ui, sans-serif;
+  --ba-ease:  cubic-bezier(.2,.8,.2,1);
+}
+
+.p-balsamo .ba-rot {
+  display: block;
+  margin: 0 0 12px;
+  font-family: var(--ba-rotf);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--ba-oroTxt);
+}
+.p-balsamo #prod .ba-h2 {
+  margin: 0 0 14px;
+  font-family: var(--ba-disp);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(32px, 9vw, 50px);
+  line-height: 1.04;
+  letter-spacing: -.01em;
+  color: var(--ba-texto);
+  text-wrap: balance;
+}
+.p-balsamo #prod .ba-h2 em { display: block; font-weight: 700; color: var(--ba-oroTxt); }
+.p-balsamo .ba-ico {
+  width: 22px; height: 22px;
+  fill: none; stroke: var(--ba-oroTxt); stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ============================================================
+   1 · HERO — letras arriba sobre negro, video abajo
+   ============================================================ */
+.ba-hero {
+  position: relative;
+  margin: 0 calc(50% - var(--ba-vw, 100vw) / 2);
+  width: var(--ba-vw, 100vw);
+  max-width: var(--ba-vw, 100vw);
+  min-height: 92svh;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--ba-base);
+}
+@supports not (min-height: 92svh) { .ba-hero { min-height: 92vh; } }
+
+.ba-hero .ba-video {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  top: 34%;
+  width: 100%; height: 66%;
+  object-fit: cover;
+  object-position: 50% 62%;
+  display: block;
+  border-radius: 0;
+  z-index: 0;
+  will-change: transform;
+}
+/* la foto se acerca despacio (solo transform) */
+.p-balsamo .ba-hero .ba-img { animation: ba-acerca 18s ease-in-out infinite alternate; transform-origin: 60% 60%; }
+@keyframes ba-acerca { from { transform: scale(1); } to { transform: scale(1.09); } }
+/* el video nace del negro: un fundido sobre su borde de arriba */
+.ba-hero .ba-funde {
+  position: absolute; left: 0; right: 0; top: calc(34% - 3px); height: 26%;
+  z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, var(--ba-base) 0%, rgba(11,9,8,.7) 38%, rgba(11,9,8,0) 100%);
+}
+.ba-hero::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 18%;
+  z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, rgba(11,9,8,.55), transparent);
+}
+
+/* las ampolletas del camerino: se encienden en fila */
+.ba-hero .ba-focos {
+  position: absolute; top: 16px; left: 22px; right: 22px; z-index: 3;
+  display: flex; justify-content: space-between;
+  pointer-events: none;
+}
+.ba-hero .ba-focos i {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: #fff4d6;
+  box-shadow: 0 0 10px 3px rgba(255,212,130,.75), 0 0 22px 6px rgba(216,165,46,.35);
+  animation: ba-titila 3.2s ease-in-out calc(var(--n) * .23s) infinite;
+}
+@keyframes ba-titila { 0%,100% { opacity: 1; } 50% { opacity: .72; } }
+.p-balsamo.ba-arranca .ba-focos i { background: #3a2f24; box-shadow: none; animation: none; }
+.p-balsamo.ba-listo .ba-focos i {
+  animation: ba-enciende .45s ease-out calc(.1s + var(--n) * .11s) both, ba-titila 3.2s ease-in-out calc(1.4s + var(--n) * .23s) infinite;
+}
+@keyframes ba-enciende {
+  0%   { background: #3a2f24; box-shadow: none; transform: scale(.8); }
+  60%  { background: #fff; box-shadow: 0 0 16px 6px rgba(255,220,150,.95), 0 0 30px 10px rgba(216,165,46,.5); transform: scale(1.15); }
+  100% { background: #fff4d6; box-shadow: 0 0 10px 3px rgba(255,212,130,.75), 0 0 22px 6px rgba(216,165,46,.35); transform: scale(1); }
+}
+
+/* polvo dorado que sube despacio sobre el video */
+.ba-hero .ba-polvo { position: absolute; left: 0; right: 0; top: 34%; bottom: 0; z-index: 2; pointer-events: none; }
+.ba-hero .ba-polvo i {
+  position: absolute; bottom: -6px; left: var(--x);
+  width: 3px; height: 3px; border-radius: 50%;
+  background: #ffe2a0;
+  box-shadow: 0 0 6px 1px rgba(255,207,112,.9);
+  opacity: 0;
+  animation: ba-sube var(--t) linear var(--r) infinite;
+}
+@keyframes ba-sube {
+  0%   { opacity: 0;  transform: translate3d(0,0,0) scale(var(--s)); }
+  12%  { opacity: .9; }
+  100% { opacity: 0;  transform: translate3d(14px,-52vh,0) scale(calc(var(--s) * .5)); }
+}
+
+.ba-hero .ba-sobre { position: relative; z-index: 4; padding: 46px 24px 0; }
+.p-balsamo #prod .ba-h1 {
+  margin: 0 0 14px;
+  font-family: var(--ba-disp);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(33px, 9.6vw, 70px);
+  line-height: 1.02;
+  letter-spacing: -.012em;
+  color: var(--ba-texto);
+  text-transform: none;
+}
+.p-balsamo #prod .ba-h1 .ba-ln { display: block; }
+.p-balsamo #prod .ba-h1 em { font-style: italic; font-weight: 700; color: var(--ba-oroTxt); }
+.p-balsamo #prod .ba-h1 .ba-pal { display: inline-block; white-space: nowrap; }
+.p-balsamo #prod .ba-h1 .ba-le { display: inline-block; }
+.p-balsamo #prod .ba-frase {
+  margin: 0;
+  max-width: 32ch;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ba-texto2);   /* era crema: sobre fondo claro no se leía */
+}
+.p-balsamo #prod .ba-frase .ba-pw { display: inline-block; }
+
+/* la cascada LETRA POR LETRA (solo si el JS puso .ba-arranca) */
+.p-balsamo.ba-arranca #prod .ba-h1 .ba-le { opacity: 0; transform: translateY(-.55em) rotate(-10deg); }
+.p-balsamo.ba-arranca #prod .ba-frase .ba-pw { opacity: 0; transform: translateY(8px); }
+.p-balsamo.ba-listo #prod .ba-h1 .ba-le {
+  opacity: 1; transform: none;
+  transition: opacity .45s ease var(--d, 0s), transform .7s cubic-bezier(.3,1.4,.5,1) var(--d, 0s);
+}
+.p-balsamo.ba-listo #prod .ba-frase .ba-pw {
+  opacity: 1; transform: none;
+  transition: opacity .5s ease var(--d, 0s), transform .6s var(--ba-ease) var(--d, 0s);
+}
+
+@media (min-width: 820px) {
+  .ba-hero .ba-sobre { padding: 64px 40px 0; max-width: 1080px; margin: 0 auto; }
+  .ba-hero .ba-focos { left: calc(50% - 500px); right: calc(50% - 500px); }
+}
+
+/* ============================================================
+   2 · BANDAS OSCURAS a sangre + el separador (hilo dorado con rombo)
+   ============================================================ */
+.p-balsamo .ba-oscura {
+  position: relative;
+  margin: 0 calc(50% - var(--ba-vw, 100vw) / 2);
+  width: var(--ba-vw, 100vw);
+  max-width: var(--ba-vw, 100vw);
+  padding: 58px max(20px, calc(var(--ba-vw, 100vw) / 2 - 50% + 20px)) 54px;
+  background: var(--ba-suave);
+  color: var(--ba-texto2);
+}
+.p-balsamo .ba-oscura::before {
+  content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ba-borde) 20%, var(--ba-borde) 80%, transparent);
+}
+.p-balsamo .ba-oscura::after {
+  content: ''; position: absolute; top: -4px; left: 50%;
+  width: 8px; height: 8px; margin-left: -4px;
+  background: var(--ba-oro);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px rgba(216,165,46,.6);
+}
+.p-balsamo .ba-hero + .ba-oscura::before,
+.p-balsamo .ba-hero + .ba-oscura::after { display: none; }
+.p-balsamo #prod > .bloque:has(+ .ba-oscura),
+.p-balsamo #prod > .ba-oscura + .bloque { margin-top: 0; }
+
+/* ---------- cifras ---------- */
+.p-balsamo .ba-cifras { padding-top: 30px; padding-bottom: 32px; }
+.p-balsamo .ba-med { display: grid; grid-template-columns: repeat(3, 1fr); }
+.p-balsamo .ba-med > div {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 4px 6px;
+}
+.p-balsamo .ba-med > div + div::before {
+  content: ''; position: absolute; left: 0; top: 12%; bottom: 12%; width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--ba-borde), transparent);
+}
+.p-balsamo .ba-med b {
+  font-family: var(--ba-disp);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(40px, 12vw, 60px);
+  line-height: 1;
+  color: var(--ba-oroTxt);
+  font-variant-numeric: tabular-nums;
+}
+.p-balsamo .ba-med b.ba-fin { animation: ba-cifra 1.1s ease-out 1; }
+@keyframes ba-cifra {
+  0%   { transform: scale(1.22); text-shadow: 0 0 22px rgba(201,128,139,.55), 0 0 44px rgba(201,128,139,.3); }
+  100% { transform: scale(1);    text-shadow: 0 0 0 rgba(201,128,139,0); }
+}
+.p-balsamo .ba-med span {
+  margin-top: 8px;
+  font-family: var(--ba-rotf);
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  color: var(--ba-texto2);
+  max-width: 13ch;
+}
+
+/* ============================================================
+   3 · CÓMO SE APLICA — numerales grandes + la pincelada dorada
+   ============================================================ */
+.p-balsamo .ba-pasos { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 30px; }
+.p-balsamo .ba-paso { display: grid; grid-template-columns: 58px 1fr; gap: 14px; align-items: start; }
+.p-balsamo .ba-num {
+  font-family: var(--ba-disp);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: .85;
+  color: transparent;
+  -webkit-text-stroke: 1.2px var(--ba-oroTxt);
+}
+.p-balsamo #prod .ba-paso h3 {
+  position: relative;
+  display: inline-block;
+  margin: 2px 0 10px;
+  font-family: var(--ba-disp);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.1;
+  color: var(--ba-texto);
+}
+/* la pincelada: se dibuja de izquierda a derecha bajo el título */
+.p-balsamo .ba-trazo {
+  position: absolute; left: -4px; right: -10px; bottom: -3px; height: 9px;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(216,165,46,.85), rgba(240,200,103,.55) 70%, rgba(216,165,46,.15));
+  border-radius: 60% 40% 55% 45% / 70% 60% 40% 30%;
+  transform-origin: left center;
+  transform: scaleX(1);
+}
+.p-balsamo #prod .ba-paso h3 { z-index: 0; isolation: isolate; }
+.p-balsamo .ba-paso p { margin: 0; font-size: 15.5px; line-height: 1.62; color: var(--ba-texto2); max-width: 46ch; }
+.p-balsamo.ba-anima .ba-paso.ba-pre .ba-trazo { transform: scaleX(0); }
+.p-balsamo.ba-anima .ba-paso.ba-pre.ba-in .ba-trazo {
+  transform: scaleX(1);
+  transition: transform .9s cubic-bezier(.6,0,.2,1) calc(.35s + var(--i, 0) * .12s);
+}
+
+/* ============================================================
+   4 · ANTES/DESPUÉS de la ficha — oscuro, con un brillo que lo cruza
+   ============================================================ */
+.p-balsamo #prod .ba-sec,
+.p-balsamo .ba-cta-franja { background: var(--ba-suave); box-shadow: 0 0 0 100vmax var(--ba-suave); clip-path: inset(0 -100vmax); }
+.p-balsamo #prod .ba-sec { margin-top: 0; margin-bottom: 0; padding-top: 56px; }
+.p-balsamo #prod .ba-sec .eyebrow { font-family: var(--ba-rotf); letter-spacing: .24em; color: var(--ba-oroTxt); }
+.p-balsamo #prod .ba-sec .tit2 {
+  font-family: var(--ba-disp); font-style: italic; font-weight: 600;
+  color: var(--ba-texto); letter-spacing: -.01em;
+}
+.p-balsamo #prod .ba-sec .sub2 { color: var(--ba-texto2); }
+.p-balsamo #prod .ba-img { position: relative; overflow: hidden; border-radius: 14px; }
+.p-balsamo #prod .ba-img .ba-brillo {
+  position: absolute; top: 0; bottom: 0; left: 0; width: 40%; z-index: 2; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,236,190,.45), transparent);
+  transform: translateX(-130%) skewX(-12deg);
+}
+.p-balsamo.ba-anima #prod .ba-img.ba-in .ba-brillo { animation: ba-cruza 1.6s ease-in-out .3s 1; }
+@keyframes ba-cruza { to { transform: translateX(330%) skewX(-12deg); } }
+
+.p-balsamo .ba-cta-franja {
+  margin: 0 calc(50% - var(--ba-vw, 100vw) / 2);
+  width: var(--ba-vw, 100vw);
+  max-width: var(--ba-vw, 100vw);
+  padding: 8px 20px 40px;
+  display: flex; justify-content: center;
+}
+.p-balsamo .ba-cta-franja .cta { width: 100%; max-width: 420px; }
+
+/* ============================================================
+   5 · LO QUE LA HACE DISTINTA — tarjetas con brillo de espejo
+   ============================================================ */
+/* overflow-x: clip: las tarjetas entran desde los lados y, antes de aparecer,
+   empujaban la página 10 px (se podía arrastrar de lado). clip no crea scroll. */
+.p-balsamo .ba-trae {
+  overflow-x: clip;
+  padding-left: max(12px, calc(var(--ba-vw, 100vw) / 2 - 50% + 12px));
+  padding-right: max(12px, calc(var(--ba-vw, 100vw) / 2 - 50% + 12px));
+}
+.p-balsamo .ba-trae > .ba-rot,
+.p-balsamo #prod .ba-trae > .ba-h2 { margin-left: 8px; margin-right: 8px; }
+.p-balsamo .ba-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 22px; }
+.p-balsamo .ba-tar {
+  position: relative; overflow: hidden; isolation: isolate;
+  appearance: none; -webkit-appearance: none;
+  display: grid; grid-template-columns: 46px 1fr; align-items: center; gap: 14px;
+  width: 100%; min-height: 74px;
+  padding: 16px 18px;
+  border: 1px solid var(--ba-borde);
+  border-radius: 16px;
+  background: linear-gradient(150deg, #FFFFFF, #FDF7F4);   /* estaba en negro literal, no en variable: por eso el cambio de paleta no la tocó */
+  text-align: left; font: inherit; color: inherit; cursor: pointer;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .2s var(--ba-ease), border-color .3s ease;
+}
+.p-balsamo .ba-tar::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(170px circle at var(--mx, 50%) var(--my, 50%), rgba(240,200,103,.28), rgba(231,181,154,.08) 45%, transparent 65%);
+  opacity: 0; transition: opacity .3s ease;
+}
+.p-balsamo .ba-tar:hover::before,
+.p-balsamo .ba-tar.ba-luz::before { opacity: 1; }
+.p-balsamo .ba-tar:hover,
+.p-balsamo .ba-tar.ba-luz { border-color: rgba(216,165,46,.6); }
+.p-balsamo .ba-tar:active { transform: scale(.985); }
+.p-balsamo .ba-tar:focus-visible { outline: 2px solid var(--ba-oro); outline-offset: 2px; }
+.p-balsamo .ba-tar-ico {
+  display: grid; place-items: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(216,165,46,.12);
+  border: 1px solid rgba(216,165,46,.3);
+}
+.p-balsamo #prod .ba-tar b {
+  font-family: var(--ba-disp); font-style: italic; font-weight: 600;
+  font-size: 18px; line-height: 1.25; color: var(--ba-texto);
+}
+@media (min-width: 620px) { .p-balsamo .ba-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ============================================================
+   6 · DESCRIPCIÓN oscura con las fotos (telón de camerino)
+   ============================================================ */
+.p-balsamo #prod section.desc {
+  margin-top: 0; margin-bottom: 0;
+  position: relative;
+  padding-top: 58px; padding-bottom: 24px;
+  background: var(--ba-suave);
+  box-shadow: 0 0 0 100vmax var(--ba-suave);
+  clip-path: inset(0 -100vmax);
+}
+.p-balsamo #prod section.desc p,
+.p-balsamo #prod section.desc li { color: var(--ba-texto2); }
+.p-balsamo #prod section.desc h2,
+.p-balsamo #prod section.desc h3,
+.p-balsamo #prod section.desc b { color: var(--ba-texto); }
+.p-balsamo #prod section.desc .eyebrow { font-family: var(--ba-rotf); letter-spacing: .24em; color: var(--ba-oroTxt); }
+.p-balsamo #prod section.desc .tit2 { font-family: var(--ba-disp); font-style: italic; font-weight: 600; }
+
+.p-balsamo #prod .ba-fichas { display: grid; gap: 38px; margin: 28px -4px 20px; }
+.p-balsamo #prod .ba-fi { margin: 0; }
+.p-balsamo #prod .ba-foto {
+  position: relative; overflow: hidden;
+  border-radius: 16px;
+  background: var(--ba-tarjeta);
+  box-shadow: 0 18px 40px rgba(59,43,42,.12), 0 0 0 1px var(--ba-borde);
+}
+.p-balsamo #prod .ba-foto img { display: block; width: 100%; height: auto; margin: 0; border-radius: 0; }
+/* el telón: dos hojas que se abren hacia los lados (sin JS, ya abiertas) */
+.p-balsamo #prod .ba-telon {
+  position: absolute; top: 0; bottom: 0; width: 50.5%; z-index: 3; pointer-events: none;
+  background: linear-gradient(90deg, #F7EAE7, #FBF4F0);
+}
+.p-balsamo #prod .ba-t1 { left: 0;  transform: translateX(-101%); }
+.p-balsamo #prod .ba-t2 { right: 0; transform: translateX(101%); background: linear-gradient(270deg, #F7EAE7, #FBF4F0); }
+.p-balsamo.ba-anima #prod .ba-fi.ba-pre .ba-telon { transform: none; }
+.p-balsamo.ba-anima #prod .ba-fi.ba-pre.ba-in .ba-t1 { transform: translateX(-101%); transition: transform .9s cubic-bezier(.7,0,.2,1) .1s; }
+.p-balsamo.ba-anima #prod .ba-fi.ba-pre.ba-in .ba-t2 { transform: translateX(101%);  transition: transform .9s cubic-bezier(.7,0,.2,1) .1s; }
+.p-balsamo #prod .ba-fi figcaption { padding: 18px 6px 0; }
+.p-balsamo #prod .ba-fi figcaption .ba-rot { margin-bottom: 8px; }
+.p-balsamo #prod .ba-fi figcaption b {
+  display: block; margin: 0 0 8px;
+  font-family: var(--ba-disp); font-style: italic; font-weight: 600;
+  font-size: 25px; line-height: 1.15; color: var(--ba-texto);
+}
+.p-balsamo #prod .ba-fi figcaption p { margin: 0; font-size: 15.5px; line-height: 1.62; }
+
+/* ============================================================
+   7 · ENTRADAS AL BAJAR (las tarjetas entran alternadas, de cada lado)
+   ============================================================ */
+.p-balsamo.ba-anima .ba-rev.ba-pre { transform: translateY(24px); opacity: .25; }
+.p-balsamo.ba-anima .ba-tar.ba-pre:nth-child(odd)  { transform: translateX(-22px); }
+.p-balsamo.ba-anima .ba-tar.ba-pre:nth-child(even) { transform: translateX(22px); }
+/* El escalonado estaba en 80ms por pieza y la entrada en 750ms: con ocho
+   elementos el ultimo salia 1,3 s despues del primero y se notaba la espera.
+   La regla (ui-ux-pro-max, escalonado + duracion) pide 30-50ms de separacion y
+   la entrada por debajo de 520ms. */
+.p-balsamo.ba-anima .ba-rev.ba-pre.ba-in {
+  transform: none; opacity: 1;
+  transition: transform .52s var(--ba-ease) calc(var(--i, 0) * .04s),
+              opacity   .42s ease           calc(var(--i, 0) * .04s);
+}
+
+/* ============================================================
+   8 · BOTONES: brillo dorado que cruza + se hunden al tocar
+   ============================================================ */
+.p-balsamo #prod .cta,
+.p-balsamo .form .btn {
+  position: relative; overflow: hidden; isolation: isolate;
+  transition: transform .18s var(--ba-ease);
+}
+.p-balsamo #prod .cta::after,
+.p-balsamo .form .btn::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: -42%; width: 34%;
+  z-index: -1; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,236,190,.45), transparent);
+  transform: skewX(-18deg);
+  animation: ba-btn 3.6s ease-in-out 1.4s infinite;
+}
+@keyframes ba-btn { 0% { left: -42%; } 38%, 100% { left: 128%; } }
+.p-balsamo #prod .cta:active,
+.p-balsamo .form .btn:active { transform: scale(.975); }
+
+/* ============================================================
+   9 · MOVIMIENTO REDUCIDO
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .ba-hero .ba-focos i { animation: none; }
+  .ba-hero .ba-polvo { display: none; }
+  .p-balsamo .ba-hero .ba-img { animation: none; }
+  .p-balsamo #prod .ba-img .ba-brillo { display: none; }
+  .p-balsamo #prod .cta::after, .p-balsamo .form .btn::after { display: none; }
+}
+
+
+/* ============================================================
+   EL HERO DE LA MASCARA NO SE USA (James, 25-09: "el hero no lo cambies").
+   El hero es el de ficha.js + hero.css: la foto del producto, el titular
+   en cascada, las pildoras, el precio y el boton.
+   De este archivo se usan las CIFRAS, los pasos, las tarjetas, las fotos
+   y sus efectos. Estas reglas quedan apagadas por si alguna clase del
+   molde viejo se colara y pintara una caja oscura encima del hero bueno.
+   ============================================================ */
+.ba-hero, .ba-polvo, .ba-focos, .ba-sobre, .ba-funde { display: none !important; }
+
+/* ============================================================
+   10 · EL VIDEO YA NO ES UN AGUJERO NEGRO
+   James, 25-09: "sigues metiendo el negro". Medido: .vid-prod tenia
+   background rgb(0,0,0) y 668 px de alto. En una pagina crema es un boquete.
+   El navegador pinta negro cuando no hay poster; con el poster puesto y el
+   fondo del color de la seccion, deja de verse.
+   Regla: ux/video-fondo.
+   ============================================================ */
+.p-balsamo #prod .vid-prod,
+.p-balsamo #prod .vid-wrap video {
+  background: var(--ba-suave);
+  border-radius: 14px;
+}
+.p-balsamo #prod .vid-wrap { background: var(--ba-base); }
+
+/* ============================================================
+   11 · OPINIONES LARGAS, PLEGADAS
+   Son reales de compradores del producto y NO se pueden reescribir (Directiva
+   UE 2019/2161): lo que se hace es plegarlas, no editarlas. 19 pasaban de 200
+   caracteres y la mas larga tenia 765; una sola tapaba la pantalla entera.
+   Se cortan a la vista en 4 lineas con "Leer mas". El texto completo sigue en
+   el DOM, asi que cualquiera lo puede leer entero y comprobar.
+   Regla: ux/texto-largo-plegado.
+   ============================================================ */
+.p-balsamo #prod .rsc > p.rsc-txt {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: none;
+}
+.p-balsamo #prod .rsc > p.rsc-txt.abierta {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+.p-balsamo #prod .rsc-mas {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 0;          /* el area tocable llega a 44px con la linea */
+  min-height: 34px;
+  background: none;
+  border: 0;
+  font-family: var(--ba-rotf);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--ba-rosa);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.p-balsamo #prod .rsc-mas:focus-visible { outline: 2px solid var(--ba-rosa); outline-offset: 3px; }
+
+/* ============================================================
+   12 · MOVIMIENTO REDUCIDO
+   Si el sistema lo pide, todo aparece ya puesto: nada se desplaza, nada se
+   retrasa. Es obligatorio, no un extra (ui-ux-pro-max §1 reduced-motion).
+   El JS ademas ni monta el observador, pero esto lo cubre por si acaso.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .p-balsamo *,
+  .p-balsamo *::before,
+  .p-balsamo *::after {
+    animation-duration: .001ms !important;
+    animation-delay: 0 !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    transition-delay: 0 !important;
+  }
+  .p-balsamo.ba-anima .ba-rev.ba-pre { transform: none !important; opacity: 1 !important; }
+}
+
+/* ============================================================
+   13 · LO QUE ENCONTRO revisar.js
+   Nada de esto se vio a ojo: salio de pasar el revisor sobre la pagina ya
+   publicada. Son contrastes por debajo del minimo (WCAG AA: 4,5:1 normal,
+   3:1 grande). Regla: ux/contraste.
+   ============================================================ */
+
+/* Estrellas de valoracion: #d8a52e sobre blanco da 2,25:1 y pide 3.
+   El dorado oscuro sigue leyendose como dorado y llega a 3,3:1. */
+.p-balsamo #prod .stars,
+.p-balsamo #prod .est svg { color: #B8860B; fill: #B8860B; }
+
+/* Precio tachado: el gris #a29c90 daba 2,73:1. */
+.p-balsamo #prod .promo-antes { color: var(--ba-texto2); }
+
+/* "Leer mas": el rosa del envase a 13px daba 3,02:1 y pide 4,5.
+   Este rosa mas cerrado da 5,3:1 y sigue siendo el mismo color de marca. */
+.p-balsamo #prod .rsc-mas { color: #A8505F; font-size: 13.5px; }
+
+/* "157 reseñas" medía 73x13: por debajo de los 44px de alto que pide
+   cualquier zona tocable. Se le da altura sin mover el texto de sitio.
+   Regla: ux/area-toque. */
+.p-balsamo #prod .rev-link,
+.p-balsamo #prod a[href="#opiniones"],
+.p-balsamo .heroP__estr a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px;
+}
+
+/* ============================================================
+   14 · LA DESCRIPCION, AIREADA
+   James, 26-09: "muy plano esto". Eran 496 caracteres de corrido y cinco
+   viñetas iguales. Esto le da los cuatro niveles de la jerarquia editorial:
+   rotulo, titular, ENTRADILLA y cuerpo, separados por tamaño y por aire, no
+   por color (quitando el color la jerarquia se sigue leyendo).
+   Reglas: jerarquia-editorial, medida-linea.
+   ============================================================ */
+
+/* La entradilla: la primera frase, un punto mas grande que el cuerpo. */
+.p-balsamo #prod .ba-entrada {
+  margin: 0 0 18px;
+  max-width: 34ch;
+  font-size: 17.5px;
+  line-height: 1.62;
+  color: var(--ba-texto);
+}
+
+/* La capital. Es el recurso de revista de toda la vida: el ojo entra por ahi.
+   Va en Bodoni, que es la letra de los titulares, para que ate con ellos. */
+.p-balsamo #prod .ba-cap {
+  float: left;
+  margin: 6px 10px 0 0;
+  font-family: var(--ba-disp);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 58px;
+  line-height: .72;
+  color: var(--ba-rosa);
+}
+
+.p-balsamo #prod .ba-cuerpo {
+  margin: 0 0 14px;
+  max-width: 34ch;
+  font-size: 15.5px;
+  line-height: 1.72;         /* mas aire entre lineas que antes (1,75) */
+  color: var(--ba-texto2);
+}
+.p-balsamo #prod .ba-cuerpo:last-of-type { margin-bottom: 22px; }
+
+/* Los puntos: cinco viñetas identicas pegadas no se leen, se saltan. Ahora
+   cada una es una fila con su filete debajo y aire alrededor. */
+.p-balsamo #prod ul.ba-puntos,
+.p-balsamo #prod .datos ul.ba-puntos {
+  list-style: none;
+  margin: 22px 0 6px;
+  padding: 0;
+}
+.p-balsamo #prod ul.ba-puntos > li {
+  position: relative;
+  margin: 0;
+  padding: 13px 0 13px 30px;
+  border-bottom: 1px solid var(--ba-borde);
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ba-texto);
+  list-style: none;
+}
+.p-balsamo #prod ul.ba-puntos > li:last-child { border-bottom: 0; }
+.p-balsamo #prod ul.ba-puntos > li::marker { content: none; }
+
+/* El filete corto en oro delante de cada punto: pesa menos que un circulo
+   relleno y ordena la columna. */
+.p-balsamo #prod ul.ba-puntos > li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 21px;
+  width: 16px; height: 1.5px;
+  background: var(--ba-oro);
+}
+
+@media (min-width: 760px) {
+  .p-balsamo #prod .ba-entrada { font-size: 19px; max-width: 58ch; }
+  .p-balsamo #prod .ba-cuerpo  { font-size: 16.5px; max-width: 58ch; }
+  .p-balsamo #prod .ba-cap     { font-size: 68px; }
+}
+
+/* ============================================================
+   15 · LOS DOS PAGOS, QUE SE ENTIENDAN
+   James, 26-09: "eso esta como enredado, no se logra aclarar bien los dos
+   pagos". El selector de pago llevaba las clases del selector de cantidad
+   "para no escribir CSS nuevo", asi que eran cinco filas identicas seguidas
+   y parecian una sola lista.
+   Ahora la cantidad son filas y el pago son dos fichas LADO A LADO: al ser
+   solo dos, se abarcan de un vistazo y no se confunden con lo de arriba.
+   Baymard: lo que importa no es el formato, es que cada decision se lea como
+   una decision aparte.
+   ============================================================ */
+
+/* El numero y la pregunta de cada paso. Sin esto, el visitante no sabe que
+   son dos decisiones distintas. */
+.p-balsamo #prod .pasoRot {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 22px 0 10px;
+  font-family: var(--ba-rotf);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--ba-texto);
+}
+.p-balsamo #prod .pasoRot:first-of-type { margin-top: 4px; }
+.p-balsamo #prod .pasoRot b {
+  display: grid;
+  place-items: center;
+  width: 21px; height: 21px;
+  border-radius: 50%;
+  background: var(--ba-rosa);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.p-balsamo #prod .pagoSel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 0 4px;
+}
+
+.p-balsamo #prod .pagoOp {
+  position: relative;
+  display: grid;
+  grid-template-areas: 'ico' 'tit' 'pr' 'sub';
+  align-content: start;
+  gap: 2px;
+  min-height: 132px;            /* de sobra sobre los 44px de zona tocable */
+  padding: 16px 12px 13px;
+  border: 1.5px solid var(--ba-borde);
+  border-radius: 14px;
+  background: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.p-balsamo #prod .pagoOp:active { transform: scale(.985); }
+
+/* La elegida: borde rosa, fondo teñido y un filete arriba. Se distingue por
+   TRES cosas a la vez, no solo por color (jerarquia-sin-color). */
+.p-balsamo #prod .pagoOp.sel {
+  border-color: var(--ba-rosa);
+  background: var(--ba-suave);
+  box-shadow: 0 0 0 3px rgba(201,128,139,.14);
+}
+.p-balsamo #prod .pagoOp.sel::after {
+  content: '';
+  position: absolute; left: 12px; right: 12px; top: -1.5px;
+  height: 3px; border-radius: 0 0 3px 3px;
+  background: var(--ba-rosa);
+}
+.p-balsamo #prod .pagoOp:focus-visible { outline: 2px solid var(--ba-rosa); outline-offset: 3px; }
+
+.p-balsamo #prod .pagoOp__ico { grid-area: ico; margin-bottom: 4px; }
+.p-balsamo #prod .pagoOp__ico svg {
+  width: 26px; height: 26px;
+  fill: none; stroke: var(--ba-texto2); stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.p-balsamo #prod .pagoOp.sel .pagoOp__ico svg { stroke: var(--ba-rosa); }
+
+.p-balsamo #prod .pagoOp__tit {
+  grid-area: tit;
+  font-size: 14px; font-weight: 700; line-height: 1.25;
+  color: var(--ba-texto);
+}
+.p-balsamo #prod .pagoOp__pr {
+  grid-area: pr;
+  margin-top: 2px;
+  font-size: 21px; font-weight: 800; line-height: 1.1;
+  font-variant-numeric: tabular-nums;   /* al cambiar de pack no baila */
+  color: var(--ba-texto);
+}
+.p-balsamo #prod .pagoOp__sub {
+  grid-area: sub;
+  margin-top: 3px;
+  font-size: 12px; line-height: 1.35;
+  color: var(--ba-texto2);
+}
+
+/* La cinta del ahorro: va fuera, en la esquina, para que no empuje el texto. */
+.p-balsamo #prod .pagoOp__cinta {
+  position: absolute; top: -9px; right: 10px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  /* No var(--ba-rosa): blanco sobre ese rosa da 3,02:1 y pide 4,5. */
+  background: #A8505F;
+  color: #fff;
+  font-family: var(--ba-rotf);
+  font-size: 11px; font-weight: 700; letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+/* Muy estrecho (320px): una debajo de otra antes que apretarlas. */
+@media (max-width: 349px) {
+  .p-balsamo #prod .pagoSel { grid-template-columns: 1fr; }
+  .p-balsamo #prod .pagoOp { min-height: 0; grid-template-areas: 'ico tit' 'ico pr' 'ico sub'; grid-template-columns: 34px 1fr; }
+  .p-balsamo #prod .pagoOp__ico { align-self: center; margin: 0; }
+}
+
+/* ============================================================
+   16 · LA LETRA PEQUEÑA DEL PIE
+   El gris #7e7869 sobre el negro del pie daba 4,39:1 y pide 4,5. Se aclara
+   un punto: 5,2:1. El pie no cambia de color -James lo dijo: el encabezado y
+   el pie se respetan-, solo se aclara el texto para que se lea.
+   Regla: ux/contraste.
+   ============================================================ */
+/* Con dos clases, para ganarle a `.pie .abajo small` de tienda.css, que es
+   mas especifica. Con `.pie small` a secas no surtia efecto. */
+.pie .abajo small { color: #8E887A; }

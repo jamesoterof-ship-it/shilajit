@@ -42,6 +42,148 @@
      packs[], popular                                precios
    ============================================================ */
 window.PRODUCTOS = [
+  /* ============================================================
+     BÁLSAMO DE COLÁGENO · CHILE · 29-09-2026 · copia idéntica de la ficha de España
+     ============================================================ */
+  {
+    id: 'balsamo', unidad: 'uno', promo: 2,
+
+    /* Dropi CHILE: id 91556 · Importadora Oferfly · costo $3.200 (alterno 154619, Esteban, $3.100).
+       Copia IDÉNTICA de la ficha de España (James, 29-09): mismo hero, mismas fotos,
+       mismo video y mismos textos; solo cambia lo que era de España. */
+    dropiId: 91556,
+
+    nombre: 'Bálsamo de Colágeno Rosetimes',
+    sub: 'Stick hidratante multizona · 8 g',
+    categoria: 'Belleza',
+    etiqueta: 'Nuevo en Chile',
+    etiquetaOro: true,
+
+    /* 'foto' es la MINIATURA (tarjeta y packs). 'fotos' es la GALERÍA.
+       Las tres las hizo James el 25-09. Se quitó la del catálogo del proveedor:
+       era un collage con los rótulos FOREHEAD / FACE / LIPS / BODY en INGLÉS
+       encima, y esto se vende en España.
+       El hero NO se repite aquí: se veía dos veces en la misma pantalla. */
+    foto: 'img/balsamo-mano.webp?v=1',
+    fotos: [
+      'img/balsamo-uso.webp?v=1',    // aplicándoselo en el pómulo: se entiende el gesto de un vistazo
+      'img/balsamo-mano.webp?v=1',   // sosteniéndolo: se lee la etiqueta y el tamaño real
+      'img/balsamo-bolso.webp?v=1',  // junto al bolso: los 8 g que caben en cualquier parte
+    ],
+
+    /* ---- VÍDEO DE LA FICHA ----
+       Sale del vídeo del propio vendedor del producto (720x1280, sin marca de
+       agua de ningún creador). Se mapeó a 2 fotogramas por segundo para
+       localizar los rótulos en inglés y se cortaron SOLO los tramos limpios:
+       quedan 7,2 s con cinco planos, sin una sola letra y SIN AUDIO (James:
+       "nada de texto ni audio"). Los textos estaban en 4,0-5,3 · 7,0-7,3 ·
+       10,5-11,3 y esos segundos no entran. */
+    /* 28-09: re-cortado. El video anterior dejaba un cuadro con el nombre de OTRA marca
+       ("Wrinkle Bounce Multi Balm", seg. 3,3), el antes/despues de las munecas (4,2-4,6) y un
+       texto en ingles (5,9). En la UE y en Meta el antes/despues en cosmetica esta prohibido. */
+    video: 'img/balsamo-ficha.mp4?v=2',
+
+    /* ---- HERO ----
+       La foto vertical 1024x1536 que hizo James: el bálsamo en primer plano y
+       la modelo detrás, desenfocada. El producto manda.
+       En 'titulo' se permite <b> para el trozo en dorado; el resto se escapa.
+       OJO CON EL TITULAR: nada de "elimina arrugas" ni "rejuvenece". Solo se
+       puede hablar de APARIENCIA (Reglamento UE 655/2013), y además Meta
+       rechaza las promesas médicas en cosmética. */
+    hero: {
+      img: 'img/hero-balsamo.webp?v=1',
+      kicker: 'Nuevo en Chile',
+      titulo: 'Dos segundos,<br>y la piel<br><b>deja de tirar.</b>',   /* con coma y punto, como el titular de la máscara: la cursiva sin puntuación queda coja */
+      sub: 'Bálsamo de colágeno en stick. Se desliza y listo: rostro, contorno, labios, cuello y escote.',
+      datos: [
+        ['envio', 'Envío gratis'],
+        ['reloj', 'En 2 a 4 días'],
+        ['pago', 'Pagas al recibir'],
+      ],
+    },
+    /* Rosa de acento. Era #B76E79 y daba 3,8:1 tanto en blanco sobre él (la
+       cinta de la promo, el -32%, el contador) como al revés (el botón
+       secundario). Pide 4,5. Este da 5,3:1 y sigue siendo el rosa del envase,
+       solo un punto más cerrado. Regla: ux/contraste. */
+    acento: '#A8505F',   /* oro rosa: cosmetica, y distinto del oro de la marca */
+
+    /* ---- Escasez: SOLO datos reales del Radar. En España inventar urgencia
+       es practica desleal (art. 5 y 7 Ley 3/1991). Estas cifras salen de
+       radar_stock, pais='España', id 2287. ---- */
+    escasez: { hoy: 179, mejorDia: 229, quedan: 924,
+      nota: 'Se despacha por orden de pedido y pagas recién cuando lo tienes en la mano.' },
+
+    desc: 'El Bálsamo Rosetimes es un hidratante en formato stick con colágeno, vitamina E y ceramida. Se gira la base, se desliza sobre la piel y listo: no hay que untarse las manos ni calcular cantidad. Al hidratar, la piel se ve más suave y las líneas de expresión se marcan menos. Sirve en rostro, frente, contorno de ojos, labios, cuello y escote, y se puede usar antes del maquillaje o por encima, para retocar durante el día. Son 8 g que caben en cualquier bolso.',
+
+    puntos: [
+      'Colágeno, vitamina E y ceramida',
+      'Ayuda a suavizar la apariencia de las líneas de expresión',
+      'Aporta hidratación a la piel seca y tirante',
+      'Se aplica directo, sin ensuciarte las manos',
+      'Rostro, contorno, labios, cuello y escote',
+    ],
+
+    formulaRotulo: 'La fórmula',
+    formulaTitulo: 'Cinco activos y un formato que no ensucia.',
+    formulaSub: 'Hidratación de verdad, en un gesto de dos segundos.',
+    formula: [
+      ['fibra', 'Colágeno', 'Acompaña la elasticidad y la firmeza de la piel.'],
+      ['pluma', 'Vitamina E', 'Antioxidante: protege del desgaste diario.'],
+      ['agua', 'Glicerina vegetal', 'Retiene el agua en la capa superficial: la piel deja de sentirse tirante.'],
+      ['ojo', 'Ceramida', 'Refuerza la barrera de la piel y mejora la textura.'],
+      ['llave', 'Stick giratorio', 'Giras la base y aplicas. Sin manos, sin derrames y sin gastar de más.'],
+      ['casa', '8 g que caben en el bolso', 'Para retocar donde estés, antes o después del maquillaje.'],
+    ],
+
+    /* ---- Linea de tiempo: la seccion que mejor funciona en las paginas
+       españolas que ya venden este producto. Sin porcentajes inventados. ---- */
+    medida: {
+      titulo: '¿Cuándo se nota?',
+      filas: [['Día 1', 'la piel deja de tirar'], ['Día 7', 'se ve más hidratada'], ['Día 21', 'las líneas finas se marcan menos']],
+      texto: 'Es un cosmético, no un tratamiento médico: trabaja sobre la apariencia de la piel. La hidratación se nota desde los primeros días. Para que las líneas finas se vean menos marcadas hay que usarlo a diario durante unas tres semanas, y el resultado depende de tu tipo de piel y de la constancia.',
+      boton: 'Lo quiero, pago al recibir',
+    },
+
+    comparaTitulo: '¿Qué lo hace diferente?',
+    compara: [
+      'Se aplica directo sobre la piel: no hay que untarse las manos ni medir cantidad.',
+      'Formato sólido: no se derrama en el bolso ni se reseca como una crema abierta.',
+      'Un solo producto para rostro, labios, cuello y escote.',
+      'Se puede usar antes del maquillaje o por encima, para retocar a media tarde.',
+    ],
+
+    /* ---- Preguntas del producto. Las de envio y pago van detras, iguales
+       para todos los productos de la tienda. ---- */
+    preguntas: [
+      { q: '¿Dónde me lo puedo aplicar?', a: 'En rostro, frente, contorno de ojos, labios, cuello y escote. Evita el interior del ojo y las heridas abiertas.' },
+      { q: '¿Se puede usar con maquillaje?', a: 'Sí. Antes, como base hidratante, o por encima para retocar durante el día. Al ser un stick no arrastra el maquillaje.' },
+      { q: '¿Cuántas veces al día?', a: 'Las que necesites. Lo habitual es por la mañana y por la noche, y un retoque en las zonas que notes secas.' },
+      { q: '¿Quita las arrugas?', a: 'No, y quien se lo diga le está engañando. Es un cosmético hidratante: cuando la piel está bien hidratada las líneas se marcan menos y se ven más suaves. No elimina arrugas ni sustituye ningún tratamiento médico.' },
+      { q: '¿Cuánto me dura?', a: 'Trae 8 g. Lo que dure depende de cuántas zonas te apliques y con qué frecuencia.' },
+      { q: '¿Sirve para piel sensible?', a: 'Es un cosmético de uso externo. Como con cualquier producto nuevo, conviene probarlo primero en una zona pequeña. Si tienes la piel reactiva o alguna afección dermatológica, consúltalo antes con tu dermatólogo.' },
+    ],
+
+    /* ---- Fotos de clientes: VACIO. No tenemos clientes en España todavia y
+       en la UE no se pueden mostrar testimonios que no sean reales
+       (Directiva UE 2019/2161). Se llena cuando haya pedidos entregados. ---- */
+    fotosResenas: [],
+    antesDespues: '',
+
+    /* ---- PRECIOS aprobados por James el 29-09-2026 (Chile): 20.500 / 27.500 / 36.500.
+       El «antes» del 1 es un 30 % sobre el precio; los de 2 y 3, lo que costaría comprarlos sueltos. ---- */
+    packs: [
+      { cant: 1, precio: 20500, antes: 26900, texto: '1 unidad' },
+      { cant: 2, precio: 27500, antes: 41000, texto: '2 unidades' },
+      { cant: 3, precio: 36500, antes: 61500, texto: '3 unidades' },
+    ],
+    /* OJO: 'popular' es el INDICE del pack, no la cantidad. 1 = el segundo de
+       la lista = el pack de 2 unidades, que es el que se empuja: el envio es
+       fijo por pedido, asi que dos unidades parten el flete a la mitad. */
+    popular: 1,
+
+  },
+
+
   {
     id: 'almohada', unidad: 'una', promo: 2,
     video: 'img/almohada.mp4?v=3',
@@ -790,4 +932,5 @@ window.PRECIOS_APROBADOS = [
   24500, 29500, 41500,   /* clorofila liquida: 1 · 2 · 3 frascos (James, 10-sep) */
   24500, 29500, 39500,   /* lymphoria drenaje: 1 · 2 · 3 frascos (James, 11-sep) */
   24990, 34990, 44990,   /* guirnalda solar: 1 · 2 · 3 guirnaldas (la placa de James, 22-09) */
+  20500, 27500, 36500,   /* bálsamo de colágeno Rosetimes: 1 · 2 · 3 unidades (James, 29-09) */
 ];

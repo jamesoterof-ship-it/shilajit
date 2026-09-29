@@ -813,7 +813,81 @@
       + '</section>';
   }
 
-  cont.innerHTML = '<div class="arriba2">' + galeria + cabecera + '</div>'
+  /* ---------- 1 bis · HERO (traído de la tienda de España, 29-09) ----------
+     Si el producto trae `hero`, va ANTES de todo: foto vertical a tamaño real
+     con el titular encima, en cascada letra por letra. La galeria sigue
+     debajo. Si no trae `hero`, no se pinta nada y la ficha queda como antes.
+     Cada PALABRA va en su caja (hCas__w) para que el navegador no la parta al
+     saltar de línea; el índice --k corre por todo el titular. El <b>…</b> del
+     titular sale en el color de acento. */
+  function cascada(html) {
+    var k = 0;
+    return String(html).split(/(<br\s*\/?>)/i).map(function (parte) {
+      if (/^<br/i.test(parte)) return '<span class="hCas__salto"></span>';
+      return parte.split(/(<b>.*?<\/b>)/i).map(function (trozo) {
+        var oro = /^<b>/i.test(trozo);
+        var limpio = trozo.replace(/<\/?b>/gi, '');
+        if (!limpio) return '';
+        return limpio.split(' ').map(function (palabra) {
+          if (!palabra) return '';
+          return '<span class="hCas__w' + (oro ? ' es-oro' : '') + '">'
+            + palabra.split('').map(function (ch) {
+                return '<span class="hCas__l" style="--k:' + (k++) + '">' + esc(ch) + '</span>';
+              }).join('')
+            + '</span>';
+        }).join(' ');
+      }).join('');
+    }).join('');
+  }
+
+  function seccionHero() {
+    var h = p.hero;
+    if (!h || !h.img) return '';
+    var ico = {
+      envio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>',
+      pago:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>',
+      reloj: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    };
+    var min = p.packs.reduce(function (a, k) { return k.precio < a.precio ? k : a; }, p.packs[0]);
+    /* 14 puntos de luz que bajan despacio sobre la foto (adorno, aria-hidden;
+       se apagan con prefers-reduced-motion) */
+    var destellos = '<div class="heroP__luces" aria-hidden="true">'
+      + [0,1,2,3,4,5,6,7,8,9,10,11,12,13].map(function (i) {
+          var x = [6,17,28,39,50,61,72,83,12,34,56,78,91,45][i];
+          return '<i style="--x:' + x + '%;--d:' + (i * 0.9).toFixed(1) + 's;--t:' + (7 + (i % 5) * 1.6).toFixed(1) + 's;--s:' + (i % 3 === 0 ? 5 : i % 3 === 1 ? 3 : 4) + 'px"></i>';
+        }).join('')
+      + '</div>';
+
+    return '<section class="heroP">'
+      + '<div class="heroP__marco">'
+      +   destellos
+      +   '<img class="heroP__img" src="' + esc(h.img) + '" alt="' + esc(p.nombre) + '"'
+      +     ' width="1024" height="1536" fetchpriority="high" decoding="async">'
+      +   '<div class="heroP__fundido"></div>'
+      + '</div>'
+      + '<div class="heroP__txt">'
+      +   (mias.length
+            ? '<span class="heroP__nota">' + estrellas(prom)
+              + '<b>' + prom.toFixed(1).replace('.', ',') + '</b>'
+              + '<a href="#resenas">' + mias.length + ' reseñas</a></span>'
+            : '<span class="heroP__kicker"><i></i>' + esc(h.kicker || 'Nuevo') + '</span>')
+      +   '<h1 class="heroP__h1 hCas" aria-label="' + esc(String(h.titulo || p.nombre).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()) + '">'
+      +     cascada(h.titulo || esc(p.nombre)) + '</h1>'
+      +   '<p class="heroP__sub">' + esc(h.sub || p.sub || '') + '</p>'
+      +   '<div class="heroP__datos">'
+      +     (h.datos || []).map(function (d, i) {
+            return '<span class="heroP__dato' + (i === 0 ? ' heroP__dato--oro' : '') + '">'
+              + (ico[d[0]] || '') + esc(d[1]) + '</span>'; }).join('')
+      +   '</div>'
+      +   '<div class="heroP__pie">'
+      +     '<div class="heroP__precio"><span>Desde</span><b>' + pesos(min.precio) + '</b></div>'
+      +     '<button type="button" class="heroP__cta" id="heroCta">Lo quiero, pago al recibir</button>'
+      +   '</div>'
+      + '</div></section>';
+  }
+
+  cont.innerHTML = seccionHero()
+    + '<div class="arriba2">' + galeria + cabecera + '</div>'
     + promo
     /* La descripcion va pegada al precio: el cliente que acaba de entrar
        primero quiere saber QUE ES, y despues le hablamos de la oferta. */
@@ -1057,6 +1131,14 @@
      abandonado se guardaba sin producto, sin cantidad y sin total, y asi no
      hay con que escribirle despues. */
   pintarPrecio();
+
+  /* el boton del hero baja al formulario. Sin esto era un boton bonito que no
+     hacia nada, que es peor que no ponerlo. */
+  if ($('heroCta')) $('heroCta').addEventListener('click', function () {
+    var d = $('pedir'); if (!d) return;
+    d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.avisarPanel) try { window.avisarPanel('clic_hero'); } catch (e) {}
+  });
 
   ['packs', 'packsForm'].forEach(function (cual) {
     var caja = $(cual); if (!caja) return;
