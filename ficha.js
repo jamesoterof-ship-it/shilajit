@@ -338,6 +338,11 @@
   var prom = mias.length ? (mias.reduce(function (a, r) { return a + r.estrellas; }, 0) / mias.length) : 4.9;
   prom = Math.round(prom * 10) / 10;
   if (prestadas) prom = 4.9;   /* que no queden todos los nuevos en 4,8 */
+  /* Resumen propio del producto (zapatero, 01-10): nota y total de un conjunto DICHO en la pagina
+     ("70 opiniones de 4 y 5 estrellas"), no el conteo de las tarjetas que se muestran. */
+  var RES = p.resenasResumen || null;
+  if (RES) prom = RES.nota;
+  var cuentaTxt = RES ? (RES.total + ' ' + RES.rotulo) : (mias.length + ' reseñas');
 
   /* ---------- 1 · galeria ---------- */
   var fotos = (p.fotos && p.fotos.length ? p.fotos : [p.foto]).filter(Boolean);
@@ -375,7 +380,7 @@
   var off = kPop.antes ? Math.round((1 - kPop.precio / kPop.antes) * 100) : 0;
   var cabecera = '<div class="datos">'
     + (mias.length ? '<div class="estrellas">' + estrellas(prom)
-    + '<span class="cuantas">' + prom.toFixed(1) + ' · <a href="#resenas">' + mias.length + ' reseñas</a></span></div>' : '')
+    + '<span class="cuantas">' + prom.toFixed(1) + ' · <a href="#resenas">' + (RES ? RES.total + ' opiniones' : mias.length + ' reseñas') + '</a></span></div>' : '')
     + '<h1>' + esc(p.nombre) + '</h1>'
     + '<p class="sub">' + esc(p.sub) + '</p>'
     + '<div class="precioTop"><span class="ahora" id="pcAhora">' + pesos(kPop.precio) + '</span>'
@@ -468,9 +473,10 @@
   }
   /* Resenas con el molde de NAD+: puntuacion grande, barras por estrella,
      boton de escribir, sello Verificado y carrusel automatico abajo. */
-  var barras = [5, 4, 3, 2, 1].map(function (e) {
-    var n = mias.filter(function (r) { return r.estrellas === e; }).length;
-    var pc = mias.length ? Math.round(n / mias.length * 100) : 0;
+  var barras = (RES ? Object.keys(RES.barras).map(Number).sort(function (a, b) { return b - a; }) : [5, 4, 3, 2, 1]).map(function (e) {
+    var n = RES ? RES.barras[e] : mias.filter(function (r) { return r.estrellas === e; }).length;
+    var base = RES ? RES.total : mias.length;
+    var pc = base ? Math.round(n / base * 100) : 0;
     /* la barra se llena con scaleX, asi que va la fraccion (0 a 1), no el % */
     return '<div class="bar"><span class="lvl">' + e + ' ★</span>'
       + '<div class="track"><i style="--p:' + (pc / 100) + '"></i></div><b>' + n + '</b></div>';
@@ -479,7 +485,7 @@
     + '<h2 class="rev-title">' + (reales ? 'Opiniones del producto' : 'Experiencias reales') + ' <span class="stars">★★★★★</span></h2>'
     + (reales ? '<p class="rev-fuente">Opiniones de compradores de este mismo producto, tal como las escribieron.</p>' : '')
     + '<div class="rev-score"><span class="big">' + prom.toFixed(1) + '</span>'
-    + '<span class="cnt">' + mias.length + ' reseñas</span></div>'
+    + '<span class="cnt">' + cuentaTxt + '</span></div>'
     + '<div class="rev-bars">' + barras + '</div>'
     + '<button class="btn-write" id="btnWrite">Escribir una reseña</button>'
     + '<div class="rs" id="listaRs"></div>'
@@ -901,7 +907,7 @@
       +   (mias.length
             ? '<span class="heroP__nota">' + estrellas(prom)
               + '<b>' + prom.toFixed(1).replace('.', ',') + '</b>'
-              + '<a href="#resenas">' + mias.length + ' reseñas</a></span>'
+              + '<a href="#resenas">' + (RES ? RES.total + ' opiniones' : mias.length + ' reseñas') + '</a></span>'
             : '<span class="heroP__kicker"><i></i>' + esc(h.kicker || 'Nuevo') + '</span>')
       +   '<h1 class="heroP__h1 hCas" aria-label="' + esc(String(h.titulo || p.nombre).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()) + '">'
       +     cascada(h.titulo || esc(p.nombre)) + '</h1>'
