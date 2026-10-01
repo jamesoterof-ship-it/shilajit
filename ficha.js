@@ -326,6 +326,9 @@
   });          // si no calzan, se usan las generales
   /* el carrusel de mas abajo tambien las necesita: sin esto tomaba
      window.RESENAS crudo y pintaba las de la Almohada */
+  /* Producto NUEVO sin reseñas reales todavia (p.sinResenas): no se muestran las de otro
+     producto ni estrellas inventadas. Las reales llegan con la postventa (James, 01-10). */
+  if (p.sinResenas) { mias = []; prestadas = false; }
   window.RESENAS_MIAS = mias;
   var prom = mias.length ? (mias.reduce(function (a, r) { return a + r.estrellas; }, 0) / mias.length) : 4.9;
   prom = Math.round(prom * 10) / 10;
@@ -366,8 +369,8 @@
   var kPop = p.packs[0];
   var off = kPop.antes ? Math.round((1 - kPop.precio / kPop.antes) * 100) : 0;
   var cabecera = '<div class="datos">'
-    + '<div class="estrellas">' + estrellas(prom)
-    + '<span class="cuantas">' + prom.toFixed(1) + ' · <a href="#resenas">' + mias.length + ' reseñas</a></span></div>'
+    + (mias.length ? '<div class="estrellas">' + estrellas(prom)
+    + '<span class="cuantas">' + prom.toFixed(1) + ' · <a href="#resenas">' + mias.length + ' reseñas</a></span></div>' : '')
     + '<h1>' + esc(p.nombre) + '</h1>'
     + '<p class="sub">' + esc(p.sub) + '</p>'
     + '<div class="precioTop"><span class="ahora" id="pcAhora">' + pesos(kPop.precio) + '</span>'
@@ -475,6 +478,8 @@
     + '<div class="rev-auto"><div class="rev-auto__track" id="revAuto"></div></div>'
     + '</section>';
 
+
+  if (p.sinResenas) resenas = '';
 
   /* ---------- 7 · preguntas ---------- */
   var preguntas = '<section class="bloque"><h2>Preguntas frecuentes</h2><div class="fq">'
@@ -1176,7 +1181,7 @@
     vistas += trozo.length;
     if (vistas >= mias.length && $('masRs')) $('masRs').style.display = 'none';
   }
-  masResenas();
+  if ($('listaRs')) masResenas();
   if ($('masRs')) $('masRs').addEventListener('click', masResenas);
 
   /* region y comuna, de la lista real de Chile */

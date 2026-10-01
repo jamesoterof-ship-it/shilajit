@@ -679,6 +679,60 @@ window.PRODUCTOS = [
     popular: 2,
   },
   {
+    /* Zapatero Organizador Colgador 4 niveles — Dropi 134193 (James, 01-10).
+       4 repisas EN TOTAL contando la de arriba, y dos barras con 4 ganchos cada una (8 ganchos).
+       OJO: los videos de TikTok que circulan son del de 5 repisas (134192): aca no se muestra ese.
+       Precios aprobados 01-10: 500 pesos bajo Fullten (22.990 · 31.990 · 44.990), el mas barato
+       que vende a todo Chile. Mismo molde de pagina que el Organizador (zapatero.js / .css). */
+    id: 'zapatero', unidad: 'zapatero', promo: 2, sinResenas: true,   /* sin reseñas hasta tener reales de la postventa */
+    preguntas: [
+      { q: '¿Cuántas repisas y ganchos trae?', a: 'Cuatro repisas en total, contando la de arriba, y dos barras con cuatro ganchos cada una: ocho ganchos para colgar chaquetas, bolsos, gorros y llaves.' },
+      { q: '¿Viene armado?', a: 'Llega desarmado en su caja, como todos los muebles de este tipo. Se arma encajando los tubos en las uniones, siguiendo las instrucciones.' },
+      { q: '¿Aguanta chaquetas y mochilas?', a: 'Sí, los ganchos están hechos para el uso de todos los días: chaquetas, mochilas, carteras y gorros. Lo recomendable es repartir el peso entre los ganchos de los dos lados.' },
+      { q: '¿Dónde lo puedo poner?', a: 'Donde se acumula el desorden: en la entrada, en el pasillo, en el dormitorio o al lado del clóset. Va apoyado en el suelo, no hay que perforar la pared.' },
+    ],
+    formulaRotulo: 'Cómo está hecho',
+    formulaTitulo: 'Tubos de metal y repisas firmes.',
+    formulaSub: 'Una estructura que se arma encajando las piezas, con ganchos arriba y repisas abajo.',
+    formula: [
+      ['casa', 'Zapatera y perchero en uno', 'Abajo los zapatos, arriba lo que cuelgas: un solo mueble en vez de dos.'],
+      ['llave', 'Repisa de arriba libre', 'Para las llaves, el bolso del día o una planta, a la altura de la mano.'],
+      ['escudo', 'Estructura de tubos de metal', 'Negra, sobria, combina con cualquier entrada.'],
+      ['ojo', 'Todo a la vista', 'Ves cada par de zapatos y cada chaqueta sin abrir ni buscar.'],
+      ['pluma', 'Fácil de armar', 'Las piezas encajan una en otra.'],
+      ['fibra', 'Apoyado en el suelo', 'No se perfora la pared: lo pones donde quieras y lo mueves cuando quieras.'],
+    ],
+    comparaTitulo: 'Un mueble en vez de tres',
+    compara: [
+      'Zapatera, perchero y repisa en el espacio de uno solo.',
+      'Ocho ganchos arriba y cuatro repisas abajo.',
+      'Se apoya en el suelo: no hay que perforar ni instalar nada.',
+    ],
+    nombre: 'Zapatero Organizador Colgador 2 en 1',
+    sub: 'Los zapatos abajo, las chaquetas y bolsos arriba',
+    categoria: 'Hogar',
+    foto: 'img/prod-zapatero.webp?v=1',
+    fotos: ['img/prod-zapatero.webp?v=1'],
+    acento: '#0F7F73',   /* verde azulado: distinto al naranja del organizador */
+    desc: 'Un solo mueble para la entrada de la casa: abajo cuatro repisas para los zapatos, contando la de arriba, y arriba dos barras con ocho ganchos para las chaquetas, las mochilas, los bolsos, los gorros y las llaves. Lo que antes quedaba amontonado en el suelo o colgado en el respaldo de una silla, ahora tiene su lugar apenas entras. La estructura es de tubos de metal negro, se arma encajando las piezas y va apoyada en el suelo, sin perforar la pared.',
+    puntos: [
+      '4 repisas en total para el calzado, contando la de arriba',
+      '8 ganchos para chaquetas, bolsos, gorros y llaves',
+      'Zapatera y perchero en un solo mueble',
+      'Estructura de tubos de metal negro',
+      'Se arma encajando las piezas',
+      'Va apoyado en el suelo: sin perforar la pared',
+    ],
+    packs: [
+      /* el "antes" sigue la cuenta que James autorizo en el organizador (unos 30 a 70% sobre el precio).
+         PENDIENTE de su visto bueno junto con la ficha. */
+      { cant: 1, precio: 22500, antes: 29500, texto: '1 zapatero colgador' },
+      { cant: 2, precio: 31500, antes: 49500, texto: '2 zapateros colgadores' },
+      { cant: 3, precio: 44500, antes: 74500, texto: '3 zapateros colgadores' },
+    ],
+    popular: 1,
+  },
+  {
     /* Clorofila Líquida Benevolent 60 ml — Dropi 118999 · VITALCOM (Recoleta)
        🔴 OJO CON EL LENGUAJE. Es un SUPLEMENTO ALIMENTARIO y en Chile lo rige el
        Reglamento Sanitario de los Alimentos (D.S. 977/96). El art. 536 prohibe
@@ -935,4 +989,5 @@ window.PRECIOS_APROBADOS = [
   24500, 29500, 39500,   /* lymphoria drenaje: 1 · 2 · 3 frascos (James, 11-sep) */
   24990, 34990, 44990,   /* guirnalda solar: 1 · 2 · 3 guirnaldas (la placa de James, 22-09) */
   20500, 27500, 36500,   /* bálsamo de colágeno Rosetimes: 1 · 2 · 3 unidades (James, 29-09) */
+  22500, 31500, 44500,   /* zapatero organizador colgador 4 niveles: 1 · 2 · 3 unidades (James, 01-10) */
 ];
