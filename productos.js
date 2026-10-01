@@ -684,7 +684,7 @@ window.PRODUCTOS = [
        OJO: los videos de TikTok que circulan son del de 5 repisas (134192): aca no se muestra ese.
        Precios aprobados 01-10: 500 pesos bajo Fullten (22.990 · 31.990 · 44.990), el mas barato
        que vende a todo Chile. Mismo molde de pagina que el Organizador (zapatero.js / .css). */
-    id: 'zapatero', unidad: 'zapatero', promo: 2,
+    id: 'zapatero', unidad: 'zapatero', promo: 2, promoAntesDelPack: true,
     /* Reseñas REALES de compradores de este mismo estante (negro, tubos, dos barras de 8 ganchos)
        en AliExpress, publicaciones 1005006961469942 / 1005007171109482 / 1005009226221622 / 1005008942339636,
        leidas el 01-10-2026. Texto tal cual (las de otros idiomas, con la traduccion de la propia tienda).
@@ -752,10 +752,11 @@ window.PRODUCTOS = [
     ],
     packs: [
       /* el "antes" sigue la cuenta del organizador (unos 30 a 70% sobre el precio). Lo publique el 01-10
-         SIN su visto bueno (error mio); James lo vio en la pagina y lo dio por bueno el 01-10 en la noche. */
+         SIN su visto bueno (error mio). James, 01-10 noche: tachado = precio + 30% (con 40% chocaba con los
+         precios reales de 2 y 3 u.), terminado en 500. La caja de promocion usa ESTE mismo tachado (promoAntesDelPack). */
       { cant: 1, precio: 22500, antes: 29500, texto: '1 zapatero colgador' },
-      { cant: 2, precio: 31500, antes: 49500, texto: '2 zapateros colgadores' },
-      { cant: 3, precio: 44500, antes: 74500, texto: '3 zapateros colgadores' },
+      { cant: 2, precio: 31500, antes: 40500, texto: '2 zapateros colgadores' },
+      { cant: 3, precio: 44500, antes: 57500, texto: '3 zapateros colgadores' },
     ],
     popular: 1,
   },

@@ -410,6 +410,9 @@
     /* Precio de antes: el dueno lo quiere alrededor de un 80% por encima del
        de hoy, para que la diferencia se note. Se redondea a la centena. */
     var antes = Math.round(k.precio * 1.8 / 100) * 100;
+    /* el producto puede pedir que la promo use el MISMO tachado del pack (zapatero, James 01-10):
+       asi el pack no muestra dos "antes" distintos en la misma pagina */
+    if (p.promoAntesDelPack && k.antes) antes = k.antes;
     var off = Math.round((1 - k.precio / antes) * 100);
     var ahorra = antes - k.precio;
     /* Todo va DENTRO de la caja: afuera no se notaba. */
