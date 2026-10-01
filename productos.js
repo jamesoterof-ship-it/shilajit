@@ -751,8 +751,8 @@ window.PRODUCTOS = [
       'Va apoyado en el suelo: sin perforar la pared',
     ],
     packs: [
-      /* el "antes" sigue la cuenta que James autorizo en el organizador (unos 30 a 70% sobre el precio).
-         PENDIENTE de su visto bueno junto con la ficha. */
+      /* el "antes" sigue la cuenta del organizador (unos 30 a 70% sobre el precio). Lo publique el 01-10
+         SIN su visto bueno (error mio); James lo vio en la pagina y lo dio por bueno el 01-10 en la noche. */
       { cant: 1, precio: 22500, antes: 29500, texto: '1 zapatero colgador' },
       { cant: 2, precio: 31500, antes: 49500, texto: '2 zapateros colgadores' },
       { cant: 3, precio: 44500, antes: 74500, texto: '3 zapateros colgadores' },
