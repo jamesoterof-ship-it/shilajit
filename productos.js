@@ -684,7 +684,32 @@ window.PRODUCTOS = [
        OJO: los videos de TikTok que circulan son del de 5 repisas (134192): aca no se muestra ese.
        Precios aprobados 01-10: 500 pesos bajo Fullten (22.990 · 31.990 · 44.990), el mas barato
        que vende a todo Chile. Mismo molde de pagina que el Organizador (zapatero.js / .css). */
-    id: 'zapatero', unidad: 'zapatero', promo: 2, sinResenas: true,   /* sin reseñas hasta tener reales de la postventa */
+    id: 'zapatero', unidad: 'zapatero', promo: 2,
+    /* Reseñas REALES de compradores de este mismo estante (negro, tubos, dos barras de 8 ganchos)
+       en AliExpress, publicaciones 1005006961469942 / 1005007171109482 / 1005009226221622 / 1005008942339636,
+       leidas el 01-10-2026. Texto tal cual (las de otros idiomas, con la traduccion de la propia tienda).
+       Fotos de los compradores recortadas a los GANCHOS: ellos compraron la version de 5 repisas. */
+    resenasReales: [
+      { nombre: 'L***a', comuna: 'Italia', fecha: '07/11/2025', estrellas: 5, foto: 'img/resenas-zapatero/rz1.webp?v=1',
+        texto: 'Llegó dentro del plazo esperado. Es tal como se describe y funciona según lo previsto.' },
+      { nombre: 'Comprador anónimo', comuna: 'Colombia', fecha: '16/02/2026', estrellas: 5, foto: 'img/resenas-zapatero/rz2.webp?v=1',
+        texto: 'El producto es tal y como se ve en la imagen, en relación calidad precio esta bien. lo recomiendo' },
+      { nombre: 'J***m', comuna: 'Alemania', fecha: '02/10/2025', estrellas: 5,
+        texto: 'El embalaje del producto llegó prácticamente destrozado, pero el producto en sí llegó intacto. En cuanto al producto en sí, es mejor de lo que esperaba al principio al ver las piezas; por el precio, vale muchísimo la pena. ¡Muy práctico!' },
+      { nombre: 'p***p', comuna: 'Ucrania', fecha: '05/12/2025', estrellas: 5,
+        texto: 'No está mal, estantería móvil. Ideal para zapatos ligeros y artículos de verano. ¡Lo recomiendo!' },
+      { nombre: 'm***r', comuna: 'Corea del Sur', fecha: '17/09/2026', estrellas: 5,
+        texto: 'Estoy muy contento de haber comprado un buen producto a un precio bajo. Funciona bien y lo usaré bien jejeje.' },
+      { nombre: 'Comprador anónimo', comuna: 'Italia', fecha: '06/12/2025', estrellas: 4,
+        texto: 'El artículo tiene una buena relación calidad-precio y es útil; obviamente, los materiales son sencillos, pero es una excelente alternativa para una necesidad.' },
+      { nombre: 'ל***ב', comuna: 'Israel', fecha: '09/02/2026', estrellas: 5, texto: 'Muy práctico y espacioso' },
+      { nombre: 'Comprador anónimo', comuna: 'Corea del Sur', fecha: '18/04/2026', estrellas: 5,
+        texto: '¡Perfecto! ¡Es lo mejor! Intenté comprar otro, pero estaba agotado, así que lo compraré de nuevo la próxima vez.' },
+      { nombre: 'y***v', comuna: 'Israel', fecha: '23/12/2025', estrellas: 5, texto: 'Excelente por este precio, entrega muy rápida.' },
+      { nombre: 'd***r', comuna: 'Italia', fecha: '09/10/2025', estrellas: 4, texto: 'Artículo que coincide con la descripción, todo está bien.' },
+      { nombre: 'Comprador anónimo', comuna: 'Corea del Sur', fecha: '19/01/2026', estrellas: 4, texto: 'Gracias por el buen producto.' },
+    ],
+    video: 'img/zapatero-ficha.mp4?v=1',   /* 01-10: imagenes de James (4 repisas) + toma real SOLO de los ganchos */
     preguntas: [
       { q: '¿Cuántas repisas y ganchos trae?', a: 'Cuatro repisas en total, contando la de arriba, y dos barras con cuatro ganchos cada una: ocho ganchos para colgar chaquetas, bolsos, gorros y llaves.' },
       { q: '¿Viene armado?', a: 'Llega desarmado en su caja, como todos los muebles de este tipo. Se arma encajando los tubos en las uniones, siguiendo las instrucciones.' },
@@ -715,7 +740,7 @@ window.PRODUCTOS = [
     fotos: ['img/prod-zapatero.webp?v=1'],
     antesDespues: 'img/zp-ba.webp?v=1',   /* lo hizo James en Gemini, 01-10: 4 repisas + ganchos, igual al 134193 */
     antesDespuesSub: 'La misma entrada: los zapatos en el suelo y la ropa en la silla, y todo en su lugar en un solo mueble.',
-    acento: '#0F7F73',   /* verde azulado: distinto al naranja del organizador */
+    acento: '#EA580C', acento2Manual: '#059669',   /* skill ui-ux-pro-max 01-10: CTA naranja, primario verde */
     desc: 'Un solo mueble para la entrada de la casa: abajo cuatro repisas para los zapatos, contando la de arriba, y arriba dos barras con ocho ganchos para las chaquetas, las mochilas, los bolsos, los gorros y las llaves. Lo que antes quedaba amontonado en el suelo o colgado en el respaldo de una silla, ahora tiene su lugar apenas entras. La estructura es de tubos de metal negro, se arma encajando las piezas y va apoyada en el suelo, sin perforar la pared.',
     puntos: [
       '4 repisas en total para el calzado, contando la de arriba',

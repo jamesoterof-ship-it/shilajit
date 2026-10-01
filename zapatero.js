@@ -1,5 +1,7 @@
 /* ============================================================
-   El diseño propio del Zapatero Colgador (copia del molde del Organizador), montado sobre la ficha.
+   El diseño propio del Zapatero Colgador, montado sobre la ficha. Desde el 01-10 los colores,
+   las letras y los efectos salen de la skill ui-ux-pro-max (ver zapatero.css); ya no es la
+   copia del Organizador.
 
    Corre DESPUES de ficha.js. Si el producto no es el zapatero
    se va sin hacer nada, asi que los otros 9 quedan igual que
@@ -152,7 +154,14 @@
       }
     }
 
+    /* las cifras de las tiras cuentan desde cero al llegar (las cuenta `contar`) */
+    cont.querySelectorAll('.zp-med b, .zp-cabe b').forEach(function (b) {
+      var n = parseInt(b.textContent, 10);
+      if (n) { b.classList.add('zp-num'); b.setAttribute('data-n', n); }
+    });
+
     efectos(cont);
+    letras(cont);
 
     /* Se repasa varias veces: efectos-ficha.js anima con GSAP y hay
        bloques que todavia no estan pintados -o estan ocultos- cuando
@@ -209,8 +218,7 @@
        llegue a correr, la seccion se ve. */
     function encender(el) {
       el.classList.remove('zp-entra', 'zp-sec-entra');
-      var n = el.querySelector && el.querySelector('.zp-num');
-      if (n) contar(n);
+      if (el.querySelectorAll) el.querySelectorAll('.zp-num').forEach(contar);
     }
 
     /* El 294 sube desde cero cuando el cliente llega al bloque.
@@ -267,6 +275,90 @@
     setTimeout(function () {
       cont.querySelectorAll('.zp-entra, .zp-sec-entra').forEach(encender);
     }, 2500);
+  }
+
+  /* ---- LETRAS que entran una por una (skill ui-ux-pro-max, dominio gsap: "Stagger List",
+     letra por letra en titulos cortos, 18 ms entre letras) y el VIDEO con su titulo ----
+     Se hace sin GSAP: cada letra es un <span> y la hoja las mueve. El titulo completo queda en
+     aria-label para los lectores de pantalla. Si el navegador no tiene IntersectionObserver o
+     la persona pide menos movimiento, no se parte nada y el titulo se ve normal. */
+  function letras(cont) {
+    var quieto = false;
+    try { quieto = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    var vid = cont.querySelector('.vid-wrap');
+    if (vid && !vid.querySelector('.zp-vtit')) {
+      vid.insertAdjacentHTML('afterbegin',
+        '<div class="zp-vtit"><span class="zp-rot">En video</span><h2>Así queda en tu entrada</h2></div>');
+    }
+    if (quieto || !('IntersectionObserver' in window)) return;
+
+    var objetivos = [];
+    cont.querySelectorAll('.tit2, .bloque > h2, .rev-title, .zp-h2, .zp-vtit h2').forEach(function (h) {
+      if (h.closest('.zp-hero') || h.closest('.form') || h.dataset.partido) return;
+      partir(h);
+      objetivos.push(h);
+    });
+    if (vid) objetivos.push(vid);
+
+    function partir(h) {
+      h.dataset.partido = '1';
+      h.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
+      var k = 0;
+      [].slice.call(h.childNodes).forEach(function (n) {
+        if (n.nodeType !== 3 || !n.nodeValue.trim()) return;
+        var frag = document.createDocumentFragment();
+        n.nodeValue.split(/(\s+)/).forEach(function (w) {
+          if (!w) return;
+          if (/^\s+$/.test(w)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var pal = document.createElement('span');
+          pal.className = 'zp-pal';
+          pal.setAttribute('aria-hidden', 'true');
+          for (var i = 0; i < w.length; i++) {
+            var l = document.createElement('span');
+            l.className = 'zp-l';
+            l.style.setProperty('--k', k++);
+            l.textContent = w.charAt(i);
+            pal.appendChild(l);
+          }
+          frag.appendChild(pal);
+        });
+        h.replaceChild(frag, n);
+      });
+      h.classList.add('zp-letras');
+      /* la barra de color que se dibuja debajo del titulo */
+      if (!h.matches('.bloque > h2')) {
+        var raya = document.createElement('span');
+        raya.className = 'zp-raya' + (getComputedStyle(h).textAlign === 'center' ? ' zp-raya--c' : '');
+        raya.setAttribute('aria-hidden', 'true');
+        h.insertAdjacentElement('afterend', raya);
+      }
+    }
+
+    function encender(el) { el.classList.add('zp-on'); }
+    var ojo = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        encender(e.target);
+        ojo.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+    objetivos.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight && r.bottom > 0) setTimeout(function () { encender(el); }, 80);
+      else ojo.observe(el);
+    });
+    /* red de seguridad: si el navegador no avisa (pestaña de fondo), al hacer scroll se revisa a mano */
+    addEventListener('scroll', function revisar() {
+      var quedan = 0;
+      objetivos.forEach(function (el) {
+        if (el.classList.contains('zp-on')) return;
+        quedan++;
+        var r = el.getBoundingClientRect();
+        if (r.top < innerHeight * 0.95 && r.bottom > 0) encender(el);
+      });
+      if (!quedan) removeEventListener('scroll', revisar);
+    }, { passive: true });
   }
 
   /* ---- contraste, medido y corregido uno por uno ----
@@ -331,6 +423,8 @@
         if (n.nodeType === 3 && n.nodeValue.trim()) { propio = true; break; }
       }
       if (!propio) return;
+      /* las estrellas van SIEMPRE doradas (regla de la marca): el corrector no las toca */
+      if (el.closest('.stars, .estrellas, .est')) return;
       var cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden') return;
       var fondo = fondoDe(el);
@@ -345,7 +439,9 @@
          incluso al !important del autor. Se veia el color puesto en el
          style inline y el navegador seguia pintando el viejo. Hay que
          apagar la transicion ANTES de cambiar el color. */
-      el.style.setProperty('transition', 'none', 'important');
+      /* a las letras sueltas NO: su transicion es solo de opacidad y movimiento, y apagarla
+         las dejaria escondidas */
+      if (!el.classList.contains('zp-l')) el.style.setProperty('transition', 'none', 'important');
       /* sobre fondo claro va texto oscuro; sobre oscuro, texto claro */
       el.style.setProperty('color', lb > 0.35 ? '#141A20' : '#DDE1E4', 'important');
       arreglados++;

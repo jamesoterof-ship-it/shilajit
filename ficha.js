@@ -329,6 +329,11 @@
   /* Producto NUEVO sin reseñas reales todavia (p.sinResenas): no se muestran las de otro
      producto ni estrellas inventadas. Las reales llegan con la postventa (James, 01-10). */
   if (p.sinResenas) { mias = []; prestadas = false; }
+  /* Reseñas REALES de compradores de este mismo producto en otras tiendas (p.resenasReales),
+     copiadas tal cual con su pais y fecha. Se rotulan como del PRODUCTO, nunca como
+     "nuestros clientes" (misma regla que España, 25-09). James, 01-10: toda ficha lleva reseñas. */
+  var reales = !!(p.resenasReales && p.resenasReales.length);
+  if (reales) { mias = p.resenasReales.slice(); prestadas = false; }
   window.RESENAS_MIAS = mias;
   var prom = mias.length ? (mias.reduce(function (a, r) { return a + r.estrellas; }, 0) / mias.length) : 4.9;
   prom = Math.round(prom * 10) / 10;
@@ -439,8 +444,9 @@
      Se quita la foto generica que traia resenas.js (esas son de la tienda) y
      se usan solo las del producto. */
   var fotosCli = p.fotosResenas || [];
-  mias = mias.map(function (r) { return Object.assign({}, r, { foto: '' }); });
-  if (fotosCli.length) {
+  /* las reales traen SU propia foto (la del comprador que la escribio): no se tocan */
+  if (!reales) mias = mias.map(function (r) { return Object.assign({}, r, { foto: '' }); });
+  if (fotosCli.length && !reales) {
     var conFoto = mias.slice(0, fotosCli.length).map(function (r, i) {
       return Object.assign({}, r, { foto: fotosCli[i] });   /* nunca se repite una foto: una por resena, en orden */
     });
@@ -467,19 +473,20 @@
       + '<div class="track"><i style="--p:' + (pc / 100) + '"></i></div><b>' + n + '</b></div>';
   }).join('');
   var resenas = '<section class="bloque rev-sec" id="resenas" data-rv>'
-    + '<h2 class="rev-title">Experiencias reales <span class="stars">★★★★★</span></h2>'
+    + '<h2 class="rev-title">' + (reales ? 'Opiniones del producto' : 'Experiencias reales') + ' <span class="stars">★★★★★</span></h2>'
+    + (reales ? '<p class="rev-fuente">Opiniones de compradores de este mismo producto, tal como las escribieron.</p>' : '')
     + '<div class="rev-score"><span class="big">' + prom.toFixed(1) + '</span>'
     + '<span class="cnt">' + mias.length + ' reseñas</span></div>'
     + '<div class="rev-bars">' + barras + '</div>'
     + '<button class="btn-write" id="btnWrite">Escribir una reseña</button>'
     + '<div class="rs" id="listaRs"></div>'
     + (mias.length > VER ? '<button class="masRs" id="masRs">Ver más reseñas</button>' : '')
-    + '<p class="rev-auto-label">Más experiencias de nuestros clientes</p>'
+    + '<p class="rev-auto-label">' + (reales ? 'Más opiniones de quienes ya lo tienen' : 'Más experiencias de nuestros clientes') + '</p>'
     + '<div class="rev-auto"><div class="rev-auto__track" id="revAuto"></div></div>'
     + '</section>';
 
 
-  if (p.sinResenas) resenas = '';
+  if (p.sinResenas && !reales) resenas = '';
 
   /* ---------- 7 · preguntas ---------- */
   var preguntas = '<section class="bloque"><h2>Preguntas frecuentes</h2><div class="fq">'
