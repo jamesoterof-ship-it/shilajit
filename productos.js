@@ -713,6 +713,8 @@ window.PRODUCTOS = [
     categoria: 'Hogar',
     foto: 'img/prod-zapatero.webp?v=1',
     fotos: ['img/prod-zapatero.webp?v=1'],
+    antesDespues: 'img/zp-ba.webp?v=1',   /* lo hizo James en Gemini, 01-10: 4 repisas + ganchos, igual al 134193 */
+    antesDespuesSub: 'La misma entrada: los zapatos en el suelo y la ropa en la silla, y todo en su lugar en un solo mueble.',
     acento: '#0F7F73',   /* verde azulado: distinto al naranja del organizador */
     desc: 'Un solo mueble para la entrada de la casa: abajo cuatro repisas para los zapatos, contando la de arriba, y arriba dos barras con ocho ganchos para las chaquetas, las mochilas, los bolsos, los gorros y las llaves. Lo que antes quedaba amontonado en el suelo o colgado en el respaldo de una silla, ahora tiene su lugar apenas entras. La estructura es de tubos de metal negro, se arma encajando las piezas y va apoyada en el suelo, sin perforar la pared.',
     puntos: [
