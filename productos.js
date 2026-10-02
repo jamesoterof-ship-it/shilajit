@@ -732,7 +732,7 @@ window.PRODUCTOS = [
       { nombre: 'Anónimo', comuna: 'Corea del Sur', fecha: '25/12/2025', estrellas: 4, texto: 'Es más pequeño y menos resistente de lo que esperaba.' },
       { nombre: 'Anónimo', comuna: 'Corea del Sur', fecha: '19/01/2026', estrellas: 4, texto: 'Gracias por el buen producto.' },
     ],
-    video: 'img/zapatero-ficha.mp4?v=1',   /* 01-10: imagenes de James (4 repisas) + toma real SOLO de los ganchos */
+    video: 'img/zapatero-ficha.mp4?v=2',   /* 01-10 noche: video REAL del modelo de 4 repisas (TikTok 7642997984178769173), sin sus letreros */
     preguntas: [
       { q: '¿Cuántas repisas y ganchos trae?', a: 'Cuatro repisas en total, contando la de arriba, y dos barras con cuatro ganchos cada una: ocho ganchos para colgar chaquetas, bolsos, gorros y llaves.' },
       { q: '¿Viene armado?', a: 'Llega desarmado en su caja, como todos los muebles de este tipo. Se arma encajando los tubos en las uniones, siguiendo las instrucciones.' },
