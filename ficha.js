@@ -482,15 +482,18 @@
       + '<div class="track"><i style="--p:' + (pc / 100) + '"></i></div><b>' + n + '</b></div>';
   }).join('');
   var resenas = '<section class="bloque rev-sec" id="resenas" data-rv>'
-    + '<h2 class="rev-title">' + (reales ? 'Opiniones del producto' : 'Experiencias reales') + ' <span class="stars">★★★★★</span></h2>'
-    + (reales ? '<p class="rev-fuente">Opiniones de compradores de este mismo producto, tal como las escribieron.</p>' : '')
+    /* p.resenasRotulo (desengrasante, 03-10): cuando las reseñas reales son del mismo TIPO de producto y no del mismo,
+       el rótulo lo dice tal cual en vez de "este mismo producto" */
+    + '<h2 class="rev-title">' + (p.resenasRotulo || (reales ? 'Opiniones del producto' : 'Experiencias reales')) + ' <span class="stars">★★★★★</span></h2>'
+    + (p.resenasRotulo ? '<p class="rev-fuente">Opiniones reales de compradores de espuma antigrasa, tal como las escribieron.</p>'
+      : (reales ? '<p class="rev-fuente">Opiniones de compradores de este mismo producto, tal como las escribieron.</p>' : ''))
     + '<div class="rev-score"><span class="big">' + prom.toFixed(1) + '</span>'
     + '<span class="cnt">' + cuentaTxt + '</span></div>'
     + '<div class="rev-bars">' + barras + '</div>'
     + '<button class="btn-write" id="btnWrite">Escribir una reseña</button>'
     + '<div class="rs" id="listaRs"></div>'
     + (mias.length > VER ? '<button class="masRs" id="masRs">Ver más reseñas</button>' : '')
-    + '<p class="rev-auto-label">' + (reales ? 'Más opiniones de quienes ya lo tienen' : 'Más experiencias de nuestros clientes') + '</p>'
+    + '<p class="rev-auto-label">' + (p.resenasRotulo ? 'Más opiniones de quienes usan espuma antigrasa' : (reales ? 'Más opiniones de quienes ya lo tienen' : 'Más experiencias de nuestros clientes')) + '</p>'
     + '<div class="rev-auto"><div class="rev-auto__track" id="revAuto"></div></div>'
     + '</section>';
 

@@ -981,6 +981,115 @@ window.PRODUCTOS = [
     popular: 1,
   },
   {
+    /* Desengrasante en espuma + pasta para ollas de regalo — MEIBO.CL (mismo proveedor del organizador:
+       un solo envío). Espuma "B - ESPUMA ANTI GRASA NARANJA" 97959 / pack x2 128285 · pasta "T - PASTA AZUL
+       ANTI GRASA DE OLLA" 150429. James 03-10: "dale 23.500", sale como COMBO (2 espumas + 1 pasta de regalo).
+       Elegido con el criterio nuevo (Meta 11+ anunciantes desde abril + Dropdata 594 u/14 d, 13/14 días).
+       Precios de la competencia 03-10: Hogario 2 por 23.990 (mismo proveedor) · Moonly 2 por 27.990 ·
+       Spezial 2x1 25.990 · Recibe & Paga 2 espumas + pasta 27.990 · Bienbueno 3x1 26.990.
+       Tachado = precio + 30 %, terminado en 500 (la regla que James aprobó con el zapatero).
+       OJO CON LO QUE SE PROMETE: "ayuda a aflojar la grasa", rociar-esperar-limpiar. Nada de "sin refregar
+       nunca", ni "para todo", ni químicos que no salen en la lata. Diseño propio (desengrasante.css/.js),
+       de la skill ui-ux-pro-max 03-10, opción B "Desengrasante Impacto": Motion-Driven, negro + naranja de la lata. */
+    id: 'desengrasante', unidad: 'combo', promo: 2, promoAntesDelPack: true,   /* la promo usa el tachado aprobado (44.500), no el +80 % */
+    /* video REAL (TikTok 7672583895497460999 @tiendas.ami: nuestra misma lata naranja, sin texto ni logo):
+       antes · lata · espuma · paño · resultado · horno. NADA de video con IA. */
+    video: 'img/dg-video.mp4?v=1',
+    /* 03-10 · reseñas REALES de compradores latinos de espuma antigrasa en aerosol (Falabella Chile/Perú y AliExpress),
+       copiadas tal cual, sin foto y sin las que nombran una marca (_kn_scratch/testeo/desengrasante/_resenas_a_pagina.js).
+       Del spray exacto no hay reseñas latinas. Rótulo: 'Lo que dicen quienes usan espuma antigrasa'. NINGUNA escrita por nosotros. */
+    resenasRotulo: 'Lo que dicen quienes usan espuma antigrasa',
+    resenasResumen: { total: 34, nota: 4.8, rotulo: 'opiniones de 4 y 5 estrellas', barras: { 5: 26, 4: 8 } },   /* 03-10: fuera las 2 sin nombre (James) */
+    resenasReales: [
+      { nombre: 'Cristal Giron', comuna: '', fecha: '', estrellas: 5, texto: 'Arranca la grasa facilmente, justo lo q necesitaba. Aunque dice que es para horno pude limpiar mis ollas en su base, ya que tenian grasa pegada que no se le quitaba con nada.' },
+      { nombre: 'Rodrigo', comuna: '', fecha: '', estrellas: 5, texto: 'Es muy buen producto para la limpieza de la grasa acumulada tanto en hornos, microondas, parrillas y utensilios de cocina.' },
+      { nombre: 'Carolina', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bueno para quitar grasa en parrillas y cocina. Solo quiero que vuelva a estar disponible para su compra' },
+      { nombre: 'Dexy Contreras', comuna: '', fecha: '', estrellas: 5, texto: 'Lo mejor que he probado para la limpieza de mi cocina, lo amoooo es uno de mis productos favoritos' },
+      { nombre: 'Sebastian', comuna: '', fecha: '', estrellas: 5, texto: 'Super buen producto. Realmente limpia la parrilla y la deja impecable. Super recomendado' },
+      { nombre: 'Sebastián', comuna: '', fecha: '', estrellas: 5, texto: 'realmente limpia las parrillas, no esta convencido, pero si funciona.' },
+      { nombre: 'Lourdes', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bueno, quita la grasa de mi cocina de mis ollas, lo recomiendo.' },
+      { nombre: 'Mariella', comuna: '', fecha: '', estrellas: 5, texto: 'excelente Producto... útil para la limpieza del hogar.' },
+      { nombre: 'Alejandra', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente producto, el mejor limpiador para la grasa.' },
+      { nombre: 'Erika', comuna: '', fecha: '', estrellas: 5, texto: 'Ideal para grasa difícil cómo de campana estractora' },
+      { nombre: 'Diana', comuna: '', fecha: '', estrellas: 5, texto: 'Usar con guantes ,ya que el producto es muy fuerte' },
+      { nombre: 'Yanet', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bueno....me lo recomendaron y es excelente.' },
+      { nombre: 'Keiko', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente producto cumple totalmente su función' },
+      { nombre: 'Pablo', comuna: '', fecha: '', estrellas: 5, texto: 'Muy buen producto, limpia toda la grasa' },
+      { nombre: 'Sofa', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bueno, cumple con lo que ofrece.' },
+      { nombre: 'Sandra', comuna: '', fecha: '', estrellas: 5, texto: 'Efectivo para la grasa acumulada' },
+      { nombre: 'Jacqueline Gallardo', comuna: '', fecha: '', estrellas: 5, texto: 'cumple al 100% con su función.' },
+      { nombre: 'Sindy Ulloa', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bueno dejar actuar y listo' },
+      { nombre: 'Dilianis', comuna: '', fecha: '', estrellas: 5, texto: 'Lo volvería a comprar 10/10' },
+      { nombre: 'Lida', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bueno y potente' },
+      { nombre: 'Valentina', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente calidad' },
+      { nombre: 'Catalina', comuna: '', fecha: '', estrellas: 5, texto: 'Buena calidad' },
+      { nombre: 'Rafael', comuna: '', fecha: '', estrellas: 5, texto: 'Máximo poder' },
+      { nombre: 'Laura', comuna: '', fecha: '', estrellas: 5, texto: 'Todo bien' },
+      { nombre: 'Urbano', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bueno' },
+      { nombre: 'Ernesto', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente' },
+      { nombre: 'Gian', comuna: '', fecha: '', estrellas: 4, texto: 'Baicamente es un quimico que ayuda a la limpieza, no remueve al 100%, pero aporta mas que otros quimicos a la hora de limpiar zonas no tan sucias, el producto es un 7/10 por el precio que tiene y por su funcion basica de limpieza' },
+      { nombre: 'Luis', comuna: '', fecha: '', estrellas: 4, texto: 'Funciona el sacagrasa pero no es como se ve en la publicidad. En grasa acumulada de sartenes y ollas es muy limitada la capacidad de limpieza...pero si es buen producto en general.' },
+      { nombre: 'Matías', comuna: '', fecha: '', estrellas: 4, texto: 'El sistema de spray estaba un poco defectuoso y “chorreaba” un poco. Pero el producto es bueno y resulta facil desengrasar' },
+      { nombre: 'Carmen Maria Moreno', comuna: '', fecha: '', estrellas: 4, texto: 'Muy bueno el limpiador de horno, el único problema es un poco fuerte para el olfato y manos' },
+      { nombre: 'Maria', comuna: '', fecha: '', estrellas: 4, texto: 'Es un buen producto pero hay que dejarlo actuar por unos 10 min para una mejor efectividad' },
+      { nombre: 'Jose', comuna: '', fecha: '', estrellas: 4, texto: 'Buen producto. Remueve la grasa en un 85 %' },
+      { nombre: 'Veronica', comuna: '', fecha: '', estrellas: 4, texto: 'Si me parece eun buen producto' },
+      { nombre: 'Lizelly', comuna: '', fecha: '', estrellas: 4, texto: 'Eficaz en ciertas superficies' },
+    ],
+    antesDespues: 'img/dg-ba.webp?v=2',
+    antesDespuesSub: 'La misma campana: con años de grasa pegada, y después de la espuma y un paño.',
+    preguntas: [
+      { q: '¿Cómo se usa?', a: 'Agitas la lata, rocías la espuma sobre la grasa, la dejas actuar unos minutos para que la afloje y la retiras con un paño o una esponja húmeda. En grasa muy antigua puede hacer falta una segunda pasada.' },
+      { q: '¿Dónde lo puedo usar?', a: 'En la campana y su filtro, la cocina, el horno, los azulejos y las encimeras: las superficies lavables de la cocina donde se va pegando la grasa.' },
+      { q: '¿Qué trae el combo?', a: 'Las latas de espuma antigrasa de 400 ml que elijas (2, 4 o 6) y sus regalos: por cada 2 latas va una pasta para ollas de 500 g y una esponja anti óxido y grasa. El combo de 2 trae 2 regalos, el de 4 trae 4 y el de 6 trae 6.' },
+      { q: '¿Tiene olor fuerte?', a: 'Deja aroma cítrico, a limón. Igual conviene usarlo con la cocina ventilada, como cualquier producto de limpieza.' },
+      { q: '¿Sirve en cualquier superficie?', a: 'Está pensado para superficies lavables de cocina. En una superficie delicada o pintada, pruébalo primero en una zona pequeña y que no se vea.' },
+      { q: '¿Cómo pago?', a: 'Pagas cuando lo recibes, en efectivo o con tarjeta de débito. El envío es gratis a todo Chile.' },
+    ],
+    formulaRotulo: 'Cómo se usa',
+    formulaTitulo: 'Rocías, esperas y limpias.',
+    formulaSub: 'Tres pasos para la grasa pegada de la cocina.',
+    formula: [
+      ['gota', 'Rocía la espuma', 'La espuma se queda pegada sobre la grasa, también en la campana y en superficies verticales.'],
+      ['sol', 'Deja actuar unos minutos', 'La espuma afloja la grasa acumulada mientras haces otra cosa.'],
+      ['pluma', 'Pasa un paño', 'Retiras la espuma con la grasa suelta, con un paño o una esponja húmeda.'],
+      ['hoja', 'Aroma cítrico', 'Deja olor a limón en la cocina.'],
+      ['casa', 'Campana, horno y cocina', 'Para las superficies lavables donde más se pega la grasa.'],
+      ['escudo', '400 ml por lata', 'Una lata rinde para varias limpiezas de campana y cocina.'],
+    ],
+    comparaTitulo: 'Por qué en espuma',
+    compara: [
+      'La espuma se queda donde la pones, no chorrea como un líquido.',
+      'Llega a la campana y a los azulejos sin tener que desarmar nada.',
+      'Aroma cítrico en vez del olor fuerte de los desengrasantes de siempre.',
+    ],
+    nombre: 'Desengrasante en Espuma',
+    sub: 'Espuma antigrasa para campana, horno y cocina · 400 ml',
+    categoria: 'Hogar',
+    foto: 'img/dg-hero.webp?v=2',
+    fotos: ['img/dg-hero.webp?v=2'],
+    acento: '#F26A1B', acento2Manual: '#18181B',   /* skill ui-ux-pro-max 03-10 opción B: naranja de la lata sobre negro */
+    desc: 'Una espuma antigrasa para la cocina: la rocías sobre la campana, el horno o la cocina, la dejas actuar unos minutos y la grasa pegada se afloja para retirarla con un paño. Se vende en combos de 2, 4 y 6 latas de 400 ml, y todos traen 2 regalos.',
+    puntos: [
+      'Ayuda a aflojar la grasa pegada de campana, horno y cocina',
+      'Rocías, esperas unos minutos y limpias con un paño',
+      'Espuma que se queda pegada, también en superficies verticales',
+      'Aroma cítrico, a limón',
+      'Combos de 2, 4 y 6 latas de 400 ml, con 2 regalos',
+      'Pagas al recibir, con envío gratis a todo Chile',
+    ],
+    /* 03-10 James: SOLO combos (2, 4 y 6 espumas), sin unidad suelta. El de 2 a 24.500 ("ahí sí le pegamos porque damos
+       dos regalos"). Cada combo lleva 2 regalos (pasta para ollas + esponja anti óxido) que NO se muestran en la página:
+       salen en la ruleta de entrada y en el circulito flotante (desengrasante.js). cant = combos que se piden a Dropi. */
+    packs: [
+      /* James 03-10: los regalos suben con el combo (cada combo de Dropi = 2 espumas + 1 pasta + 1 esponja) */
+      { cant: 1, precio: 24500, antes: 31500, texto: 'Combo 2 espumas antigrasa + 2 regalos' },
+      { cant: 2, precio: 34500, antes: 44500, texto: 'Combo 4 espumas antigrasa + 4 regalos' },
+      { cant: 3, precio: 44500, antes: 57500, texto: 'Combo 6 espumas antigrasa + 6 regalos' },
+    ],
+    popular: 1,   /* el de 4 espumas: ahí está la ganancia */
+  },
+  {
     /* Clorofila Líquida Benevolent 60 ml — Dropi 118999 · VITALCOM (Recoleta)
        🔴 OJO CON EL LENGUAJE. Es un SUPLEMENTO ALIMENTARIO y en Chile lo rige el
        Reglamento Sanitario de los Alimentos (D.S. 977/96). El art. 536 prohibe
@@ -1238,4 +1347,5 @@ window.PRECIOS_APROBADOS = [
   24990, 34990, 44990,   /* guirnalda solar: 1 · 2 · 3 guirnaldas (la placa de James, 22-09) */
   20500, 27500, 36500,   /* bálsamo de colágeno Rosetimes: 1 · 2 · 3 unidades (James, 29-09) */
   22500, 31500, 44500,   /* zapatero organizador colgador 4 niveles: 1 · 2 · 3 unidades (James, 01-10) */
+  24500, 34500, 44500,   /* desengrasante en espuma: combos de 2 · 4 · 6 espumas, con 2 regalos (James, 03-10) */
 ];
