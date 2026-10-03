@@ -465,7 +465,7 @@
       + '<span class="ini">' + esc((r.nombre || '?').charAt(0)) + '</span>'
       + '<span class="quien">' + esc(r.nombre)
       + '<i class="verif">✓ Verificado</i>'
-      + '<small>' + esc(r.comuna || '') + ' · ' + esc(r.fecha || '') + '</small></span>'
+      + '<small>' + esc(r.comuna ? r.comuna + ' · ' + (r.fecha || '') : (r.fecha || '')) + '</small></span>'
       + estrellas(r.estrellas) + '</div>'
       + '<p>' + esc(r.texto) + '</p>'
       + (r.foto ? '<img class="rfoto" src="' + esc(r.foto) + '" alt="" loading="lazy" onerror="this.remove()">' : '')
