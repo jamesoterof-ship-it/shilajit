@@ -552,7 +552,9 @@
      almohada, que no está pauteada. Con cinco nombres el relleno ya no
      hace falta. OJO: esto vale para las trece fichas, no solo para el
      foco. */
-  var MAS_VENDIDOS = ['organizador', 'lentes', 'foco', 'cargador', 'guirnalda'];
+  /* 03-10 (James): solo lo que SE ESTÁ VENDIENDO. Panel, últimos 7 días: organizador 932 · lymphoria 83 ·
+     lentes 67 · antena 58 · máscara 18. El cargador ya no se vende y el foco/guirnalda casi nada. */
+  var MAS_VENDIDOS = ['organizador', 'lentes', 'antena', 'lymphoria', 'mascara'];
   var otros = TODOS
     .filter(function (x) { return x.id !== p.id && MAS_VENDIDOS.indexOf(x.id) >= 0; })
     .sort(function (a, b) { return MAS_VENDIDOS.indexOf(a.id) - MAS_VENDIDOS.indexOf(b.id); })

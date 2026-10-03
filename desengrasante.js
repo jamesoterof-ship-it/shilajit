@@ -228,22 +228,28 @@
     out += '<circle cx="' + R + '" cy="' + R + '" r="22" fill="#000000" stroke="#3F3F46" stroke-width="2"/><circle cx="' + R + '" cy="' + R + '" r="8" fill="#F26A1B"/>';
     return '<svg class="dg-rueda" viewBox="0 0 260 260" role="img" aria-label="Ruleta de regalos">' + out + '</svg>';
   }
-  var caja = null;
+  /* James 03-10: la ruleta gira tocando EN CUALQUIER PARTE (no solo el botón). El premio NO lleva botón:
+     solo la foto de los regalos con burbujas de festejo; al tocar donde sea se cierra y el cliente queda
+     arriba, en el héroe, para ver la página entera (no se le manda directo a comprar). */
+  var caja = null, girando = false, burbujeo = null;
   function abrir(modo) {
     if (!caja) {
       caja = document.createElement('div'); caja.className = 'dg-ruleta'; caja.setAttribute('role', 'dialog'); caja.setAttribute('aria-modal', 'true');
       document.body.appendChild(caja);
-      caja.addEventListener('click', function (e) { if (e.target === caja || e.target.closest('.dg-cerrar')) cerrar(); });
+      caja.addEventListener('click', function (e) {
+        if (e.target.closest('.dg-cerrar')) { cerrar(); return; }
+        if (caja.dataset.modo === 'ruleta') girar(); else cerrar();
+      });
       addEventListener('keydown', function (e) { if (e.key === 'Escape' && !caja.hidden) cerrar(); });
     }
+    caja.dataset.modo = modo;
     caja.hidden = false;
     caja.innerHTML = modo === 'gano' ? htmlGano() :
       '<div class="dg-rbox"><button class="dg-cerrar" aria-label="Cerrar">×</button>'
       + '<h3>Gira y descubre tus regalos</h3><p>Todas las casillas ganan: van gratis con tu combo.</p>'
       + '<div class="dg-rueda-wrap"><span class="dg-flecha" aria-hidden="true"></span>' + ruedaSVG() + '</div>'
-      + '<button class="dg-girar">Girar la ruleta</button></div>';
-    var b = caja.querySelector('.dg-girar'); if (b) b.addEventListener('click', girar);
-    var ir = caja.querySelector('.dg-ir'); if (ir) ir.addEventListener('click', function () { cerrar(); irAlPedido(); });
+      + '<button class="dg-girar" type="button">Toca para girar</button></div>';
+    if (modo === 'gano') festejar(); else pararFestejo();
   }
   function htmlGano() {
     return '<div class="dg-rbox dg-gano"><button class="dg-cerrar" aria-label="Cerrar">×</button>'
@@ -251,12 +257,18 @@
       + '<img src="' + FOTO_REGALOS + '" alt="Tus regalos: pasta para ollas y esponja anti óxido" width="580" height="580">'
       + '<p class="dg-nombres">' + NOMBRES + '</p>'
       + '<p class="dg-nota">Van gratis con tu pedido al completar tu compra. En los combos de 4 y 6 espumas, los regalos se duplican y triplican.</p>'
-      + '<button class="dg-ir">Pedir ahora con mis regalos</button></div>';
+      + '<p class="dg-toca">Toca en cualquier parte para seguir</p></div>';
   }
+  /* burbujas de premio mientras se ve el regalo: una ráfaga grande al abrir y después tandas chicas */
+  function festejar() {
+    pararFestejo(); festejo(26);
+    if (!menos) burbujeo = setInterval(function () { festejo(7); }, 900);
+  }
+  function pararFestejo() { if (burbujeo) { clearInterval(burbujeo); burbujeo = null; } }
   /* burbujas que salen volando del centro cuando gana */
-  function festejo() {
+  function festejo(cuantas) {
     if (menos) return;
-    for (var i = 0; i < 26; i++) {
+    for (var i = 0; i < (cuantas || 26); i++) {
       var s = document.createElement('span'), an = Math.random() * 6.28, d = 120 + Math.random() * 200, t = 8 + Math.random() * 16;
       s.className = 'dg-pop';
       s.style.cssText = 'left:50%;top:45%;width:' + t + 'px;height:' + t + 'px;--x:' + (Math.cos(an) * d).toFixed(0) + 'px;--y:' + (Math.sin(an) * d).toFixed(0) + 'px;animation-delay:' + (Math.random() * .2).toFixed(2) + 's';
@@ -265,15 +277,22 @@
     }
   }
   function girar() {
-    var b = caja.querySelector('.dg-girar'), r = caja.querySelector('.dg-rueda'); if (!b || !r) return;
-    b.disabled = true; b.textContent = 'Girando…';
+    var b = caja.querySelector('.dg-girar'), r = caja.querySelector('.dg-rueda'); if (!b || !r || girando) return;
+    girando = true; b.disabled = true; b.textContent = 'Girando…';
     /* cae en la casilla "2 regalos" (índice 1): su centro está a 90° del arriba; vueltas extra para la emoción */
     var paso = 360 / CASILLAS.length, centro = paso * 1 + paso / 2, final = 360 * 6 + (360 - centro);
     if (menos) { r.style.transition = 'none'; }
     requestAnimationFrame(function () { r.style.transform = 'rotate(' + final + 'deg)'; });
-    setTimeout(function () { guardar('dg_gano', '1'); abrir('gano'); festejo(); badge(); }, menos ? 300 : 4400);
+    setTimeout(function () { girando = false; guardar('dg_gano', '1'); primera = true; abrir('gano'); badge(); }, menos ? 300 : 4400);
   }
-  function cerrar() { if (caja) caja.hidden = true; badge(); }
+  var primera = false;
+  function cerrar() {
+    pararFestejo();
+    if (caja) caja.hidden = true;
+    badge();
+    /* la primera vez que reclama el regalo, queda arriba en el héroe para ver toda la página */
+    if (primera) { primera = false; scrollTo({ top: 0, behavior: menos ? 'auto' : 'smooth' }); }
+  }
   function irAlPedido() {
     var d = document.querySelector('.promo-sec') || document.getElementById('pedir');
     if (d) d.scrollIntoView({ behavior: menos ? 'auto' : 'smooth', block: 'start' });

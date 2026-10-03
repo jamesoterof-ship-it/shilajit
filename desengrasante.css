@@ -221,6 +221,16 @@ body.p-dg #prod .formcard .cc-lista{background:var(--dg-card);border:1px solid v
 body.p-dg #prod .formcard .cc-lista *{color:var(--dg-fg)}
 body.p-dg #prod .formcard option{background:var(--dg-card);color:var(--dg-fg)}
 body.p-dg #prod .pack .radio{border-color:var(--dg-borde)}
+/* revisión de James 03-10 (noche): la fila de la tabla se ponía blanca al pasar el mouse */
+body.p-dg #prod table.cmp tbody tr:hover,body.p-dg #prod table.cmp tbody tr:hover :is(td,th){background:var(--dg-sec) !important}
+body.p-dg #prod table.cmp:hover{box-shadow:none}
+/* "Con quién se despacha": los nombres salían oscuros sobre oscuro; los logos van en una placa blanca pareja */
+body.p-dg #prod .sellos .sello .nom{color:var(--dg-fg);font-family:var(--dg-t);font-weight:400;font-size:22px;letter-spacing:.04em;text-transform:uppercase}
+body.p-dg #prod .sellos .sello small{color:var(--dg-mfg)}
+body.p-dg #prod .sellos .sello img{background:var(--dg-blanco);padding:4px 10px;border-radius:4px}
+/* botones más delgados; el de abajo deja libre el botón de WhatsApp */
+body.p-dg #prod :is(.cta,.btn,button.pedir,.btn-pedir,.big),body.p-dg #prod .form button[type=submit]{min-height:48px;font-size:21px;padding-top:8px;padding-bottom:8px}
+body.p-dg .stickycta .btn-flota{min-height:44px;height:auto;padding:9px 10px;font-size:17px;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:calc(100% - 84px) !important;max-width:calc(100% - 84px);margin-left:0;margin-right:auto;display:block}
 body.p-dg #prod .cuenta > div.seg,body.p-dg #prod .cuenta > div.seg.late{background:var(--dg-a) !important;animation:none !important}
 body.p-dg #prod .rev-score .big{display:inline-block;height:auto;padding:6px 12px 2px;font-size:44px;line-height:1}
 body.p-dg #prod .cinta{color:var(--dg-on-a) !important;font-size:16px;letter-spacing:.06em}
@@ -247,6 +257,8 @@ body.p-dg .dg-gano img{width:min(290px,100%);height:auto !important;aspect-ratio
 .dg-gano img{width:100%;max-width:290px;aspect-ratio:1;object-fit:cover;border:1px solid var(--dg-borde);margin:4px auto 10px;display:block;background:var(--dg-bg)}
 .dg-gano .dg-nombres{font-weight:700;color:var(--dg-fg);font-size:15px;margin:0 0 4px}
 .dg-gano .dg-nota{font-size:13px;color:var(--dg-mfg);margin:0 0 14px}
+.dg-gano .dg-toca{margin:4px 0 0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dg-a);animation:dg-punto 1.6s ease-in-out infinite}
+.dg-ruleta{cursor:pointer}
 /* burbujas que salen volando cuando gana */
 .dg-pop{position:fixed;z-index:95;width:14px;height:14px;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle at 30% 30%,#fff,rgba(255,255,255,.6) 55%,rgba(242,106,27,.35));animation:dg-vuela 1.3s ease-out forwards}
