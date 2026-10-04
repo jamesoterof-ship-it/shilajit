@@ -269,7 +269,11 @@
       + '<div class="dg-rueda-wrap"><span class="dg-flecha" aria-hidden="true"></span>' + ruedaSVG() + '</div>'
       + '<button class="dg-girar" type="button">Toca para girar</button></div>';
     if (modo === 'gano') festejar(); else pararFestejo();
+    /* James 03-10: el regalo no puede trabar la entrada. Se va solo a los 5 segundos (o antes si toca) */
+    clearTimeout(autoCierre);
+    if (modo === 'gano') autoCierre = setTimeout(function () { if (!caja.hidden && caja.dataset.modo === 'gano') cerrar(); }, 5000);
   }
+  var autoCierre = null;
   function htmlGano() {
     return '<div class="dg-rbox dg-gano"><button class="dg-cerrar" aria-label="Cerrar">×</button>'
       + '<h3>¡Ganaste 2 regalos!</h3>'
@@ -306,7 +310,7 @@
   }
   var primera = false;
   function cerrar() {
-    pararFestejo();
+    pararFestejo(); clearTimeout(autoCierre);
     if (caja) caja.hidden = true;
     badge();
     /* la primera vez que reclama el regalo, queda arriba en el héroe para ver toda la página */
