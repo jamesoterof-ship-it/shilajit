@@ -1041,7 +1041,7 @@ window.PRODUCTOS = [
     preguntas: [
       { q: '¿Cómo se usa?', a: 'Agitas la lata, rocías la espuma sobre la grasa, la dejas actuar unos minutos para que la afloje y la retiras con un paño o una esponja húmeda. En grasa muy antigua puede hacer falta una segunda pasada.' },
       { q: '¿Dónde lo puedo usar?', a: 'En la campana y su filtro, la cocina, el horno, los azulejos y las encimeras: las superficies lavables de la cocina donde se va pegando la grasa.' },
-      { q: '¿Qué trae el combo?', a: 'Las latas de espuma antigrasa de 400 ml que elijas (2, 4 o 6) y sus regalos: por cada 2 latas va una pasta para ollas de 500 g y una esponja anti óxido y grasa. El combo de 2 trae 2 regalos, el de 4 trae 4 y el de 6 trae 6.' },
+      { q: '¿Qué trae el combo?', a: 'Las latas de espuma antigrasa de 400 ml que elijas: 2, 4 o 6, según el combo. El combo de 2 latas sale $24.500, el de 4 sale $34.500 y el de 6 sale $44.500.' },
       { q: '¿Tiene olor fuerte?', a: 'Deja aroma cítrico, a limón. Igual conviene usarlo con la cocina ventilada, como cualquier producto de limpieza.' },
       { q: '¿Sirve en cualquier superficie?', a: 'Está pensado para superficies lavables de cocina. En una superficie delicada o pintada, pruébalo primero en una zona pequeña y que no se vea.' },
       { q: '¿Cómo pago?', a: 'Pagas cuando lo recibes, en efectivo o con tarjeta de débito. El envío es gratis a todo Chile.' },
@@ -1069,13 +1069,13 @@ window.PRODUCTOS = [
     foto: 'img/dg-hero.webp?v=2',
     fotos: ['img/dg-hero.webp?v=2'],
     acento: '#F26A1B', acento2Manual: '#18181B',   /* skill ui-ux-pro-max 03-10 opción B: naranja de la lata sobre negro */
-    desc: 'Una espuma antigrasa para la cocina: la rocías sobre la campana, el horno o la cocina, la dejas actuar unos minutos y la grasa pegada se afloja para retirarla con un paño. Se vende en combos de 2, 4 y 6 latas de 400 ml, y todos traen 2 regalos.',
+    desc: 'Una espuma antigrasa para la cocina: la rocías sobre la campana, el horno o la cocina, la dejas actuar unos minutos y la grasa pegada se afloja para retirarla con un paño. Se vende en combos de 2, 4 y 6 latas de 400 ml.',   /* 03-10 James: los regalos NO se anuncian arriba, solo en el formulario y la ruleta */
     puntos: [
       'Ayuda a aflojar la grasa pegada de campana, horno y cocina',
       'Rocías, esperas unos minutos y limpias con un paño',
       'Espuma que se queda pegada, también en superficies verticales',
       'Aroma cítrico, a limón',
-      'Combos de 2, 4 y 6 latas de 400 ml, con 2 regalos',
+      'Combos de 2, 4 y 6 latas de 400 ml',
       'Pagas al recibir, con envío gratis a todo Chile',
     ],
     /* 03-10 James: SOLO combos (2, 4 y 6 espumas), sin unidad suelta. El de 2 a 24.500 ("ahí sí le pegamos porque damos

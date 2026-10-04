@@ -43,7 +43,7 @@
       + '<div class="dg-datos">'
       +   '<div class="dg-dato"><b>400 ML</b>por lata</div>'
       +   '<div class="dg-dato"><b>LIMÓN</b>aroma</div>'
-      +   '<div class="dg-dato"><b>+2</b>regalos</div>'
+      +   '<div class="dg-dato"><b>$24.500</b>por 2 latas</div>'
       + '</div>'
       + '<canvas class="dg-burbujas" aria-hidden="true"></canvas>';
     if (arriba) {
@@ -151,6 +151,25 @@
     ref.parentNode.insertBefore(d, ref.nextSibling);
   }
 
+  /* James 03-10: debajo del precio de arriba se dice POR CUÁNTO es ("$24.500 por 2 latas"), porque la gente no
+     lo identificaba. Sigue al precio: si el cliente elige el combo de 4 o 6 en el formulario, el texto cambia solo. */
+  var POR = { 24500: 2, 34500: 4, 44500: 6 };
+  function porCuanto(prod) {
+    var top = prod.querySelector('.precioTop'), ahora = document.getElementById('pcAhora');
+    if (!top || !ahora || document.getElementById('dgPor')) return;
+    var el = document.createElement('p'); el.className = 'dg-por'; el.id = 'dgPor';
+    top.insertAdjacentElement('afterend', el);
+    function pintar() {
+      var n = POR[parseInt(ahora.textContent.replace(/\D/g, ''), 10)] || 2;
+      el.innerHTML = 'por <b>' + n + ' latas</b> de 400 ml';   /* sin regalos: arriba no se anuncian (James) */
+    }
+    pintar();
+    if ('MutationObserver' in window) new MutationObserver(pintar).observe(ahora, { childList: true, characterData: true, subtree: true });
+    /* la caja de promoción usa el nombre del pack ("Combo 4 espumas antigrasa + 4 regalos"): arriba va sin los regalos */
+    var qt = prod.querySelector('.promo-sec .promo-qt');
+    if (qt) { var i = qt.textContent.indexOf(' + '); if (i > 0) qt.textContent = qt.textContent.slice(0, i); }
+  }
+
   /* el VIDEO real (TikTok, nuestra misma lata) con su título arriba, como en el zapatero */
   function video(prod) {
     var v = prod.querySelector('.vid-wrap');
@@ -187,7 +206,7 @@
       ['section.desc', 'Capítulo 1', 'la grasa pegada', true],
       ['.form-sec', 'Capítulo 2', 'cómo se usa', true],
       ['.ba-sec', 'Capítulo 3', 'el resultado', false],
-      ['.promo-sec', 'Tu combo', 'con tus regalos', false],
+      ['.promo-sec', 'Tu combo', 'la promoción', false],
     ];
     marcas.forEach(function (m) {
       var el = prod.querySelector(m[0]); if (!el) return;
@@ -325,7 +344,7 @@
   function arrancar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2')) return false;   /* ficha.js todavía no pinta */
-    heroe(prod); pasos(prod); video(prod); enCasa(prod); capitulos(prod); avance(); vigilarPedido();
+    heroe(prod); porCuanto(prod); pasos(prod); video(prod); enCasa(prod); capitulos(prod); avance(); vigilarPedido();
     /* ?sinruleta=1 solo para las capturas de revisión */
     if (/[?&]sinruleta=1/.test(location.search)) return true;
     if (leer('dg_gano')) badge();

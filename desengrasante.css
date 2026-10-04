@@ -94,6 +94,9 @@ body.p-dg #prod .precioTop{display:flex;align-items:baseline;justify-content:cen
 body.p-dg #prod .precioTop .ahora{font-size:64px;line-height:1;letter-spacing:.02em;color:var(--dg-fg)}
 body.p-dg #prod :is(.antes,s,del){color:var(--dg-mfg)}
 body.p-dg #prod .precioTop .antes{font-size:26px}
+body.p-dg #prod .dg-por{margin:6px 0 0;font-family:var(--dg-t);font-size:26px;letter-spacing:.04em;text-transform:uppercase;color:var(--dg-fg);text-align:center}
+body.p-dg #prod .dg-por b{font-family:var(--dg-t);font-weight:400;color:var(--dg-a)}
+body.p-dg #prod .dg-por span{font-family:var(--dg-t);color:var(--dg-mfg)}
 body.p-dg #prod .off{background:var(--dg-a);color:var(--dg-on-a);font-size:20px;padding:2px 8px;border-radius:0}
 body.p-dg #prod :is(.estrellas,.stars,.estrellas svg){color:var(--dg-oro);fill:var(--dg-oro)}
 
@@ -230,7 +233,7 @@ body.p-dg #prod .sellos .sello small{color:var(--dg-mfg)}
 body.p-dg #prod .sellos .sello img{background:var(--dg-blanco);padding:4px 10px;border-radius:4px}
 /* botones más delgados; el de abajo deja libre el botón de WhatsApp */
 body.p-dg #prod :is(.cta,.btn,button.pedir,.btn-pedir,.big),body.p-dg #prod .form button[type=submit]{min-height:48px;font-size:21px;padding-top:8px;padding-bottom:8px}
-body.p-dg .stickycta .btn-flota{min-height:44px;height:auto;padding:9px 10px;font-size:17px;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:calc(100% - 84px) !important;max-width:calc(100% - 84px);margin-left:0;margin-right:auto;display:block}
+body.p-dg .stickycta .btn-flota{min-height:44px;height:auto;padding:9px 12px;font-size:19px;letter-spacing:.04em;white-space:nowrap}   /* todo el ancho, como antes; solo más delgado (James) */
 body.p-dg #prod .cuenta > div.seg,body.p-dg #prod .cuenta > div.seg.late{background:var(--dg-a) !important;animation:none !important}
 body.p-dg #prod .rev-score .big{display:inline-block;height:auto;padding:6px 12px 2px;font-size:44px;line-height:1}
 body.p-dg #prod .cinta{color:var(--dg-on-a) !important;font-size:16px;letter-spacing:.06em}
