@@ -286,7 +286,7 @@ function fbUser(){
     // telefono con el indicativo real que eligio el cliente (no forzamos Chile)
     var cc  = String(d.indicativo||"+56").replace(/\D/g,"") || "56";
     var tel = String(d.telefono||"").replace(/\D/g,"");
-    if(tel){ u.ph = (tel.indexOf(cc)===0 ? tel : cc+tel); }
+    if(tel){ u.ph = (tel.indexOf(cc)===0 ? tel : cc+tel); u.external_id = u.ph; } /* 05-10: identificador externo = telefono (igual que el servidor) */
     // correo: es lo que Meta más valora para reconocer a la persona
     var mail = String(d.correo||"").trim().toLowerCase();
     if(mail.indexOf("@")>0) u.em = mail;

@@ -1503,7 +1503,7 @@
         /* recien aqui la COMPRA a Meta, con el mismo event_id que viajo en el pedido */
         try {
           var _c = { value: _cobra, currency: 'CLP', content_name: p.nombre, content_ids: [p.id], content_type: 'product', num_items: k.cant };
-          if (window.fbq && !window._compraEnviada) { window._compraEnviada = true; fbq('track', 'Purchase', _c, { eventID: _pedido.event_id }); }
+          if (window.fbq && !window._compraEnviada) { window._compraEnviada = true; _datosMeta(); fbq('track', 'Purchase', _c, { eventID: _pedido.event_id }); }
         } catch (e) {}
         $('pedir').innerHTML = '<div class="listo"><h3>¡Pago recibido!</h3><p>Gracias, ' + _nom1 + '. Tu pedido está pagado y sale hoy. Te escribimos por WhatsApp al '
           + esc(indic) + ' ' + esc(tel) + ' cuando vaya en camino.</p></div>';
@@ -1515,6 +1515,20 @@
       s.onload = pintar; s.onerror = pintar; document.head.appendChild(s);
     }
 
+    /* 05-10 (recomendacion de Meta): antes de la COMPRA se le pasan al pixel los datos del cliente,
+       con el telefono como "identificador externo", igual que lo manda el servidor (mismo numero con
+       indicativo). El pixel los cifra solo. Va en try: si algo falla, la compra sigue igual. */
+    function _datosMeta() {
+      try {
+        if (!window.fbq) return;
+        var _num = String(indic || '').replace(/\D/g, '') + String(tel || '');
+        var _u = { ph: _num, external_id: _num, country: String(paisCod || 'cl').toLowerCase() };
+        var _fn = (g('fNombre').split(' ')[0] || '').toLowerCase();
+        if (_fn) _u.fn = _fn;
+        fbq('init', '1249894010361489', _u);
+      } catch (e) {}
+    }
+
     function gracias() {
       /* La COMPRA. La pagina disparaba PageView, ViewContent e InitiateCheckout
          pero nunca Purchase, y las campañas a la web optimizan justo a Purchase:
@@ -1522,6 +1536,7 @@
          unico punto donde el pedido ya salio. */
       if (window.fbq && !window._compraEnviada) {
         window._compraEnviada = true;
+        _datosMeta();
         var _c = {
           value: k.precio, currency: 'CLP',
           content_name: p.nombre, content_ids: [p.id],
