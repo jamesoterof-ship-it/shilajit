@@ -1,124 +1,103 @@
 <!DOCTYPE html>
 <html lang="es-CL">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Paga con tarjeta y ahorra 7% | Jaye Group</title>
-<meta name="description" content="Paga tu pedido por adelantado con tarjeta de débito o crédito y te descontamos el 7%. Envío gratis a todo Chile.">
+<meta name="robots" content="noindex, nofollow">
+<title>Paga tu pedido · Jaye Group Chile</title>
+<!-- 04-10 James: link PERSONAL de pago (Camila se lo manda por WhatsApp): el cliente solo pone la tarjeta.
+     Diseño de la skill ui-ux-pro-max de esta conversación: minimalista, Inter, azul #2563EB, verde #059669 para el descuento,
+     fondo #F0F9FF, texto #0F172A. Datos del pedido: n8n pago-info-cl; cobro: paypal-orden-cl / paypal-captura-cl
+     (el servidor fija el monto y comprueba el cobro con PayPal). -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tienda.css?v=95">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  .pg-wrap{max-width:860px;margin:0 auto;padding:22px 16px 60px}
-  .pg-hero{background:linear-gradient(135deg,#0f2f24,#14483a);color:#fff;border-radius:18px;padding:26px 20px;text-align:center}
-  .pg-hero h1{font-family:'Barlow Condensed',system-ui,sans-serif;font-size:34px;line-height:1.05;margin:0 0 10px;letter-spacing:.5px}
-  .pg-hero .dto{display:inline-block;background:#d8a52e;color:#14281f;font-weight:800;border-radius:999px;padding:6px 14px;font-size:14px;margin-bottom:12px}
-  .pg-hero p{margin:0;font-size:15.5px;line-height:1.5;opacity:.95}
-  .pg-pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 6px}
-  .pg-paso{background:#f4f7f5;border:1px solid #dfe8e3;border-radius:14px;padding:12px}
-  .pg-paso b{display:block;font-size:13px;color:#14483a;margin-bottom:3px}
-  .pg-paso span{font-size:13px;color:#4b5a54;line-height:1.35}
-  h2.pg-t{font-family:'Barlow Condensed',system-ui,sans-serif;font-size:24px;margin:26px 0 10px;color:#14281f}
-  .pg-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-  .pg-chip{border:1.5px solid #dfe8e3;background:#fff;border-radius:999px;padding:9px 14px;font-size:14px;font-weight:600;cursor:pointer;color:#26332e}
-  .pg-chip.on{border-color:#14483a;background:#14483a;color:#fff}
-  .pg-packs{display:grid;gap:12px}
-  .pg-pack{border:1.5px solid #dfe8e3;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px;background:#fff}
-  .pg-pack .txt{flex:1;min-width:0}
-  .pg-pack .cant{font-weight:700;font-size:15.5px;color:#14281f}
-  .pg-pack .antes{font-size:13px;color:#7c8a84}
-  .pg-pack .antes s{margin-right:6px}
-  .pg-pack .ahora{font-family:'Barlow Condensed',system-ui,sans-serif;font-size:27px;font-weight:700;color:#14483a;line-height:1}
-  .pg-pack .ahorro{font-size:12.5px;color:#0f7a4a;font-weight:700}
-  .pg-btn{background:#25D366;color:#08331f;font-weight:800;border-radius:12px;padding:12px 16px;text-decoration:none;font-size:14.5px;white-space:nowrap}
-  .pg-nota{background:#fff8e8;border:1px solid #f0dcae;border-radius:14px;padding:14px 16px;font-size:14px;color:#4a3d1c;line-height:1.5;margin-top:20px}
-  .pg-mini{font-size:13px;color:#6b7a74;line-height:1.5;margin-top:14px}
-  @media(max-width:560px){.pg-pasos{grid-template-columns:1fr}.pg-pack{flex-wrap:wrap}.pg-btn{width:100%;text-align:center}}
+:root{--azul:#2563EB;--verde:#059669;--rojo:#DC2626;--fondo:#F0F9FF;--tinta:#0F172A;--gris:#475569;--borde:#E4ECFC;--blanco:#FFFFFF;--oro:#d8a52e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+.barra{background:var(--tinta);padding:14px 16px;text-align:center}
+.marca{font-family:'Inter',sans-serif;font-weight:700;font-size:19px;letter-spacing:.06em}
+.marca .j{color:#fff}.marca .g{color:var(--oro);margin-left:6px}
+.marco{max-width:440px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--blanco);border:1px solid var(--borde);border-radius:16px;padding:20px}
+.prod{display:flex;gap:12px;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--borde);margin-bottom:14px}
+.ico{width:48px;height:48px;border-radius:12px;background:var(--fondo);display:grid;place-items:center;flex:none}
+.ico svg{width:24px;height:24px;stroke:var(--azul);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.prod b{display:block;font-size:15px;font-weight:600}
+.prod small{color:var(--gris);font-size:12.5px}
+.rot{font-size:12.5px;color:var(--gris);margin:0}
+.total{font-size:30px;font-weight:700;margin:2px 0 0;font-variant-numeric:tabular-nums}
+.antes{font-size:14px;color:var(--gris);text-decoration:line-through;margin-left:8px;font-weight:500}
+.tag{display:inline-block;background:var(--verde);color:#fff;font-size:12px;font-weight:700;border-radius:8px;padding:3px 9px;margin-top:8px}
+#ppBotones{margin-top:18px;min-height:110px}
+.usd{font-size:12px;color:var(--gris);text-align:center;margin:10px 0 0}
+.estado{font-size:14.5px;font-weight:600;min-height:20px;margin:10px 0 0;text-align:center}
+.ayuda{font-size:13px;color:var(--gris);text-align:center;margin:16px 0 0}
+.ayuda a{color:var(--azul);font-weight:600}
+.listo{text-align:center;padding:10px 4px}
+.listo h1{font-size:22px;margin:8px 0}
+.listo p{color:var(--gris);font-size:14.5px;line-height:1.55}
+.ok{width:56px;height:56px;border-radius:50%;background:#E7F6EF;display:grid;place-items:center;margin:0 auto}
+.ok svg{width:30px;height:30px;stroke:var(--verde);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.mal{color:var(--rojo)}
+.seg{display:flex;gap:6px;align-items:center;justify-content:center;font-size:12px;color:var(--gris);margin-top:14px}
+.seg svg{width:14px;height:14px;stroke:var(--gris);fill:none;stroke-width:2}
 </style>
-<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1249894010361489');fbq('track','PageView');</script>
 </head>
-<body class="legal">
-<header class="legal-head">
-  <div class="wrap">
-    <a href="index.html" class="logo"><span class="j">JAYE</span><i class="raya"></i><span class="g">GROUP</span></a>
-    <a href="index.html" class="volver">← Volver</a>
-  </div>
-</header>
-
-<main class="pg-wrap">
-  <section class="pg-hero">
-    <span class="dto">7% DE DESCUENTO</span>
-    <h1>PAGA CON TARJETA Y AHORRA</h1>
-    <p>Si pagas tu pedido por adelantado con tarjeta de débito o crédito, te descontamos el 7%. Envío gratis a todo Chile y al recibir no pagas nada más.</p>
-  </section>
-
-  <div class="pg-pasos">
-    <div class="pg-paso"><b>1. Eliges tu pack</b><span>Aquí abajo ves el precio con el descuento ya aplicado.</span></div>
-    <div class="pg-paso"><b>2. Pagas con tu tarjeta</b><span>Débito o crédito, sin crear ninguna cuenta.</span></div>
-    <div class="pg-paso"><b>3. Se despacha</b><span>Te llega la guía para hacer el seguimiento de tu pedido.</span></div>
-  </div>
-
-  <h2 class="pg-t">Elige tu producto</h2>
-  <div class="pg-chips" id="chips"></div>
-  <div class="pg-packs" id="packs"></div>
-
-  <div class="pg-nota">
-    <b>¿Prefieres pagar al recibir?</b> También puedes. El pago contra entrega sigue disponible en todos nuestros productos, solo que sin el 7% de descuento.
-  </div>
-
-  <p class="pg-mini">
-    Jaye Group es una marca de JAYE DISTRIBUCIONES S.A.S. · NIT 901795482-6.
-    Los precios están en pesos chilenos e incluyen el envío. El descuento del 7% aplica solo a pedidos pagados por adelantado con tarjeta.
-    Si tu pedido no llega, te devolvemos el dinero.
-  </p>
+<body>
+<div class="barra"><span class="marca"><span class="j">JAYE</span><span class="g">GROUP</span></span></div>
+<main class="marco">
+  <div class="card" id="caja"><p class="estado">Cargando tu pedido…</p></div>
+  <p class="seg"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg>Pago seguro procesado por PayPal</p>
 </main>
-
-<script src="productos.js?v=97"></script>
 <script>
-(function(){
-  /* Los precios NO se escriben aquí: salen de productos.js, la misma lista aprobada
-     que usa la tienda. Si un precio cambia allá, esta página cambia sola. */
-  var DTO = 0.07;                 /* descuento por pagar adelantado (James, 17-09) */
-  var WA  = '56964775539';        /* Camila */
-  var EN_VENTA = ['organizador','lentes','foco','antena','lymphoria','clorofila','mascara'];
-
-  var TODOS = (window.PRODUCTOS || []).filter(function(p){ return EN_VENTA.indexOf(p.id) >= 0; });
-  TODOS.sort(function(a,b){ return EN_VENTA.indexOf(a.id) - EN_VENTA.indexOf(b.id); });
-
-  function pesos(n){ return '$' + Math.round(n).toLocaleString('es-CL'); }
-  /* se redondea a la centena de abajo: el cliente ve un precio limpio y nunca paga de mas */
-  function conDto(n){ return Math.floor(n * (1 - DTO) / 100) * 100; }
-
-  var sel = 0;
-
-  function pintarChips(){
-    document.getElementById('chips').innerHTML = TODOS.map(function(p,i){
-      return '<button class="pg-chip' + (i===sel?' on':'') + '" data-i="' + i + '">' + p.nombre + '</button>';
-    }).join('');
-    [].forEach.call(document.querySelectorAll('.pg-chip'), function(b){
-      b.addEventListener('click', function(){ sel = Number(b.dataset.i); pintarChips(); pintarPacks(); });
-    });
+(function () {
+  var N8N = 'https://n8n-production-8a42.up.railway.app/webhook/';
+  var WA = 'https://wa.me/56964775539?text=' + encodeURIComponent('Hola, tengo una consulta con el pago de mi pedido');
+  var caja = document.getElementById('caja');
+  var p = new URLSearchParams(location.search).get('p') || '';
+  var pesos = function (n) { return '$' + Math.round(Number(n) || 0).toLocaleString('es-CL'); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var post = function (ruta, d) { return fetch(N8N + ruta, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }).then(function (r) { return r.json(); }); };
+  var ayuda = '<p class="ayuda">¿Prefieres pagar al recibir o tienes una duda? <a href="' + WA + '" target="_blank" rel="noopener">Escríbenos por WhatsApp</a></p>';
+  function pagadoVista(nom) {
+    caja.innerHTML = '<div class="listo"><div class="ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>'
+      + '<h1>¡Pago recibido!</h1><p>Gracias' + (nom ? ', ' + esc(nom) : '') + '. Tu pedido está pagado y sale con entrega prioritaria. Te escribimos por WhatsApp cuando vaya en camino.</p></div>';
   }
-
-  function pintarPacks(){
-    var p = TODOS[sel]; if(!p) return;
-    document.getElementById('packs').innerHTML = (p.packs||[]).map(function(k){
-      var precio = conDto(k.precio), ahorro = k.precio - precio;
-      var msg = 'Hola, quiero pagar por adelantado con tarjeta: ' + k.texto + ' de ' + p.nombre
-              + ' por ' + pesos(precio) + ' con el 7% de descuento.';
-      return '<div class="pg-pack">'
-        + '<div class="txt">'
-        +   '<div class="cant">' + k.texto + '</div>'
-        +   '<div class="antes"><s>' + pesos(k.precio) + '</s> pagando al recibir</div>'
-        +   '<div class="ahora">' + pesos(precio) + '</div>'
-        +   '<div class="ahorro">Ahorras ' + pesos(ahorro) + ' pagando con tarjeta</div>'
-        + '</div>'
-        + '<a class="pg-btn" target="_blank" rel="noopener" href="https://wa.me/' + WA + '?text=' + encodeURIComponent(msg) + '">Pagar con tarjeta</a>'
-        + '</div>';
-    }).join('');
-  }
-
-  pintarChips(); pintarPacks();
+  function error(msg) { caja.innerHTML = '<p class="estado mal">' + esc(msg) + '</p>' + ayuda; }
+  if (!p) return error('Este link no trae un pedido.');
+  post('pago-info-cl', { p: p }).then(function (d) {
+    if (!d || !d.ok) return error((d && d.motivo ? d.motivo.charAt(0).toUpperCase() + d.motivo.slice(1) : 'No pudimos abrir tu pedido') + '.');
+    if (d.pagado) return pagadoVista(d.nombre);
+    caja.innerHTML = '<div class="prod"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></div>'
+      + '<div><b>' + esc(d.producto) + (d.cantidad ? ' × ' + esc(d.cantidad) : '') + '</b><small>Pedido JG-' + esc(d.id) + (d.nombre ? ' · ' + esc(d.nombre) : '') + '</small></div></div>'
+      + '<p class="rot">Total a pagar</p><p class="total">' + pesos(d.total) + (d.normal > d.total ? '<span class="antes">' + pesos(d.normal) + '</span>' : '') + '</p>'
+      + '<span class="tag">−10 % · entrega prioritaria</span>'
+      + '<div id="ppBotones"><p class="estado" style="color:var(--gris);font-weight:500">Cargando el pago seguro…</p></div>'
+      + (d.usd ? '<p class="usd">PayPal lo cobra en dólares: USD ' + String(d.usd).replace('.', ',') + ' (dólar de hoy). Tu banco lo pasa a pesos.</p>' : '')
+      + '<p class="estado" id="ppEstado" role="status" aria-live="polite"></p>' + ayuda;
+    var msg = function (t, mal) { var e = document.getElementById('ppEstado'); if (e) { e.textContent = t; e.className = 'estado' + (mal ? ' mal' : ''); } };
+    var pintar = function () {
+      if (!window.paypal || !window.paypal.Buttons) return msg('El pago no cargó. Recarga la página o escríbenos por WhatsApp.', true);
+      document.getElementById('ppBotones').innerHTML = '';
+      window.paypal.Buttons({
+        style: { layout: 'vertical', shape: 'rect', label: 'pay', height: 48 },
+        createOrder: function () { msg(''); return post('paypal-orden-cl', { venta_id: d.id }).then(function (j) { if (!j || !j.ok || !j.id) throw new Error((j && j.motivo) || 'sin orden'); return j.id; }); },
+        onApprove: function (data) {
+          msg('Comprobando el pago…');
+          return post('paypal-captura-cl', { venta_id: d.id, order_id: data.orderID }).then(function (j) {
+            if (!j || !j.ok) throw new Error((j && j.motivo) || 'no completado');
+            pagadoVista(d.nombre);
+          }).catch(function () { msg('No pudimos confirmar el pago. Si se te cobró, escríbenos por WhatsApp y lo revisamos al momento.', true); });
+        },
+        onCancel: function () { msg('No se completó el pago. Puedes intentarlo de nuevo cuando quieras.'); },
+        onError: function () { msg('El pago no se pudo iniciar. Inténtalo de nuevo o escríbenos por WhatsApp.', true); }
+      }).render('#ppBotones');
+    };
+    var s = document.createElement('script');
+    s.src = 'https://www.paypal.com/sdk/js?client-id=BAAtjPqP0U5V9dZpJsXj6mLe2pqj4TrR4lp7LIVFX7eziKlAtoHpcWSSr9-IURZxFNC1mEyYrYIEJ0YR8A&currency=USD&intent=capture&components=buttons&locale=es_CL';
+    s.onload = pintar; s.onerror = pintar; document.head.appendChild(s);
+  }).catch(function () { error('No pudimos abrir tu pedido. Revisa tu conexión e inténtalo de nuevo.'); });
 })();
 </script>
 </body>
