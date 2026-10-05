@@ -68,13 +68,22 @@ body{margin:0;background:var(--fondo);color:var(--tinta);font-family:'Inter',sys
   if (!p) return error('Este link no trae un pedido.');
   post('pago-info-cl', { p: p }).then(function (d) {
     if (!d || !d.ok) return error((d && d.motivo ? d.motivo.charAt(0).toUpperCase() + d.motivo.slice(1) : 'No pudimos abrir tu pedido') + '.');
+    /* 05-10 ANTICIPO (cliente riesgoso): USD 5 por el link; se descuentan $4.700 y el resto se paga al recibir */
+    var ant = d.modo === 'anticipo';
+    if (d.pagado && ant) { caja.innerHTML = '<div class="listo"><div class="ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>'
+      + '<h1>¡Anticipo recibido!</h1><p>Gracias' + (d.nombre ? ', ' + esc(d.nombre) : '') + '. Tu pedido queda confirmado. Al recibir pagas ' + pesos(d.resto) + '. Te escribimos por WhatsApp cuando vaya en camino.</p></div>'; return; }
     if (d.pagado) return pagadoVista(d.nombre);
+    if (ant) d.total = d.anticipo;
     caja.innerHTML = '<div class="prod"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></div>'
       + '<div><b>' + esc(d.producto) + (d.cantidad ? ' × ' + esc(d.cantidad) : '') + '</b><small>Pedido JG-' + esc(d.id) + (d.nombre ? ' · ' + esc(d.nombre) : '') + '</small></div></div>'
-      + '<p class="rot">Total a pagar</p><p class="total">' + pesos(d.total) + (d.normal > d.total ? '<span class="antes">' + pesos(d.normal) + '</span>' : '') + '</p>'
-      + '<span class="tag">−10 % · entrega prioritaria</span>'
+      + (ant
+        ? '<p class="rot">Anticipo para despachar tu pedido</p><p class="total">USD 5</p>'
+          + '<p class="rot" style="margin-top:4px">Entre $5.000 y $5.700 según tu banco. Se descuentan $4.700 de tu total: al recibir pagas <b>' + pesos(d.resto) + '</b>.</p>'
+        : '<p class="rot">Total a pagar</p><p class="total">' + pesos(d.total) + (d.normal > d.total ? '<span class="antes">' + pesos(d.normal) + '</span>' : '') + '</p>'
+          + '<span class="tag">−10 % · entrega prioritaria</span>')
+      + '<p class="rot" style="margin-top:12px;color:var(--tinta);font-weight:600">Toca el botón negro «Tarjeta de débito o crédito» y pagas con tu tarjeta.</p>'
       + '<div id="ppBotones"><p class="estado" style="color:var(--gris);font-weight:500">Cargando el pago seguro…</p></div>'
-      + (d.usd ? '<p class="usd">PayPal lo cobra en dólares: USD ' + String(d.usd).replace('.', ',') + ' (dólar de hoy). Tu banco lo pasa a pesos.</p>' : '')
+      + (d.usd && !ant ? '<p class="usd">PayPal lo cobra en dólares: USD ' + String(d.usd).replace('.', ',') + ' (dólar de hoy). Tu banco lo pasa a pesos.</p>' : '')
       + '<p class="estado" id="ppEstado" role="status" aria-live="polite"></p>' + ayuda;
     var msg = function (t, mal) { var e = document.getElementById('ppEstado'); if (e) { e.textContent = t; e.className = 'estado' + (mal ? ' mal' : ''); } };
     var pintar = function () {
@@ -87,6 +96,7 @@ body{margin:0;background:var(--fondo);color:var(--tinta);font-family:'Inter',sys
           msg('Comprobando el pago…');
           return post('paypal-captura-cl', { venta_id: d.id, order_id: data.orderID }).then(function (j) {
             if (!j || !j.ok) throw new Error((j && j.motivo) || 'no completado');
+            if (ant) { caja.innerHTML = '<div class="listo"><div class="ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>¡Anticipo recibido!</h1><p>Gracias' + (d.nombre ? ', ' + esc(d.nombre) : '') + '. Tu pedido queda confirmado. Al recibir pagas ' + pesos(d.resto) + '. Te escribimos por WhatsApp cuando vaya en camino.</p></div>'; return; }
             pagadoVista(d.nombre);
           }).catch(function () { msg('No pudimos confirmar el pago. Si se te cobró, escríbenos por WhatsApp y lo revisamos al momento.', true); });
         },
