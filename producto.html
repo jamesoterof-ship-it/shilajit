@@ -543,6 +543,23 @@
 .logosPago img{width:auto;height:11px;display:block}
 .logosPago img[alt="Mastercard"]{height:22px}
 .logosPago img[alt="PayPal"]{height:14px}
+/* 04-10 pago anticipado ARRIBA (James): linea bajo el precio + seccion "Paga con tarjeta y gana". Colores que se adaptan al
+   tema de cada producto (currentColor) y verde var(--acento,#059669) de la skill para el descuento. */
+.preTop{display:flex;align-items:flex-start;gap:7px;margin:4px 0 12px;font-size:13.5px;line-height:1.4}
+.preTop svg{width:18px;height:18px;flex:none;margin-top:1px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:.8}
+.preTop__tag{color:var(--acento,#059669)}
+.promo-tarjeta{margin-top:4px}
+.pagoAnt__caja{border:1.5px solid color-mix(in srgb, currentColor 18%, transparent);border-radius:16px;padding:16px;background:color-mix(in srgb, currentColor 3%, transparent)}
+.pagoAnt.fondoClaro .pagoAnt__caja{border-color:rgba(0,0,0,.12);background:rgba(0,0,0,.02)}
+.pagoAnt__tit{margin:0 0 10px;font-weight:800;font-size:16px}
+.pagoAnt__tit::before{content:'−10 %';display:inline-block;background:var(--acento,#059669);color:var(--sobreAcento,#fff);font-size:11.5px;font-weight:800;border-radius:7px;padding:2px 8px;margin-right:8px;vertical-align:2px}
+.pagoAnt__lista{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.pagoAnt__lista li{display:flex;gap:9px;align-items:flex-start;font-size:14px;line-height:1.4}
+.pagoAnt__lista svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--acento,#059669);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pagoAnt__pie{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px}
+.pagoAnt__pie .logosPago{display:inline-flex;gap:9px;align-items:center}
+.pagoAnt__btn{border:0;border-radius:11px;background:var(--acento,#059669);color:var(--sobreAcento,#fff);font:700 14px/1 Inter,system-ui,sans-serif;padding:12px 16px;cursor:pointer}
+.pagoAnt__btn:hover{filter:brightness(1.07)}
 /* pie: medios de pago con los logos oficiales (transparentes, version para fondo oscuro) */
 .pie .mediosPago{display:flex;flex-direction:column;align-items:center;gap:10px;margin:22px 0 4px}
 .pie .mediosPago .rot{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9A9384}
@@ -1188,7 +1205,7 @@ window.jayePixel = (function () {
 <script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=31"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha.js?v=248"></script>
+<script src="ficha.js?v=249"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->

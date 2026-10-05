@@ -390,6 +390,9 @@
        cree que ese valor es por una sola unidad. Se muestra tambien cuanto le
        sale cada una, que es el argumento que cierra el pack. */
     + (kPop.cant > 1 ? '<p class="packDe" id="pcPack">' + esc(kPop.texto) + ' · ' + pesos(Math.round(kPop.precio / kPop.cant)) + ' cada ' + (p.unidad || 'una') + '</p>' : '<div style="height:10px"></div>')
+    /* 04-10 James: el pago anticipado se ve arriba, junto al precio */
+    + '<p class="preTop"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><path d="M2.5 10h19"/></svg>'
+    + '<span>o <b id="pcPre">' + pesos(Math.floor(kPop.precio * 0.9 / 100) * 100) + '</b> pagando ahora con tarjeta · <b class="preTop__tag">−10&nbsp;% y entrega prioritaria</b></span></p>'
     + '</div>';
 
   /* ---------- 4 · promocion ---------- */
@@ -397,7 +400,23 @@
      y estorbaban. Aca queda el boton que baja al pedido. */
   var promo = '<section class="bloque">'
     + '<button class="cta rojo rebota" id="btnArriba">Lo quiero, pago al recibir</button>'
-    + '<p class="ctaSub">Envío gratis · No pagas nada por adelantado</p></section>';
+    + '<p class="ctaSub">Envío gratis · Paga al recibir o con tarjeta y ahorra 10 %</p></section>'
+    + seccionPagoAnt();
+
+  /* 04-10 James: "todo lo que ganas con el pago anticipado", arriba, cerca de la promocion. El boton baja al
+     formulario con "Paga ahora con tarjeta" ya elegido. */
+  function seccionPagoAnt() {
+    var ic = function (d) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>'; };
+    return '<section class="bloque pagoAnt" data-rv><div class="pagoAnt__caja">'
+      + '<p class="pagoAnt__tit">Paga con tarjeta y gana</p>'
+      + '<ul class="pagoAnt__lista">'
+      + '<li>' + ic('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>') + '<span><b>10 % de descuento</b> en todos los packs</span></li>'
+      + '<li>' + ic('<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>') + '<span><b>Entrega prioritaria</b>: tu pedido sale primero</span></li>'
+      + '<li>' + ic('<rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/>') + '<span><b>Pago seguro</b> con PayPal: tarjeta de crédito o débito, sin crear cuenta</span></li>'
+      + '</ul>'
+      + '<div class="pagoAnt__pie"><span class="logosPago logosAuto">' + ['paypal', 'visa', 'mastercard'].map(function (n) { return '<img src="img/pago-' + n + '.svg" data-logo="' + n + '" alt="' + ({ visa: 'Visa', mastercard: 'Mastercard', paypal: 'PayPal' })[n] + '" loading="lazy">'; }).join('') + '</span><button type="button" class="pagoAnt__btn" id="btnPagoAnt">Pagar con tarjeta</button></div>'
+      + '</div></section>';
+  }
 
   /* ---------- PROMOCION · el pack que se empuja, con contador ----------
      Arriba el cliente ve el precio de salida. Aca ve la oferta de verdad:
@@ -432,6 +451,8 @@
       + '<span class="promo-off">-' + off + '%</span></div>'
       + '<p class="promo-uni">' + pesos(Math.round(k.precio / k.cant)) + ' cada ' + (p.unidad || 'una')
       + ' · <b>ahorras ' + pesos(ahorra) + '</b></p>'
+      /* 04-10: el precio con tarjeta tambien en la promocion */
+      + '<p class="promo-uni promo-tarjeta">o <b>' + pesos(Math.floor(k.precio * 0.9 / 100) * 100) + '</b> pagando ahora con tarjeta · −10&nbsp;% y entrega prioritaria</p>'
       + '<div class="cuenta"><div><b id="cH">--</b><span>horas</span></div>'
       + '<div><b id="cM">--</b><span>min</span></div>'
       + '<div class="seg" id="cajaS"><b id="cS">--</b><span>seg</span></div></div>'
@@ -734,9 +755,16 @@
     while (el && !rgb) { var c = getComputedStyle(el).backgroundColor, m = c.match(/[\d.]+/g); if (m && (m.length < 4 || Number(m[3]) > 0.5)) rgb = m; el = el.parentElement; }
     var claro = rgb ? (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) > 150 : false;
     if (document.getElementById('pagoSel')) document.getElementById('pagoSel').classList.toggle('fondoClaro', claro);
-    Array.prototype.forEach.call(cont.querySelectorAll('img[data-logo="visa"],img[data-logo="paypal"],img[data-logo="mastercard"]'), function (im) {
-      var v = 'img/pago-' + im.getAttribute('data-logo') + (claro ? '-color' : '') + '.svg';
-      if (im.getAttribute('src') !== v) im.setAttribute('src', v);
+    /* el formulario y la seccion "Paga con tarjeta y gana": cada caja mira SU fondo */
+    Array.prototype.forEach.call(document.querySelectorAll('#logosForm, .logosAuto'), function (caja) {
+      var e2 = caja, rgb2 = null;
+      while (e2 && !rgb2) { var c2 = getComputedStyle(e2).backgroundColor, m2 = c2.match(/[\d.]+/g); if (m2 && (m2.length < 4 || Number(m2[3]) > 0.5)) rgb2 = m2; e2 = e2.parentElement; }
+      var claro2 = rgb2 ? (0.299 * rgb2[0] + 0.587 * rgb2[1] + 0.114 * rgb2[2]) > 150 : false;
+      if (caja.closest && caja.closest('.pagoAnt')) caja.closest('.pagoAnt').classList.toggle('fondoClaro', claro2);
+      Array.prototype.forEach.call(caja.querySelectorAll('img[data-logo]'), function (im) {
+        var v = 'img/pago-' + im.getAttribute('data-logo') + (claro2 ? '-color' : '') + '.svg';
+        if (im.getAttribute('src') !== v) im.setAttribute('src', v);
+      });
     });
     /* el CSS de cada producto (oscuro/claro) puede llegar despues: se vuelve a mirar al cargar todo */
     if (n >= 0 && !elegirLogos._otra) { elegirLogos._otra = 1; window.addEventListener('load', function () { elegirLogos(-1); }); setTimeout(function () { elegirLogos(-1); }, 2500); }
@@ -1090,6 +1118,7 @@
     if ($('pcOff')) $('pcOff').textContent = o ? '-' + o + '%' : '';
     if ($('pcPack')) $('pcPack').textContent = kArriba.texto + ' · ' + pesos(Math.round(kArriba.precio / kArriba.cant)) + ' cada ' + (p.unidad || 'una');
     /* 04-10 pago anticipado: los dos precios del selector siguen al pack; el resumen y el boton, a la forma de pago */
+    if ($('pcPre')) $('pcPre').textContent = pesos(Math.floor(kArriba.precio * 0.9 / 100) * 100);
     var cobra = precioAhora(elegido);
     if ($('prCod')) $('prCod').textContent = pesos(k.precio);
     if ($('prPre')) $('prPre').textContent = pesos(precioPre(elegido));
@@ -1105,6 +1134,13 @@
       ? 'Al enviar se abre el pago con tarjeta o PayPal aquí mismo. Te confirmamos por WhatsApp.'
       : 'No pagas nada ahora. Te escribimos por WhatsApp para coordinar la entrega.';
   }
+  /* "Pagar con tarjeta" de la seccion de arriba: baja al formulario con "Paga ahora" ya elegido */
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest && ev.target.closest('#btnPagoAnt');
+    if (!b) return;
+    var op = document.querySelector('.pagoOp[data-pago="pre"]'); if (op) op.click();
+    var d = $('pedir'); if (d) d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
   /* cambiar entre pago al recibir y paga ahora */
   document.addEventListener('click', function (ev) {
     var b = ev.target.closest && ev.target.closest('.pagoOp');
