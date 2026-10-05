@@ -711,18 +711,63 @@
   }
   /* el bloque del sellador: mismo aspecto de los packs, pero aparte */
   var kSel = p.packs[elegido];
+  /* ---- 04-10 PAGO ANTICIPADO (James: "igualitica a la de España"; diseño: skill ui-ux-pro-max, opción 2
+     con los colores del formulario) ----
+     'cod' = pago al recibir. 'pre' = paga ahora con tarjeta o PayPal, 7 % menos redondeado a la centena
+     (James 04-10: 7 % en TODOS los productos). Arranca SIEMPRE en 'cod'. PayPal cobra en dólares: el paso
+     a USD lo hace n8n con el dólar del día; aquí el cliente ve y elige en pesos. */
+  /* James 04-10 noche: 10 % ("llama más la atención"), antes 7 % */
+  var ANT_PCT = 10, formaPago = 'cod';
+  /* hacia ABAJO a la centena: el cartel dice −10 % y el descuento nunca puede quedar por debajo (34.500 → 31.000, no 31.100) */
+  function precioPre(i) { return Math.floor(p.packs[i].precio * (100 - ANT_PCT) / 10000) * 100; }
+  function precioAhora(i) { return formaPago === 'pre' ? precioPre(i) : p.packs[i].precio; }
+  var LOGOS_PAGO = '<span class="logosPago" id="logosForm">'
+    /* James 04-10: como España, los logos van DENTRO de la ficha "Paga ahora" (PayPal, Visa, Mastercard) */
+    + ['paypal', 'visa', 'mastercard'].map(function (n) { return '<img src="img/pago-' + n + '.svg" data-logo="' + n + '" alt="' + ({ visa: 'Visa', mastercard: 'Mastercard', amex: 'American Express', paypal: 'PayPal' })[n] + '" loading="lazy">'; }).join('')
+    + '</span>';
+  /* Logos oficiales transparentes (James: "que se monten en cualquier fondo"). Visa y PayPal tienen dos versiones:
+     blanca para fondo oscuro y a color para fondo claro. Se mira el fondo real del formulario de ESTE producto. */
+  (function elegirLogos(n) {
+    var cont = document.getElementById('logosForm');
+    if (!cont) { if (n < 40) setTimeout(function () { elegirLogos(n + 1); }, 150); return; }
+    var el = cont, rgb = null;
+    while (el && !rgb) { var c = getComputedStyle(el).backgroundColor, m = c.match(/[\d.]+/g); if (m && (m.length < 4 || Number(m[3]) > 0.5)) rgb = m; el = el.parentElement; }
+    var claro = rgb ? (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) > 150 : false;
+    if (document.getElementById('pagoSel')) document.getElementById('pagoSel').classList.toggle('fondoClaro', claro);
+    Array.prototype.forEach.call(cont.querySelectorAll('img[data-logo="visa"],img[data-logo="paypal"],img[data-logo="mastercard"]'), function (im) {
+      var v = 'img/pago-' + im.getAttribute('data-logo') + (claro ? '-color' : '') + '.svg';
+      if (im.getAttribute('src') !== v) im.setAttribute('src', v);
+    });
+    /* el CSS de cada producto (oscuro/claro) puede llegar despues: se vuelve a mirar al cargar todo */
+    if (n >= 0 && !elegirLogos._otra) { elegirLogos._otra = 1; window.addEventListener('load', function () { elegirLogos(-1); }); setTimeout(function () { elegirLogos(-1); }, 2500); }
+  })(0);
   var formulario = '<section class="form" id="pedir" data-rv><h2>Pide el tuyo</h2>'
-    + '<p class="baj">Lo despachamos hoy. Pagas cuando lo recibes.</p>'
+    + '<p class="baj">Lo despachamos hoy. Pagas al recibir o con tarjeta y ahorras un ' + ANT_PCT + ' %.</p>'
     + '<div class="formcard">'
     + '<div class="cod-badge">'
     + '<svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/></svg>'
     + ' Pago 100% seguro contra entrega</div>'
+    + '<p class="pasoRot"><b>1</b>¿Cuántas quieres?</p>'
     + '<div class="packs" id="packsForm">' + packsHTML() + '</div>'
+    /* PASO 2: como paga. Dos fichas lado a lado (como España) para que no se confundan con los packs.
+       Se dice como DESCUENTO por pagar ahora, nunca como recargo por pagar al recibir. */
+    + '<p class="pasoRot"><b>2</b>¿Cómo quieres pagar?</p>'
+    + '<div class="pagoSel" id="pagoSel" role="radiogroup" aria-label="¿Cómo quieres pagar?">'
+    + '<button type="button" class="pagoOp sel" data-pago="cod" role="radio" aria-checked="true">'
+    + '<span class="pagoOp__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span>'
+    + '<span class="pagoOp__tit">Pago al recibir</span><span class="pagoOp__pr" id="prCod">' + pesos(kSel.precio) + '</span>'
+    + '<span class="pagoOp__sub">Pagas al repartidor</span></button>'
+    + '<button type="button" class="pagoOp" data-pago="pre" role="radio" aria-checked="false"><span class="pagoOp__cinta">−' + ANT_PCT + ' %</span>'
+    + '<span class="pagoOp__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.2"/><path d="M2.5 10h19"/><path d="M6 15h4"/></svg></span>'
+    + '<span class="pagoOp__tit">Paga ahora con tarjeta</span><span class="pagoOp__pr" id="prPre">' + pesos(precioPre(elegido)) + '</span>'
+    /* James 04-10: "entrega prioritaria" (las transportadoras le dan prioridad al pagado); el montador lo manda primero */
+    + '<span class="pagoOp__sub">Entrega prioritaria</span>' + LOGOS_PAGO + '</button>'
+    + '</div>'
     + '<div class="summary">'
-    + '<div class="r"><span>Subtotal</span><span id="sumSub">' + pesos(kSel.antes || kSel.precio) + '</span></div>'
-    + '<div class="r"><span>Descuento</span><span id="sumDesc" class="desc">-' + pesos((kSel.antes || kSel.precio) - kSel.precio) + '</span></div>'
+    + '<div class="r" id="rowSub"><span>Subtotal</span><span id="sumSub">' + pesos(kSel.antes || kSel.precio) + '</span></div>'
+    + '<div class="r" id="rowDesc"><span>Descuento</span><span id="sumDesc" class="desc">-' + pesos((kSel.antes || kSel.precio) - kSel.precio) + '</span></div>'
     + '<div class="r"><span>Envío</span><span class="free">Gratis</span></div>'
-    + '<div class="r tot"><span>Total a pagar al recibir</span><span id="sumTot">' + pesos(kSel.precio) + '</span></div>'
+    + '<div class="r tot"><span id="sumTotRot">Total a pagar al recibir</span><span id="sumTot">' + pesos(kSel.precio) + '</span></div>'
     + '</div>'
     + '<form id="fPedido" novalidate>'
     + '<div class="field"><label for="fNombre">Nombre completo</label><input id="fNombre" autocomplete="name" placeholder="Ej: María González"><div class="err">Escribe tu nombre.</div></div>'
@@ -1044,10 +1089,33 @@
     if ($('pcAntes')) $('pcAntes').textContent = kArriba.antes ? pesos(kArriba.antes) : '';
     if ($('pcOff')) $('pcOff').textContent = o ? '-' + o + '%' : '';
     if ($('pcPack')) $('pcPack').textContent = kArriba.texto + ' · ' + pesos(Math.round(kArriba.precio / kArriba.cant)) + ' cada ' + (p.unidad || 'una');
+    /* 04-10 pago anticipado: los dos precios del selector siguen al pack; el resumen y el boton, a la forma de pago */
+    var cobra = precioAhora(elegido);
+    if ($('prCod')) $('prCod').textContent = pesos(k.precio);
+    if ($('prPre')) $('prPre').textContent = pesos(precioPre(elegido));
     if ($('sumSub')) $('sumSub').textContent = pesos(k.antes || k.precio);
-    if ($('sumDesc')) $('sumDesc').textContent = '-' + pesos((k.antes || k.precio) - k.precio);
-    if ($('sumTot')) $('sumTot').textContent = pesos(k.precio);
+    if ($('sumDesc')) $('sumDesc').textContent = '-' + pesos(Math.max(0, (k.antes || k.precio) - cobra));
+    if ($('sumTot')) $('sumTot').textContent = pesos(cobra);
+    if ($('sumTotRot')) $('sumTotRot').textContent = formaPago === 'pre' ? 'Total a pagar ahora' : 'Total a pagar al recibir';
+    /* el boton dice a donde lleva: si se abre un pago y el boton no lo avisaba, el cliente se siente engañado */
+    var btn = document.querySelector('#fPedido button[type="submit"]');
+    if (btn && !btn.disabled) btn.textContent = formaPago === 'pre' ? 'Pagar ahora ' + pesos(cobra) : 'Comprar — pago al recibir';
+    var nota = document.querySelector('#fPedido .formnote');
+    if (nota) nota.textContent = formaPago === 'pre'
+      ? 'Al enviar se abre el pago con tarjeta o PayPal aquí mismo. Te confirmamos por WhatsApp.'
+      : 'No pagas nada ahora. Te escribimos por WhatsApp para coordinar la entrega.';
   }
+  /* cambiar entre pago al recibir y paga ahora */
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest && ev.target.closest('.pagoOp');
+    if (!b || !$('pagoSel')) return;
+    formaPago = b.getAttribute('data-pago') === 'pre' ? 'pre' : 'cod';
+    Array.prototype.forEach.call($('pagoSel').children, function (x) {
+      x.classList.toggle('sel', x === b);
+      if (x.setAttribute) x.setAttribute('aria-checked', x === b ? 'true' : 'false');
+    });
+    pintarPrecio();
+  });
   /* los dos selectores (el de arriba y el del formulario) se mueven juntos:
      si el cliente cambia el pack abajo, arriba tambien cambia */
   var _ic = false;
@@ -1269,6 +1337,9 @@
     err.style.display = 'none';
 
     var k = p.packs[elegido];
+    /* 04-10: si eligio pagar ahora, se cobra el precio con 7 % menos y el pedido va a OTRO webhook
+       (pedido-tienda-pre) que lo deja "PAGO PENDIENTE" y devuelve su id para cobrar con PayPal */
+    var _pre = formaPago === 'pre', _cobra = precioAhora(elegido);
     var btn = this.querySelector('button[type="submit"]');
     btn.disabled = true; btn.textContent = 'Enviando…';
     var _pedido = {
@@ -1277,7 +1348,8 @@
          landing vieja y el que lee el flujo. Mandando solo `precio`, la
          venta entraba con precio 0 (paso el 28-08 con la ducha) y el
          candado de precios no la podia validar. Se mandan los dos. */
-      producto: p.nombre, total: k.precio, precio: k.precio, cantidad: k.cant,
+      producto: p.nombre, total: _cobra, precio: _cobra, cantidad: k.cant,
+      forma_pago: _pre ? 'pre' : 'cod', precio_normal: k.precio,
       cmp: window._CMP || '',   /* el anuncio del que vino */
       direccion: g('fDir'), comuna: g('fComuna'), region: g('fRegion'),
       /* La referencia y el correo se le pedian al cliente y se tiraban a la
@@ -1326,10 +1398,14 @@
        Ahora: solo se agradece y se avisa a Meta si el pedido ENTRO de verdad.
        Si no entro, se guarda y se reintenta. */
     function mandar(datos, intento) {
-      return fetch(window.URL_PEDIDO || 'https://n8n-production-8a42.up.railway.app/webhook/pedido-tienda', {
+      var _url = _pre ? 'https://n8n-production-8a42.up.railway.app/webhook/pedido-tienda-pre'
+                      : (window.URL_PEDIDO || 'https://n8n-production-8a42.up.railway.app/webhook/pedido-tienda');
+      return fetch(_url, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(datos),
       }).then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
+        /* el de pagar ahora devuelve {ok, id, usd}: sin id no hay como cobrar, se trata como no entrado */
+        if (_pre) return r.json().then(function (j) { if (!j || !j.ok || !j.id) throw new Error('sin id'); return j; });
         return true;
       }).catch(function (e) {
         /* tres intentos, separados, por si fue un tropiezo de red */
@@ -1341,14 +1417,66 @@
       });
     }
 
-    mandar(_pedido, 1).then(function () {
-      gracias();
+    mandar(_pedido, 1).then(function (res) {
+      if (_pre) pagar(res); else gracias();
     }).catch(function () {
       /* el pedido NO entro: se guarda para reintentarlo al volver a abrir la
-         pagina, y se le dice la verdad al cliente en vez de un falso exito */
-      try { localStorage.setItem('jaye_pedido_pendiente', JSON.stringify(_pedido)); } catch (e) {}
+         pagina, y se le dice la verdad al cliente en vez de un falso exito.
+         El de pagar ahora NO se guarda: el reintento va al webhook normal y entraria
+         como contra entrega con el precio rebajado. */
+      if (!_pre) { try { localStorage.setItem('jaye_pedido_pendiente', JSON.stringify(_pedido)); } catch (e) {} }
       noEntro();
     });
+
+    /* 04-10 PAGAR AHORA (igual que España): el pedido ya entro como "PAGO PENDIENTE"; aqui mismo salen los botones
+       de PayPal y tarjeta. La orden la crea n8n con el importe de la base, en USD al dolar del dia (paypal-orden-cl),
+       y n8n comprueba con PayPal que el cobro es de ESTE pedido y por ESE importe antes de marcarlo pagado
+       (paypal-captura-cl). La COMPRA a Meta se avisa recien cuando el pago queda confirmado. */
+    function pagar(res) {
+      var _N8N = 'https://n8n-production-8a42.up.railway.app/webhook/', _vid = res.id, _nom1 = esc(g('fNombre').split(' ')[0]);
+      var _wa = 'https://wa.me/56964775539?text=' + encodeURIComponent('Hola, hice mi pedido de ' + p.nombre + ' para pagar con tarjeta y no pude pagar. Mi nombre es ' + g('fNombre'));
+      $('pedir').innerHTML = '<div class="listo"><h3>Último paso: paga tu pedido</h3>'
+        + '<p>Gracias, ' + _nom1 + '. Paga aquí mismo con tarjeta o PayPal y tu pedido sale hoy.</p>'
+        + '<p style="font-size:22px;font-weight:800;margin:10px 0 2px">Total a pagar: ' + pesos(_cobra) + '</p>'
+        + (res.usd ? '<p style="font-size:13px;opacity:.8;margin:0 0 12px">PayPal lo cobra en dólares: USD ' + String(res.usd).replace('.', ',') + ' (dólar de hoy).</p>' : '')
+        + '<div id="ppBotones" style="min-height:120px;margin:4px 0 8px;background:#fff;border-radius:12px;padding:12px"><p style="font-size:14px;color:#475569">Cargando el pago seguro…</p></div>'
+        + '<p id="ppEstado" role="status" aria-live="polite" style="font-size:15px;font-weight:700;min-height:22px;margin:6px 0"></p>'
+        + '<p style="font-size:13px;opacity:.8">¿No puedes pagar? <a href="' + _wa + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Escríbenos por WhatsApp</a> y te ayudamos.</p></div>';
+      $('pedir').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var msg = function (t, c) { var e = $('ppEstado'); if (e) { e.textContent = t; e.style.color = c || ''; } };
+      var post = function (ruta, d) { return fetch(_N8N + ruta, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }).then(function (r) { return r.json(); }); };
+      var pintar = function () {
+        if (!window.paypal || !window.paypal.Buttons) return msg('El pago no cargó. Recarga la página o escríbenos por WhatsApp.', '#b91c1c');
+        $('ppBotones').innerHTML = '';
+        window.paypal.Buttons({
+          style: { layout: 'vertical', shape: 'rect', label: 'pay', height: 48 },
+          createOrder: function () { msg(''); return post('paypal-orden-cl', { venta_id: _vid }).then(function (j) { if (!j || !j.ok || !j.id) throw new Error((j && j.motivo) || 'sin orden'); return j.id; }); },
+          onApprove: function (data) {
+            msg('Comprobando el pago…');
+            return post('paypal-captura-cl', { venta_id: _vid, order_id: data.orderID }).then(function (j) {
+              if (!j || !j.ok) throw new Error((j && j.motivo) || 'no completado');
+              pagado();
+            }).catch(function () { msg('No pudimos confirmar el pago. Si se te cobró, escríbenos por WhatsApp y lo revisamos al momento.', '#b91c1c'); });
+          },
+          onCancel: function () { msg('No se completó el pago. Puedes intentarlo de nuevo cuando quieras.'); },
+          onError: function () { msg('El pago no se pudo iniciar. Inténtalo de nuevo o escríbenos por WhatsApp.', '#b91c1c'); }
+        }).render('#ppBotones');
+      };
+      var pagado = function () {
+        /* recien aqui la COMPRA a Meta, con el mismo event_id que viajo en el pedido */
+        try {
+          var _c = { value: _cobra, currency: 'CLP', content_name: p.nombre, content_ids: [p.id], content_type: 'product', num_items: k.cant };
+          if (window.fbq && !window._compraEnviada) { window._compraEnviada = true; fbq('track', 'Purchase', _c, { eventID: _pedido.event_id }); }
+        } catch (e) {}
+        $('pedir').innerHTML = '<div class="listo"><h3>¡Pago recibido!</h3><p>Gracias, ' + _nom1 + '. Tu pedido está pagado y sale hoy. Te escribimos por WhatsApp al '
+          + esc(indic) + ' ' + esc(tel) + ' cuando vaya en camino.</p></div>';
+        $('pedir').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+      if (window.paypal && window.paypal.Buttons) return pintar();
+      var s = document.createElement('script');
+      s.src = 'https://www.paypal.com/sdk/js?client-id=BAAtjPqP0U5V9dZpJsXj6mLe2pqj4TrR4lp7LIVFX7eziKlAtoHpcWSSr9-IURZxFNC1mEyYrYIEJ0YR8A&currency=USD&intent=capture&components=buttons&locale=es_CL';
+      s.onload = pintar; s.onerror = pintar; document.head.appendChild(s);
+    }
 
     function gracias() {
       /* La COMPRA. La pagina disparaba PageView, ViewContent e InitiateCheckout

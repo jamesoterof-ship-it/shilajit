@@ -515,6 +515,43 @@
 .summary .free{color:var(--oro);font-weight:700}
 .summary .tot{font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:18px;color:#fff;
   border-top:1px solid rgba(255,255,255,.14);margin-top:7px;padding-top:11px}
+/* 04-10 PAGO ANTICIPADO (James: igual que España): paso 1 cantidad, paso 2 como paga, en dos fichas lado a lado */
+.pasoRot{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-weight:700;font-size:14px;color:#fff}
+.pasoRot b{width:22px;height:22px;border-radius:50%;background:var(--oro);color:var(--negro);display:grid;place-items:center;font-size:12px;flex:none}
+.pagoSel{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px}
+.pagoOp{position:relative;display:grid;grid-template-areas:'ico' 'tit' 'pr' 'sub';justify-items:start;text-align:left;
+  border:1.5px solid color-mix(in srgb, currentColor 22%, transparent);border-radius:15px;padding:14px 12px 12px;
+  background:color-mix(in srgb, currentColor 4%, transparent);cursor:pointer;transition:.2s;width:100%;font-family:inherit;color:inherit}
+.pagoOp:hover{border-color:color-mix(in srgb, currentColor 40%, transparent)}
+/* formularios claros (organizador y otros): ficha.js le pone .fondoClaro al mirar el fondo real */
+.pagoSel.fondoClaro .pagoOp:not(.sel){border-color:rgba(0,0,0,.16);background:rgba(0,0,0,.025)}
+.pagoOp.sel{border-color:var(--oro);background:rgba(216,165,46,.10);box-shadow:0 0 0 3px rgba(216,165,46,.14)}
+.pagoOp:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
+.pagoOp__ico{grid-area:ico;margin-bottom:4px}
+.pagoOp__ico svg{width:26px;height:26px;fill:none;stroke:#C9C2B4;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pagoOp.sel .pagoOp__ico svg{stroke:var(--oro)}
+.pagoOp__tit{grid-area:tit;font-size:14px;font-weight:700;line-height:1.25}
+.pagoOp__pr{grid-area:pr;margin-top:2px;font-family:'Barlow Condensed','Inter',sans-serif;font-weight:800;font-size:21px;line-height:1.1;font-variant-numeric:tabular-nums}
+.pagoOp__sub{grid-area:sub;margin-top:3px;font-size:12px;line-height:1.35;color:#C9C2B4}
+.pagoOp__cinta{position:absolute;top:-9px;right:10px;padding:3px 9px;border-radius:7px;background:#16A34A;color:#fff;font-size:11.5px;font-weight:800;white-space:nowrap}
+@media (max-width:360px){.pagoSel{grid-template-columns:1fr}}
+.pagoSeg{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:-6px 0 16px;font-size:12.5px;color:#C9C2B4}
+.logosPago{display:inline-flex;gap:6px;align-items:center}
+/* opción A (James 04-10): logos completos a color, sin fondo, grandes */
+.pagoOp .logosPago{grid-area:logos;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.pagoOp{grid-template-areas:'ico' 'tit' 'pr' 'sub' 'logos'}
+.logosPago img{width:auto;height:11px;display:block}
+.logosPago img[alt="Mastercard"]{height:22px}
+.logosPago img[alt="PayPal"]{height:14px}
+/* pie: medios de pago con los logos oficiales (transparentes, version para fondo oscuro) */
+.pie .mediosPago{display:flex;flex-direction:column;align-items:center;gap:10px;margin:22px 0 4px}
+.pie .mediosPago .rot{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9A9384}
+.pie .mediosPago .logosPago{gap:20px;flex-wrap:wrap;justify-content:center}
+.pie .mediosPago .logosPago img{height:24px}
+.pie .mediosPago .logosPago img[alt="Mastercard"]{height:46px}
+.pie .mediosPago .logosPago img[alt="American Express"]{height:32px}
+.pie .mediosPago .logosPago img[alt="PayPal"]{height:27px}
+.pie .mediosPago .ce{font-size:12.5px;color:#C9C2B4;border:1px solid rgba(255,255,255,.18);border-radius:6px;padding:4px 9px}
 .field{margin-bottom:13px}
 .field label{display:block;font-weight:600;font-size:13px;margin-bottom:6px;color:#C9C2B4;
   text-transform:none;letter-spacing:0}
@@ -1122,6 +1159,17 @@ window.jayePixel = (function () {
         </div>
       </div>
 
+      <div class="mediosPago">
+        <span class="rot">Medios de pago</span>
+        <span class="logosPago">
+          <img src="img/pago-visa.svg" alt="Visa" loading="lazy">
+          <img src="img/pago-mastercard.svg" alt="Mastercard" loading="lazy">
+          <img src="img/pago-amex.svg" alt="American Express" loading="lazy">
+          <img src="img/pago-paypal.svg" alt="PayPal" loading="lazy">
+          <span class="ce">Pago contra entrega</span>
+        </span>
+      </div>
+
       <div class="marca-grande">
         <span class="j">JAYE</span><i class="raya"></i><span class="g">GROUP</span>
       </div>
@@ -1138,7 +1186,7 @@ window.jayePixel = (function () {
 <script src="chile-regiones.js?v=2"></script>
 <script src="resenas.js?v=31"></script>
 <script src="efectos.js?v=4"></script>
-<script src="ficha.js?v=247"></script>
+<script src="ficha.js?v=248"></script>
 <!-- GSAP, de lib/ y del propio dominio. NO se carga ScrollTrigger: para saber
      cuando algo entra en pantalla ya sirve IntersectionObserver, que viene en
      el navegador y no pesa. Va al final para no frenar la pintura. -->
