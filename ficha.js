@@ -400,8 +400,7 @@
      y estorbaban. Aca queda el boton que baja al pedido. */
   var promo = '<section class="bloque">'
     + '<button class="cta rojo rebota" id="btnArriba">Lo quiero, pago al recibir</button>'
-    + '<p class="ctaSub">Envío gratis · Paga al recibir o con tarjeta y ahorra 10 %</p></section>'
-    + seccionPagoAnt();
+    + '<p class="ctaSub">Envío gratis · Paga al recibir o con tarjeta y ahorra 10 %</p></section>';
 
   /* 04-10 James: "todo lo que ganas con el pago anticipado", arriba, cerca de la promocion. El boton baja al
      formulario con "Paga ahora con tarjeta" ya elegido. */
@@ -1011,6 +1010,8 @@
     + desc
     + seccionZonas()
     + seccionPromo()
+    /* 04-10 James: "Paga con tarjeta y gana" va DEBAJO de la promoción, en todos los productos */
+    + seccionPagoAnt()
     + bloqueVideo()
     + seccionFormula()
     + seccionMedida()
