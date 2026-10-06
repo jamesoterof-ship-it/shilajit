@@ -183,6 +183,12 @@ body.p-amp #prod .otros .oc{background:var(--am-card);border:1px solid var(--am-
 body.p-amp #prod .otros .oc :is(b,strong,span,p,div){color:var(--am-fg)}
 body.p-amp #prod .otros .oc .im{background:var(--am-muted)}
 
+/* "Despachamos con" (James 06-10): Blue Express como sticker blanco redondeado; Starken sin cambios */
+body.p-amp #prod .carriers{height:auto;overflow:visible;padding-bottom:14px}
+body.p-amp #prod .carriers .cbadges{align-items:center;height:auto;overflow:visible}
+body.p-amp #prod .carriers .amp-blue{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;background:#fff;border-radius:10px;padding:7px 14px;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+body.p-amp #prod .carriers .amp-blue img{display:block;height:24px;width:auto;max-width:none;background:none;padding:0;border-radius:0;box-shadow:none}
+
 /* ---------- reseñas ---------- */
 body.p-amp #prod .rev-sec :is(.rsc,.rev,.card,article){background:var(--am-vidrio);border:1px solid var(--am-filo);border-radius:16px;box-shadow:none}
 body.p-amp #prod .rev-sec :is(p,span,small){color:var(--am-mfg)}

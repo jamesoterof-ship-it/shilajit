@@ -158,6 +158,16 @@
     if (ban) ban.insertAdjacentElement('afterend', f); else card.insertBefore(f, card.firstChild);
   }
 
+  /* "Despachamos con" (James 06-10): Blue Express con su logo oficial (blue.cl/logo.svg) dentro de un sticker blanco
+     redondeado; Starken queda igual */
+  function blueSticker(prod) {
+    var im = prod.querySelector('.carriers img[src*="bluexpress"]');
+    if (!im || im.closest('.amp-blue')) return;
+    var s = document.createElement('span'); s.className = 'amp-blue';
+    var n = document.createElement('img'); n.src = 'img/logo-blue-express.svg?v=1'; n.alt = 'Blue Express'; n.width = 73; n.height = 36;
+    s.appendChild(n); im.replaceWith(s);
+  }
+
   /* ---------- 5. video con título ---------- */
   function video(prod) {
     var v = prod.querySelector('.vid-wrap');
@@ -180,7 +190,7 @@
   function arrancar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2')) return false;   /* ficha.js todavía no pinta */
-    heroe(prod); porCuantas(prod); escenas(prod); promoFoto(prod); video(prod); entradas(prod);
+    heroe(prod); porCuantas(prod); escenas(prod); promoFoto(prod); blueSticker(prod); video(prod); entradas(prod);
     return true;
   }
   function intentar() {
