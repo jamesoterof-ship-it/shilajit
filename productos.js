@@ -1090,6 +1090,96 @@ window.PRODUCTOS = [
     popular: 1,   /* el de 4 espumas: ahí está la ganancia */
   },
   {
+    /* Cámara Ampolleta WiFi — Dropi 171647 "J - AMPOLLETA CAMARA SEGURIDAD CON APP" · MEIBO.CL (mismo proveedor del
+       organizador), costo 6.990. Elegida 06-10: Dropdata 150-350 u/día cuando hay stock (MEIBO confirmó reposición).
+       Competencia 06-10 en la Biblioteca de Meta (mismo modelo, pago al recibir): CheliExpress 21.990 / 33.990 / 45.990 ·
+       AlterTienda 29.990. Shop Ehome 9.990 cobra el envío aparte (no compara). James 06-10 "dale hazlo": 500 bajo
+       CheliExpress → 21.490 / 33.490 / 45.490, el pack de 2 como oferta. Tachado = precio + 30 %, terminado en 500.
+       OJO CON LO QUE SE PROMETE: solo lo que muestran la foto del proveedor y los videos reales (WiFi, app, visión
+       nocturna, gira desde la app, aviso de movimiento, micrófono y parlante). NADA de tarjeta de memoria ni nube
+       gratis hasta confirmarlo con MEIBO. Funciona con la corriente del portalámpara: el interruptor queda prendido.
+       Diseño propio (ampolleta.css/.js) de la skill ui-ux-pro-max 06-10: glass oscuro, azul noche + verde "en vivo". */
+    id: 'ampolleta', unidad: 'cámara', promo: 2, promoAntesDelPack: true,
+    /* video REAL (TikTok @lasmegaofertas 7464682141197126918 0-6,8 s + @premiumshopp3 7498580949454572805), sin sus
+       subtítulos ni marcas: atornillarla, verla en el celular, instalación, visión nocturna y hablar. NADA con IA. */
+    video: 'img/amp-ficha.mp4?v=1',
+    /* 06-10 · reseñas REALES de compradores latinos de la cámara ampolleta E27 de un lente (AliExpress: Chile, México,
+       Colombia, Perú, Venezuela, Panamá), copiadas tal cual, sin foto y sin las que nombran marca, app, tienda o vendedor
+       (_kn_scratch/testeo/ampolleta/_amp_resenas_a_pagina.js). Fuera las 3 que solo hablan del envío. NINGUNA escrita por nosotros. */
+    resenasRotulo: 'Lo que dicen quienes usan la cámara ampolleta',
+    resenasFuente: 'Opiniones reales de compradores de la cámara ampolleta, tal como las escribieron.',
+    resenasMas: 'Más opiniones de quienes usan la cámara ampolleta',
+    resenasResumen: { total: 18, nota: 5, rotulo: 'opiniones de 4 y 5 estrellas', barras: { 5: 18, 4: 0 } },
+    resenasReales: [
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'excelente producto recomendado 100% llegó rápido y fácil de configurar es un dispositivo necesario para el hogar buena conexión audio video de buena calidad graba full HD' },
+      { nombre: 'L***l', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bien en imagen y sonido, la app funciona bien, fácil de configurar y manejar, aun se está probando la memoria sin usar la nube.' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'muy buena camara , no cuesta mucho instalarla en el celular y de noche tiene buena resolución y muy buena ! la recomiendo' },
+      { nombre: 'R***a', comuna: '', fecha: '', estrellas: 5, texto: 'Muy buena , la imagen nítida. Y desde el celular con la aplicación cuidas a distancia.' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'estoy mu feliz con mi compra. se ve un producto de buena calidad, cumple al 109% mis espectativas, llegó muy rapido y en excelentes vondiciones' },
+      { nombre: 'K***r', comuna: '', fecha: '', estrellas: 5, texto: 'lo ancho de la visión es lo fuerte de estas camaras, trabajan bien, es la segunda que pido' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'súper calidad es la segunda unidad que compro lo recomiendo ampliamente' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'excelente producto, muy buena calidad, envío super rápido' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'funciona muy bien. es perfecta para la vigilancia del hogar, recomiendo ampliamente este producto.' },
+      { nombre: 'D***V', comuna: '', fecha: '', estrellas: 5, texto: 'tiene buena imagen y es fácil de programar y usar' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente producto. Fácil configuración .' },
+      { nombre: 'H***a', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente calidad y envío muy rápido' },
+      { nombre: 'o***r', comuna: '', fecha: '', estrellas: 5, texto: 'buena resolucion sin fallas' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'me encantó funciona excelente la recomiendo mucho' },
+      { nombre: 'r***z', comuna: '', fecha: '', estrellas: 5, texto: 'Muy bueno. Cumple lo prometido.' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'Muy buena funciona perfecto.' },
+      { nombre: 'M***A', comuna: '', fecha: '', estrellas: 5, texto: 'Me encanto, súper funcional' },
+      { nombre: 'Compra verificada', comuna: '', fecha: '', estrellas: 5, texto: 'Buen producto fácil de usar' },
+    ],
+    antesDespues: 'img/amp-ba.webp?v=1',   /* OpenAI 06-10 con la foto de Dropi de referencia: "Imagen ilustrativa" */
+    antesDespuesSub: 'La misma entrada de noche: sin saber quién anda afuera, y con la cámara puesta, mirando en vivo desde el celular.',
+    preguntas: [
+      { q: '¿Cómo se instala?', a: 'Se atornilla en un portalámpara común de rosca E27, como una ampolleta. Después la vinculas al WiFi de tu casa con la aplicación del celular, siguiendo las instrucciones de la caja. No necesitas técnico ni cables.' },
+      { q: '¿El portalámpara tiene que quedar encendido?', a: 'Sí. La cámara funciona con la corriente del portalámpara, así que el interruptor de esa luz tiene que quedar prendido.' },
+      { q: '¿Necesita internet?', a: 'Sí, se conecta al WiFi de tu casa. Así la ves en vivo desde el celular, estés donde estés.' },
+      { q: '¿Se ve de noche?', a: 'Sí. Tiene visión nocturna con luces infrarrojas, y luces blancas para ver a color.' },
+      { q: '¿La puedo poner en la entrada?', a: 'Sí, en cualquier portalámpara bajo techo: el alero de la entrada, el pasillo, el living o la cochera. No debe quedar expuesta directo a la lluvia.' },
+      { q: '¿Cómo pago?', a: 'Pagas cuando la recibes, en efectivo o con tarjeta de débito. El envío es gratis a todo Chile.' },
+    ],
+    formulaRotulo: 'Cómo funciona',
+    formulaTitulo: 'La atornillas, la conectas y la ves.',
+    formulaSub: 'Sin técnico y sin cables: tu casa a la vista desde el celular.',
+    formula: [
+      ['casa', 'Se atornilla en el portalámpara', 'Va en un portalámpara común de rosca E27, como una ampolleta: sin cables ni perforar.'],
+      ['llave', 'Se conecta al WiFi', 'La vinculas con la aplicación del celular siguiendo las instrucciones de la caja.'],
+      ['ojo', 'La ves en vivo', 'Desde el celular ves lo que pasa en tu casa, estés donde estés.'],
+      ['sol', 'Visión nocturna', 'De noche también se ve: tiene luces infrarrojas y luces blancas.'],
+      ['escudo', 'Aviso de movimiento', 'Cuando detecta movimiento te avisa en el celular.'],
+      ['pluma', 'Escuchas y hablas', 'Trae micrófono y parlante: puedes hablarle a quien está al frente.'],
+    ],
+    comparaTitulo: 'Por qué tipo ampolleta',
+    compara: [
+      'Va donde ya tienes una ampolleta: sin técnico, sin cables y sin perforar.',
+      'Gira desde la aplicación para mirar a los lados.',
+      'Con 2 cámaras cuidas la entrada y el patio al mismo tiempo.',
+    ],
+    nombre: 'Cámara Ampolleta WiFi',
+    sub: 'Se atornilla como una ampolleta y la ves en vivo desde el celular',
+    categoria: 'Hogar',
+    foto: 'img/amp-heroe.webp?v=1',
+    fotos: ['img/amp-poster.webp?v=1'],   /* la portada del video: el héroe ya muestra la foto grande (ninguna foto se repite) */
+    acento: '#22C55E', acento2Manual: '#0F172A',   /* skill ui-ux-pro-max 06-10: verde "en vivo" sobre azul noche */
+    desc: 'Una cámara de seguridad con forma de ampolleta: se atornilla en un portalámpara común de la casa, se conecta al WiFi y desde el celular ves en vivo lo que pasa, también de noche. Gira desde la aplicación para mirar a los lados, te avisa cuando detecta movimiento y trae micrófono y parlante para escuchar y hablar.',
+    puntos: [
+      'Se atornilla en un portalámpara común (rosca E27)',
+      'La ves en vivo desde el celular, estés donde estés',
+      'Visión nocturna con luces infrarrojas y blancas',
+      'Gira desde la aplicación para mirar a los lados',
+      'Aviso de movimiento en el celular',
+      'Micrófono y parlante para escuchar y hablar',
+    ],
+    packs: [
+      { cant: 1, precio: 21490, antes: 27500, texto: '1 cámara ampolleta' },
+      { cant: 2, precio: 33490, antes: 43500, texto: '2 cámaras ampolleta' },
+      { cant: 3, precio: 45490, antes: 59500, texto: '3 cámaras ampolleta' },
+    ],
+    popular: 1,   /* el pack de 2: la entrada y el patio */
+  },
+  {
     /* Clorofila Líquida Benevolent 60 ml — Dropi 118999 · VITALCOM (Recoleta)
        🔴 OJO CON EL LENGUAJE. Es un SUPLEMENTO ALIMENTARIO y en Chile lo rige el
        Reglamento Sanitario de los Alimentos (D.S. 977/96). El art. 536 prohibe
@@ -1348,4 +1438,5 @@ window.PRECIOS_APROBADOS = [
   20500, 27500, 36500,   /* bálsamo de colágeno Rosetimes: 1 · 2 · 3 unidades (James, 29-09) */
   22500, 31500, 44500,   /* zapatero organizador colgador 4 niveles: 1 · 2 · 3 unidades (James, 01-10) */
   24500, 34500, 44500,   /* desengrasante en espuma: combos de 2 · 4 · 6 espumas, con 2 regalos (James, 03-10) */
+  21490, 33490, 45490,   /* cámara ampolleta WiFi: 1 · 2 · 3 cámaras, 500 bajo CheliExpress (James, 06-10) */
 ];

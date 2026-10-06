@@ -505,7 +505,7 @@
     /* p.resenasRotulo (desengrasante, 03-10): cuando las reseñas reales son del mismo TIPO de producto y no del mismo,
        el rótulo lo dice tal cual en vez de "este mismo producto" */
     + '<h2 class="rev-title">' + (p.resenasRotulo || (reales ? 'Opiniones del producto' : 'Experiencias reales')) + ' <span class="stars">★★★★★</span></h2>'
-    + (p.resenasRotulo ? '<p class="rev-fuente">Opiniones reales de compradores de espuma antigrasa, tal como las escribieron.</p>'
+    + (p.resenasRotulo ? '<p class="rev-fuente">' + (p.resenasFuente || 'Opiniones reales de compradores de espuma antigrasa, tal como las escribieron.') + '</p>'  /* 06-10: cada producto trae su texto (ampolleta) */
       : (reales ? '<p class="rev-fuente">Opiniones de compradores de este mismo producto, tal como las escribieron.</p>' : ''))
     + '<div class="rev-score"><span class="big">' + prom.toFixed(1) + '</span>'
     + '<span class="cnt">' + cuentaTxt + '</span></div>'
@@ -513,7 +513,7 @@
     + '<button class="btn-write" id="btnWrite">Escribir una reseña</button>'
     + '<div class="rs" id="listaRs"></div>'
     + (mias.length > VER ? '<button class="masRs" id="masRs">Ver más reseñas</button>' : '')
-    + '<p class="rev-auto-label">' + (p.resenasRotulo ? 'Más opiniones de quienes usan espuma antigrasa' : (reales ? 'Más opiniones de quienes ya lo tienen' : 'Más experiencias de nuestros clientes')) + '</p>'
+    + '<p class="rev-auto-label">' + (p.resenasRotulo ? (p.resenasMas || 'Más opiniones de quienes usan espuma antigrasa') : (reales ? 'Más opiniones de quienes ya lo tienen' : 'Más experiencias de nuestros clientes')) + '</p>'
     + '<div class="rev-auto"><div class="rev-auto__track" id="revAuto"></div></div>'
     + '</section>';
 

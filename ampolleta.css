@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
+/* ============================================================
+   CÁMARA AMPOLLETA WIFI · skill ui-ux-pro-max 06-10 (aprobada por James: "dale hazlo")
+     Estilo   Glassmorphism oscuro: vidrio esmerilado, borde blanco translúcido, profundidad en capas
+     Colores  Background #0F172A · Card #1B2336 · Muted #272F42 · Foreground #F8FAFC · Muted fg #94A3B8
+              Border #475569 · Accent/CTA #22C55E (el verde de "en vivo") con letra #0F172A
+     Letra    Plus Jakarta Sans (títulos y texto)
+   Del zapatero/guirnalda solo se respeta el ORDEN de las secciones (lo pone ficha.js).
+   Todo cuelga de body.p-amp. El encabezado (.top) y el pie (.pie) no se tocan.
+   ============================================================ */
+body.p-amp{
+  --am-bg:#0F172A; --am-card:#1B2336; --am-muted:#272F42; --am-fg:#F8FAFC; --am-mfg:#94A3B8; --am-borde:#475569;
+  --am-vidrio:rgba(255,255,255,.06); --am-filo:rgba(255,255,255,.14);
+  --am-a:#22C55E; --am-a-claro:#4ADE80; --am-on-a:#0F172A; --am-ambar:#F5B455; --am-oro:#d8a52e;
+  --am-letra:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --am-r:18px; --am-curva:cubic-bezier(.22,.8,.24,1);
+  background:var(--am-bg);
+}
+
+/* ---------- base ---------- */
+body.p-amp #prod{background:var(--am-bg);color:var(--am-fg);font-family:var(--am-letra);overflow-x:clip}
+body.p-amp #prod *{font-family:var(--am-letra)}
+body.p-amp #prod :is(h2,.tit2,.rev-title){color:var(--am-fg);font-weight:800;letter-spacing:-.02em;line-height:1.08;
+  font-size:clamp(28px,7.6vw,40px);text-wrap:balance}
+body.p-amp #prod h3{color:var(--am-fg);font-weight:700}
+body.p-amp #prod :is(p,li,td,.sub2,.ctaSub,.packDe,label,.opc){color:var(--am-mfg);line-height:1.55}
+body.p-amp #prod :is(b,strong){color:var(--am-fg)}
+body.p-amp #prod .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--am-a-claro);background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.35)}
+/* cada sección: un panel de vidrio sobre la noche */
+body.p-amp #prod > :is(section,.bloque){position:relative;background:transparent;border:0;box-shadow:none;padding-top:40px;padding-bottom:40px}
+body.p-amp #prod > :is(section,.bloque) + :is(section,.bloque)::before{content:"";position:absolute;left:18px;right:18px;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--am-filo),transparent)}
+body.p-amp #prod :is(video){border-radius:var(--am-r)}
+
+/* ============================================================ HÉROE: transmisión en vivo ============================================================ */
+.amp-heroe{position:relative;isolation:isolate;overflow:hidden;padding:22px 16px 26px;background:var(--am-bg);color:var(--am-fg)}
+.amp-cielo{position:absolute;inset:-20% -10% auto;height:120%;z-index:-1;pointer-events:none;
+  background:radial-gradient(60% 40% at 80% 18%,rgba(245,180,85,.20),transparent 70%),
+             radial-gradient(70% 50% at 10% 0%,rgba(34,197,94,.14),transparent 70%),
+             linear-gradient(180deg,#0B1222 0%,var(--am-bg) 60%)}
+.amp-pill{display:inline-flex;align-items:center;gap:8px;margin:0;padding:7px 13px;border-radius:999px;font-size:12.5px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--am-fg);background:var(--am-vidrio);border:1px solid var(--am-filo);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.amp-led{width:9px;height:9px;border-radius:50%;background:var(--am-a);box-shadow:0 0 0 0 rgba(34,197,94,.7);animation:amp-latido 1.8s infinite}
+@keyframes amp-latido{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+body.p-amp .amp-heroe .amp-h1{margin:14px 0 10px;font-weight:800;font-size:clamp(44px,13vw,72px);line-height:.98;letter-spacing:-.035em;color:var(--am-fg);
+  animation:amp-asoma .8s var(--am-curva) both}
+.amp-h1 em{font-style:normal;color:var(--am-a);text-shadow:0 0 30px rgba(34,197,94,.35)}
+@keyframes amp-asoma{from{transform:translateY(18px);opacity:.01}to{transform:none;opacity:1}}
+body.p-amp .amp-heroe .amp-sub{max-width:34ch;margin:0 0 18px;font-size:16.5px;line-height:1.5;color:var(--am-mfg);animation:amp-asoma .8s .15s var(--am-curva) both}
+
+/* el visor: la foto dentro de una "pantalla de cámara" */
+.amp-visor{position:relative;margin:0;border-radius:22px;overflow:hidden;aspect-ratio:2/3;max-height:78vh;background:#000;
+  border:1px solid var(--am-filo);box-shadow:0 30px 60px -20px rgba(0,0,0,.7),0 0 0 6px rgba(255,255,255,.03);animation:amp-asoma .9s .25s var(--am-curva) both}
+.amp-capa{position:absolute;inset:0;transform:scale(1.06);will-change:transform;transition:transform .25s ease-out}
+.amp-capa img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+/* luces de la cámara (arriba a la derecha de la foto) que laten */
+.amp-halo{position:absolute;left:72.5%;top:22.5%;width:26%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(closest-side,rgba(255,255,255,.55),rgba(190,240,255,.18) 45%,transparent);animation:amp-luz 2.6s ease-in-out infinite}
+@keyframes amp-luz{0%,100%{opacity:.35;transform:translate(-50%,-50%) scale(.85)}50%{opacity:.95;transform:translate(-50%,-50%) scale(1.1)}}
+/* línea de barrido y líneas de video */
+.amp-visor::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px)}
+.amp-barrido{position:absolute;left:0;right:0;top:-12%;height:12%;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(34,197,94,.16),transparent);animation:amp-barre 5.5s linear infinite}
+@keyframes amp-barre{to{top:100%}}
+/* esquinas del visor */
+.amp-esq{position:absolute;width:26px;height:26px;border:2.5px solid rgba(248,250,252,.85);pointer-events:none}
+.amp-esq.e1{top:14px;left:14px;border-right:0;border-bottom:0;border-top-left-radius:8px}
+.amp-esq.e2{top:14px;right:14px;border-left:0;border-bottom:0;border-top-right-radius:8px}
+.amp-esq.e3{bottom:14px;left:14px;border-right:0;border-top:0;border-bottom-left-radius:8px}
+.amp-esq.e4{bottom:14px;right:14px;border-left:0;border-top:0;border-bottom-right-radius:8px}
+/* barra de datos de la cámara */
+.amp-hud{position:absolute;left:46px;right:46px;top:18px;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font-size:11.5px;font-weight:700;letter-spacing:.08em;color:var(--am-fg);text-shadow:0 1px 3px rgba(0,0,0,.8);font-variant-numeric:tabular-nums}
+.amp-hud > span:nth-child(2){opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.amp-rec{display:inline-flex;align-items:center;gap:6px}
+.amp-rec b{width:9px;height:9px;border-radius:50%;background:#EF4444;animation:amp-parpadea 1.2s steps(2,start) infinite}
+@keyframes amp-parpadea{to{visibility:hidden}}
+.amp-hora{font-weight:700;color:var(--am-fg)}
+/* el aviso de movimiento: así se ve en la app */
+.amp-aviso{position:absolute;left:14px;right:14px;bottom:18px;display:flex;gap:10px;align-items:center;padding:11px 13px;border-radius:16px;
+  background:rgba(15,23,42,.72);border:1px solid var(--am-filo);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  transform:translateY(130%);opacity:0;transition:transform .5s var(--am-curva),opacity .4s}
+.amp-aviso.amp-sale{transform:none;opacity:1}
+.amp-aviso svg{flex:0 0 34px;width:34px;height:34px;padding:7px;border-radius:10px;background:var(--am-a);fill:none;stroke:var(--am-on-a);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.amp-aviso span{display:flex;flex-direction:column;font-size:12.5px;line-height:1.3;color:var(--am-mfg);min-width:0}
+.amp-aviso b{font-size:14.5px;color:var(--am-fg)}
+/* los tres datos */
+.amp-chips{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.amp-chips li{padding:12px 6px 10px;border-radius:14px;text-align:center;font-size:12.5px;line-height:1.25;color:var(--am-mfg);
+  background:var(--am-vidrio);border:1px solid var(--am-filo);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);min-width:0}
+body.p-amp .amp-chips b{display:block;margin-bottom:3px;font-size:clamp(17px,5vw,22px);font-weight:800;letter-spacing:-.02em;color:var(--am-a)}
+
+/* ---------- cabecera de la ficha (nombre, estrellas, precio) pegada al héroe ---------- */
+body.p-amp #prod .arriba2{display:block;background:transparent;padding:4px 16px 6px;border:0}
+body.p-amp #prod .arriba2 .datos{text-align:center;padding:0}
+body.p-amp #prod .arriba2 h1{font-weight:800;font-size:24px;letter-spacing:-.01em;color:var(--am-fg);margin:6px 0 2px}
+body.p-amp #prod .arriba2 .sub{color:var(--am-mfg);font-size:15px}
+body.p-amp #prod .arriba2 .estrellas{justify-content:center}
+body.p-amp #prod .arriba2 :is(.cuantas,.cuantas a){color:var(--am-mfg)}
+body.p-amp #prod .precioTop{display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap}
+body.p-amp #prod .precioTop .ahora{font-size:52px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--am-fg);font-variant-numeric:tabular-nums}
+body.p-amp #prod :is(.antes,s,del){color:var(--am-mfg)}
+body.p-amp #prod .precioTop .antes{font-size:22px}
+body.p-amp #prod .off{background:var(--am-a);color:var(--am-on-a);font-weight:800;border-radius:8px;padding:2px 8px}
+body.p-amp #prod .amp-por{margin:6px 0 0;text-align:center;font-size:16px;color:var(--am-mfg)}
+body.p-amp #prod .amp-por b{color:var(--am-a)}
+body.p-amp #prod :is(.estrellas,.stars,.estrellas svg){color:var(--am-oro);fill:var(--am-oro)}
+
+/* ---------- botones: verde "en vivo", letra azul noche ---------- */
+body.p-amp #prod :is(.cta,.btn,button.pedir,.btn-pedir,.big),body.p-amp #prod .form button[type=submit]{background:var(--am-a);color:var(--am-on-a);border:0;
+  border-radius:14px;font-weight:800;font-size:18px;letter-spacing:.01em;min-height:52px;text-transform:none;
+  box-shadow:0 10px 30px -10px rgba(34,197,94,.65);transition:transform .15s var(--am-curva),background .2s}
+body.p-amp #prod :is(.cta,.btn,button.pedir,.btn-pedir,.big):hover{background:var(--am-a-claro)}
+body.p-amp #prod :is(.cta,.btn,button.pedir,.btn-pedir,.big):active{transform:scale(.98)}
+body.p-amp :is(.cta,.btn,button,a,input,select,textarea,.amp-escenas):focus-visible{outline:2px solid var(--am-a-claro);outline-offset:3px}
+body.p-amp .stickycta .btn-flota{background:var(--am-a);color:var(--am-on-a);border-radius:14px;font-weight:800;min-height:46px;height:auto;padding:10px 12px;white-space:nowrap}
+
+/* ---------- "Cómo funciona": las 3 escenas en carrusel ---------- */
+.amp-escenas{display:grid;grid-auto-flow:column;grid-auto-columns:86%;gap:12px;margin:18px -16px 8px;padding:0 16px 6px;
+  overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.amp-escenas::-webkit-scrollbar{display:none}
+.amp-escenas figure{position:relative;margin:0;scroll-snap-align:start;border-radius:var(--am-r);overflow:hidden;border:1px solid var(--am-filo);background:var(--am-card)}
+.amp-escenas img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover}
+.amp-escenas figcaption{display:flex;align-items:center;gap:10px;padding:12px 14px;font-weight:700;font-size:15px;color:var(--am-fg)}
+.amp-escenas figcaption b{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;font-size:13px;background:rgba(34,197,94,.14);color:var(--am-a);border:1px solid rgba(34,197,94,.35)}
+.amp-puntos{display:flex;justify-content:center;gap:6px;margin:4px 0 18px}
+.amp-puntos i{width:7px;height:7px;border-radius:99px;background:var(--am-borde);transition:width .25s var(--am-curva),background .25s}
+.amp-puntos i.on{width:22px;background:var(--am-a)}
+@media (min-width:768px){.amp-escenas{grid-auto-flow:row;grid-template-columns:repeat(3,1fr);margin:18px 0 8px;padding:0;overflow:visible}.amp-puntos{display:none}}
+body.p-amp #prod .ing{background:var(--am-vidrio);border:1px solid var(--am-filo);border-radius:16px}
+body.p-amp #prod .ing .cir{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.4);border-radius:12px}
+body.p-amp #prod .ing .cir svg{stroke:var(--am-a);fill:none}
+
+/* ---------- promoción y packs ---------- */
+body.p-amp #prod .promo-card{background:linear-gradient(180deg,rgba(34,197,94,.10),transparent 40%),var(--am-card);border:1px solid rgba(34,197,94,.45);
+  border-radius:22px;overflow:hidden;box-shadow:0 0 50px -12px rgba(34,197,94,.35)}
+body.p-amp #prod .amp-promo-foto{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover}
+body.p-amp #prod .promo-cuerpo{background:transparent}
+body.p-amp #prod :is(.promo-banner,.promo-off,.cinta){background:var(--am-a);color:var(--am-on-a);font-weight:800;border-radius:0}
+body.p-amp #prod .promo-off{border-radius:8px}
+body.p-amp #prod .promo-qt{color:var(--am-fg);font-size:22px;font-weight:800}
+body.p-amp #prod .promo-precio{color:var(--am-fg);font-size:48px;font-weight:800;letter-spacing:-.03em}
+body.p-amp #prod .promo-antes{color:var(--am-mfg)}
+body.p-amp #prod :is(.promo-uni,.promo-uni b){color:var(--am-mfg)}
+body.p-amp #prod .cuenta > div{background:var(--am-bg);border:1px solid var(--am-filo);border-radius:12px}
+body.p-amp #prod .cuenta > div b{color:var(--am-fg);font-weight:800;font-size:28px;font-variant-numeric:tabular-nums}
+body.p-amp #prod .cuenta > div span{color:var(--am-mfg)}
+body.p-amp #prod .cuenta > div.seg,body.p-amp #prod .cuenta > div.seg.late{background:var(--am-a) !important;border-color:var(--am-a);animation:none !important}
+body.p-amp #prod .cuenta > div.seg :is(b,span){color:var(--am-on-a)}
+body.p-amp #prod .pack{background:var(--am-vidrio);border:1px solid var(--am-filo);border-radius:16px;color:var(--am-fg)}
+body.p-amp #prod .pack :is(b,strong,span){color:var(--am-fg)}
+body.p-amp #prod .pack :is(s,.antes){color:var(--am-mfg)}
+body.p-amp #prod .pack:is(.sel,[aria-pressed=true]){border-color:var(--am-a);box-shadow:0 0 0 1px var(--am-a),0 12px 30px -12px rgba(34,197,94,.45)}
+body.p-amp #prod .pack .radio{border-color:var(--am-borde)}
+body.p-amp #prod .cinta{color:var(--am-on-a) !important}
+
+/* ---------- antes y después ---------- */
+body.p-amp #prod .ba-img{border-radius:var(--am-r);overflow:hidden;border:1px solid var(--am-filo)}
+body.p-amp #prod .ba-img img{display:block;width:100%;height:auto}
+
+/* ---------- comparación, resultados, garantía, envíos ---------- */
+body.p-amp #prod .res{background:var(--am-vidrio);border:1px solid var(--am-filo);border-radius:16px}
+body.p-amp #prod .res b{color:var(--am-a);font-weight:800}
+body.p-amp #prod .res span{color:var(--am-mfg)}
+body.p-amp #prod table.cmp{background:transparent;border-collapse:collapse}
+body.p-amp #prod table.cmp :is(th,td){background:transparent;color:var(--am-fg);border-bottom:1px solid var(--am-filo)}
+body.p-amp #prod table.cmp th.us{color:var(--am-a)}
+body.p-amp #prod table.cmp .si svg{stroke:var(--am-a)}
+body.p-amp #prod table.cmp .no svg{stroke:var(--am-mfg)}
+body.p-amp #prod table.cmp tbody tr:hover,body.p-amp #prod table.cmp tbody tr:hover :is(td,th){background:var(--am-muted) !important}
+body.p-amp #prod table.cmp:hover{box-shadow:none}
+body.p-amp #prod .gar-chips span{background:var(--am-vidrio);background-image:none;color:var(--am-fg);border:1px solid var(--am-filo);border-radius:999px;box-shadow:none}
+body.p-amp #prod .sellos .sello{background:var(--am-card);border:1px solid var(--am-filo);border-radius:16px;box-shadow:none}
+body.p-amp #prod .sellos .sello :is(b,strong,h3,h4,.nom){color:var(--am-fg)}
+body.p-amp #prod .sellos .sello small{color:var(--am-mfg)}
+body.p-amp #prod .sellos .sello img{background:var(--am-fg);padding:4px 10px;border-radius:8px}
+body.p-amp #prod .otros .oc{background:var(--am-card);border:1px solid var(--am-filo);border-radius:16px;box-shadow:none}
+body.p-amp #prod .otros .oc :is(b,strong,span,p,div){color:var(--am-fg)}
+body.p-amp #prod .otros .oc .im{background:var(--am-muted)}
+
+/* ---------- reseñas ---------- */
+body.p-amp #prod .rev-sec :is(.rsc,.rev,.card,article){background:var(--am-vidrio);border:1px solid var(--am-filo);border-radius:16px;box-shadow:none}
+body.p-amp #prod .rev-sec :is(p,span,small){color:var(--am-mfg)}
+body.p-amp #prod .rev-sec :is(b,strong,h3,h4){color:var(--am-fg)}
+body.p-amp #prod .rev-sec :is(.stars,.est,.est *){color:var(--am-oro)}
+body.p-amp #prod .rev-score .big{display:inline-block;height:auto;padding:6px 12px;border-radius:12px;background:var(--am-a);color:var(--am-on-a);font-weight:800;font-size:40px;line-height:1}
+body.p-amp #prod .rev-bars .track{background:var(--am-muted);border-radius:99px}
+body.p-amp #prod .rev-bars .track i{background:var(--am-a);border-radius:99px}
+body.p-amp #prod .rsc .ini{background:var(--am-muted);color:var(--am-fg)}
+body.p-amp #prod .rsc .quien{color:var(--am-fg);font-weight:700}
+body.p-amp #prod :is(.btn-write,.masRs){background:transparent;color:var(--am-fg);border:1px solid var(--am-filo);border-radius:12px;font-weight:700;box-shadow:none}
+
+/* ---------- preguntas ---------- */
+body.p-amp #prod details{background:var(--am-vidrio);border:1px solid var(--am-filo);border-radius:14px;color:var(--am-fg)}
+body.p-amp #prod details summary{color:var(--am-fg);font-weight:700;cursor:pointer}
+body.p-amp #prod details[open]{border-color:rgba(34,197,94,.5)}
+body.p-amp #prod details p{color:var(--am-mfg)}
+
+/* ---------- video ---------- */
+body.p-amp #prod .vid-wrap video{border:1px solid var(--am-filo);background:#000}
+body.p-amp #prod .amp-vtit{padding:0 16px 16px}
+body.p-amp #prod .amp-vtit h2{margin:10px 0 0}
+.amp-pill-s{font-size:11.5px;padding:6px 11px}
+
+/* ---------- formulario oscuro y legible ---------- */
+body.p-amp #prod :is(.form,.formcard){background:var(--am-card);color:var(--am-fg);color-scheme:dark;border:1px solid var(--am-filo);border-radius:20px;box-shadow:none}
+body.p-amp #prod .form h2{color:var(--am-fg)}
+body.p-amp #prod .form label{color:var(--am-fg);font-weight:600}
+body.p-amp #prod :is(.form,.formcard) :is(input,select,textarea){background:var(--am-bg);color:var(--am-fg);border:1px solid var(--am-borde);border-radius:12px;min-height:48px;font-size:16px}
+body.p-amp #prod :is(.form,.formcard) :is(input,select,textarea)::placeholder{color:#64748B}
+body.p-amp #prod :is(.form,.formcard) :is(input,select,textarea):focus{border-color:var(--am-a)}
+body.p-amp #prod .form .err{color:#F87171}
+body.p-amp #prod .formcard :is(p,small,span){color:var(--am-mfg)}
+body.p-amp #prod .formcard .cod-badge{background:var(--am-bg);border:1px solid rgba(34,197,94,.5);color:var(--am-fg);border-radius:12px}
+body.p-amp #prod .formcard .cod-badge *{color:var(--am-fg)}
+body.p-amp #prod .formcard .summary{background:var(--am-bg);border:1px solid var(--am-filo);color:var(--am-mfg);border-radius:12px}
+body.p-amp #prod .formcard .summary :is(b,strong){color:var(--am-fg)}
+body.p-amp #prod .formcard .cc-btn{background:var(--am-bg);color:var(--am-fg);border:1px solid var(--am-filo)}
+body.p-amp #prod .formcard .cc-btn *{color:var(--am-fg)}
+body.p-amp #prod .formcard .cc-lista{background:var(--am-card);border:1px solid var(--am-filo)}
+body.p-amp #prod .formcard .cc-lista *{color:var(--am-fg)}
+body.p-amp #prod .formcard option{background:var(--am-card);color:var(--am-fg)}
+body.p-amp #prod .listo{background:var(--am-bg);border:1px solid var(--am-a);color:var(--am-fg);border-radius:16px}
+body.p-amp #prod .bloque > h2{display:block}
+body.p-amp #prod .bloque > h2::before{content:none}
+
+/* entrada suave al llegar: la sección queda VISIBLE en reposo (solo se corre un poco) */
+.amp-sube{transform:translateY(18px);transition:transform .7s var(--am-curva)}
+.amp-sube.amp-in{transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .amp-heroe *,.amp-heroe *::before,.amp-heroe *::after,.amp-visor::after{animation:none !important;transition:none !important}
+  .amp-aviso{transform:none;opacity:1}
+  .amp-sube{transform:none;transition:none}
+}
