@@ -127,6 +127,25 @@
       var i = Math.round(d.scrollLeft / Math.max(1, d.clientWidth * .86));
       puntos.querySelectorAll('i').forEach(function (p, k) { p.classList.toggle('on', k === i); });
     }, { passive: true });
+    pasaSolo(d);
+  }
+
+  /* James 06-10: "la sección debe tener movimiento automático". Cada 3,5 s pasa a la escena siguiente y vuelve a la
+     primera al final. Se detiene mientras el cliente la toca (y 6 s después), si no se ve o si la pestaña está de fondo. */
+  function pasaSolo(d) {
+    if (quieto) return;
+    var visible = false, quietoHasta = 0;
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: .5 }).observe(d);
+    ['pointerdown', 'touchstart', 'wheel'].forEach(function (ev) { d.addEventListener(ev, function () { quietoHasta = Date.now() + 6000; }, { passive: true }); });
+    setInterval(function () {
+      if (!visible || document.hidden || Date.now() < quietoHasta) return;
+      var fig = d.querySelector('figure'); if (!fig) return;
+      var paso = fig.getBoundingClientRect().width + 12;
+      if (d.scrollWidth - d.clientWidth < 4) return;   /* en escritorio las 3 ya se ven: no hay a dónde mover */
+      var max = d.scrollWidth - d.clientWidth;
+      /* al llegar a la última vuelve a la primera; si no, avanza una (sin pasarse del final, o se saltaba la tercera) */
+      d.scrollTo({ left: d.scrollLeft >= max - 4 ? 0 : Math.min(d.scrollLeft + paso, max), behavior: 'smooth' });
+    }, 3500);
   }
 
   /* ---------- 4. la foto de la promoción ---------- */

@@ -155,6 +155,8 @@ body.p-amp #prod .pack :is(b,strong,span){color:var(--am-fg)}
 body.p-amp #prod .pack :is(s,.antes){color:var(--am-mfg)}
 body.p-amp #prod .pack:is(.sel,[aria-pressed=true]){border-color:var(--am-a);box-shadow:0 0 0 1px var(--am-a),0 12px 30px -12px rgba(34,197,94,.45)}
 body.p-amp #prod .pack .radio{border-color:var(--am-borde)}
+/* James 06-10: "no se ven las letras" de MÁS VENDIDO / MEJOR PRECIO -> letra azul noche sobre el verde */
+body.p-amp #prod .form .pack .tag,body.p-amp #prod .pack .tag{background:var(--am-a);color:var(--am-on-a) !important;font-weight:800;font-size:11px;letter-spacing:.06em}
 body.p-amp #prod .cinta{color:var(--am-on-a) !important}
 
 /* ---------- antes y después ---------- */
