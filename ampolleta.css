@@ -46,9 +46,23 @@ body.p-amp #prod :is(video){border-radius:var(--am-r)}
 @keyframes amp-latido{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
 body.p-amp .amp-heroe .amp-h1{margin:14px 0 10px;font-weight:800;font-size:clamp(44px,13vw,72px);line-height:.98;letter-spacing:-.035em;color:var(--am-fg);
   animation:amp-asoma .8s var(--am-curva) both}
-.amp-h1 em{font-style:normal;color:var(--am-a);text-shadow:0 0 30px rgba(34,197,94,.35)}
+.amp-h1 em{font-style:normal;color:var(--am-a)}   /* sin text-shadow: la máscara de cada palabra lo recortaba en recuadros */
 @keyframes amp-asoma{from{transform:translateY(18px);opacity:.01}to{transform:none;opacity:1}}
-body.p-amp .amp-heroe .amp-sub{max-width:34ch;margin:0 0 18px;font-size:16.5px;line-height:1.5;color:var(--am-mfg);animation:amp-asoma .8s .15s var(--am-curva) both}
+body.p-amp .amp-heroe .amp-sub{max-width:34ch;margin:0 0 18px;font-size:16.5px;line-height:1.5;color:var(--am-mfg)}
+/* entrada de las letras (James 06-10): el título palabra por palabra subiendo detrás de una máscara, y "a la vista."
+   con un destello verde al terminar; la frase de abajo palabra por palabra, de desenfocada a nítida */
+body.p-amp .amp-heroe .amp-h1{animation:none}
+.amp-p{display:inline-block;overflow:hidden;vertical-align:top;padding:.08em .02em .04em;margin:-.08em -.02em -.04em}
+.amp-p > i{display:inline-block;font-style:normal;transform:translateY(110%) rotate(6deg);transform-origin:0 100%;
+  animation:amp-sube-palabra .75s calc(.12s + var(--i) * .11s) cubic-bezier(.2,.9,.25,1.15) forwards}
+@keyframes amp-sube-palabra{to{transform:none}}
+.amp-h1 em .amp-p > i{background:linear-gradient(100deg,var(--am-a) 0 40%,#B9F8CF 50%,var(--am-a) 60% 100%);background-size:250% 100%;background-position:100% 0;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:amp-sube-palabra .75s calc(.12s + var(--i) * .11s) cubic-bezier(.2,.9,.25,1.15) forwards,amp-destello 1.4s 1.2s ease-in-out forwards}
+@keyframes amp-destello{to{background-position:-50% 0}}
+.amp-w > i{display:inline-block;font-style:normal;opacity:0;filter:blur(6px);transform:translateY(6px);
+  animation:amp-aclara .6s calc(.6s + var(--i) * .035s) ease-out forwards}
+@keyframes amp-aclara{to{opacity:1;filter:none;transform:none}}
 
 /* el visor: la foto dentro de una "pantalla de cámara" */
 .amp-visor{position:relative;margin:0;border-radius:22px;overflow:hidden;aspect-ratio:2/3;max-height:78vh;background:#000;
@@ -242,5 +256,7 @@ body.p-amp #prod .bloque > h2::before{content:none}
 @media (prefers-reduced-motion:reduce){
   .amp-heroe *,.amp-heroe *::before,.amp-heroe *::after,.amp-visor::after{animation:none !important;transition:none !important}
   .amp-aviso{transform:none;opacity:1}
+  .amp-p > i,.amp-w > i{transform:none !important;opacity:1 !important;filter:none !important}
+  .amp-h1 em .amp-p > i{color:var(--am-a);background:none}
   .amp-sube{transform:none;transition:none}
 }

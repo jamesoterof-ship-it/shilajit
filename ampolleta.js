@@ -29,6 +29,14 @@
   var CAMARAS = { 21490: 1, 33490: 2, 45490: 3 };
   var quieto = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* James 06-10: "pon efecto de entrada a estas letras". Cada palabra entra por separado (--i = su turno):
+     las del título suben desde abajo detrás de una máscara; las de la frase aparecen desenfocadas y se aclaran. */
+  function palabras(txt, desde, clase) {
+    return txt.split(' ').map(function (p, k) {
+      return '<span class="' + clase + '" aria-hidden="true" style="--i:' + (desde + k) + '"><i>' + p + '</i></span>';
+    }).join(' ');
+  }
+
   /* ---------- 1. héroe: la casa en vivo ---------- */
   function heroe(prod) {
     if (prod.querySelector('.amp-heroe')) return;
@@ -38,8 +46,9 @@
     h.innerHTML =
       '<div class="amp-cielo" aria-hidden="true"></div>'
       + '<p class="amp-pill"><span class="amp-led" aria-hidden="true"></span>En vivo desde tu celular</p>'
-      + '<h1 class="amp-h1">Tu casa,<br><em>a la vista.</em></h1>'
-      + '<p class="amp-sub">Se atornilla en el portalámpara como una ampolleta, se conecta al WiFi y la ves en vivo, estés donde estés. También de noche.</p>'
+      + '<h1 class="amp-h1" aria-label="Tu casa, a la vista.">' + palabras('Tu casa,', 0, 'amp-p') + '<br><em>' + palabras('a la vista.', 2, 'amp-p') + '</em></h1>'
+      + '<p class="amp-sub" aria-label="Se atornilla en el portalámpara como una ampolleta, se conecta al WiFi y la ves en vivo, estés donde estés. También de noche.">'
+      +   palabras('Se atornilla en el portalámpara como una ampolleta, se conecta al WiFi y la ves en vivo, estés donde estés. También de noche.', 0, 'amp-w') + '</p>'
       + '<figure class="amp-visor">'
       +   '<div class="amp-capa"><img src="' + FOTO_HEROE + '" alt="Hombre atornillando la cámara ampolleta en el portalámpara del alero de su casa, de noche" width="1024" height="1536" fetchpriority="high"></div>'
       +   '<span class="amp-halo" aria-hidden="true"></span>'
