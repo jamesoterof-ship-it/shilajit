@@ -1475,8 +1475,10 @@
       $('pedir').innerHTML = '<div class="listo"><h3>Último paso: paga tu pedido</h3>'
         + '<p>Gracias, ' + _nom1 + '. Paga aquí mismo con tarjeta o PayPal y tu pedido sale hoy.</p>'
         + '<p style="font-size:22px;font-weight:800;margin:10px 0 2px">Total a pagar: ' + pesos(_cobra) + '</p>'
-        + (res.usd ? '<p style="font-size:13px;opacity:.8;margin:0 0 12px">PayPal lo cobra en dólares: USD ' + String(res.usd).replace('.', ',') + ' (dólar de hoy).</p>' : '')
+        + '<p style="font-size:14px;font-weight:700;margin:0 0 8px">Toca el botón negro «Tarjeta de débito o crédito» y pagas con tu tarjeta.</p>'
         + '<div id="ppBotones" style="min-height:120px;margin:4px 0 8px;background:#fff;border-radius:12px;padding:12px"><p style="font-size:14px;color:#475569">Cargando el pago seguro…</p></div>'
+        /* 05-10 James: que se entienda que el "Pagar $17.77" de PayPal son DÓLARES, no un precio raro */
+        + (res.usd ? '<p style="font-size:13.5px;color:#0F172A;background:#FFF7E6;border:1px solid #F5D9A8;border-radius:10px;padding:10px 12px;line-height:1.45;margin:6px 0">💵 <b>En el botón de PayPal verás «Pagar $' + String(res.usd) + '»: son dólares (USD ' + String(res.usd).replace('.', ',') + '), lo mismo que tus ' + pesos(_cobra) + '.</b> Tu banco lo pasa a pesos.</p>' : '')
         + '<p id="ppEstado" role="status" aria-live="polite" style="font-size:15px;font-weight:700;min-height:22px;margin:6px 0"></p>'
         + '<p style="font-size:13px;opacity:.8">¿No puedes pagar? <a href="' + _wa + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Escríbenos por WhatsApp</a> y te ayudamos.</p></div>';
       $('pedir').scrollIntoView({ behavior: 'smooth', block: 'center' });

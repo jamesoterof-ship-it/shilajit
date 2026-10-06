@@ -83,7 +83,8 @@ body{margin:0;background:var(--fondo);color:var(--tinta);font-family:'Inter',sys
           + '<span class="tag">−10 % · entrega prioritaria</span>')
       + '<p class="rot" style="margin-top:12px;color:var(--tinta);font-weight:600">Toca el botón negro «Tarjeta de débito o crédito» y pagas con tu tarjeta.</p>'
       + '<div id="ppBotones"><p class="estado" style="color:var(--gris);font-weight:500">Cargando el pago seguro…</p></div>'
-      + (d.usd && !ant ? '<p class="usd">PayPal lo cobra en dólares: USD ' + String(d.usd).replace('.', ',') + ' (dólar de hoy). Tu banco lo pasa a pesos.</p>' : '')
+      /* 05-10 James: que se entienda que el "Pagar $17.77" de PayPal son DÓLARES, no un precio raro */
+      + (d.usd && !ant ? '<p class="usd" style="font-size:13.5px;color:var(--tinta);background:#FFF7E6;border:1px solid #F5D9A8;border-radius:10px;padding:10px 12px;text-align:left;line-height:1.45">💵 <b>En el botón de PayPal verás «Pagar $' + String(d.usd) + '»: son dólares (USD ' + String(d.usd).replace('.', ',') + '), lo mismo que tus ' + pesos(d.total) + '.</b> Tu banco lo pasa a pesos.</p>' : '')
       + '<p class="estado" id="ppEstado" role="status" aria-live="polite"></p>' + ayuda;
     var msg = function (t, mal) { var e = document.getElementById('ppEstado'); if (e) { e.textContent = t; e.className = 'estado' + (mal ? ' mal' : ''); } };
     var pintar = function () {
