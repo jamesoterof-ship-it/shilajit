@@ -1455,6 +1455,10 @@
     }
 
     mandar(_pedido, 1).then(function (res) {
+      /* 08-10: el cmp viajaba en el pedido pero el flujo de la tienda no lo guarda. Se anota aparte
+         (telefono + anuncio) para saber que campana trajo cada venta del panel. */
+      try { if (_pedido.cmp) fetch('https://n8n-production-8a42.up.railway.app/webhook/track-click', { method: 'POST', headers: { 'Content-Type': 'application/json' }, keepalive: true,
+        body: JSON.stringify({ phone: String(indic || '') + String(tel || ''), cmp: _pedido.cmp, producto: p.nombre, canal: 'pagina' }) }).catch(function () {}); } catch (e) {}
       if (_pre) pagar(res); else gracias();
     }).catch(function () {
       /* el pedido NO entro: se guarda para reintentarlo al volver a abrir la
