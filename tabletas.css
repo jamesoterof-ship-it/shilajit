@@ -49,6 +49,16 @@ body.p-tab #prod :is(.eyebrow,.rot){color:var(--tb-azul);font-weight:700;letter-
   font:600 12px/1.3 var(--tb-cuerpo);color:var(--tb-gris)}
 .tab-datos b{display:block;margin-bottom:3px;font:700 18px/1.1 var(--tb-titulo);color:var(--tb-azul)}
 
+/* 09-10 · portada con las letras dentro de la imagen (opción B): ocupa todo el ancho, sin marco */
+body.p-tab .tab-heroe{padding:0;background:var(--tb-fondo)}
+body.p-tab #prod .tab-portada{display:block;width:100%;height:auto;aspect-ratio:2/3;border-radius:0 !important;object-fit:cover}
+.tab-oculto{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+@media (min-width:760px){body.p-tab .tab-heroe{display:block;max-width:560px;margin:24px auto 0;padding:0}body.p-tab #prod .tab-portada{border-radius:28px !important}}
+
+/* 09-10 · imágenes con letras dentro de las secciones */
+.tab-img{margin:20px 0 6px}
+.tab-img img{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:24px !important;box-shadow:0 18px 40px rgba(12,74,110,.16)}
+
 /* ---------- cuántas tabletas trae el pack elegido ---------- */
 .tab-cuantas{margin:6px 0 0;font:600 14px/1.4 var(--tb-cuerpo);color:var(--tb-gris)}
 .tab-cuantas b{color:var(--tb-azul)}

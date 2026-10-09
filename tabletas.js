@@ -21,37 +21,37 @@
   ];
   var calma = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function burbujas() {
-    var html = '';
-    for (var k = 0; k < 14; k++) {
-      var t = 10 + Math.round(Math.random() * 26), x = Math.round(Math.random() * 100), d = (6 + Math.random() * 6).toFixed(1), r = (Math.random() * 6).toFixed(1);
-      html += '<i style="--t:' + t + 'px;--x:' + x + '%;--d:' + d + 's;--r:-' + r + 's"></i>';
-    }
-    return '<div class="tab-burbujas" aria-hidden="true">' + html + '</div>';
-  }
-
   function heroe(prod) {
     if (prod.querySelector('.tab-heroe')) return;
     var arriba = prod.querySelector('.arriba2');
     var s = document.createElement('section');
     s.className = 'tab-heroe';
+    /* 09-10 James: la portada lleva las letras DENTRO de la imagen (opción B, hecha por la IA, sin precio impreso).
+       El h1 queda para Google y lectores de pantalla, sin verse. */
     s.innerHTML =
-        '<div class="tab-texto">'
-      +   '<p class="tab-etiqueta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><circle cx="16" cy="8" r="3"/><circle cx="17.5" cy="17" r="2"/></svg>Limpia tu lavadora por dentro</p>'
-      +   '<h1 class="tab-h1">Tu lavadora se ve limpia… <em>hasta que ves lo que sale.</em></h1>'
-      +   '<p class="tab-baja">Una tableta al tambor vacío y un ciclo largo: burbujea y suelta los restos de detergente, el sarro y el mal olor que no se ven.</p>'
-      + '</div>'
-      + '<div class="tab-imagen">'
-      +   '<figure class="tab-foto">' + (calma ? '' : burbujas())
-      +     '<img src="img/tab-heroe.webp?v=1" alt="Mano sosteniendo una tableta efervescente azul y blanca frente a una lavadora abierta" width="1024" height="1536" fetchpriority="high">'
-      +     '<figcaption class="tab-sello"><b>72 tabletas</b>el pack más vendido · $24.500</figcaption>'
-      +   '</figure>'
-      +   '<ul class="tab-datos"><li><b>1 al mes</b>basta una tableta</li><li><b>Sin ropa</b>al tambor vacío</li><li><b>2 tipos</b>carga superior y frontal</li></ul>'
-      + '</div>';
+        '<h1 class="tab-oculto">Tu lavadora se ve limpia… hasta que ves lo que sale. Tabletas limpia lavadora</h1>'
+      + '<img class="tab-portada" src="img/tab-portada.webp?v=1" alt="Mano sosteniendo una tableta limpia lavadora frente a una lavadora abierta, con burbujas: tu lavadora se ve limpia hasta que ves lo que sale, 1 tableta al mes, carga superior y frontal" width="1024" height="1536" fetchpriority="high">';
     if (arriba) {
       arriba.parentNode.insertBefore(s, arriba);
       ['.gal', '.miniz'].forEach(function (q) { var el = arriba.querySelector(q); if (el) el.remove(); });
     } else prod.insertBefore(s, prod.firstChild);
+  }
+
+  /* 09-10 James: "muy pocas imágenes". Tres imágenes con sus letras (IA, sin precio), cada una en su sección. */
+  function imagenes(prod) {
+    if (prod.querySelector('.tab-img')) return;
+    var IMG = [
+      ['section.tab-desc', 'img/tab-esconde.webp?v=1', 'Sello de goma de la lavadora con moho, sarro, restos de detergente y mal olor: lo que se esconde en tu lavadora', 'fin'],
+      ['section.tab-fq-sec', 'img/tab-dostipos.webp?v=1', 'Lavadora de carga superior y de carga frontal: la tableta sirve para las dos, con el tambor vacío', 'titulo'],
+      ['section.desc:not(.tab-desc)', 'img/tab-ropa.webp?v=1', 'Mujer oliendo toallas recién lavadas: ropa que huele a limpio porque el tambor también está limpio', 'titulo'],
+    ];
+    IMG.forEach(function (x) {
+      var sec = prod.querySelector(x[0]); if (!sec) return;
+      var f = document.createElement('figure'); f.className = 'tab-img';
+      f.innerHTML = '<img src="' + x[1] + '" alt="' + x[2] + '" width="900" height="900" loading="lazy">';
+      var h = sec.querySelector('h2');
+      if (x[3] === 'titulo' && h) h.insertAdjacentElement('afterend', f); else sec.appendChild(f);
+    });
   }
 
   function cuantas(prod) {
@@ -189,7 +189,7 @@
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2')) return false;
     heroe(prod); cuantas(prod); pasos(prod); video(prod);
-    descripcion(prod); promoPanel(prod); compara(prod); resultados(prod); garantia(prod); cambio(prod); preguntas(prod);
+    descripcion(prod); promoPanel(prod); compara(prod); resultados(prod); garantia(prod); cambio(prod); preguntas(prod); imagenes(prod);
     llegada(prod);
     return true;
   }
