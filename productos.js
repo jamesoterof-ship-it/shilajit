@@ -1192,6 +1192,105 @@ window.PRODUCTOS = [
     popular: 1,   /* el pack de 2: la entrada y el patio */
   },
   {
+    /* 09-10 · TABLETAS LIMPIA LAVADORA — Dropi 78516 (Vida y Hogar SpA): cada unidad = 2 cajas = 24 tabletas efervescentes,
+       costo $1.600. Ganó la búsqueda del 09-10 (Dropdata ~100/día en el mercado, Valkyria la pauta hace 17 meses).
+       Escalera APROBADA por James 09-10: 48 tab $19.500 · 72 tab $24.500 (la que se impulsa) · 120 tab $29.500.
+       Diseño propio (tabletas.css/.js) de la skill ui-ux-pro-max 09-10: azul profundo #0369A1, celeste agua #38BDF8, CTA verde #16A34A,
+       letra Lora (títulos) + Raleway (texto). */
+    id: 'tabletas', unidad: 'tableta', promo: 72,
+    /* video REAL (TikTok @vax732 7598866846284090655 + @bytehive5 7597024356102950166), sin textos ni marcas ajenas:
+       la tableta al tambor, la espuma café, el agua sucia por el desagüe y el tambor limpio. NADA con IA. */
+    video: 'img/tab-ficha.mp4?v=1',
+    /* 09-10 · reseñas REALES de Falabella Chile, Perú y Colombia de pastillas limpia lavadora, con el nombre que publica la tienda.
+       Las 3 fotos son de compradoras con la misma caja genérica y las tabletas azul y blanco (_kn_scratch/tabletas/_a_pagina.js).
+       NINGUNA escrita por nosotros. */
+    resenasRotulo: 'Lo que dicen quienes ya limpiaron su lavadora',
+    resenasFuente: 'Opiniones reales de compradores de tabletas limpia lavadora, tal como las escribieron.',
+    resenasMas: 'Más opiniones de quienes usan las tabletas',
+    resenasResumen: { total: 32, nota: 4.8, rotulo: 'opiniones de 4 y 5 estrellas', barras: { 5: 24, 4: 8 } },
+    resenasReales: [
+      { nombre: 'Monica', comuna: '', fecha: '', estrellas: 4, foto: 'img/resenas-tabletas/n01.webp?v=1', texto: 'Igual a la foto el tamaño corresponde y funciona 🙂' },
+      { nombre: 'Claudia', comuna: '', fecha: '', estrellas: 4, foto: 'img/resenas-tabletas/n02.webp?v=1', texto: 'No trae instrucciones en español, pero supuse la cantidad de pastillas para mi lavadora de 21 kilos' },
+      { nombre: 'Sonia', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-tabletas/n03.webp?v=1', texto: 'Igual a la foto' },
+      { nombre: 'Pedro', comuna: '', fecha: '', estrellas: 5, texto: 'Hola el producto es perfecto es mejor que e comprado en él comercio limpio muy bien la lavadora Y la dejo con muy limpia y con agradable aroma todo lo que describe en los detalles yo lo recomiendo aaa y tiene muy buen precio estoy muy feliz' },
+      { nombre: 'Aldana', comuna: '', fecha: '', estrellas: 5, texto: 'Es igual a la foto Tamaño corresponde La calidad buenísima Hice un lavado de tambor Y quedé maravillada Con lo bien q funciono el producto.' },
+      { nombre: 'Elena', comuna: '', fecha: '', estrellas: 5, texto: 'El producto es maravilloso ,ya que no hace completamente el trabajo pero si saca la mayoria de suciedad que tiene la lavadora muy buena compra' },
+      { nombre: 'Kelly', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente, muchas gracias mi lavadora quedó en óptimas condiciones.. Y volvió a funcionar como nueva.. Gracias' },
+      { nombre: 'Francisco', comuna: '', fecha: '', estrellas: 5, texto: 'Tengo tiempo usándolas en mi lavadora y de verdad deja el tambor y compartimiento de detergente súper limpios' },
+      { nombre: 'Beatriz Alejandra', comuna: '', fecha: '', estrellas: 5, texto: 'Cumple con el tema de limpieza, salen incluso trozitos de mugre. �atil para una limpeiza periodica.' },
+      { nombre: 'Claudia', comuna: '', fecha: '', estrellas: 5, texto: 'Producto muy util para la limpieza del electrodomestico, buena calidad igual que la fotografia' },
+      { nombre: 'Jessica', comuna: '', fecha: '', estrellas: 5, texto: 'El uso de las pastilla en l lavadora es efectiva , me gusto mucho y dejo impecable la lavadora' },
+      { nombre: 'Ivan', comuna: '', fecha: '', estrellas: 5, texto: 'El producto es de buena calidad, al ser efervescentes dejan muy limpia la lavadora' },
+      { nombre: 'Daniela', comuna: '', fecha: '', estrellas: 5, texto: 'Buen producto, limpia la lavadora, ya no queda con ese olor A humedad dentro.' },
+      { nombre: 'Jaime', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente producto, deja la lavadora con aroma fresco y limpio, recomendado!' },
+      { nombre: 'Ricardo', comuna: '', fecha: '', estrellas: 5, texto: 'Desde que comenzamos a ocuparlas, la ropa queda bien lavada y se nota .' },
+      { nombre: 'Marcela', comuna: '', fecha: '', estrellas: 5, texto: 'Muy fácil de usar y realmente es genial tu lavadora queda impecable' },
+      { nombre: 'Paula', comuna: '', fecha: '', estrellas: 5, texto: 'Las pastillas son igual a la foto , y mi lavadora quedó perfecta' },
+      { nombre: 'Carmen', comuna: '', fecha: '', estrellas: 5, texto: 'Es igual a la foto! Dejo la lavadora impecable. Recomendado 100%' },
+      { nombre: 'María Fernanda', comuna: '', fecha: '', estrellas: 5, texto: 'Es igual a la foto, no deja manchado el tambor de la lavadora .' },
+      { nombre: 'Freddy', comuna: '', fecha: '', estrellas: 5, texto: 'Es un producto muy efecas deja limpio el tambor de la lavadora' },
+      { nombre: 'Sofía', comuna: '', fecha: '', estrellas: 5, texto: 'Súper buenas Deja. Las lavadoras impecables como nuevas' },
+      { nombre: 'Texia', comuna: '', fecha: '', estrellas: 5, texto: 'Cumplió mis expectativas y se nota que saca la suciedad!' },
+      { nombre: 'Mónica', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente producto, eliminó el mal olor de la lavadora' },
+      { nombre: 'Gladys', comuna: '', fecha: '', estrellas: 5, texto: 'Es bueno me ha sido útil para mi lavadora.' },
+      { nombre: 'Judy', comuna: '', fecha: '', estrellas: 5, texto: 'Dejan muy limpia la lavadora' },
+      { nombre: 'Nibia', comuna: '', fecha: '', estrellas: 5, texto: 'Es ub excelente producto!' },
+      { nombre: 'Patricio', comuna: '', fecha: '', estrellas: 4, texto: 'El tamaño es el que corresponde, uso 2 pastillas cada vez... y se nota diferencia en el olor a humedad.' },
+      { nombre: 'Leonardo', comuna: '', fecha: '', estrellas: 4, texto: 'El producto si bien lo estamos probando se aprecia un cambio en el aseo de mi lavadora' },
+      { nombre: 'Julia', comuna: '', fecha: '', estrellas: 4, texto: 'Buen producto,sirve para la limpieza de mi lavadora' },
+      { nombre: 'Johanna', comuna: '', fecha: '', estrellas: 4, texto: 'Buen produxto sirve para limpiar lavadora' },
+      { nombre: 'Cecilia', comuna: '', fecha: '', estrellas: 4, texto: 'Funcionan bien, y saco mal olor lavadora' },
+      { nombre: 'Lorena', comuna: '', fecha: '', estrellas: 4, texto: 'Dejó limpio el tambor de la lavadora' },
+    ],
+    antesDespues: 'img/tab-ba.webp?v=1',   /* OpenAI 09-10: tambor sucio / el mismo tambor limpio. Imagen ilustrativa */
+    antesDespuesSub: 'Por fuera la lavadora se ve limpia. Por dentro, el tambor junta restos de detergente, sarro y mal olor.',
+    preguntas: [
+      { q: '¿Cómo se usan?', a: 'Con la lavadora vacía, echas 1 tableta directo al tambor y haces un ciclo largo con agua caliente o el ciclo de limpieza de tambor si tu lavadora lo tiene. Al terminar, listo.' },
+      { q: '¿Cada cuánto se usan?', a: 'Una vez al mes para mantenerla limpia. Si hace mucho que no la limpias, puedes usar 2 tabletas la primera vez.' },
+      { q: '¿Sirven para mi lavadora?', a: 'Sí, sirven para lavadoras de carga superior y de carga frontal.' },
+      { q: '¿Se puede lavar ropa al mismo tiempo?', a: 'No. Se usan con la lavadora vacía, sin ropa, para que limpien el tambor por dentro.' },
+      { q: '¿Cuántas tabletas trae cada caja?', a: 'Cada caja trae 12 tabletas envueltas una por una. El pack de 48 son 4 cajas, el de 72 son 6 cajas y el de 120 son 10 cajas.' },
+      { q: '¿Cómo pago?', a: 'Pagas cuando las recibes, en efectivo o con tarjeta de débito. El envío es gratis a todo Chile.' },
+    ],
+    formulaRotulo: 'Cómo se usa',
+    formulaTitulo: 'Una tableta, un ciclo y listo.',
+    formulaSub: 'Sin desarmar nada: la tableta hace el trabajo sola.',
+    formula: [
+      ['agua', 'Al tambor vacío', 'Echas 1 tableta directo al tambor, sin ropa.'],
+      ['rayo', 'Un ciclo largo', 'Agua caliente o el ciclo de limpieza de tambor de tu lavadora.'],
+      ['cepillo', 'Suelta la mugre', 'La tableta burbujea y despega los restos de detergente y el sarro.'],
+      ['sol', 'Adiós al mal olor', 'La lavadora vuelve a oler a limpio y tu ropa también.'],
+      ['escudo', 'Una vez al mes', 'Con una tableta al mes la mantienes limpia todo el año.'],
+      ['casa', 'Carga superior o frontal', 'Sirven para los dos tipos de lavadora.'],
+    ],
+    comparaTitulo: 'Por qué en tabletas',
+    compara: [
+      'Ya vienen medidas: una tableta por lavado de tambor, sin calcular nada.',
+      'Vienen envueltas una por una: no se humedecen ni se desarman.',
+      'Con el pack de 72 tienes para años de lavadora limpia.',
+    ],
+    nombre: 'Tabletas Limpia Lavadora',
+    sub: 'Una tableta al tambor vacío y tu lavadora queda limpia por dentro',
+    categoria: 'Hogar',
+    foto: 'img/tab-heroe.webp?v=1',
+    fotos: ['img/tab-poster.webp?v=1'],
+    acento: '#16A34A', acento2Manual: '#0369A1',   /* skill ui-ux-pro-max 09-10: verde CTA sobre azul profundo */
+    desc: 'Tabletas efervescentes para limpiar la lavadora por dentro. Con la lavadora vacía echas una tableta al tambor, haces un ciclo largo y la tableta burbujea y suelta los restos de detergente, el sarro y la mugre que se juntan en el tambor y causan mal olor. Sirven para lavadoras de carga superior y frontal. Cada caja trae 12 tabletas envueltas una por una.',
+    puntos: [
+      'Limpian el tambor por dentro, sin desarmar nada',
+      'Sacan restos de detergente, sarro y mal olor',
+      'Para lavadoras de carga superior y frontal',
+      'Una tableta al mes basta',
+      'Envueltas una por una: no se humedecen',
+    ],
+    packs: [
+      { cant: 48, precio: 19500, antes: 27900, texto: '48 tabletas · 4 cajas' },
+      { cant: 72, precio: 24500, antes: 36900, texto: '72 tabletas · 6 cajas' },
+      { cant: 120, precio: 29500, antes: 49900, texto: '120 tabletas · 10 cajas' },
+    ],
+    popular: 1,   /* James 09-10: impulsar el de 72, el que deja más margen */
+  },
+  {
     /* Clorofila Líquida Benevolent 60 ml — Dropi 118999 · VITALCOM (Recoleta)
        🔴 OJO CON EL LENGUAJE. Es un SUPLEMENTO ALIMENTARIO y en Chile lo rige el
        Reglamento Sanitario de los Alimentos (D.S. 977/96). El art. 536 prohibe

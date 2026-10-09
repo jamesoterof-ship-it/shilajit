@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Raleway:wght@400;500;600;700;800&display=swap');
+/* ============================================================
+   TABLETAS LIMPIA LAVADORA · skill ui-ux-pro-max 09-10 (aprobada por James: "dale")
+     Consulta  "fresh aqua laundry care effervescent tablet, mint and cyan bubbles, clean white linen, soft spa calm"
+     Colores   Primario #0369A1 · Secundario #38BDF8 · CTA #16A34A · Fondo #F0F9FF · Texto #0C4A6E · Borde #E0F2FE
+     Letra     Lora (títulos) + Raleway (texto)
+   Sensación: lavadero luminoso, agua clara y burbujas. Todo cuelga de body.p-tab; el encabezado (.top) y el pie (.pie)
+   no se tocan. El ORDEN de las secciones lo pone ficha.js (el mismo que vende en el organizador).
+   ============================================================ */
+body.p-tab{
+  --tb-azul:#0369A1; --tb-celeste:#38BDF8; --tb-verde:#16A34A; --tb-fondo:#F0F9FF; --tb-texto:#0C4A6E;
+  --tb-gris:#475569; --tb-borde:#E0F2FE; --tb-blanco:#FFFFFF; --tb-hielo:#E7EFF5;
+  --tb-titulo:'Lora',Georgia,'Times New Roman',serif; --tb-cuerpo:'Raleway',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --tb-r:22px; --tb-suave:cubic-bezier(.2,.75,.25,1);
+  background:var(--tb-fondo);
+}
+body.p-tab #prod{background:var(--tb-fondo);color:var(--tb-texto);font-family:var(--tb-cuerpo);overflow-x:clip}
+body.p-tab #prod :is(p,li,td,label,.sub2,.ctaSub,.packDe,.opc){font-family:var(--tb-cuerpo);color:var(--tb-gris);line-height:1.6}
+body.p-tab #prod :is(h1,h2,h3,.tit2,.rev-title){font-family:var(--tb-titulo);color:var(--tb-texto);letter-spacing:-.01em;text-wrap:balance}
+body.p-tab #prod :is(h2,.tit2,.rev-title){font-size:clamp(27px,7.2vw,38px);line-height:1.12;font-weight:700}
+body.p-tab #prod :is(b,strong){color:var(--tb-texto)}
+body.p-tab #prod > :is(section,.bloque){background:transparent;padding-top:38px;padding-bottom:38px}
+body.p-tab #prod > :is(section,.bloque):nth-of-type(even){background:linear-gradient(180deg,var(--tb-blanco),var(--tb-fondo))}
+body.p-tab #prod :is(video,img){border-radius:var(--tb-r)}
+body.p-tab #prod :is(.eyebrow,.rot){color:var(--tb-azul);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+
+/* ---------- héroe: agua clara y burbujas ---------- */
+.tab-heroe{position:relative;isolation:isolate;overflow:hidden;padding:24px 16px 30px;
+  background:radial-gradient(120% 70% at 85% 0%,rgba(56,189,248,.28),transparent 60%),linear-gradient(180deg,#FFFFFF 0%,var(--tb-fondo) 70%)}
+.tab-etiqueta{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:7px 14px;border-radius:999px;background:var(--tb-blanco);
+  border:1px solid var(--tb-borde);color:var(--tb-azul);font:700 12.5px/1 var(--tb-cuerpo);letter-spacing:.06em;box-shadow:0 6px 18px rgba(3,105,161,.08)}
+.tab-etiqueta svg{width:16px;height:16px;fill:none;stroke:var(--tb-celeste);stroke-width:2.2}
+.tab-h1{margin:0;font:700 clamp(32px,9.4vw,50px)/1.05 var(--tb-titulo);color:var(--tb-texto);text-wrap:balance}
+.tab-h1 em{font-style:italic;color:var(--tb-azul)}
+.tab-baja{margin:12px 0 18px;font:500 16.5px/1.55 var(--tb-cuerpo);color:var(--tb-gris);max-width:34em}
+.tab-foto{position:relative;margin:0;border-radius:28px;overflow:hidden;background:var(--tb-hielo);box-shadow:0 22px 50px rgba(3,105,161,.18)}
+.tab-foto img{display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:28px}
+.tab-sello{position:absolute;left:14px;bottom:14px;display:flex;flex-direction:column;gap:2px;padding:12px 16px;border-radius:18px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(6px);color:var(--tb-texto);font:600 13px/1.25 var(--tb-cuerpo);box-shadow:0 10px 24px rgba(12,74,110,.18)}
+.tab-sello b{font:700 22px/1 var(--tb-titulo);color:var(--tb-verde)}
+.tab-burbujas{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.tab-burbujas i{position:absolute;bottom:-40px;width:var(--t,18px);height:var(--t,18px);border-radius:50%;left:var(--x,50%);
+  background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.95),rgba(186,230,253,.55) 45%,rgba(56,189,248,.18) 70%,transparent 72%);
+  border:1px solid rgba(255,255,255,.7);animation:tab-sube var(--d,7s) linear var(--r,0s) infinite;opacity:.9}
+@keyframes tab-sube{0%{transform:translate3d(0,0,0) scale(.7);opacity:0}12%{opacity:.95}50%{transform:translate3d(12px,-52vh,0) scale(1)}
+  100%{transform:translate3d(-10px,-110vh,0) scale(1.1);opacity:0}}
+.tab-datos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0 0;padding:0;list-style:none}
+.tab-datos li{padding:12px 8px;border-radius:16px;background:var(--tb-blanco);border:1px solid var(--tb-borde);text-align:center;
+  font:600 12px/1.3 var(--tb-cuerpo);color:var(--tb-gris)}
+.tab-datos b{display:block;margin-bottom:3px;font:700 18px/1.1 var(--tb-titulo);color:var(--tb-azul)}
+
+/* ---------- cuántas tabletas trae el pack elegido ---------- */
+.tab-cuantas{margin:6px 0 0;font:600 14px/1.4 var(--tb-cuerpo);color:var(--tb-gris)}
+.tab-cuantas b{color:var(--tb-azul)}
+
+/* ---------- cómo se usa: 3 pasos con foto ---------- */
+.tab-pasos{display:grid;gap:14px;margin:18px 0 6px;padding:0;list-style:none;counter-reset:paso}
+.tab-pasos li{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;padding:10px;border-radius:20px;background:var(--tb-blanco);
+  border:1px solid var(--tb-borde);box-shadow:0 8px 22px rgba(3,105,161,.06);counter-increment:paso}
+.tab-pasos img{width:96px;height:96px;object-fit:cover;border-radius:16px}
+.tab-pasos h3{margin:0 0 4px;font:700 18px/1.2 var(--tb-titulo);color:var(--tb-texto)}
+.tab-pasos h3::before{content:counter(paso) ". ";color:var(--tb-celeste)}
+.tab-pasos p{margin:0;font:500 14.5px/1.5 var(--tb-cuerpo);color:var(--tb-gris)}
+
+/* ---------- video ---------- */
+.tab-vtit{margin:0 0 14px;text-align:center}
+.tab-vtit small{display:inline-block;margin-bottom:6px;padding:5px 12px;border-radius:999px;background:rgba(56,189,248,.14);color:var(--tb-azul);
+  font:700 12px/1 var(--tb-cuerpo);letter-spacing:.1em;text-transform:uppercase}
+.tab-vtit h2{margin:0}
+
+/* ============================================================
+   09-10 · LAS SECCIONES DE ABAJO CON DISEÑO PROPIO (James: "siempre el mismo diseño")
+   La página es una lavadora: panel con pantalla, tambor, perilla, burbujas y globos de conversación.
+   ============================================================ */
+
+/* ---- precio de arriba: pastilla verde suave en vez de la etiqueta roja común ---- */
+body.p-tab #prod .precioTop .ahora{font-family:var(--tb-titulo);color:var(--tb-texto);font-weight:700}
+body.p-tab #prod .precioTop .off{background:var(--tb-celeste);color:var(--tb-texto);border-radius:999px;padding:3px 10px;font-weight:800}
+body.p-tab #prod .preTop{background:var(--tb-blanco);border:1px dashed var(--tb-celeste);border-radius:14px;padding:9px 12px}
+
+/* ---- qué es: ojo de buey de la lavadora + gotas en vez de palomitas ---- */
+body.p-tab #prod .tab-desc{position:relative}
+.tab-ojo{position:relative;width:min(78%,300px);aspect-ratio:1;margin:18px auto 20px;border-radius:50%;padding:14px;
+  background:radial-gradient(circle at 30% 25%,#FFFFFF,#DCE7EF 55%,#B9CBD8);box-shadow:0 18px 40px rgba(12,74,110,.22),inset 0 -6px 14px rgba(12,74,110,.18)}
+.tab-ojo img{width:100%;height:100%;object-fit:cover;border-radius:50% !important;display:block;box-shadow:inset 0 0 0 6px rgba(255,255,255,.6),0 0 0 6px #9FB4C3}
+.tab-ojo::after{content:"";position:absolute;inset:14px;border-radius:50%;background:linear-gradient(130deg,rgba(255,255,255,.55),transparent 38%);pointer-events:none}
+.tab-ojo figcaption{position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);white-space:nowrap;padding:6px 14px;border-radius:999px;
+  background:var(--tb-azul);color:#fff;font:700 12px/1 var(--tb-cuerpo);letter-spacing:.06em}
+body.p-tab #prod .tab-desc ul{list-style:none;padding:0;display:grid;gap:10px}
+body.p-tab #prod .tab-desc li{position:relative;padding:10px 12px 10px 44px;border-radius:14px;background:var(--tb-blanco);border:1px solid var(--tb-borde)}
+body.p-tab #prod .tab-desc li::before{content:"";position:absolute;left:14px;top:50%;width:18px;height:22px;transform:translateY(-50%);background:var(--tb-celeste);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2c4.5 5.6 7 9.2 7 12.6A7 7 0 0 1 5 14.6C5 11.2 7.5 7.6 12 2z'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2c4.5 5.6 7 9.2 7 12.6A7 7 0 0 1 5 14.6C5 11.2 7.5 7.6 12 2z'/%3E%3C/svg%3E") center/contain no-repeat;
+  border:0;box-shadow:none}
+
+/* ---- promoción = panel de la lavadora con su pantalla ---- */
+body.p-tab #prod .promo-card{position:relative;overflow:hidden;border:0;border-radius:28px;padding:0;color:#fff;
+  background:linear-gradient(160deg,#0C4A6E 0%,#075985 55%,#0369A1 100%);box-shadow:0 24px 50px rgba(3,105,161,.32)}
+body.p-tab #prod .promo-banner{display:none}
+.tab-perillas{display:flex;align-items:center;gap:8px;padding:14px 18px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.12)}
+.tab-perillas i{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#B9CBD8 60%,#7F98AA);box-shadow:0 2px 4px rgba(0,0,0,.3)}
+.tab-perillas span{margin-left:6px;font:800 12px/1 var(--tb-cuerpo);letter-spacing:.16em;text-transform:uppercase;color:#BAE6FD}
+.tab-led{margin-left:auto;width:10px;height:10px;border-radius:50%;background:#4ADE80;box-shadow:0 0 10px #4ADE80;animation:tab-led 1.4s ease-in-out infinite}
+@keyframes tab-led{50%{opacity:.35}}
+body.p-tab #prod .promo-cuerpo{padding:18px 18px 22px;background:transparent}
+body.p-tab #prod .promo-qt{display:block;color:#fff;font:700 22px/1.2 var(--tb-titulo)}
+body.p-tab #prod .promo-precios{gap:10px;align-items:baseline}
+body.p-tab #prod .promo-antes{color:#93C5FD}
+body.p-tab #prod .promo-precio{color:#fff;font-family:var(--tb-titulo);font-size:44px}
+body.p-tab #prod .promo-off{background:#4ADE80;color:#052e16;border-radius:999px}
+body.p-tab #prod .promo-uni,body.p-tab #prod .promo-uni b{color:#E0F2FE}
+.tab-lcd-rot{margin:16px 0 6px;font:700 11px/1 var(--tb-cuerpo) !important;letter-spacing:.18em;text-transform:uppercase;color:#7DD3FC !important}
+body.p-tab #prod .cuenta{display:flex;align-items:center;justify-content:center;gap:4px;padding:12px 10px;border-radius:16px;
+  background:#021B2B;box-shadow:inset 0 3px 10px rgba(0,0,0,.6),0 0 0 3px rgba(255,255,255,.08)}
+body.p-tab #prod .cuenta > div{background:transparent;border:0;box-shadow:none;min-width:0;padding:0 6px}
+body.p-tab #prod .cuenta b{font:700 40px/1 var(--tb-cuerpo);font-variant-numeric:tabular-nums;color:#38BDF8;text-shadow:0 0 12px rgba(56,189,248,.8);letter-spacing:.04em}
+body.p-tab #prod .cuenta span{color:#7DD3FC;font-size:10px;letter-spacing:.14em}
+body.p-tab #prod .cuenta .seg.late{animation:tab-seg .92s ease-out}
+body.p-tab #prod .cuenta .seg.late b,body.p-tab #prod .cuenta .seg.late span{animation:none}
+@keyframes tab-seg{0%{background:rgba(56,189,248,.28)}100%{background:transparent}}
+body.p-tab #prod .cuenta em{font:700 34px/1 var(--tb-cuerpo);color:#38BDF8;font-style:normal;opacity:.7;margin-top:-14px;animation:tab-led 1s steps(1) infinite}
+body.p-tab #prod .promo-card .cta{background:#16A34A;border-radius:16px;box-shadow:0 10px 0 #0F7A37,0 16px 26px rgba(0,0,0,.25)}
+
+/* ---- pagar con tarjeta = comprobante con perforación ---- */
+body.p-tab #prod .pagoAnt__caja{position:relative;background:var(--tb-blanco);border:0;border-radius:6px;padding:20px 18px 18px;
+  box-shadow:0 14px 30px rgba(12,74,110,.10);
+  -webkit-mask:radial-gradient(circle 9px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat;
+          mask:radial-gradient(circle 9px at 0 50%,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,#0000 98%,#000) right/51% 100% no-repeat}
+body.p-tab #prod .pagoAnt__caja::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:repeating-linear-gradient(90deg,var(--tb-azul) 0 14px,var(--tb-celeste) 14px 28px)}
+body.p-tab #prod .pagoAnt__tit{font:700 22px/1.2 var(--tb-titulo);color:var(--tb-texto)}
+body.p-tab #prod .pagoAnt__lista li{border-bottom:1px dashed var(--tb-borde);padding-bottom:9px}
+body.p-tab #prod .pagoAnt__lista svg{stroke:var(--tb-azul)}
+body.p-tab #prod .pagoAnt__btn{background:var(--tb-azul);border-radius:12px}
+
+/* ---- video: dentro de la puerta de la lavadora ---- */
+body.p-tab #prod .vid-wrap{padding:36px 16px !important}
+body.p-tab #prod .vid-wrap video{width:min(100%,380px) !important;margin:0 auto;border-radius:34px !important;border:12px solid #E7EFF5;
+  box-shadow:0 0 0 2px #B9CBD8,0 24px 50px rgba(12,74,110,.25)}
+
+/* ---- qué trae: burbujas sueltas, sin la caja oscura del molde ---- */
+body.p-tab #prod .ing-grid{background:transparent !important;box-shadow:none !important;padding:0 !important;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+body.p-tab #prod .ing{flex-direction:column;align-items:flex-start;gap:10px;padding:16px 14px;border-radius:22px;background:var(--tb-blanco);border:1px solid var(--tb-borde)}
+body.p-tab #prod .ing:nth-child(even){transform:translateY(14px)}
+body.p-tab #prod .ing .cir{width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fff,#BAE6FD 55%,#38BDF8);border:0;box-shadow:0 6px 14px rgba(56,189,248,.35)}
+body.p-tab #prod .ing .cir svg{stroke:var(--tb-texto)}
+body.p-tab #prod .ing b{color:var(--tb-texto);font-family:var(--tb-titulo);font-size:16px}
+body.p-tab #prod .ing p{font-size:13.5px;margin:4px 0 0}
+
+/* ---- resultados: el nivel del agua ---- */
+body.p-tab #prod > section.tab-agua{position:relative;background:linear-gradient(180deg,#38BDF8 0%,#0369A1 100%) !important;padding-top:64px !important;color:#fff}
+.tab-ola{position:absolute;left:0;top:0;width:100%;height:40px;fill:var(--tb-fondo)}
+body.p-tab #prod .tab-agua :is(.eyebrow,.tit2){color:#fff}
+body.p-tab #prod .tab-agua .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:transparent}
+body.p-tab #prod .tab-agua .res{background:transparent;border:0;box-shadow:none;border-radius:0;padding:16px 10px;text-align:center;border-top:1px solid rgba(255,255,255,.3)}
+body.p-tab #prod .tab-agua .res:nth-child(odd){border-right:1px solid rgba(255,255,255,.3)}
+body.p-tab #prod .tab-agua .res b{color:#fff;font:700 44px/1 var(--tb-titulo)}
+body.p-tab #prod .tab-agua .res span{color:#E0F2FE}
+
+/* ---- comparación: burbujas que suben en zigzag ---- */
+.tab-burbujas-lista{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:14px}
+.tab-burbujas-lista li{display:flex;align-items:center;gap:14px;width:88%;padding:14px 16px;border-radius:999px 999px 999px 999px / 60px 60px 60px 60px;
+  background:linear-gradient(135deg,#FFFFFF,#E0F2FE);border:1px solid #BAE6FD;box-shadow:0 10px 22px rgba(3,105,161,.10)}
+.tab-burbujas-lista li:nth-child(even){margin-left:auto;flex-direction:row-reverse;text-align:right}
+.tab-burbujas-lista p{margin:0 !important;font:600 15px/1.45 var(--tb-cuerpo) !important;color:var(--tb-texto) !important}
+.tab-gota{flex:0 0 44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--tb-verde);box-shadow:0 6px 14px rgba(22,163,74,.35)}
+.tab-gota svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- reseñas: globos de conversación ---- */
+body.p-tab #prod .rev-title{display:block}
+body.p-tab #prod .rev-title .stars{display:block;margin-top:8px;font-size:22px;color:#F59E0B;letter-spacing:.12em}
+body.p-tab #prod .rev-score{display:flex;align-items:center;gap:14px}
+body.p-tab #prod .rev-score .big{display:grid;place-items:center;width:86px;height:86px;border-radius:50%;font:700 30px/1 var(--tb-titulo);color:var(--tb-texto);
+  background:radial-gradient(closest-side,var(--tb-fondo) 78%,transparent 80%),conic-gradient(var(--tb-azul) 96%,var(--tb-borde) 0)}
+body.p-tab #prod .rev-bars .track{background:var(--tb-borde);border-radius:999px;height:8px}
+body.p-tab #prod .rev-bars .track i{background:var(--tb-celeste);border-radius:999px}
+body.p-tab #prod .btn-write{background:transparent;border:2px solid var(--tb-azul);color:var(--tb-azul);border-radius:999px}
+body.p-tab #prod #listaRs .rsc{display:flex;flex-direction:column;gap:10px;background:transparent;border:0;box-shadow:none;padding:0 0 22px;margin-bottom:22px;border-bottom:1px dashed #BAE6FD}
+body.p-tab #prod #listaRs .rsc > p{order:1;position:relative;margin:0;padding:14px 16px;border-radius:20px 20px 20px 6px;background:var(--tb-blanco);
+  border:1px solid var(--tb-borde);color:var(--tb-texto);box-shadow:0 8px 18px rgba(12,74,110,.07)}
+body.p-tab #prod #listaRs .rsc:nth-child(even) > p{border-radius:20px 20px 6px 20px;background:#E0F2FE;border-color:#BAE6FD}
+body.p-tab #prod #listaRs .rsc .rfoto{order:2;width:62%;max-width:240px;border-radius:18px;border:5px solid #fff;box-shadow:0 10px 22px rgba(12,74,110,.14)}
+body.p-tab #prod #listaRs .rsc:nth-child(even) .rfoto{align-self:flex-end}
+body.p-tab #prod #listaRs .rsc .arriba{order:3;padding:0 4px}
+body.p-tab #prod #listaRs .rsc:nth-child(even) .arriba{flex-direction:row-reverse;text-align:right}
+body.p-tab #prod .rsc .ini{background:var(--tb-azul);color:#fff;border-radius:50%}
+body.p-tab #prod .rsc .verif{color:var(--tb-verde)}
+body.p-tab #prod .masRs{border-radius:999px;border:2px solid var(--tb-borde);background:var(--tb-blanco);color:var(--tb-azul)}
+
+/* ---- garantía: la perilla de programas ---- */
+body.p-tab #prod .gseal.tab-perilla{width:190px;height:190px;filter:drop-shadow(0 16px 26px rgba(12,74,110,.28))}
+.tab-perilla .aro{fill:#F1F5F9;stroke:#CBD5E1;stroke-width:2}
+.tab-perilla .marcas line{stroke:#94A3B8;stroke-width:2;stroke-linecap:round}
+.tab-perilla .marcas line.larga{stroke:var(--tb-azul);stroke-width:3}
+.tab-perilla .perilla{fill:#0369A1}
+.tab-perilla .brillo{fill:url(#none);fill:rgba(255,255,255,.0);stroke:rgba(255,255,255,.35);stroke-width:3}
+.tab-perilla .aguja{fill:#38BDF8}
+.tab-perilla .num{font:700 44px var(--tb-titulo);fill:#fff}
+.tab-perilla .dias{font:800 13px var(--tb-cuerpo);letter-spacing:.24em;fill:#BAE6FD}
+body.p-tab #prod .tab-perilla svg{animation:tab-gira 1.4s var(--tb-suave) both;filter:none}
+body.p-tab #prod .gar-sec .tit2::before,body.p-tab #prod .gar-sec .tit2::after{display:none}
+@keyframes tab-gira{from{transform:rotate(-120deg)}to{transform:none}}
+body.p-tab #prod .gar-chips span{background:var(--tb-blanco);border:1px solid var(--tb-borde);color:var(--tb-texto);border-radius:999px}
+
+/* ---- antes y después: se desliza dentro del tambor ---- */
+body.p-tab #prod .ba-img.tab-tambor{--corte:50%;position:relative;aspect-ratio:1;width:min(100%,360px);margin:20px auto 0;border-radius:50%;overflow:hidden;
+  border:14px solid #E7EFF5;box-shadow:0 0 0 2px #B9CBD8,0 22px 46px rgba(12,74,110,.25);touch-action:pan-y}
+.tab-cara{position:absolute;inset:0;background-size:auto 200%;background-repeat:no-repeat}
+.tab-despues{background-position:50% 100%}
+.tab-antes{background-position:50% 0;clip-path:inset(0 calc(100% - var(--corte)) 0 0)}
+.tab-chip{position:absolute;top:50%;transform:translateY(-50%);padding:6px 12px;border-radius:999px;font:800 11px/1 var(--tb-cuerpo);letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+.tab-chip-a{left:10px;background:rgba(41,37,36,.85);color:#fff}
+.tab-chip-d{right:10px;background:var(--tb-azul);color:#fff}
+.tab-mango{position:absolute;top:0;bottom:0;left:var(--corte);width:3px;background:#fff;transform:translateX(-50%);pointer-events:none;box-shadow:0 0 8px rgba(0,0,0,.35)}
+.tab-mango svg{position:absolute;top:50%;left:50%;width:44px;height:44px;padding:10px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;
+  fill:none;stroke:var(--tb-azul);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.tab-rango{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize}
+.ba-img.tab-tambor:not(.tocado) .tab-antes{animation:tab-vaiven 3.2s ease-in-out 1s 2}
+.ba-img.tab-tambor:not(.tocado) .tab-mango{animation:tab-vaiven-m 3.2s ease-in-out 1s 2}
+@keyframes tab-vaiven{25%{clip-path:inset(0 30% 0 0)}75%{clip-path:inset(0 70% 0 0)}}
+@keyframes tab-vaiven-m{25%{left:70%}75%{left:30%}}
+.tab-desliza{text-align:center;margin:10px 0 0 !important;font:600 13px/1.4 var(--tb-cuerpo) !important;color:var(--tb-azul) !important}
+
+/* ---- preguntas: burbujas con su "+" ---- */
+body.p-tab #prod .tab-fq{display:grid;gap:10px}
+body.p-tab #prod .tab-fq details{border:0;border-radius:20px;background:var(--tb-blanco);box-shadow:0 6px 16px rgba(12,74,110,.07);padding:0 16px;overflow:hidden}
+body.p-tab #prod .tab-fq summary{position:relative;list-style:none;padding:16px 46px 16px 0;font:700 15.5px/1.35 var(--tb-cuerpo);color:var(--tb-texto)}
+body.p-tab #prod .tab-fq summary::-webkit-details-marker{display:none}
+body.p-tab #prod .tab-fq summary::after{content:"+";position:absolute;right:0;top:50%;width:30px;height:30px;margin-top:-15px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 32% 28%,#fff,#BAE6FD 60%,#38BDF8);color:var(--tb-texto);font:700 20px/30px var(--tb-cuerpo);text-align:center;transition:transform .25s var(--tb-suave);border:0;
+  -webkit-mask:none;mask:none}
+body.p-tab #prod .tab-fq details[open]{background:linear-gradient(180deg,#E0F2FE,#FFFFFF 70%)}
+body.p-tab #prod .tab-fq details[open] summary::after{transform:rotate(45deg)}
+
+/* ---- con quién se despacha: fila limpia ---- */
+body.p-tab #prod .sellos{gap:10px;background:transparent}
+body.p-tab #prod .sello{border-radius:18px;background:var(--tb-blanco);border:1px solid var(--tb-borde)}
+
+/* ---- formulario: el panel de la lavadora arriba ---- */
+body.p-tab #prod .formcard{border-radius:26px;border:1px solid var(--tb-borde);box-shadow:0 22px 50px rgba(3,105,161,.14);overflow:hidden;position:relative;padding-top:34px}
+body.p-tab #prod .formcard::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;background:linear-gradient(90deg,#0C4A6E,#0369A1 60%,#38BDF8)}
+body.p-tab #prod .pack{border-radius:18px;border:1.5px solid var(--tb-borde)}
+body.p-tab #prod .pack.sel{border-color:var(--tb-azul);background:linear-gradient(135deg,#FFFFFF,#E0F2FE);box-shadow:0 0 0 4px rgba(56,189,248,.22)}
+body.p-tab #prod .pack .tag{background:var(--tb-azul);border-radius:999px}
+
+/* ---------- entrada suave al llegar (siempre visibles si no hay observador) ---------- */
+body.p-tab .tab-baja-in{opacity:0;transform:translateY(18px);transition:opacity .6s var(--tb-suave),transform .6s var(--tb-suave)}
+body.p-tab .tab-baja-in.tab-listo{opacity:1;transform:none}
+.tab-h1,.tab-baja,.tab-etiqueta{animation:tab-entra .7s var(--tb-suave) both}
+.tab-baja{animation-delay:.12s}.tab-foto{animation:tab-entra .8s var(--tb-suave) .2s both}
+@keyframes tab-entra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+@media (min-width:760px){
+  .tab-heroe{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;padding:40px 28px}
+  .tab-pasos{grid-template-columns:repeat(3,1fr)}
+  .tab-pasos li{grid-template-columns:1fr;text-align:left}
+  .tab-pasos img{width:100%;height:auto;aspect-ratio:1}
+}
+@media (prefers-reduced-motion:reduce){
+  .tab-burbujas{display:none}
+  .tab-h1,.tab-baja,.tab-etiqueta,.tab-foto{animation:none}
+  body.p-tab .tab-baja-in{opacity:1;transform:none;transition:none}
+}
