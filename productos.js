@@ -1547,6 +1547,7 @@ window.PRECIOS_APROBADOS = [
   24500, 29500, 41500,   /* clorofila liquida: 1 · 2 · 3 frascos (James, 10-sep) */
   24500, 29500, 39500,   /* lymphoria drenaje: 1 · 2 · 3 frascos (James, 11-sep) */
   24990, 34990, 44990,   /* guirnalda solar: 1 · 2 · 3 guirnaldas (la placa de James, 22-09) */
+  21500, 31500, 39500,   /* guirnalda solar desde el 09-10 (James): 500 bajo Latam Prime y Flash Store */
   20500, 27500, 36500,   /* bálsamo de colágeno Rosetimes: 1 · 2 · 3 unidades (James, 29-09) */
   22500, 31500, 44500,   /* zapatero organizador colgador 4 niveles: 1 · 2 · 3 unidades (James, 01-10) */
   24500, 34500, 44500,   /* desengrasante en espuma: combos de 2 · 4 · 6 espumas, con 2 regalos (James, 03-10) */
