@@ -26,15 +26,90 @@
     var arriba = prod.querySelector('.arriba2');
     var s = document.createElement('section');
     s.className = 'tab-heroe';
-    /* 09-10 James: la portada lleva las letras DENTRO de la imagen (opción B, hecha por la IA, sin precio impreso).
-       El h1 queda para Google y lectores de pantalla, sin verse. */
+    /* 09-10 James: las letras van ENCIMA de la foto (como el desengrasante y la cámara), escritas por la página,
+       NUNCA impresas en la imagen. La foto limpia ocupa todo el ancho y el título se apoya en su parte de arriba. */
     s.innerHTML =
-        '<h1 class="tab-oculto">Tu lavadora se ve limpia… hasta que ves lo que sale. Tabletas limpia lavadora</h1>'
-      + '<img class="tab-portada" src="img/tab-portada.webp?v=1" alt="Mano sosteniendo una tableta limpia lavadora frente a una lavadora abierta, con burbujas: tu lavadora se ve limpia hasta que ves lo que sale, 1 tableta al mes, carga superior y frontal" width="1024" height="1536" fetchpriority="high">';
+        '<img class="tab-fondo" src="img/tab-heroe.webp?v=1" alt="Mano sosteniendo una tableta efervescente azul y blanca frente a una lavadora abierta" width="1024" height="1536" fetchpriority="high">'
+      + '<div class="tab-velo" aria-hidden="true"></div>'
+      + '<div class="tab-sobre">'
+      +   '<p class="tab-etiqueta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><circle cx="16" cy="8" r="3"/><circle cx="17.5" cy="17" r="2"/></svg>Limpia tu lavadora por dentro</p>'
+      +   '<h1 class="tab-h1" aria-label="Tu lavadora se ve limpia… hasta que ves lo que sale.">' + gotas('Tu lavadora se ve limpia…', 0) + ' <em>' + gotas('hasta que ves lo que sale.', 26) + '</em></h1>'
+      + '</div>'
+      + '<div class="tab-luz" aria-hidden="true"></div>'
+      + '<canvas class="tab-agua-cv" aria-hidden="true"></canvas>'
+      + '<ul class="tab-chips"><li><b>1 al mes</b>basta una tableta</li><li><b>Sin ropa</b>tambor vacío</li><li><b>2 tipos</b>superior y frontal</li></ul>';
     if (arriba) {
       arriba.parentNode.insertBefore(s, arriba);
       ['.gal', '.miniz'].forEach(function (q) { var el = arriba.querySelector(q); if (el) el.remove(); });
     } else prod.insertBefore(s, prod.firstChild);
+    if (!calma) agua(s);
+  }
+
+  /* LETRAS EN CASCADA (James 09-10): cada letra cae como una gota, una tras otra. Cada palabra va en su caja para que
+     el navegador no la corte al saltar de línea; --k corre por todo el título. */
+  function gotas(txt, k0) {
+    var k = k0;
+    return txt.split(' ').map(function (pal) {
+      return '<span class="tab-pal" aria-hidden="true">' + pal.split('').map(function (ch) {
+        return '<span class="tab-l" style="--k:' + (k++) + '">' + ch.replace(/[<>&]/g, '') + '</span>';
+      }).join('') + '</span>';
+    }).join(' ');
+  }
+
+  /* EFECTO AGUA (James 09-10): burbujas que nacen en la tableta y suben meciéndose con borde tornasol, revientan en un
+     anillo; cada tanto sale una onda desde la tableta. Tocar la portada suelta un chorro de burbujas. Se detiene si la
+     portada no se ve o la pestaña está de fondo. */
+  function agua(h) {
+    var cv = h.querySelector('.tab-agua-cv'); if (!cv || !cv.getContext) return;
+    var cx = cv.getContext('2d'), W = 0, H = 0, dpr = Math.min(2, window.devicePixelRatio || 1), B = [], O = [], P = [], vivo = true, ultimo = 0, onda = 0;
+    var TAB = { x: 0.58, y: 0.44 };   /* dónde está la tableta en la foto (proporción del ancho y alto de la portada) */
+    function medir() { W = h.clientWidth; H = h.clientHeight; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    function nace(x, y, fuerza) {
+      B.push({ x: x + (Math.random() - .5) * 30, y: y + (Math.random() - .5) * 16, r: 2.5 + Math.random() * (fuerza ? 13 : 9),
+        vy: -(0.35 + Math.random() * 0.75) * (fuerza ? 1.8 : 1), fase: Math.random() * 6.28, vida: 0, max: 260 + Math.random() * 260 });
+    }
+    function pinta(t) {
+      if (!vivo) { ultimo = 0; return; }
+      requestAnimationFrame(pinta);
+      if (t - ultimo < 15) return; ultimo = t;
+      cx.clearRect(0, 0, W, H);
+      var tx = W * TAB.x, ty = H * TAB.y;
+      if (B.length < 34 && Math.random() < 0.22) nace(tx, ty, false);
+      if (t - onda > 2600) { onda = t; O.push({ r: 8, a: .55 }); }
+      O = O.filter(function (o) {
+        o.r += 1.25; o.a -= 0.0065; if (o.a <= 0) return false;
+        cx.beginPath(); cx.ellipse(tx, ty + 18, o.r * 1.6, o.r * 0.55, 0, 0, 6.283);
+        cx.strokeStyle = 'rgba(186,230,253,' + o.a.toFixed(3) + ')'; cx.lineWidth = 2; cx.stroke(); return true;
+      });
+      B = B.filter(function (b) {
+        b.vida++; b.y += b.vy; b.x += Math.sin(b.fase + b.vida * 0.045) * 0.55;
+        if (b.vida > b.max || b.y < -20) {
+          if (b.y > 0) P.push({ r: b.r, a: .35, x: b.x, y: b.y });
+          return false;
+        }
+        var g = cx.createRadialGradient(b.x - b.r * .35, b.y - b.r * .35, b.r * .1, b.x, b.y, b.r);
+        g.addColorStop(0, 'rgba(255,255,255,.85)'); g.addColorStop(.45, 'rgba(224,242,254,.18)');
+        g.addColorStop(.85, 'rgba(56,189,248,.20)'); g.addColorStop(1, 'rgba(244,114,182,.30)');
+        cx.beginPath(); cx.arc(b.x, b.y, b.r, 0, 6.283); cx.fillStyle = g; cx.fill();
+        cx.strokeStyle = 'rgba(255,255,255,.75)'; cx.lineWidth = 1; cx.stroke();
+        return true;
+      });
+      /* los anillos de las que revientan */
+      P = P.filter(function (o) {
+        o.a -= 0.02; if (o.a <= 0) return false;
+        cx.beginPath(); cx.arc(o.x, o.y, o.r + (0.35 - o.a) * 40, 0, 6.283); cx.strokeStyle = 'rgba(255,255,255,' + o.a.toFixed(3) + ')'; cx.lineWidth = 1.2; cx.stroke(); return true;
+      });
+    }
+    medir(); window.addEventListener('resize', medir);
+    h.addEventListener('pointerdown', function (e) {
+      var r = h.getBoundingClientRect();
+      for (var i = 0; i < 14; i++) nace(e.clientX - r.left, e.clientY - r.top, true);
+    });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (l) {
+      vivo = l[0].isIntersecting && !document.hidden; if (vivo && !ultimo) requestAnimationFrame(pinta);
+    }).observe(h);
+    document.addEventListener('visibilitychange', function () { vivo = !document.hidden; if (vivo && !ultimo) requestAnimationFrame(pinta); });
+    requestAnimationFrame(pinta);
   }
 
   /* 09-10 James: "muy pocas imágenes". Tres imágenes con sus letras (IA, sin precio), cada una en su sección. */
