@@ -532,9 +532,10 @@ window.PRODUCTOS = [
       'Se cuelga en un minuto, sin electricista',
     ],
     packs: [
-      { cant: 1, precio: 24990, antes: 37000, texto: '1 guirnalda' },
-      { cant: 2, precio: 34990, antes: 58000, texto: '2 guirnaldas' },
-      { cant: 3, precio: 44990, antes: 78000, texto: '3 guirnaldas' },
+      /* 09-10 James: 500 bajo el más barato (Latam Prime $21.990 · Flash Store 2x1 $31.990). Antes 24.990 / 34.990 / 44.990 */
+      { cant: 1, precio: 21500, antes: 37000, texto: '1 guirnalda' },
+      { cant: 2, precio: 31500, antes: 58000, texto: '2 guirnaldas' },
+      { cant: 3, precio: 39500, antes: 78000, texto: '3 guirnaldas' },
     ],
     popular: 2,
   },
