@@ -673,9 +673,11 @@ window.PRODUCTOS = [
       /* el "antes" del pack de 3 lo autorizo James el 8-sep: un 30% sobre
          el precio de venta (19.500 x 1.3 = 25.350). Sin el, la cabecera
          salia sin tachado ni descuento. */
-      { cant: 3, precio: 19500, antes: 25350, texto: '3 cajas · 294 litros' },
-      { cant: 6, precio: 24500, antes: 39000, texto: '6 cajas · 588 litros' },
-      { cant: 9, precio: 34500, antes: 58500, texto: '9 cajas · 882 litros' },
+      /* 13-10 James: proveedor nuevo Chamos Store (pack x3 a $8.000) => +3.500 parejo a cada pack: 23.000 / 28.000 / 38.000.
+         El "antes" del de 3 sigue la regla del 30 % (23.000 x 1.3 = 29.900). La medida se deja como estaba (James 13-10). */
+      { cant: 3, precio: 23000, antes: 29900, texto: '3 cajas · 294 litros' },
+      { cant: 6, precio: 28000, antes: 39000, texto: '6 cajas · 588 litros' },
+      { cant: 9, precio: 38000, antes: 58500, texto: '9 cajas · 882 litros' },
     ],
     popular: 2,
   },
@@ -1552,4 +1554,5 @@ window.PRECIOS_APROBADOS = [
   22500, 31500, 44500,   /* zapatero organizador colgador 4 niveles: 1 · 2 · 3 unidades (James, 01-10) */
   24500, 34500, 44500,   /* desengrasante en espuma: combos de 2 · 4 · 6 espumas, con 2 regalos (James, 03-10) */
   21490, 33490, 45490,   /* cámara ampolleta WiFi: 1 · 2 · 3 cámaras, 500 bajo CheliExpress (James, 06-10) */
+  23000, 28000, 38000,   /* organizador desde el 13-10 (James): Chamos Store a $8.000 el pack => +3.500 a cada pack */
 ];
