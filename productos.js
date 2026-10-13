@@ -623,6 +623,7 @@ window.PRODUCTOS = [
     /* promo 9 (James 15-09): el combo de 9 es el que deja ganancia ($13.662 por entrega contra
        $7.748 el de 6), asi que la promocion y el mas vendido (popular: 2) empujan el de 9. */
     id: 'organizador', unidad: 'caja', promo: 9,
+    promoAntesDelPack: true,   /* 13-10: la promo usa el mismo tachado del pack de 9 ($58.500); antes calculaba $68.400 y no cuadraba */
     /* fotos reales de clientes, en orden de lo que mas convence: primero
        las que muestran la caja LLENA y cerrada, despues el detalle de las
        asas y el cierre, y al final el paquete como llega */
@@ -676,8 +677,9 @@ window.PRODUCTOS = [
       /* 13-10 James: proveedor nuevo Chamos Store (pack x3 a $8.000) => +3.500 parejo a cada pack: 23.000 / 28.000 / 38.000.
          El "antes" del de 3 sigue la regla del 30 % (23.000 x 1.3 = 29.900). La medida se deja como estaba (James 13-10). */
       { cant: 3, precio: 23000, antes: 29900, texto: '3 cajas · 294 litros' },
-      { cant: 6, precio: 28000, antes: 39000, texto: '6 cajas · 588 litros' },
-      { cant: 9, precio: 38000, antes: 58500, texto: '9 cajas · 882 litros' },
+      /* 13-10 tarde James: "que quede con la misma ganancia" => +3.500 POR PACK: 6 cajas 31.500 · 9 cajas 45.000 (antes 28.000 / 38.000) */
+      { cant: 6, precio: 31500, antes: 39000, texto: '6 cajas · 588 litros' },
+      { cant: 9, precio: 45000, antes: 58500, texto: '9 cajas · 882 litros' },
     ],
     popular: 2,
   },
@@ -1554,5 +1556,5 @@ window.PRECIOS_APROBADOS = [
   22500, 31500, 44500,   /* zapatero organizador colgador 4 niveles: 1 · 2 · 3 unidades (James, 01-10) */
   24500, 34500, 44500,   /* desengrasante en espuma: combos de 2 · 4 · 6 espumas, con 2 regalos (James, 03-10) */
   21490, 33490, 45490,   /* cámara ampolleta WiFi: 1 · 2 · 3 cámaras, 500 bajo CheliExpress (James, 06-10) */
-  23000, 28000, 38000,   /* organizador desde el 13-10 (James): Chamos Store a $8.000 el pack => +3.500 a cada pack */
+  23000, 31500, 45000, 63000,   /* organizador desde el 13-10 (James): Chamos Store a $8.000 el pack => +3.500 POR PACK (misma ganancia que con MEIBO) */
 ];
