@@ -31,7 +31,7 @@
      'Caja organizadora abierta sobre una cama con un plumón king doblado dentro',
      'La capacidad', '98 litros por caja',
      'O seis frazadas gruesas, o dieciséis prendas dobladas. La tapa abre entera por el cierre, no por una ranura: entra de una y cierra sin forzar.'],
-    ['img/og-packs.webp?v=1',
+    ['img/og-packs.webp?v=2',
      'Seis cajas organizadoras apiladas en dos torres en un dormitorio',
      'Cómo se maneja', 'Asas reforzadas y plegable',
      'Las asas aguantan para llevarla cargada de un lugar a otro sin esfuerzo. Y cuando no la usas, se pliega y la guardas sin que ocupe espacio.'],
