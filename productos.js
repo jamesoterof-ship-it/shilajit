@@ -1417,8 +1417,8 @@ window.PRODUCTOS = [
       { nombre: 'Claudia Zapata Mora', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente el tamaño y dura el mes' },
       { nombre: 'Viviana Palomino', comuna: '', fecha: '', estrellas: 5, texto: 'lo tomo hace 2 meses , muy bueno' },
     ],
-    antesDespues: 'img/neo-ba.webp?v=1',   /* OpenAI 13-10, molde de la tienda (ANTES gris / DESPUÉS naranja + 3 íconos). Imagen ilustrativa */
-    antesDespuesSub: 'Con los años el cuerpo produce menos colágeno: la piel pierde firmeza y las uñas y el cabello se debilitan.',
+    antesDespues: 'img/neo-ba-hombre.webp?v=1',   /* 14-10 James: "deja la del señor" */   /* OpenAI 13-10, molde de la tienda (ANTES gris / DESPUÉS naranja + 3 íconos). Imagen ilustrativa */
+    antesDespuesSub: 'Con los años el cuerpo produce menos colágeno y se nota al moverse, en la piel y en la energía del día.',
     preguntas: [
       { q: '¿Cómo se toma?', a: 'Una medida al día (20 g) disuelta en café, agua, jugo, leche o un batido. No tiene sabor, así que no cambia el gusto de lo que tomas.' },
       { q: '¿Cuánto dura un frasco?', a: 'Cada frasco trae 567 g: alrededor de 28 porciones, casi un mes tomando una medida diaria.' },
@@ -1448,7 +1448,7 @@ window.PRODUCTOS = [
     sub: 'Una medida al día en tu café: 20 g de colágeno para piel, cabello, uñas y articulaciones',
     categoria: 'Salud',
     foto: 'img/neo-heroe.webp?v=1',
-    fotos: ['img/neo-beneficios.webp?v=1'],
+    fotos: ['img/neo-pasos.webp?v=1'],   /* 14-10: imágenes nuevas (James), solo el héroe se mantiene */
     acento: '#EA580C', acento2Manual: '#0EA5E9',   /* catálogo de la skill ui-ux-pro-max 13-10: botón naranja sobre celeste */
     desc: 'Colágeno hidrolizado en polvo NeoCell Collagen Bio-Peptides, frasco de 567 g. Cada medida aporta 20 g de colágeno. No tiene sabor: se disuelve en café, agua, jugo, leche o batidos, en frío o en caliente. Suplemento alimentario para hombres y mujeres adultos; trae alrededor de 28 porciones.',
     puntos: [

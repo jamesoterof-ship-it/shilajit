@@ -51,10 +51,22 @@
     var d = prod.querySelector(':scope > .desc');
     if (!d || d.querySelector('.neo-benef')) return;
     var f = document.createElement('img');
-    f.className = 'neo-benef'; f.src = 'img/neo-beneficios.webp?v=1'; f.width = 1024; f.height = 1024; f.loading = 'lazy';
-    f.alt = 'Frasco de colágeno NeoCell con sus beneficios: piel más firme, cabello más fuerte, uñas resistentes, articulaciones y huesos, 20 g por porción, sin sabor';
+    f.className = 'neo-benef'; f.src = 'img/neo-pasos.webp?v=1'; f.width = 1024; f.height = 1024; f.loading = 'lazy';
+    f.alt = 'Cómo se toma el colágeno NeoCell en 3 pasos: una medida, en tu café o jugo, sin sabor';
     f.style.cssText = 'display:block;width:100%;height:auto;margin:14px 0 4px';
     var h = d.querySelector('.tit2'); if (h) h.insertAdjacentElement('afterend', f); else d.appendChild(f);
+  }
+
+  /* 14-10 · imágenes nuevas (James: "crea nuevas imágenes, solo deja la del héroe"): el problema va arriba del antes y después,
+     y el pack de 2 encima de la tarjeta de la promoción */
+  function imagenesNuevas(prod) {
+    var pon = function (sel, antesDe, src, alt, clase) {
+      var s = prod.querySelector(sel); if (!s || s.querySelector('.' + clase)) return;
+      var im = document.createElement('img'); im.className = clase; im.src = src; im.alt = alt; im.width = 1024; im.height = 1024; im.loading = 'lazy';
+      var ref = s.querySelector(antesDe); if (ref) ref.parentNode.insertBefore(im, ref); else s.appendChild(im);
+    };
+    pon('.ba-sec', '.eyebrow', 'img/neo-problema.webp?v=1', 'Mujer frente al espejo mirando su piel: ¿tu piel ya no es la misma? Desde los 25 el cuerpo produce menos colágeno', 'neo-img-problema');
+    pon('.promo-sec', '.promo-card', 'img/neo-promo2.webp?v=1', 'Pareja con dos frascos de colágeno NeoCell: pack 2 frascos $34.500, envío gratis y pagas al recibir', 'neo-img-promo');
   }
 
   function carrusel(prod) {
@@ -78,7 +90,11 @@
       actual = (n + t.length) % t.length;
       lista.scrollTo({ left: t[actual].offsetLeft - lista.offsetLeft - (lista.clientWidth - t[actual].clientWidth) / 2, behavior: calma ? 'auto' : 'smooth' });
       pos.textContent = (actual + 1) + ' de ' + t.length;
+      alto();
     }
+    /* 14-10 James: "las reseñas feas" (quedaba un hueco blanco bajo las tarjetas cortas): el carril toma el alto de la tarjeta visible */
+    function alto() { var t = tarjetas(); if (t[actual]) lista.style.height = (t[actual].offsetHeight + 16) + 'px'; }
+    window.addEventListener('resize', alto);
     function dibujaPausa() {
       bPausa.setAttribute('aria-label', enPausa ? 'Reanudar' : 'Pausar');
       bPausa.innerHTML = enPausa ? SVG('<path d="M8 5l11 7-11 7z"/>') : SVG('<path d="M9 5v14M15 5v14"/>');
@@ -94,9 +110,10 @@
     lista.addEventListener('scroll', function () {
       var t = tarjetas(), c = lista.scrollLeft + lista.clientWidth / 2, mejor = 0, dist = 1e9;
       for (var k = 0; k < t.length; k++) { var m = t[k].offsetLeft - lista.offsetLeft + t[k].clientWidth / 2, d = Math.abs(m - c); if (d < dist) { dist = d; mejor = k; } }
-      if (mejor !== actual) { actual = mejor; pos.textContent = (actual + 1) + ' de ' + t.length; }
+      if (mejor !== actual) { actual = mejor; pos.textContent = (actual + 1) + ' de ' + t.length; alto(); }
     }, { passive: true });
-    dibujaPausa(); pos.textContent = '1 de ' + tarjetas().length; andar();
+    dibujaPausa(); pos.textContent = '1 de ' + tarjetas().length; andar(); setTimeout(alto, 300);
+    lista.querySelectorAll('img').forEach(function (im) { im.addEventListener('load', alto); });
   }
 
   /* pages/producto.md del script: "organic curves, flowing SVG shapes" -> una onda arriba de cada sección, del color de esa sección */
@@ -163,7 +180,7 @@
   function armar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2') || !document.getElementById('listaRs')) return false;
-    heroe(prod); ordenar(prod); solucion(prod); carrusel(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Flat Design, sin ondas */
+    heroe(prod); ordenar(prod); solucion(prod); imagenesNuevas(prod); carrusel(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Aurora UI */
     /* red de seguridad (14-10, James vio secciones en blanco): a los 2,5 s nada puede quedar invisible, pase lo que pase con las animaciones */
     setTimeout(function () {
       prod.querySelectorAll('[data-rv]:not(.vino)').forEach(function (e) { e.classList.add('vino'); });
