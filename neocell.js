@@ -116,12 +116,20 @@
      stagger:{ each:0.06, from:'start', grid:'auto' }, ease:'back.out(1.4)' }), al llegar con el scroll; con movimiento reducido no se anima */
   function movimiento(prod) {
     if (calma || !window.gsap || prod.dataset.neoMov) return;
-    if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-    ['.ing-grid', '.res-grid', '.sellos', '.otros', '#packsForm', '.gar-chips', '.rev-bars'].forEach(function (q) {
-      var caja = prod.querySelector(q); if (!caja || !caja.children.length) return;
-      var conf = { opacity: 0, scale: 0.92, y: 16, duration: 0.4, stagger: { each: 0.06, from: 'start', grid: 'auto' }, ease: 'back.out(1.4)' };
-      if (window.ScrollTrigger) conf.scrollTrigger = { trigger: caja, start: 'top 85%', once: true };
-      gsap.from(caja.children, conf);
+    /* 14-10 · ERROR CORREGIDO: con scrollTrigger el gsap.from dejaba los packs, los resultados y las tarjetas en opacidad 0 desde
+       el inicio, y en el celular de James el disparador nunca llegaba (posiciones calculadas antes de reordenar): quedaban en blanco.
+       Ahora NADA se esconde antes: todo está visible y la animación corre recién cuando la caja aparece en pantalla. */
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (ent) {
+      ent.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        gsap.fromTo(e.target.children, { opacity: 0, scale: 0.92, y: 16 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: { each: 0.06, from: 'start', grid: 'auto' }, ease: 'back.out(1.4)', clearProps: 'all' });
+      });
+    }, { threshold: 0.15 });
+    ['.ing-grid', '.res-grid', '.sellos', '.otros', '.gar-chips'].forEach(function (q) {
+      var caja = prod.querySelector(q); if (caja && caja.children.length) io.observe(caja);
     });
     prod.dataset.neoMov = '1';
   }
@@ -140,13 +148,13 @@
     if (img && window.ScrollTrigger) gsap.to(img, { yPercent: 10, ease: 'none', scrollTrigger: { trigger: h, scrub: true } });
     var arriba = prod.querySelector('.arriba2'), cta = arriba && arriba.nextElementSibling;
     var items = [].concat(arriba ? Array.prototype.slice.call(arriba.querySelectorAll('.estrellas, h1, h2, .sub, .precioTop, .preTop')) : [], cta ? [cta] : []);
-    if (items.length) gsap.from(items, { opacity: 0, y: 8, duration: 0.3, stagger: 0.03 });
+    if (items.length) gsap.fromTo(items, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, stagger: 0.03, clearProps: 'all' });
     var tit = h.querySelector('h1');
     function letras() {
       if (!window.SplitText || !tit) return;
       gsap.registerPlugin(SplitText);
       var split = new SplitText(tit, { type: 'words,chars' });
-      gsap.from(split.chars, { opacity: 0, y: 20, rotateX: -40, duration: 0.6, stagger: 0.015, ease: 'expo.out' });
+      gsap.fromTo(split.chars, { opacity: 0, y: 20, rotateX: -40 }, { opacity: 1, y: 0, rotateX: 0, duration: 0.6, stagger: 0.015, ease: 'expo.out' });
     }
     if (window.SplitText) letras();
     else { var sc = document.createElement('script'); sc.src = 'lib/SplitText.min.js'; sc.onload = letras; document.head.appendChild(sc); }
@@ -156,6 +164,11 @@
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2') || !document.getElementById('listaRs')) return false;
     heroe(prod); ordenar(prod); solucion(prod); carrusel(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Flat Design, sin ondas */
+    /* red de seguridad (14-10, James vio secciones en blanco): a los 2,5 s nada puede quedar invisible, pase lo que pase con las animaciones */
+    setTimeout(function () {
+      prod.querySelectorAll('[data-rv]:not(.vino)').forEach(function (e) { e.classList.add('vino'); });
+      prod.querySelectorAll('[style*="opacity"]').forEach(function (e) { if (parseFloat(getComputedStyle(e).opacity) < 0.5) { e.style.opacity = '1'; e.style.transform = 'none'; } });
+    }, 2500);
     return true;
   }
   function intentar() {
