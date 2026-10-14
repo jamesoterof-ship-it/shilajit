@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap');
+/* ============================================================
+   COLÁGENO NEOCELL · 14-10 · TODO sale del sistema de diseño del script ui-ux-pro-max (James: "tú no diseñas nada";
+   "los efectos, todo tienen que ser con él"). Archivo fuente: _kn_scratch/neocell/design-system/neocell-colageno/MASTER.md
+   + pages/producto.md (--design-system --persist --page producto --variance 6 --motion 5 --density 4). Aprobado por James: "si".
+   ÚNICO cambio: los colores del MASTER (rosado) se reemplazan por los que James aprobó (opción 3): marca #0EA5E9 · #38BDF8
+   · botón #EA580C (texto #000000, "On Accent" del catálogo) · fondo #F0F9FF · texto #0C4A6E. Letras del MASTER: Lora + Raleway.
+   MASTER: espacios 4/8/16/24/32/48/64 · sombras sm/md/lg/xl · botón primario 12x24, radio 8, 600, 200ms, hover opacity .9 y -1px
+   · botón secundario transparente con borde 2px · tarjeta radio 12, relleno 24, sombra md, hover sombra lg y -2px · campo 12x16,
+   borde 1px #E2E8F0, radio 8, 16px, foco borde de marca + halo 3px · estilo Soft UI Evolution · movimiento "Stagger List"
+   (en neocell.js) · prohibido: neón, animaciones bruscas, modo oscuro, emojis, saltos sin transición, foco invisible.
+   pages/producto.md (manda sobre el MASTER): radios 16-24px, curvas orgánicas, formas SVG que fluyen (las ondas entre secciones),
+   vidrio con profundidad (z-offset), títulos bien distintos del texto, ancho máximo 1200px, nada de paneles planos opacos.
+   Patrón (--domain landing): Hero > Problem > Solution > Testimonials carousel > CTA; testimonios en fondo #F5F5F5, citas en
+   cursiva #666. Todo cuelga de body.p-neo; el encabezado y el pie de la tienda no se tocan.
+   ============================================================ */
+body.p-neo{
+  --color-primary:#0EA5E9; --color-secondary:#38BDF8; --color-accent:#EA580C; --color-on-accent:#000000;
+  --color-background:#F0F9FF; --color-foreground:#0C4A6E; --color-card:#FFFFFF; --color-muted:#E9EFF8; --color-muted-foreground:#475569;
+  --color-border:#E2E8F0; --color-ring:#0EA5E9; --testi:#F5F5F5; --cita:#666666;
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px; --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow-md:0 4px 6px rgba(0,0,0,.1); --shadow-lg:0 10px 15px rgba(0,0,0,.1); --shadow-xl:0 20px 25px rgba(0,0,0,.15);
+  --radio-boton:8px; --radio-tarjeta:16px; --radio-panel:24px;
+  --f-tit:'Lora',Georgia,'Times New Roman',serif; --f-txt:'Raleway',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  background:var(--color-background);
+}
+body.p-neo #prod{background:var(--color-background);color:var(--color-foreground);font-family:var(--f-txt);overflow-x:clip}
+body.p-neo #prod > *{position:relative}
+body.p-neo #prod > section > *{max-width:1200px;margin-left:auto;margin-right:auto}
+body.p-neo #prod :is(p,li,td,label,.sub2,.ctaSub,.baj,.preTop){font-family:var(--f-txt);font-size:16px;font-weight:400;line-height:1.6;color:var(--color-foreground)}
+/* títulos bien distintos del texto (pages/producto.md) */
+body.p-neo #prod :is(h1,h2,h3,.tit2,.rev-title){font-family:var(--f-tit);color:var(--color-foreground);font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+body.p-neo #prod :is(h2,.tit2,.rev-title){font-size:clamp(30px,7.6vw,40px);line-height:1.12;margin-bottom:var(--space-md)}
+body.p-neo #prod :is(.eyebrow){font-family:var(--f-txt);font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-primary)}
+body.p-neo #prod > :is(section,.bloque){padding-top:var(--space-2xl);padding-bottom:var(--space-2xl);background:var(--color-background)}
+body.p-neo #prod :is(img,video){border-radius:var(--radio-panel)}
+
+/* ---------- botones (MASTER · Primary / Secondary) ---------- */
+body.p-neo #prod :is(.cta,#btnPromo,#btnPagoAnt,.cc-btn),body.p-neo #stickycta :is(a,button){
+  background:var(--color-accent)!important;color:var(--color-on-accent)!important;padding:12px 24px;border-radius:var(--radio-boton)!important;
+  font-family:var(--f-txt)!important;font-weight:600;border:0;box-shadow:var(--shadow-md);transition:all 200ms ease;cursor:pointer;animation:none}
+body.p-neo #prod :is(.cta,#btnPromo,#btnPagoAnt,.cc-btn):hover,body.p-neo #stickycta :is(a,button):hover{opacity:.9;transform:translateY(-1px)}
+body.p-neo #prod :is(.btn-write,.masRs,.cta.azul){background:transparent!important;color:var(--color-foreground)!important;border:2px solid var(--color-primary)!important;
+  padding:12px 24px;border-radius:var(--radio-boton)!important;font-weight:600;box-shadow:none;transition:all 200ms ease;cursor:pointer}
+body.p-neo #prod :is(button,a,summary,.pack,.pagoOp){cursor:pointer}
+body.p-neo #prod :is(a,button,input,select,summary,textarea):focus-visible{outline:3px solid var(--color-ring);outline-offset:2px}
+
+/* ---------- tarjetas (MASTER · Cards, con el radio 16-24px de pages/producto.md) ---------- */
+body.p-neo #prod :is(.ing,.res,.rsc,.pack,.pagoOp,.sello,.oc,.fq details,.formcard,.gseal){background:var(--color-card);border-radius:var(--radio-tarjeta);
+  box-shadow:var(--shadow-md);transition:all 200ms ease}
+body.p-neo #prod :is(.ing,.res,.sello,.oc,.fq details){padding:var(--space-lg)}
+body.p-neo #prod :is(.ing,.res,.rsc,.pack,.pagoOp,.sello,.oc):hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+body.p-neo #prod .pack.sel,body.p-neo #prod .pagoOp.sel{box-shadow:0 0 0 2px var(--color-primary),var(--shadow-lg)}
+body.p-neo #prod .ing .cir{background:var(--color-background);color:var(--color-primary);border-radius:50%}
+body.p-neo #prod .ing .cir svg{stroke:var(--color-primary)}
+body.p-neo #prod :is(.ing-grid,.res-grid,.sellos,.otros,.gar-chips){gap:var(--space-md)}
+
+/* ---------- vidrio con profundidad (pages/producto.md · glass material y z-offset) ---------- */
+body.p-neo #prod :is(.promo-card,.pagoAnt__caja){background:rgba(255,255,255,.62);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.7);border-radius:var(--radio-panel);box-shadow:var(--shadow-xl);transform:translateZ(0)}
+body.p-neo #prod :is(.promo-sec,.pagoAnt){background:radial-gradient(90% 70% at 15% 10%,rgba(56,189,248,.35),transparent 60%),radial-gradient(80% 60% at 90% 90%,rgba(14,165,233,.25),transparent 60%),var(--color-background)}
+body.p-neo #prod .promo-precio{font-family:var(--f-tit);color:var(--color-foreground)}
+body.p-neo #prod .cuenta b{background:var(--color-card);color:var(--color-foreground);border-radius:var(--radio-boton);box-shadow:var(--shadow-sm)}
+
+/* ---------- campos del formulario (MASTER · Inputs) ---------- */
+body.p-neo #pedir :is(input,select,textarea){padding:12px 16px;border:1px solid var(--color-border);border-radius:var(--radio-boton);font-size:16px;font-family:var(--f-txt);
+  background:var(--color-card);transition:border-color 200ms ease}
+body.p-neo #pedir :is(input,select,textarea):focus{border-color:var(--color-primary);outline:none;box-shadow:0 0 0 3px rgba(14,165,233,.13)}
+
+/* ---------- 1. héroe (patrón: color de marca; la foto con sombra xl de "hero images") ---------- */
+.neo-heroe{position:relative;isolation:isolate;overflow:hidden;background:var(--color-primary);min-height:min(140vw,720px);box-shadow:var(--shadow-xl)}
+.neo-heroe img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 72%;border-radius:0!important;z-index:-2}
+.neo-heroe::after{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(14,165,233,.70) 0%,rgba(14,165,233,.30) 30%,rgba(14,165,233,0) 50%)}
+.neo-heroe .neo-tit{padding:var(--space-3xl) var(--space-lg) 0}
+.neo-heroe .neo-rot{margin:0 0 var(--space-sm);font:600 13px/1 var(--f-txt);letter-spacing:.14em;text-transform:uppercase;color:#FFFFFF}
+body.p-neo #prod .neo-heroe h1{margin:0;max-width:13ch;font:700 clamp(36px,10vw,58px)/1.04 var(--f-tit);color:#FFFFFF;text-wrap:balance}
+
+/* ---------- formas SVG que fluyen entre secciones (pages/producto.md) ---------- */
+.neo-ola{position:absolute;left:0;right:0;top:-1px;height:42px;width:100%;max-width:none!important;pointer-events:none;transform:translateY(-99%)}
+.neo-ola path{fill:currentColor}
+
+/* ---------- 4. testimonios: fondo #F5F5F5, citas en cursiva #666, carrusel con anterior / pausa / siguiente ---------- */
+body.p-neo #prod > .rev-sec{background:var(--testi)}
+body.p-neo #prod .rev-sec .rev-title{display:block}   /* con el título de 40px las estrellas al lado lo partían palabra por palabra */
+body.p-neo #prod .rev-sec .rev-title .stars{display:block;margin-top:var(--space-sm)}
+body.p-neo .rev-sec #listaRs.neo-carril{display:flex;align-items:flex-start;gap:var(--space-md);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:var(--space-xs) 2px var(--space-md);scrollbar-width:none}
+body.p-neo .rev-sec #listaRs.neo-carril::-webkit-scrollbar{display:none}
+body.p-neo .rev-sec #listaRs.neo-carril > .rsc{flex:0 0 86%;scroll-snap-align:center;margin:0;padding:var(--space-lg)}
+body.p-neo .rev-sec .rsc :is(p,.txt,blockquote){font-style:italic;color:var(--cita)}
+body.p-neo .rev-sec .rsc .ini{background:var(--color-secondary);color:var(--color-foreground)}
+body.p-neo .rev-sec .rsc img{border-radius:var(--radio-tarjeta)}
+.neo-mandos{display:flex;align-items:center;justify-content:center;gap:var(--space-md);margin:var(--space-sm) 0}
+.neo-mandos button{width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--color-card);color:var(--color-foreground);
+  box-shadow:var(--shadow-md);cursor:pointer;transition:all 200ms ease}
+.neo-mandos button:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.neo-mandos svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.neo-mandos .neo-pos{min-width:72px;text-align:center;font:600 14px/1 var(--f-txt);color:var(--color-foreground)}
+body.p-neo .rev-sec.neo-con-carril #masRs{display:none}
+@media (min-width:760px){body.p-neo .rev-sec #listaRs.neo-carril > .rsc{flex-basis:44%}}
+
+@media (prefers-reduced-motion:reduce){body.p-neo .rev-sec #listaRs.neo-carril{scroll-behavior:auto}body.p-neo #prod *{transition:none!important}}
