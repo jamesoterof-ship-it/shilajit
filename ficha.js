@@ -1985,9 +1985,32 @@ function abrirUpsell(nombre, telWA, upsell) {
       fecha: new Date().toLocaleString('es-CL'), estado: 'INCOMPLETO',
     };
   }
+  /* 13-10 (James: "tenemos que registrar tambien las de WhatsApp"): el clic del anuncio (fbc/fbp) va
+     aparte, al flujo carrito-clic-cl, con el mismo sid y el telefono. Si el cliente deja el formulario
+     y despues compra por WhatsApp, el CAPI de ventas lo cruza por telefono y la compra llega a Meta
+     atada al anuncio. Sin esto, 103 de 279 ventas por WhatsApp de la semana entraron "sin anuncio".
+     Esta tienda no define window.jayePixel: el clic se lee de las cookies del pixel (_fbc/_fbp) y,
+     si no hay _fbc pero la URL trae fbclid, se arma como lo hace Meta. Mismo molde que Espana. */
+  var URL_CLIC = 'https://n8n-production-8a42.up.railway.app/webhook/carrito-clic-cl';
+  var ultimoClic = '';
+  function cookie(n) { var m = document.cookie.match('(?:^|; )' + n + '=([^;]*)'); return m ? decodeURIComponent(m[1]) : ''; }
+  function mandarClic(d) {
+    try {
+      var fbc = cookie('_fbc'), fbp = cookie('_fbp');
+      if (!fbc) { var q = new URLSearchParams(location.search).get('fbclid'); if (q) fbc = 'fb.1.' + Date.now() + '.' + q; }
+      if (!fbc && !fbp) return;
+      if (!window._jayeEvId) window._jayeEvId = 'web-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+      var c = { sid: d.sid, telefono: d.telefono, event_id: window._jayeEvId, fbc: fbc, fbp: fbp, url: location.href };
+      var f = JSON.stringify(c);
+      if (f === ultimoClic || c.telefono.length < 8) return;
+      ultimoClic = f;
+      fetch(URL_CLIC, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: f, keepalive: true }).catch(function () {});
+    } catch (e) {}
+  }
   function mandar() {
     if (yaCompro) return;
     var d = datos(); if (!d) return;
+    mandarClic(d);
     var firma = JSON.stringify(d).replace(/"fecha":"[^"]*"/, '');
     if (firma === ultimo) return;          /* nada nuevo que contar */
     ultimo = firma;
