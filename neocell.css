@@ -39,7 +39,7 @@ body.p-neo #prod :is(img,video){border-radius:var(--radio)}
 body.p-neo #prod :is(.neo-img-problema,.neo-img-promo,.neo-benef){display:block;width:100%;height:auto;margin:0 auto 22px;box-shadow:0 18px 40px rgba(2,132,199,.18)}
 
 /* tarjetas blancas sobre la aurora, con borde tornasol sutil (azul → ámbar) */
-body.p-neo #prod :is(.ing,.res,.rsc,.pack,.pagoOp,.sello,.oc,.fq details,.formcard,.promo-card,.pagoAnt__caja,.gseal,.cmp,.ba-img){
+body.p-neo #prod :is(.ing,.res,.pack,.pagoOp,.sello,.oc,.fq details,.formcard,.promo-card,.pagoAnt__caja,.gseal,.cmp,.ba-img){
   background:linear-gradient(var(--c-blanco),var(--c-blanco)) padding-box,
              linear-gradient(120deg,rgba(14,165,233,.55),rgba(125,211,252,.35),rgba(245,158,11,.5),rgba(14,165,233,.55)) border-box;
   border:1.5px solid transparent!important;border-radius:var(--radio)!important;box-shadow:0 10px 30px rgba(2,132,199,.10)}
@@ -58,7 +58,6 @@ body.p-neo #prod > :is(.promo-sec,.res-sec){
   background-size:200% 200%,200% 200%,200% 200%,auto;animation:neo-aurora 12s ease-in-out infinite}
 body.p-neo #prod > :is(.promo-sec,.res-sec) > :is(h2,.tit2,p){color:var(--c-blanco)}
 body.p-neo #prod > .res-sec .eyebrow{color:var(--c-texto)}
-body.p-neo #prod > .rev-sec{background:rgba(255,255,255,.55)}
 
 /* botones: ámbar con brillo tornasol que recorre el botón cada 8 s */
 body.p-neo #prod :is(.cta,#btnPromo,#btnPagoAnt,.cc-btn),body.p-neo #stickycta :is(a,button){
@@ -82,20 +81,7 @@ body.p-neo #prod > .neo-heroe > *{max-width:none}
 .neo-heroe .neo-rot{margin:0 0 10px;font:700 12.5px/1 var(--f-txt);letter-spacing:.14em;text-transform:uppercase;color:var(--c-texto);background:rgba(255,255,255,.85);display:inline-block;padding:7px 12px;border-radius:999px}
 body.p-neo #prod .neo-heroe h1{margin:0;max-width:11ch;font:800 clamp(36px,10.4vw,64px)/.95 var(--f-tit);color:var(--c-texto);perspective:400px}
 
-/* ---------- TESTIMONIOS: carrusel con anterior / pausa / siguiente; la altura sigue a la tarjeta visible ---------- */
-body.p-neo #prod .rev-sec .rev-title{display:block}
-body.p-neo #prod .rev-sec .rev-title .stars{display:block;margin-top:8px}
-body.p-neo .rev-sec #listaRs.neo-carril{display:flex;align-items:flex-start;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:4px 2px 12px;scrollbar-width:none;transition:height .3s ease}
-body.p-neo .rev-sec #listaRs.neo-carril::-webkit-scrollbar{display:none}
-body.p-neo .rev-sec #listaRs.neo-carril > .rsc{flex:0 0 86%;scroll-snap-align:center;margin:0;padding:18px}
-body.p-neo .rev-sec .rsc img{max-height:260px;width:100%;object-fit:cover}
-body.p-neo .rev-sec .rsc .ini{background:linear-gradient(135deg,var(--c-secundario),var(--c-ambar));color:var(--c-blanco)}
-.neo-mandos{display:flex;align-items:center;justify-content:center;gap:10px;margin:8px 0}
-.neo-mandos button{width:46px;height:46px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--c-blanco);color:var(--c-primario);box-shadow:0 6px 18px rgba(2,132,199,.18);cursor:pointer}
-.neo-mandos svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.neo-mandos .neo-pos{min-width:76px;text-align:center;font:700 16px/1 var(--f-tit);color:var(--c-texto)}
-body.p-neo .rev-sec.neo-con-carril #masRs{display:none}
-@media (min-width:760px){body.p-neo .rev-sec #listaRs.neo-carril > .rsc{flex-basis:44%}}
+/* 14-10 James: "me cambiaste el estilo de la reseña… déjala como están las páginas": sin carrusel ni estilo propio, las reseñas de la ficha */
 
 @media (prefers-reduced-motion:reduce){
   body.p-neo #prod,body.p-neo #prod *,body.p-neo #stickycta *,.neo-heroe .neo-foto::after{animation:none!important;transition:none!important}

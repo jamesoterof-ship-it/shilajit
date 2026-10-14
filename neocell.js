@@ -181,12 +181,18 @@
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2') || !document.getElementById('listaRs')) return false;
     heroe(prod); /* 14-10 James: "ese desorden… el formulario por la mitad… la promoción por debajo": sin ordenar(), queda el orden
-       de la ficha, el mismo de las tabletas (producto > promoción > pago con tarjeta > … > preguntas > formulario al final) */ solucion(prod); imagenesNuevas(prod); carrusel(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Aurora UI */
-    /* red de seguridad (14-10, James vio secciones en blanco): a los 2,5 s nada puede quedar invisible, pase lo que pase con las animaciones */
-    setTimeout(function () {
-      prod.querySelectorAll('[data-rv]:not(.vino)').forEach(function (e) { e.classList.add('vino'); });
-      prod.querySelectorAll('[style*="opacity"]').forEach(function (e) { if (parseFloat(getComputedStyle(e).opacity) < 0.5) { e.style.opacity = '1'; e.style.transform = 'none'; } });
-    }, 2500);
+       de la ficha, el mismo de las tabletas (producto > promoción > pago con tarjeta > … > preguntas > formulario al final) */ solucion(prod); imagenesNuevas(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Aurora UI · sin carrusel (James: reseñas como en las demás páginas) */
+    /* red de seguridad (14-10, James vio secciones en blanco): nada que YA pasó por la pantalla puede quedar invisible.
+       14-10 tarde, James: "no tiene nada de efecto": antes destapaba TODA la página a los 2,5 s y lo de abajo ya no se animaba al llegar.
+       Ahora solo destapa lo que está en pantalla o arriba de ella, cada vez que se mueve la página. */
+    var destapar = function () {
+      var lim = innerHeight * 0.95;
+      prod.querySelectorAll('[data-rv]:not(.vino)').forEach(function (e) { if (e.getBoundingClientRect().top < lim) e.classList.add('vino'); });
+      prod.querySelectorAll('[style*="opacity"]').forEach(function (e) { if (e.getBoundingClientRect().top < lim - 200 && parseFloat(getComputedStyle(e).opacity) < 0.5) { e.style.opacity = '1'; e.style.transform = 'none'; } });
+    };
+    var espera = null;
+    addEventListener('scroll', function () { clearTimeout(espera); espera = setTimeout(destapar, 1200); }, { passive: true });
+    setTimeout(destapar, 2500);
     return true;
   }
   function intentar() {
