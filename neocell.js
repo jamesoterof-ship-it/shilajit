@@ -18,8 +18,10 @@
     var arriba = prod.querySelector('.arriba2');
     var s = document.createElement('section');
     s.className = 'neo-heroe';
-    s.innerHTML = '<img src="img/neo-heroe.webp?v=1" alt="Mujer sonriente extendiendo hacia la cámara el frasco celeste de colágeno NeoCell" width="1024" height="1536" fetchpriority="high">'
-      + '<div class="neo-tit"><p class="neo-rot">Colágeno hidrolizado · 567 g</p><h1>Se nota en tu piel, tu pelo y tus uñas.</h1></div>';
+    /* 14-10 James: "el título ahí mismo en la foto, que entra en cascada, sin tapar el producto" -> el título va ENCIMA de la
+       foto, en la franja de cielo de arriba; el frasco queda abajo, libre */
+    s.innerHTML = '<div class="neo-foto"><img src="img/neo-heroe.webp?v=1" alt="Mujer sonriente extendiendo hacia la cámara el frasco celeste de colágeno NeoCell" width="1024" height="1536" fetchpriority="high">'
+      + '<div class="neo-tit"><p class="neo-rot">Colágeno hidrolizado · 567 g</p><h1>Se nota en tu piel, tu pelo y tus uñas.</h1></div></div>';
     if (arriba) {
       arriba.parentNode.insertBefore(s, arriba);
       ['.gal', '.miniz'].forEach(function (q) { var el = arriba.querySelector(q); if (el) el.remove(); });
@@ -124,10 +126,36 @@
     prod.dataset.neoMov = '1';
   }
 
+  /* EFECTOS DEL HÉROE (James: "quiero que el héroe tenga efectos"), los tres del catálogo --domain gsap de la skill:
+     1. "Stagger List · Complex": SplitText por letra -> gsap.from(chars, { opacity:0, y:20, rotateX:-40, duration:0.6, stagger:0.015, ease:'expo.out' })
+     2. "Parallax Scroll · Subtle": gsap.to(foto, { yPercent:10, ease:'none', scrollTrigger:{ trigger:sección, scrub:true } })
+     3. "Stagger List · Subtle": gsap.from(items, { opacity:0, y:8, duration:0.3, stagger:0.03 }) para estrellas, precio y botón
+     Con movimiento reducido no se anima nada (queda el texto quieto y legible). */
+  function efectosHeroe(prod) {
+    var h = prod.querySelector('.neo-heroe');
+    if (calma || !window.gsap || !h || h.dataset.neoFx) return;
+    h.dataset.neoFx = '1';
+    if (window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+    var img = h.querySelector('.neo-foto img');
+    if (img && window.ScrollTrigger) gsap.to(img, { yPercent: 10, ease: 'none', scrollTrigger: { trigger: h, scrub: true } });
+    var arriba = prod.querySelector('.arriba2'), cta = arriba && arriba.nextElementSibling;
+    var items = [].concat(arriba ? Array.prototype.slice.call(arriba.querySelectorAll('.estrellas, h1, h2, .sub, .precioTop, .preTop')) : [], cta ? [cta] : []);
+    if (items.length) gsap.from(items, { opacity: 0, y: 8, duration: 0.3, stagger: 0.03 });
+    var tit = h.querySelector('h1');
+    function letras() {
+      if (!window.SplitText || !tit) return;
+      gsap.registerPlugin(SplitText);
+      var split = new SplitText(tit, { type: 'words,chars' });
+      gsap.from(split.chars, { opacity: 0, y: 20, rotateX: -40, duration: 0.6, stagger: 0.015, ease: 'expo.out' });
+    }
+    if (window.SplitText) letras();
+    else { var sc = document.createElement('script'); sc.src = 'lib/SplitText.min.js'; sc.onload = letras; document.head.appendChild(sc); }
+  }
+
   function armar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2') || !document.getElementById('listaRs')) return false;
-    heroe(prod); ordenar(prod); solucion(prod); carrusel(prod); ondas(prod); movimiento(prod);
+    heroe(prod); ordenar(prod); solucion(prod); carrusel(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Flat Design, sin ondas */
     return true;
   }
   function intentar() {
