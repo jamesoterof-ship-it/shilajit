@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+/* ============================================================
+   SHAMPOO CUBRE CANAS DEXE · 14-10 · OPCIÓN B elegida por James. CSS que reproduce la salida de la skill ui-ux-pro-max
+   (corrida "premium hair cosmetics salon, grey coverage before after transformation, elegant dark luxury" --variance 6 --motion 5 --density 4):
+     PATRÓN  "Scroll-Triggered Storytelling": gancho de entrada > capítulo 1 (problema) > capítulo 2 (camino) > capítulo 3 (solución) >
+             cierre con botón. Botón chico al final de cada capítulo + botón grande al final. BARRA DE PROGRESO. Sin parallax ni scrub con
+             reduced-motion; cada capítulo legible en su estado final.
+     ESTILO  "Liquid Glass": material dinámico, vidrio óptico, translucidez, lente/refracción, transiciones fluidas (morph).
+             Evitar: visuales baratos y animaciones rápidas.
+     COLORES primario #1C1917 (sobre él #FFFFFF) · secundario #44403C (sobre él #FFFFFF) · fondo #FAFAF9 · texto #0C0A09 · tarjeta #FFFFFF
+             apagado #E8ECF0 / texto apagado #475569 · borde #D6D3D1 · error #DC2626 · anillo #1C1917.
+             Acento: la skill dio dorado #A16207; por regla fija de James ("el botón lleva los colores del producto") va el VERDE REAL del
+             logo Dexe medido en la foto de la caja, #84B348, con letra negra (contraste 8:1). Corrida autorizada por James en el candado.
+     LETRAS  Cormorant (títulos, 400-700) · Montserrat (texto, 300-700).
+     ESPACIADO (densidad 4, estándar) xs 4 · sm 8 · md 16 · lg 24 · xl 32 · 2xl 48 · 3xl 64.
+     MOVIMIENTO (motion 5) "Stagger List": gsap.from('.grid-item',{opacity:0,scale:.92,y:16,duration:.4,stagger:{each:.06,from:'start',grid:'auto'},ease:'back.out(1.4)'})
+   Regla de James: héroe GRANDE, foto vertical a todo el ancho, SOLO el producto, título escrito por la página encima.
+   Todo cuelga de body.p-dexe; el encabezado (.top) y el pie (.pie) no se tocan. El ORDEN de las secciones base lo pone ficha.js.
+   ============================================================ */
+body.p-dexe{
+  --color-primary:#1C1917; --color-on-primary:#FFFFFF; --color-secondary:#44403C; --color-on-secondary:#FFFFFF;
+  --color-accent:#84B348; --color-on-accent:#0C0A09; --color-accent-hover:#74A03E;
+  --color-background:#FAFAF9; --color-foreground:#0C0A09; --color-card:#FFFFFF; --color-card-foreground:#0C0A09;
+  --color-muted:#E8ECF0; --color-muted-foreground:#475569; --color-border:#D6D3D1; --color-destructive:#DC2626; --color-on-destructive:#FFFFFF; --color-ring:#1C1917;
+  --font-heading:'Cormorant',Georgia,serif; --font-body:'Montserrat',system-ui,sans-serif;
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px; --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+  /* vidrio líquido */
+  --glass-bg:rgba(255,255,255,.58); --glass-bg-dark:rgba(28,25,23,.62); --glass-line:rgba(255,255,255,.65); --glass-blur:blur(18px) saturate(1.5);
+  --glass-shadow:0 18px 50px rgba(28,25,23,.14), inset 0 1px 0 rgba(255,255,255,.7); --glass-radius:26px; --morph:420ms cubic-bezier(.4,0,.2,1);
+  background:var(--color-background);
+}
+body.p-dexe #prod{background:var(--color-background);color:var(--color-foreground);font-family:var(--font-body);overflow-x:clip}
+body.p-dexe #prod :is(p,li,td,label,.sub2,.ctaSub,.packDe,.opc){font-family:var(--font-body);color:var(--color-muted-foreground);line-height:1.6;font-weight:400;font-size:16px}
+body.p-dexe #prod :is(h1,h2,h3,.tit2,.rev-title,.datos h1){font-family:var(--font-heading)!important;color:var(--color-foreground);font-weight:600;letter-spacing:-.01em;text-wrap:balance;text-transform:none!important}
+body.p-dexe #prod :is(h1,.datos h1){font-size:clamp(34px,8.5vw,52px);line-height:1.02}
+body.p-dexe #prod :is(h2,.tit2,.rev-title){font-size:clamp(32px,8vw,48px);line-height:1.05}
+body.p-dexe #prod :is(b,strong){color:var(--color-foreground);font-weight:600}
+body.p-dexe #prod :is(.eyebrow,.rot){color:var(--color-secondary);font-family:var(--font-body);font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:11.5px}
+body.p-dexe #prod > :is(section,.bloque){background:transparent;padding:var(--space-2xl) var(--space-md)}
+body.p-dexe #prod :is(a,button,.pack,.cta,summary){cursor:pointer}
+body.p-dexe #prod :focus-visible{outline:2px solid var(--color-ring);outline-offset:3px}
+
+/* fondo de vidrio: manchas de luz suaves detrás de todo (la "refracción" del estilo) */
+body.p-dexe #prod{position:relative;isolation:isolate}
+body.p-dexe #prod::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(60% 40% at 15% 12%,rgba(132,179,72,.22),transparent 70%),radial-gradient(50% 35% at 90% 40%,rgba(68,64,60,.14),transparent 70%),radial-gradient(55% 40% at 30% 85%,rgba(132,179,72,.16),transparent 70%)}
+
+/* componentes de vidrio: tarjetas, packs, promoción, garantía, resumen, preguntas, pago con tarjeta */
+body.p-dexe #prod :is(.card,.pack,.promo-card,.gar-card,.res-card,.rev,.fq details,.pagoAnt__caja,.dx-glass){background:var(--glass-bg);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-line);border-radius:var(--glass-radius)!important;box-shadow:var(--glass-shadow);color:var(--color-card-foreground);transition:transform var(--morph),box-shadow var(--morph),background var(--morph)}
+body.p-dexe #prod :is(.card,.pack):hover{transform:translateY(-3px);box-shadow:0 26px 60px rgba(28,25,23,.18),inset 0 1px 0 rgba(255,255,255,.8)}
+body.p-dexe #prod .pack[aria-pressed="true"],body.p-dexe #prod .pack.sel{background:rgba(255,255,255,.85);border-color:var(--color-primary);box-shadow:0 0 0 2px var(--color-primary),var(--glass-shadow)}
+body.p-dexe #prod :is(.promo-card *,.gar-card *,.res-card *,.pack *,.cuenta *){font-family:var(--font-body)!important;text-transform:none!important}
+body.p-dexe #prod :is(.promo-qt,.promo-precio,.gar-card b,.res-card b,.pack b,.pack .precio,.packPrecio,.cuenta b){font-family:var(--font-heading)!important;font-weight:700}
+body.p-dexe #prod .promo-banner{background:var(--glass-bg-dark);color:var(--color-on-primary);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border-radius:18px}
+body.p-dexe #prod :is(.off,.promo-off){background:var(--color-accent);color:var(--color-on-accent);border-radius:999px;font-family:var(--font-body)}
+body.p-dexe #prod :is(.promo-antes,.antes){font-weight:400;text-decoration:line-through;color:var(--color-muted-foreground)}
+body.p-dexe #prod :is(.precio,.pPrecio,.ahora){font-family:var(--font-heading);color:var(--color-foreground);font-weight:700}
+body.p-dexe #prod :is(input,select,textarea){padding:12px 16px;border:1px solid var(--color-border);border-radius:16px;font-size:16px;font-family:var(--font-body);background:rgba(255,255,255,.7);transition:border-color var(--morph),box-shadow var(--morph)}
+body.p-dexe #prod :is(input,select,textarea):focus{border-color:var(--color-primary);outline:none;box-shadow:0 0 0 3px rgba(28,25,23,.12)}
+body.p-dexe #prod :is(video,img){border-radius:var(--glass-radius)}
+/* botón: píldora de vidrio con el verde del producto; transición fluida (morph), nada rápido */
+body.p-dexe #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn,.dx-mini){background:var(--color-accent)!important;color:var(--color-on-accent)!important;font-family:var(--font-body)!important;
+  font-weight:600;font-size:16px;letter-spacing:.01em;text-transform:none!important;padding:14px 26px;min-height:48px;border-radius:999px!important;border:1px solid rgba(255,255,255,.55);
+  box-shadow:0 12px 30px rgba(132,179,72,.35),inset 0 1px 0 rgba(255,255,255,.6);transition:transform var(--morph),box-shadow var(--morph),background var(--morph)}
+body.p-dexe #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn,.dx-mini):hover{background:var(--color-accent-hover)!important;transform:translateY(-2px);box-shadow:0 18px 40px rgba(132,179,72,.42),inset 0 1px 0 rgba(255,255,255,.6)}
+body.p-dexe #prod .dx-mini{display:inline-flex;align-items:center;gap:var(--space-sm);padding:11px 20px;min-height:44px;font-size:14.5px;background:var(--glass-bg)!important;color:var(--color-foreground)!important;box-shadow:var(--glass-shadow);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
+body.p-dexe #prod .dx-mini svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+body.p-dexe #prod .rev p{font-style:italic;color:#666}
+
+/* ---------- barra de progreso (el patrón la pide) ---------- */
+.dx-progreso{position:fixed;left:0;top:0;height:4px;width:100%;z-index:60;background:rgba(28,25,23,.08);pointer-events:none}
+.dx-progreso i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--color-primary),var(--color-accent));transition:width 120ms linear}
+
+/* ---------- GANCHO DE ENTRADA (héroe): foto entera del producto, título Cormorant encima sobre vidrio, abajo tarjeta de vidrio oscuro ---------- */
+body.p-dexe #prod > .dx-heroe{padding:0;display:grid}
+.dx-marco{position:relative;isolation:isolate;background:var(--color-background)}
+.dx-heroe .dx-foto{display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:0!important}
+.dx-marco .dx-arriba{position:absolute;top:0;left:0;right:0;padding:var(--space-md)}
+.dx-vidrio{background:var(--glass-bg);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid var(--glass-line);border-radius:var(--glass-radius);box-shadow:var(--glass-shadow);padding:var(--space-md) var(--space-lg)}
+.dx-sello{display:inline-flex;align-items:center;gap:var(--space-sm);margin:0 0 var(--space-sm);font:600 11.5px/1 var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--color-secondary)}
+.dx-sello i{width:8px;height:8px;border-radius:50%;background:var(--color-accent);display:inline-block}
+body.p-dexe #prod .dx-h1{margin:0;font:600 clamp(40px,11vw,76px)/.98 var(--font-heading);letter-spacing:-.015em;color:var(--color-foreground);text-wrap:balance;text-transform:none!important}
+.dx-h1 .dx-w{display:inline-block;white-space:nowrap}
+.dx-h1 .dx-l{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(6px);animation:dxCae .55s cubic-bezier(.4,0,.2,1) forwards;animation-delay:calc(var(--i)*26ms)}
+@keyframes dxCae{to{opacity:1;transform:none;filter:none}}
+.dx-heroe .dx-abajo{margin:-56px var(--space-md) 0;position:relative;z-index:2;background:var(--glass-bg-dark);color:var(--color-on-primary);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);
+  border:1px solid rgba(255,255,255,.22);border-radius:var(--glass-radius);box-shadow:var(--glass-shadow);padding:var(--space-lg);display:grid;gap:var(--space-md)}
+body.p-dexe #prod .dx-baja{margin:0;color:rgba(255,255,255,.88);font-size:16px}
+.dx-datos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-sm)}
+body.p-dexe #prod .dx-datos li{padding:12px 8px;text-align:center;font:400 12px/1.3 var(--font-body);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.25);border-radius:18px;background:rgba(255,255,255,.08)}
+.dx-datos b{display:block;font:700 24px/1 var(--font-heading);color:var(--color-on-primary);margin-bottom:5px}
+.dx-heroe .cta{width:100%;margin:0}
+@media (min-width:768px){.dx-marco .dx-arriba{padding:var(--space-xl)}.dx-heroe .dx-abajo{margin:-80px var(--space-xl) 0;grid-template-columns:1fr auto;align-items:end;padding:var(--space-xl)}}
+@media (min-width:1024px){.dx-heroe .dx-foto{aspect-ratio:16/10;object-position:50% 60%}}
+@media (prefers-reduced-motion:reduce){.dx-h1 .dx-l{animation:none;opacity:1;transform:none;filter:none}}
+
+/* ---------- CAPÍTULOS (patrón): número, título Cormorant, texto, tarjetas de vidrio en cuadrícula, botón chico al final ---------- */
+.dx-cap{max-width:1100px;margin:0 auto;display:grid;gap:var(--space-lg)}
+.dx-cap .dx-num{display:inline-flex;align-items:center;gap:var(--space-sm);font:600 11.5px/1 var(--font-body);letter-spacing:.18em;text-transform:uppercase;color:var(--color-secondary)}
+.dx-cap .dx-num::before{content:'';width:28px;height:1px;background:var(--color-secondary)}
+.dx-cap h2{margin:0;max-width:16ch}
+body.p-dexe #prod .dx-cap > p{margin:0;max-width:36em;font-size:17px}
+.dx-cap .dx-cierre{display:flex;justify-content:flex-start;margin:0}
+.dx-grid{display:grid;gap:var(--space-md)}
+body.p-dexe #prod .dx-glass.grid-item{padding:0;overflow:hidden;margin:0}
+.dx-glass img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:0!important}
+.dx-glass figcaption,.dx-glass .dx-txt{padding:var(--space-md) var(--space-lg) var(--space-lg)}
+.dx-glass .dx-paso{display:block;font:600 11.5px/1 var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--color-secondary);margin-bottom:var(--space-sm)}
+.dx-glass b{display:block;font:700 24px/1.15 var(--font-heading);color:var(--color-foreground)}
+body.p-dexe #prod .dx-glass p{margin:var(--space-sm) 0 0;font-size:15px}
+@media (min-width:768px){.dx-grid{grid-template-columns:repeat(3,1fr)}}
+/* capítulo 1 (problema): vidrio oscuro, foto a un lado */
+.dx-cap1 .dx-prob{display:grid;gap:0;background:var(--glass-bg-dark);color:var(--color-on-primary);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,.2);border-radius:var(--glass-radius);box-shadow:var(--glass-shadow);overflow:hidden}
+.dx-cap1 .dx-prob img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:0!important}
+.dx-cap1 .dx-prob div{padding:var(--space-lg)}
+body.p-dexe #prod .dx-cap1 .dx-prob :is(p,li){color:rgba(255,255,255,.86)}
+.dx-cap1 .dx-prob ul{margin:0;padding:0;list-style:none;display:grid;gap:var(--space-sm)}
+.dx-cap1 .dx-prob li{padding-left:18px;position:relative}
+.dx-cap1 .dx-prob li::before{content:'';position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--color-accent)}
+@media (min-width:768px){.dx-cap1 .dx-prob{grid-template-columns:1fr 1fr;align-items:stretch}.dx-cap1 .dx-prob img{height:100%;aspect-ratio:auto}}
+/* capítulo 3 (solución): gancho de precio en vidrio */
+.dx-cap3 .dx-sol{display:grid;gap:var(--space-md)}
+body.p-dexe #prod .dx-cap3 .dx-oferta{display:grid;gap:var(--space-sm);padding:var(--space-lg)}
+.dx-cap3 .dx-oferta .dx-tag{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--color-accent);color:var(--color-on-accent);font:600 12px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;width:max-content}
+.dx-cap3 .dx-oferta b{font:700 clamp(36px,9vw,56px)/1 var(--font-heading)}
+.dx-cap3 .dx-oferta s{color:var(--color-muted-foreground);font-weight:400}
+@media (min-width:768px){.dx-cap3 .dx-sol{grid-template-columns:1.2fr 1fr;align-items:center}}
+
+/* ---------- debajo del precio: el gancho (James: nunca "pack") ---------- */
+body.p-dexe #prod .dx-gancho{display:flex;align-items:center;gap:var(--space-sm);margin:12px 0 4px;padding:12px 16px;background:var(--glass-bg-dark);color:var(--color-on-primary);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,.2);border-radius:18px;font-size:14.5px;line-height:1.35}
+.dx-gancho svg{flex:0 0 22px;width:22px;height:22px;fill:none;stroke:var(--color-on-primary);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+body.p-dexe #prod .dx-gancho b{color:var(--color-on-primary);font-family:var(--font-body);font-weight:600}

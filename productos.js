@@ -1296,6 +1296,84 @@ window.PRODUCTOS = [
     popular: 1,   /* James 09-10: impulsar el de 72, el que deja más margen */
   },
   {
+    /* 14-10 · SHAMPOO CUBRE CANAS DEXE, caja de 10 sobres de 25 ml, negro — Dropi 51293 (Chamos / Carlos, 13113), costo $2.000.
+       Producto "nuevo para Chile": nadie lo pautea en la Biblioteca de Meta CL (los 16 anunciantes de la categoría venden el
+       FRASCO de 400 ml a 19.990-30.990). Escalera de James 14-10: NO hay caja suelta. Dos ganchos, no "packs":
+         "Paga 1 y llévate 2" = 2 cajas $24.500 (la que se impulsa) · "Paga 2 y llévate 3" = 3 cajas $29.500.
+       Flete real sept-2026: $8.000 (promedio de 2.475 pedidos). Ganancia por entrega sin pauta: 12.500 / 15.500.
+       Diseño (dexe.css/.js) = OPCIÓN B de la skill ui-ux-pro-max elegida por James 14-10: patrón "historia por capítulos al bajar",
+       estilo vidrio líquido, negro #1C1917 / #44403C, fondo #FAFAF9, letras Cormorant + Montserrat; botón con el verde real del logo Dexe #84B348.
+       🔴 Es un COSMÉTICO semipermanente: cubre canas y se va desvaneciendo con los lavados. No decir "permanente", "para siempre"
+       ni cifras de duración que el fabricante no declare. Nada de marcas de la competencia en la página. */
+    id: 'dexe', unidad: 'caja', promo: 3, promoAntesDelPack: true,
+    dropiId: 51293,
+    etiqueta: 'Nuevo en Chile', etiquetaOro: true,
+    /* video REAL del producto (TikTok, sin marcas ajenas): pendiente de elegir; mientras no exista, la ficha lo salta sola */
+    video: 'img/dexe-ficha.mp4?v=1',
+    resenasRotulo: 'Lo que dicen quienes ya lo usaron',
+    resenasFuente: 'Opiniones reales de compradores del shampoo Dexe, tal como las escribieron.',
+    resenasMas: 'Más opiniones del Dexe',
+    /* reseñas REALES: se cargan desde Falabella Chile (fichas del Dexe 25 ml x 10) con _kn_scratch/dexe/_resenas_fal.js. NINGUNA escrita por nosotros. */
+    /* 14-10 · 5 opiniones REALES de Falabella Chile de compradores del Dexe (fichas 141453946, 146478868, 140000853), copiadas tal cual
+       (_kn_scratch/dexe/_resenas_fal.js → _fal_filtradas.json). Son pocas porque el producto es nuevo; NINGUNA escrita por nosotros. */
+    resenasResumen: { total: 5, nota: 5.0, rotulo: 'opiniones de 5 estrellas', barras: { 5: 5, 4: 0 } },
+    resenasReales: [
+      { nombre: 'Pamela Jarabran', comuna: '', fecha: '', estrellas: 5, texto: 'Se pone y a los minutos lo enjuagas..y listo.. dura un par de meses.. para mi es excelente.' },
+      { nombre: 'Mara', comuna: '', fecha: '', estrellas: 5, texto: 'Me toma bien las canas y no me daña el pelo' },
+      { nombre: 'Julio Ignacio', comuna: '', fecha: '', estrellas: 5, texto: 'Bueno eficaz , no mancha , por demás es inoloro. Práctico y durable' },
+      { nombre: 'Julio Ignacio', comuna: '', fecha: '', estrellas: 5, texto: 'Buen producto , perdura bastante tiempo antes de volver a ocupar el shampoo' },
+      { nombre: 'Eduardo', comuna: '', fecha: '', estrellas: 5, texto: 'Bueno y rapido' },
+    ],
+    antesDespues: 'img/dexe-ba.webp?v=1',   /* pendiente: foto real antes/después del mismo producto */
+    antesDespuesSub: 'Un sobre sobre las canas, cinco minutos de espera y enjuague. El color negro cubre las canas visibles en una sola aplicación.',
+    preguntas: [
+      { q: '¿Cómo se usa?', a: 'Con el cabello húmedo, abres un sobre, lo repartes sobre las zonas con canas como si fuera shampoo, esperas 5 a 10 minutos y enjuagas con agua. Un sobre alcanza para cabello corto o medio; si es largo o grueso, usa dos.' },
+      { q: '¿Cuánto trae cada caja?', a: 'Cada caja trae 10 sobres de 25 ml. Un sobre es una aplicación, así que con "Paga 1 y llévate 2" tienes 20 aplicaciones.' },
+      { q: '¿Cuánto dura el color?', a: 'Es un shampoo cubre canas semipermanente: el color se va desvaneciendo poco a poco con los lavados y lo retocas con otro sobre cuando lo necesites.' },
+      { q: '¿Sirve para hombres y mujeres?', a: 'Sí. Lo usan hombres y mujeres, en cabello y también en barba, siempre que se quiera cubrir canas con color negro.' },
+      { q: '¿Tiene amoníaco?', a: 'El fabricante lo declara sin amoníaco. No necesita mezclas ni medidas: el sobre ya viene listo para usar.' },
+      { q: '¿Mancha la piel?', a: 'Como todo cubre canas, puede teñir levemente la piel o las uñas si no se enjuaga bien. Conviene usar guantes y enjuagar la frente y las orejas al terminar.' },
+      { q: '¿Cómo pago?', a: 'Pagas cuando lo recibes, en efectivo o con tarjeta de débito. El envío es gratis a todo Chile.' },
+    ],
+    formulaRotulo: 'Lo que trae',
+    formulaTitulo: 'Un sobre, un retoque, cinco minutos.',
+    formulaSub: 'Shampoo cubre canas negro en sobres de 25 ml, listos para usar. Caja de 10 sobres.',
+    formula: [
+      ['reloj', '5 minutos', 'Se aplica como un shampoo, se deja actuar 5 a 10 minutos y se enjuaga.'],
+      ['gota', 'Dosis exacta', 'Cada sobre es una aplicación. No se seca, no se derrama y no se desperdicia.'],
+      ['escudo', 'Sin amoníaco', 'Así lo declara el fabricante. Sin mezclas, sin medidas, sin olor fuerte.'],
+      ['fibra', 'Cabello y barba', 'Color negro para cubrir canas en el cabello y en la barba.'],
+      ['casa', 'En tu casa', 'Sin ir a la peluquería cada vez que asoman las canas.'],
+      ['sol', 'Para él y para ella', 'Lo usan hombres y mujeres que quieren verse con el color parejo.'],
+    ],
+    comparaTitulo: 'Por qué en sobres y no en frasco',
+    compara: [
+      'Cada sobre es una dosis exacta: usas lo justo y el resto queda sellado, sin secarse ni derramarse.',
+      'Cabe en el bolso o en la maleta: te lo llevas de viaje sin cargar un frasco.',
+      'Con "Paga 1 y llévate 2" tienes 20 retoques; con "Paga 2 y llévate 3", 30.',
+    ],
+    nombre: 'Shampoo Cubre Canas Dexe',
+    sub: 'Cubre las canas en 5 minutos, en tu casa · caja de 10 sobres de 25 ml · color negro',
+    categoria: 'Belleza',
+    foto: 'img/dexe-heroe.webp?v=1',
+    fotos: ['img/dexe-caja.webp?v=1'],
+    acento: '#84B348', acento2Manual: '#18181B',   /* James 14-10: botón con el color del producto = verde real del logo Dexe (medido en la foto); negro #18181B de la caja como primario */
+    desc: 'Shampoo cubre canas Dexe en sobres de 25 ml, color negro. Se aplica como un shampoo sobre el cabello húmedo, se deja actuar 5 a 10 minutos y se enjuaga. Cada sobre es una aplicación; la caja trae 10. Sin amoníaco según el fabricante. Para hombres y mujeres, en cabello y barba.',
+    puntos: [
+      'Cubre las canas en una sola aplicación de 5 minutos',
+      '10 sobres de 25 ml por caja: un sobre, un retoque',
+      'Sin amoníaco, sin mezclas, listo para usar',
+      'Color negro para cabello y barba',
+      'Para hombres y mujeres',
+    ],
+    /* "antes" = lo que valdrían las cajas a $24.500 cada una (el gancho dice "paga una"). Tachados a la espera del OK de James. */
+    packs: [
+      { cant: 2, precio: 24500, antes: 49000, texto: 'Paga 1 y llévate 2 · 2 cajas, 20 sobres' },
+      { cant: 3, precio: 29500, antes: 73500, texto: 'Paga 2 y llévate 3 · 3 cajas, 30 sobres' },
+    ],
+    popular: 0,   /* James 14-10: se impulsa "Paga 1 y llévate 2" */
+  },
+  {
     /* 13-10 · COLÁGENO NEOCELL Bio-Peptides 567 g — Dropi 142607 (VITALCOM), costo $6.500. Lo trajo James (Dropdata 27/30 días
        con venta, ~70/día) y 11 anunciantes lo pautan en Meta Chile. Escalera APROBADA por James 13-10 ("dale"): 1 frasco $22.500 ·
        2 $34.500 (la que se impulsa: deja $13.800) · 3 $42.500 = $500 bajo el más barato (Clicka 22.990 · Tu compra segura 34.990/42.990).
@@ -1318,24 +1396,24 @@ window.PRODUCTOS = [
        el resto, reseñas reales de Falabella CL/CO/PE de colágeno en polvo (_kn_scratch/neocell/_resenas_100_a_pagina.js). Tal cual. */
     resenasReales: [
       { nombre: 'Verónica', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n01.webp?v=1', texto: 'Es este de NeoCell porque es hidrolizado y tiene 20 gramos de colágeno, que es lo más que yo he visto en un colágeno. Además de los 20 gramos de colágeno, también tiene 18 gramos de proteína.' },
+      { nombre: 'Mike Narváez', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n02.webp?v=1', texto: 'Yo el que uso es el NeoCell, el grass-fed, no sabe a nada, no huele a nada, lo puedes añadir en café, jugo, agua, lo que te dé la gana.' },
+      { nombre: 'Sam Orellana', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n03.webp?v=1', texto: 'Este colágeno no te trae sabor, no te trae color, por eso lo puedes disolver en tu bebida favorita. Yo en lo particular me lo tomo con café y esto sabe delicioso.' },
+      { nombre: 'Compra verificada', comuna: 'AliExpress', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n04.webp?v=1', texto: 'Primero, es muy fácil de usar. Se disuelve bien, especialmente en bebidas calientes como el café, y no tiene un sabor fuerte, lo cual valoro mucho. He notado que mi piel se ve más hidratada y se siente más suave. No es un producto milagroso, pero con consistencia, sí noto una diferencia.' },
+      { nombre: 'Compra verificada', comuna: 'AliExpress', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n05.webp?v=1', texto: 'Excelente collagen me encanta tiene muchos bendicios' },
       { nombre: 'Romina rivera', comuna: '', fecha: '', estrellas: 5, texto: 'Buen producto, desde que lo tomo ya no se rompen mis uñas lo compre por los buenos comentarios que tiene el producto veremos con el tiempo si cumple con lo que promete :)' },
       { nombre: 'Patricia', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente producto e notado un cambio muy notorio en mi piel y en el dolor de las articulaciones además y no se si tendrá que ver,pero no me e resfriado' },
       { nombre: 'Anita', comuna: '', fecha: '', estrellas: 5, texto: 'Adquirí este producto para que ayude a mi madre con su problema en las rodillas y está teniendo resultados favorables por su consumo diario.' },
       /* 14-10 James: "cinco con imagen… búscalas en AliExpress". Reseñas REALES del NeoCell Collagen Bio-Peptides en AliExpress
          (artículo 1005012194402082, _kn_scratch/neocell/_ali_neocell.json), foto del cliente; texto traducido por AliExpress, frases tal cual. */
-      { nombre: 'Compra verificada', comuna: 'AliExpress', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n04.webp?v=1', texto: 'Primero, es muy fácil de usar. Se disuelve bien, especialmente en bebidas calientes como el café, y no tiene un sabor fuerte, lo cual valoro mucho. He notado que mi piel se ve más hidratada y se siente más suave. No es un producto milagroso, pero con consistencia, sí noto una diferencia.' },
       { nombre: 'Patricia', comuna: '', fecha: '', estrellas: 5, texto: 'Tamaño real, sabor agradable y lo mejor es que las molestias en mis articulaciones de los pies están en franca regresión Lo máximo' },
       { nombre: 'Caro', comuna: '', fecha: '', estrellas: 5, texto: 'Después de 7 días usándolo noté que mis uñas ya no se quebraban, si hace eso por ellas imagino lo que hará por mís articulaciones' },
       { nombre: 'Mary', comuna: '', fecha: '', estrellas: 5, texto: 'Colágeno hidrolizado es muy bueno por sus propiedades hay ser constante para seguir adelante y tener una piel hermosa y fuerte' },
-      { nombre: 'Mike Narváez', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n02.webp?v=1', texto: 'Yo el que uso es el NeoCell, el grass-fed, no sabe a nada, no huele a nada, lo puedes añadir en café, jugo, agua, lo que te dé la gana.' },
       { nombre: 'Melany', comuna: '', fecha: '', estrellas: 5, texto: 'Me encanta desde que comencé a tomarlo automáticamente deje de sentir dolor de rodillas y hombros al entrenar 1000/10' },
       { nombre: 'Mara', comuna: '', fecha: '', estrellas: 5, texto: 'desde que lo tomo,ya no se me cae el pelo y mis uñas están más fuertes, además me sirve para mí dolor de huesos' },
       { nombre: 'Angela', comuna: '', fecha: '', estrellas: 5, texto: 'Este colageno es de facil absorción y mi padre ha sentido mejoría en sus rodillas, lo recomiendo totalmente.' },
       { nombre: 'Jackelin', comuna: '', fecha: '', estrellas: 5, texto: 'El producto cumple con su función. Se lo regalé a mi papá y el dolor en la articulacion de la rodilla' },
-      { nombre: 'Compra verificada', comuna: 'AliExpress', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n05.webp?v=1', texto: 'Excelente collagen me encanta tiene muchos bendicios' },
       { nombre: 'María Teresa', comuna: '', fecha: '', estrellas: 5, texto: 'El producto es de buena calidad, ayuda mucho con las articulaciones y fortifica todos los ligamentos' },
       { nombre: 'Maria', comuna: '', fecha: '', estrellas: 5, texto: 'Es un producto que otorga resultados inmediatos dejando la piel súper hidratada con un glow up lindo' },
-      { nombre: 'Sam Orellana', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n03.webp?v=1', texto: 'Este colágeno no te trae sabor, no te trae color, por eso lo puedes disolver en tu bebida favorita. Yo en lo particular me lo tomo con café y esto sabe delicioso.' },
       { nombre: 'Esther', comuna: '', fecha: '', estrellas: 5, texto: 'Es muy bueno desde la primera toma me bajó un montón el dolor de rodilla … se los recomiendo' },
       { nombre: 'Andrea', comuna: '', fecha: '', estrellas: 5, texto: 'no tiene Mal savor y me a quitado las molestias dela rodilla y mi piel se ve mas radiante' },
       { nombre: 'Miguelon', comuna: '', fecha: '', estrellas: 5, texto: 'Rodillas nuevas, como las tenía hace 20años. Me va súper bien. Reecontra recomendado.' },
@@ -1421,7 +1499,7 @@ window.PRODUCTOS = [
       { nombre: 'Claudia Zapata Mora', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente el tamaño y dura el mes' },
       { nombre: 'Viviana Palomino', comuna: '', fecha: '', estrellas: 5, texto: 'lo tomo hace 2 meses , muy bueno' },
     ],
-    antesDespues: 'img/neo-ba-hombre.webp?v=1',   /* 14-10 James: "deja la del señor" */   /* OpenAI 13-10, molde de la tienda (ANTES gris / DESPUÉS naranja + 3 íconos). Imagen ilustrativa */
+    antesDespues: 'img/neo-ba-hombre.webp?v=1',   /* 14-10 James: "deja la del señor" (v4: rodillas rígidas → más movimiento). Imagen ilustrativa */
     antesDespuesSub: 'Con los años el cuerpo produce menos colágeno y se nota al moverse, en la piel y en la energía del día.',
     preguntas: [
       { q: '¿Cómo se toma?', a: 'Una medida al día (20 g) disuelta en café, agua, jugo, leche o un batido. No tiene sabor, así que no cambia el gusto de lo que tomas.' },
