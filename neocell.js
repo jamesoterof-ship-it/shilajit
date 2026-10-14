@@ -177,11 +177,30 @@
     else { var sc = document.createElement('script'); sc.src = 'lib/SplitText.min.js'; sc.onload = letras; document.head.appendChild(sc); }
   }
 
+  /* 14-10 James: "los botones tienen que tener efecto y no tienen". Efectos del catálogo de la skill ui-ux-pro-max (--domain gsap):
+     1. "Hover Micro-interaction · Standard": gsap.to(el, { y:-4, scale:1.02, boxShadow:'0 12px 24px …', duration:0.25, ease:'power2.out' })
+        -> en el celular no hay mouse: se repite solo (ida y vuelta, cada ~2 s) para que el botón "llame".
+     2. Brillo: "backgroundPosition 200%, 1.4 s, sine.inOut, repeat:-1" (el tornasol iba a 8 s y no se notaba; ver neocell.css).
+     3. Quick Reference "scale-feedback": al tocar baja a 0.96 y vuelve.
+     Con movimiento reducido no se anima nada. */
+  function botones() {
+    if (calma || !window.gsap) return;
+    document.querySelectorAll('#prod .cta, #prod #btnPromo, #prod #btnPagoAnt, #prod .cc-btn, #stickycta a, #stickycta button').forEach(function (b, i) {
+      if (b.dataset.neoBtn) return; b.dataset.neoBtn = '1';
+      gsap.to(b, { y: -4, scale: 1.02, boxShadow: '0 12px 24px rgba(245,158,11,0.45)', duration: 0.25, ease: 'power2.out', yoyo: true, repeat: -1, repeatDelay: 1.6, delay: (i % 3) * 0.4 });
+      b.addEventListener('pointerdown', function () { gsap.to(b, { scale: 0.96, duration: 0.12, ease: 'power1.out', overwrite: 'auto' }); });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (ev) { b.addEventListener(ev, function () { gsap.to(b, { scale: 1, duration: 0.2, ease: 'power2.out' }); }); });
+    });
+  }
+
   function armar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2') || !document.getElementById('listaRs')) return false;
     heroe(prod); /* 14-10 James: "ese desorden… el formulario por la mitad… la promoción por debajo": sin ordenar(), queda el orden
-       de la ficha, el mismo de las tabletas (producto > promoción > pago con tarjeta > … > preguntas > formulario al final) */ solucion(prod); imagenesNuevas(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Aurora UI · sin carrusel (James: reseñas como en las demás páginas) */
+       de la ficha, el mismo de las tabletas (producto > promoción > pago con tarjeta > … > preguntas > formulario al final) */ solucion(prod); imagenesNuevas(prod); movimiento(prod);
+    /* 14-10 James: "cinco fotos, nada más aparece una": las 5 con foto van primero en productos.js y la ficha muestra 4; se abre una tanda más */
+    var mas = document.getElementById('masRs'); if (mas && !prod.dataset.neoRs) { prod.dataset.neoRs = '1'; mas.click(); }
+    botones(); setTimeout(botones, 1500);   /* el botón fijo de abajo aparece después */ efectosHeroe(prod);   /* 14-10: Aurora UI · sin carrusel (James: reseñas como en las demás páginas) */
     /* red de seguridad (14-10, James vio secciones en blanco): nada que YA pasó por la pantalla puede quedar invisible.
        14-10 tarde, James: "no tiene nada de efecto": antes destapaba TODA la página a los 2,5 s y lo de abajo ya no se animaba al llegar.
        Ahora solo destapa lo que está en pantalla o arriba de ella, cada vez que se mueve la página. */

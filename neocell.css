@@ -61,8 +61,9 @@ body.p-neo #prod > .res-sec .eyebrow{color:var(--c-texto)}
 
 /* botones: ámbar con brillo tornasol que recorre el botón cada 8 s */
 body.p-neo #prod :is(.cta,#btnPromo,#btnPagoAnt,.cc-btn),body.p-neo #stickycta :is(a,button){
-  background:linear-gradient(110deg,var(--c-ambar) 0%,#FBBF24 40%,var(--c-naranja) 60%,var(--c-ambar) 100%)!important;background-size:200% 100%!important;
-  animation:neo-tornasol 8s linear infinite!important;color:var(--c-texto)!important;font-family:var(--f-tit)!important;font-weight:800!important;
+  background-image:linear-gradient(110deg,var(--c-ambar) 0%,#FBBF24 40%,var(--c-naranja) 60%,var(--c-ambar) 100%)!important;background-size:200% 100%!important;background-color:var(--c-ambar)!important;
+  /* 14-10: antes "background:…!important" fijaba también la posición con !important y la animación del brillo NUNCA corría */
+  animation:neo-tornasol 1.4s ease-in-out infinite!important;   /* skill: shimmer 1.2-1.6 s sine.inOut (antes 8 s, no se notaba) */color:var(--c-texto)!important;font-family:var(--f-tit)!important;font-weight:800!important;
   border:0!important;border-radius:999px!important;box-shadow:0 10px 26px rgba(245,158,11,.35);cursor:pointer}
 body.p-neo #prod :is(.btn-write,.masRs,.cta.azul){background:rgba(255,255,255,.8)!important;color:var(--c-primario)!important;border:1.5px solid var(--c-secundario)!important;border-radius:999px!important;font-weight:700;cursor:pointer}
 body.p-neo #prod :is(a,button,input,select,summary,textarea):focus-visible{outline:3px solid var(--c-primario);outline-offset:2px}
@@ -80,6 +81,11 @@ body.p-neo #prod > .neo-heroe > *{max-width:none}
 .neo-heroe .neo-tit{position:absolute;z-index:2;left:0;right:0;top:0;padding:22px 18px 0}
 .neo-heroe .neo-rot{margin:0 0 10px;font:700 12.5px/1 var(--f-txt);letter-spacing:.14em;text-transform:uppercase;color:var(--c-texto);background:rgba(255,255,255,.85);display:inline-block;padding:7px 12px;border-radius:999px}
 body.p-neo #prod .neo-heroe h1{margin:0;max-width:11ch;font:800 clamp(36px,10.4vw,64px)/.95 var(--f-tit);color:var(--c-texto);perspective:400px}
+
+/* 14-10 James: "unir ese espacio ahí": entre el botón de arriba y "El producto" quedaban 133 px vacíos */
+body.p-neo #prod > .arriba2 + section{padding-top:8px;padding-bottom:6px}
+body.p-neo #prod > .arriba2 + section .ctaSub{margin-bottom:0}
+body.p-neo #prod > .arriba2 + section + .desc{padding-top:22px}
 
 /* 14-10 James: "me cambiaste el estilo de la reseña… déjala como están las páginas": sin carrusel ni estilo propio, las reseñas de la ficha */
 
