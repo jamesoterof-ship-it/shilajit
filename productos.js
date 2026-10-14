@@ -1321,6 +1321,9 @@ window.PRODUCTOS = [
       { nombre: 'Romina rivera', comuna: '', fecha: '', estrellas: 5, texto: 'Buen producto, desde que lo tomo ya no se rompen mis uñas lo compre por los buenos comentarios que tiene el producto veremos con el tiempo si cumple con lo que promete :)' },
       { nombre: 'Patricia', comuna: '', fecha: '', estrellas: 5, texto: 'Excelente producto e notado un cambio muy notorio en mi piel y en el dolor de las articulaciones además y no se si tendrá que ver,pero no me e resfriado' },
       { nombre: 'Anita', comuna: '', fecha: '', estrellas: 5, texto: 'Adquirí este producto para que ayude a mi madre con su problema en las rodillas y está teniendo resultados favorables por su consumo diario.' },
+      /* 14-10 James: "cinco con imagen… búscalas en AliExpress". Reseñas REALES del NeoCell Collagen Bio-Peptides en AliExpress
+         (artículo 1005012194402082, _kn_scratch/neocell/_ali_neocell.json), foto del cliente; texto traducido por AliExpress, frases tal cual. */
+      { nombre: 'Compra verificada', comuna: 'AliExpress', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n04.webp?v=1', texto: 'Primero, es muy fácil de usar. Se disuelve bien, especialmente en bebidas calientes como el café, y no tiene un sabor fuerte, lo cual valoro mucho. He notado que mi piel se ve más hidratada y se siente más suave. No es un producto milagroso, pero con consistencia, sí noto una diferencia.' },
       { nombre: 'Patricia', comuna: '', fecha: '', estrellas: 5, texto: 'Tamaño real, sabor agradable y lo mejor es que las molestias en mis articulaciones de los pies están en franca regresión Lo máximo' },
       { nombre: 'Caro', comuna: '', fecha: '', estrellas: 5, texto: 'Después de 7 días usándolo noté que mis uñas ya no se quebraban, si hace eso por ellas imagino lo que hará por mís articulaciones' },
       { nombre: 'Mary', comuna: '', fecha: '', estrellas: 5, texto: 'Colágeno hidrolizado es muy bueno por sus propiedades hay ser constante para seguir adelante y tener una piel hermosa y fuerte' },
@@ -1329,6 +1332,7 @@ window.PRODUCTOS = [
       { nombre: 'Mara', comuna: '', fecha: '', estrellas: 5, texto: 'desde que lo tomo,ya no se me cae el pelo y mis uñas están más fuertes, además me sirve para mí dolor de huesos' },
       { nombre: 'Angela', comuna: '', fecha: '', estrellas: 5, texto: 'Este colageno es de facil absorción y mi padre ha sentido mejoría en sus rodillas, lo recomiendo totalmente.' },
       { nombre: 'Jackelin', comuna: '', fecha: '', estrellas: 5, texto: 'El producto cumple con su función. Se lo regalé a mi papá y el dolor en la articulacion de la rodilla' },
+      { nombre: 'Compra verificada', comuna: 'AliExpress', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n05.webp?v=1', texto: 'Excelente collagen me encanta tiene muchos bendicios' },
       { nombre: 'María Teresa', comuna: '', fecha: '', estrellas: 5, texto: 'El producto es de buena calidad, ayuda mucho con las articulaciones y fortifica todos los ligamentos' },
       { nombre: 'Maria', comuna: '', fecha: '', estrellas: 5, texto: 'Es un producto que otorga resultados inmediatos dejando la piel súper hidratada con un glow up lindo' },
       { nombre: 'Sam Orellana', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-neocell/n03.webp?v=1', texto: 'Este colágeno no te trae sabor, no te trae color, por eso lo puedes disolver en tu bebida favorita. Yo en lo particular me lo tomo con café y esto sabe delicioso.' },

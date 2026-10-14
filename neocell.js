@@ -180,7 +180,8 @@
   function armar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2') || !document.getElementById('listaRs')) return false;
-    heroe(prod); ordenar(prod); solucion(prod); imagenesNuevas(prod); carrusel(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Aurora UI */
+    heroe(prod); /* 14-10 James: "ese desorden… el formulario por la mitad… la promoción por debajo": sin ordenar(), queda el orden
+       de la ficha, el mismo de las tabletas (producto > promoción > pago con tarjeta > … > preguntas > formulario al final) */ solucion(prod); imagenesNuevas(prod); carrusel(prod); movimiento(prod); efectosHeroe(prod);   /* 14-10: Aurora UI */
     /* red de seguridad (14-10, James vio secciones en blanco): a los 2,5 s nada puede quedar invisible, pase lo que pase con las animaciones */
     setTimeout(function () {
       prod.querySelectorAll('[data-rv]:not(.vino)').forEach(function (e) { e.classList.add('vino'); });
