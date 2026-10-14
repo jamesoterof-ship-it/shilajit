@@ -87,6 +87,10 @@ body.p-neo #prod > .arriba2 + section{padding-top:8px;padding-bottom:6px}
 body.p-neo #prod > .arriba2 + section .ctaSub{margin-bottom:0}
 body.p-neo #prod > .arriba2 + section + .desc{padding-top:22px}
 
+/* 14-10 James: "título arriba y estrellas debajo" (se habían ido con el carrusel) */
+body.p-neo #prod .rev-sec .rev-title{display:block}
+body.p-neo #prod .rev-sec .rev-title .stars{display:block;margin-top:8px}
+
 /* 14-10 James: "me cambiaste el estilo de la reseña… déjala como están las páginas": sin carrusel ni estilo propio, las reseñas de la ficha */
 
 @media (prefers-reduced-motion:reduce){
