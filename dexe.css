@@ -76,6 +76,21 @@ body.p-dexe #prod .rev p{font-style:italic;color:#666}
 body.p-dexe #prod > .dx-heroe{padding:0;display:grid}
 .dx-marco{position:relative;isolation:isolate;background:var(--color-background)}
 .dx-heroe .dx-foto{display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:0!important}
+/* 14-10 héroe nuevo (foto oscura de estudio): el título va en BLANCO directo sobre el negro de la foto, sin la tarjeta gris */
+body.p-dexe #prod .dx-heroe .dx-vidrio{background:transparent;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding:var(--space-lg) var(--space-sm) 0}
+body.p-dexe #prod .dx-heroe .dx-sello{color:var(--color-accent)}
+body.p-dexe #prod .dx-heroe .dx-h1{color:#FFFFFF;font-size:clamp(46px,13vw,84px);text-shadow:0 4px 30px rgba(0,0,0,.6)}
+/* 14-10 James "esto se ve feo" (la tarjeta gris con 3 cajitas bajo el héroe): fuera la tarjeta. La foto se funde en negro y debajo
+   sigue el mismo negro, con una línea de texto, los 3 datos separados por líneas finas (sin cajas) y el botón a todo el ancho. */
+body.p-dexe #prod .dx-marco::after{content:'';position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(180deg,rgba(12,10,9,0),#0C0A09);pointer-events:none}
+body.p-dexe #prod .dx-heroe .dx-abajo{margin:0;border:0;border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;background:#0C0A09;padding:4px var(--space-md) var(--space-xl);gap:var(--space-lg)}
+body.p-dexe #prod .dx-heroe .dx-baja{text-align:center;font-size:17px;color:rgba(255,255,255,.82)}
+body.p-dexe #prod .dx-heroe .dx-datos{gap:0;margin-top:var(--space-md)}
+body.p-dexe #prod .dx-heroe .dx-datos li{border:0;border-radius:0;background:none;padding:4px 6px}
+body.p-dexe #prod .dx-heroe .dx-datos li+li{border-left:1px solid rgba(255,255,255,.18)}
+body.p-dexe #prod .dx-heroe .dx-datos b{font-size:30px;color:var(--color-accent)}
+body.p-dexe #prod .dx-heroe .cta{max-width:none}
+@media (min-width:768px){body.p-dexe #prod .dx-heroe .dx-abajo{margin:0;padding:var(--space-md) var(--space-xl) var(--space-xl)}}
 .dx-marco .dx-arriba{position:absolute;top:0;left:0;right:0;padding:var(--space-md)}
 .dx-vidrio{background:var(--glass-bg);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid var(--glass-line);border-radius:var(--glass-radius);box-shadow:var(--glass-shadow);padding:var(--space-md) var(--space-lg)}
 .dx-sello{display:inline-flex;align-items:center;gap:var(--space-sm);margin:0 0 var(--space-sm);font:600 11.5px/1 var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--color-secondary)}
@@ -131,3 +146,11 @@ body.p-dexe #prod .dx-cap3 .dx-oferta{display:grid;gap:var(--space-sm);padding:v
 body.p-dexe #prod .dx-gancho{display:flex;align-items:center;gap:var(--space-sm);margin:12px 0 4px;padding:12px 16px;background:var(--glass-bg-dark);color:var(--color-on-primary);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid rgba(255,255,255,.2);border-radius:18px;font-size:14.5px;line-height:1.35}
 .dx-gancho svg{flex:0 0 22px;width:22px;height:22px;fill:none;stroke:var(--color-on-primary);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 body.p-dexe #prod .dx-gancho b{color:var(--color-on-primary);font-family:var(--font-body);font-weight:600}
+/* 14-10: imagen de la promoción (las dos ofertas) arriba de la tarjeta, y dos botones */
+.dx-promo-img{margin:0 0 var(--space-md)}
+.dx-promo-img img{display:block;width:100%;height:auto;aspect-ratio:1/1;border-radius:var(--glass-radius)!important;box-shadow:var(--glass-shadow)}
+body.p-dexe #prod .promo-sec .cta{width:100%;margin-top:var(--space-sm)}
+body.p-dexe #prod .promo-sec .dx-promo-2{background:#0C0A09!important;color:#FFFFFF!important;border:1px solid var(--color-accent);box-shadow:none}
+/* 14-10: el gancho bajo el precio en negro sólido (el vidrio gris se veía apagado) */
+body.p-dexe #prod .dx-gancho{background:#0C0A09;-webkit-backdrop-filter:none;backdrop-filter:none;border:0}
+body.p-dexe #prod .dx-gancho b{color:var(--color-accent)}

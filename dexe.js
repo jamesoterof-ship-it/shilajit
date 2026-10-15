@@ -49,14 +49,14 @@
     s.className = 'dx-heroe';
     s.innerHTML =
         '<div class="dx-marco">'
-      +   '<img class="dx-foto" src="img/dexe-heroe.webp?v=2" alt="Caja negra del shampoo cubre canas Dexe con tres sobres de 25 ml delante, sobre un mesón claro" width="1024" height="1536" fetchpriority="high">'
+      +   '<img class="dx-foto" src="img/dexe-heroe.webp?v=3" alt="Caja negra del shampoo cubre canas Dexe y un sobre de 25 ml sobre una superficie negra con gotas y luz verde" width="1024" height="1536" fetchpriority="high">'
       +   '<div class="dx-arriba"><div class="dx-vidrio">'
       +     '<p class="dx-sello"><i aria-hidden="true"></i>Nuevo en Chile</p>'
       +     '<h1 class="dx-h1" aria-label="Cubre tus canas en 5 minutos.">' + cascada('Cubre tus canas en 5 minutos.') + '</h1>'
       +   '</div></div>'
       + '</div>'
       + '<div class="dx-abajo">'
-      +   '<div><p class="dx-baja">Shampoo cubre canas en sobres de 25 ml. Un sobre, un retoque: lo aplicas, esperas cinco minutos y enjuagas. Color negro, para cabello y barba.</p>'
+      +   '<div><p class="dx-baja">Un sobre, un retoque. Color negro para cabello y barba.</p>'
       +   '<ul class="dx-datos"><li><b>10</b>sobres por caja</li><li><b>5 min</b>de espera</li><li><b>25 ml</b>por sobre</li></ul></div>'
       +   '<button type="button" class="cta" id="dxCta">Lo quiero, pago al recibir</button>'
       + '</div>';
@@ -86,10 +86,10 @@
     if (prod.querySelector('.dx-cap1')) return;
     var s = document.createElement('section');
     s.className = 'dx-cap dx-cap1';
+    /* 14-10 James: "mucho texto y nada de imágenes": cada capítulo = una foto grande y una línea */
     s.innerHTML = '<span class="dx-num">Capítulo 1 · El problema</span><h2>Las canas vuelven cada dos semanas.</h2>'
-      + '<p>Te tiñes, y a los quince días la raíz blanca asoma otra vez. Volver a la peluquería cada vez cuesta plata y tiempo; el tinte de caja te deja con mezclas, olor fuerte y medio frasco que se seca.</p>'
       + '<div class="dx-prob grid-item"><img src="img/dexe-ba.webp?v=1" alt="Antes y después: raíces y barba con canas, y el mismo hombre con el cabello negro parejo" width="1200" height="800" loading="lazy">'
-      + '<div><ul><li>Raíz blanca a las dos semanas</li><li>Mezclas, medidas y olor a amoníaco</li><li>El frasco abierto se seca o se derrama</li><li>Peluquería cada vez: plata y tiempo</li></ul></div></div>'
+      + '<div><ul><li>Raíz blanca a los 15 días</li><li>Peluquería cada vez</li><li>Tinte de caja: mezclas y olor</li></ul></div></div>'
       + mini('Ver cómo lo resuelve');
     var ref = prod.querySelector('.vid-wrap') || prod.querySelector('.form-sec');
     if (ref) ref.parentNode.insertBefore(s, ref); else prod.appendChild(s);
@@ -101,10 +101,9 @@
     var s = document.createElement('section');
     s.className = 'dx-cap dx-cap2';
     s.innerHTML = '<span class="dx-num">Capítulo 2 · El camino</span><h2>Un sobre, un retoque, cinco minutos.</h2>'
-      + '<p>No es un tinte de mezclas. Es un shampoo que viene dosificado en sobres de 25 ml: abres uno cuando asoman las canas, lo aplicas en tu casa y enjuagas. Lo que no usas queda sellado.</p>'
       + '<div class="dx-grid">' + PASOS.map(function (u, i) {
           return '<figure class="dx-glass grid-item"><img src="' + u[0] + '" alt="' + u[3] + '" width="1024" height="1024" loading="lazy">'
-            + '<figcaption><span class="dx-paso">Paso ' + (i + 1) + '</span><b>' + u[1] + '</b><p>' + u[2] + '</p></figcaption></figure>';
+            + '<figcaption><span class="dx-paso">Paso ' + (i + 1) + '</span><b>' + u[1] + '</b></figcaption></figure>';
         }).join('') + '</div>'
       + mini('Ver el resultado');
     var ref = prod.querySelector('.form-sec');
@@ -117,12 +116,14 @@
     var s = document.createElement('section');
     s.className = 'dx-cap dx-cap3';
     s.innerHTML = '<span class="dx-num">Capítulo 3 · La solución</span><h2>Negro parejo, en cabello y barba.</h2>'
-      + '<p>Lo usan hombres y mujeres que quieren verse con el color parejo sin pasar por la peluquería. Sin amoníaco según el fabricante, sin mezclas, listo para usar.</p>'
       + '<div class="dx-sol">'
       +   '<figure class="dx-glass grid-item"><img src="img/dexe-ambos.webp?v=1" alt="Hombre y mujer con el cabello negro, sin canas visibles, con la caja Dexe" width="1024" height="1024" loading="lazy"></figure>'
-      +   '<div class="dx-glass grid-item dx-oferta"><span class="dx-tag">Paga 1 y llévate 2</span><b>$24.500</b><span><s>$49.000</s> · 2 cajas · 20 sobres · 20 retoques</span>'
-      +   '<p>Y si quieres para más tiempo: <strong>Paga 2 y llévate 3</strong>, 3 cajas por $29.500. Envío gratis y pagas al recibir.</p></div>'
+      +   '<div class="dx-glass grid-item dx-oferta"><span class="dx-tag">Paga 1 y llévate 2</span><b>$24.500</b><span><s>$49.000</s> · 2 cajas · 20 sobres</span>'
+      +   '<p><strong>Paga 2 y llévate 3</strong>: 3 cajas por $29.500. Envío gratis, pagas al recibir.</p></div>'
       + '</div>'
+      + '<div class="dx-grid dx-galeria"><figure class="dx-glass grid-item"><img src="img/dexe-caja.webp?v=1" alt="Caja Dexe con los 10 sobres abiertos sobre la mesa" width="1000" height="1000" loading="lazy"></figure>'
+      +   '<figure class="dx-glass grid-item"><img src="img/dexe-paso3.webp?v=1" alt="Cabello negro parejo después de enjuagar" width="1000" height="1000" loading="lazy"></figure>'
+      +   '<figure class="dx-glass grid-item"><img src="img/dexe-paso1.webp?v=1" alt="Un sobre de Dexe abierto" width="1000" height="1000" loading="lazy"></figure></div>'
       + mini('Pedir el mío');
     var ref = prod.querySelector('.form-sec');
     if (ref) ref.parentNode.insertBefore(s, ref); else prod.appendChild(s);
@@ -131,19 +132,41 @@
 
   /* MOVIMIENTO = el snippet "Stagger List" (Standard) que dio la skill con --motion 5, tal cual, por cuadrícula */
   function mover(prod) {
-    if (calma || !window.gsap || !window.ScrollTrigger) return;
-    try { gsap.registerPlugin(ScrollTrigger); } catch (e) { return; }
-    prod.querySelectorAll('.dx-cap').forEach(function (cap) {
-      var items = cap.querySelectorAll('.grid-item'); if (!items.length) return;
-      gsap.from(items, { opacity: 0, scale: 0.92, y: 16, duration: 0.4, stagger: { each: 0.06, from: 'start', grid: 'auto' }, ease: 'back.out(1.4)',
-        scrollTrigger: { trigger: cap, start: 'top 85%', once: true } });
+    /* 14-10: con gsap.from + ScrollTrigger las fotos quedaban INVISIBLES hasta que el disparador saltaba (en el celular a veces nunca:
+       capítulo 2 en blanco, mismo error que tuvo Neocell). Ahora las fotos están SIEMPRE visibles y la animación solo corre cuando el
+       capítulo entra en pantalla (IntersectionObserver), con fromTo que termina en opacidad 1. */
+    if (calma || !window.gsap || !('IntersectionObserver' in window)) return;
+    var obs = new IntersectionObserver(function (lista) {
+      lista.forEach(function (it) {
+        if (!it.isIntersecting) return; obs.unobserve(it.target);
+        var items = it.target.querySelectorAll('.grid-item'); if (!items.length) return;
+        gsap.fromTo(items, { opacity: 0, scale: 0.92, y: 16 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: { each: 0.06, from: 'start', grid: 'auto' }, ease: 'back.out(1.4)', clearProps: 'transform' });
+      });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    prod.querySelectorAll('.dx-cap').forEach(function (cap) { obs.observe(cap); });
+  }
+
+  /* 14-10 James: "en la sección de promoción pon una imagen, con las dos promos". Imagen (precios escritos con PIL, exactos) arriba de la
+     tarjeta de promoción + un segundo botón para "Paga 1 y llévate 2" (el de la ficha lleva a "Paga 2 y llévate 3"). */
+  function promo(prod) {
+    var sec = prod.querySelector('.promo-sec'); if (!sec || sec.querySelector('.dx-promo-img')) return;
+    var fig = document.createElement('figure'); fig.className = 'dx-promo-img';
+    fig.innerHTML = '<img src="img/dexe-promo.webp?v=1" alt="Promoción: Paga 1 y llévate 2 cajas Dexe por $24.500, o paga 2 y llévate 3 por $29.500" width="1024" height="1024" loading="lazy">';
+    sec.insertBefore(fig, sec.firstChild);
+    var bp = sec.querySelector('#btnPromo'); if (!bp) return;
+    bp.textContent = 'Quiero Paga 2 y llévate 3';
+    var b2 = document.createElement('button'); b2.type = 'button'; b2.className = 'cta dx-promo-2'; b2.textContent = 'Quiero Paga 1 y llévate 2';
+    bp.insertAdjacentElement('beforebegin', b2);
+    b2.addEventListener('click', function () {
+      var k = document.querySelector('.form-sec .pack[data-i="0"]') || document.querySelector('.pack[data-i="0"]'); if (k) k.click();
+      irAlFormulario();
     });
   }
 
   function armar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2')) return false;
-    progreso(); portada(prod); gancho(prod); capitulo1(prod); capitulo2(prod); capitulo3(prod); mover(prod);
+    progreso(); portada(prod); gancho(prod); promo(prod); capitulo1(prod); capitulo2(prod); capitulo3(prod); mover(prod);
     return true;
   }
   function intentar() {
