@@ -222,6 +222,7 @@
        ningun producto, por si James quiere volver a ellos. */
     clorofila: MAGNESIO,
     lymphoria: MAGNESIO,
+    neocell: MAGNESIO,   /* 14-10 James: "la venta es el colágeno, el upsell es del magnesio, así como lo utiliza el drenador" (mismo VITALCOM, misma caja) */
     viejo_clorofila_lymphoria: { nombre: 'Drenaje Linfático Lymphoria',
       webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-lymphoria',
       foto: 'img/lymphoria.webp',
