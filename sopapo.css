@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap');
+/* ============================================================
+   SOPAPO DESTAPADOR A PRESIÓN · 15-10 · diseño de la skill ui-ux-pro-max, aprobado por James ("daLE"):
+     PATRÓN  "Hero-Centric Design": héroe a todo el ancho que domina la primera pantalla (titular + producto), franja con UNA
+             propuesta de valor, beneficio / prueba, botón principal. CTA dominante + botón fijo (la ficha ya trae .stickycta).
+             Con reduced-motion: héroe estático y botón sin pulso.
+     ESTILO  "Minimalism & Swiss Style": limpio, espacioso, funcional, alto contraste, geométrico, sans-serif, cuadrícula, lo esencial.
+             Efectos: hover sutil 200-250 ms, transiciones suaves, sombras SECAS si las hay, jerarquía tipográfica clara.
+     COLORES primario #64748B (sobre él #FFFFFF) · secundario #94A3B8 · fondo #F8FAFC · texto #334155 · tarjeta #FFFFFF ·
+             apagado #EBF0F5 / texto apagado #475569 · borde #E2E8F0 · error #DC2626 · anillo #64748B.
+             Acento: la skill dio el naranja de seguridad #EA580C; por regla de James va el NARANJA REAL del cuerpo del sopapo #E5431E
+             (medido en la foto de Chamos) con letra casi negra #0F172A (la skill pide texto negro sobre el acento).
+     LETRAS  Barlow Condensed (títulos) · Barlow (texto) — de la misma skill (--domain typography), aprobadas por James.
+   Todo cuelga de body.p-sopapo; el encabezado (.top) y el pie (.pie) no se tocan. El ORDEN de las secciones base lo pone ficha.js.
+   ============================================================ */
+body.p-sopapo{
+  --color-primary:#64748B; --color-on-primary:#FFFFFF; --color-secondary:#94A3B8; --color-on-secondary:#0F172A;
+  --color-accent:#E5431E; --color-on-accent:#0F172A; --color-accent-hover:#CC3A17;
+  --color-background:#F8FAFC; --color-foreground:#334155; --color-ink:#0F172A; --color-card:#FFFFFF; --color-card-foreground:#334155;
+  --color-muted:#EBF0F5; --color-muted-foreground:#475569; --color-border:#E2E8F0; --color-destructive:#DC2626; --color-ring:#64748B;
+  --font-heading:'Barlow Condensed','Arial Narrow',sans-serif; --font-body:'Barlow',system-ui,sans-serif;
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px; --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+  --radius:6px; --shadow-dry:0 1px 0 #E2E8F0, 0 8px 0 -4px rgba(15,23,42,.06); --ease:220ms cubic-bezier(.4,0,.2,1);
+  background:var(--color-background);
+}
+body.p-sopapo #prod{background:var(--color-background);color:var(--color-foreground);font-family:var(--font-body);overflow-x:clip}
+body.p-sopapo #prod :is(p,li,td,label,.sub2,.ctaSub,.packDe,.opc){font-family:var(--font-body);color:var(--color-muted-foreground);line-height:1.55;font-weight:400;font-size:16px}
+body.p-sopapo #prod :is(h1,h2,h3,.tit2,.rev-title,.datos h1){font-family:var(--font-heading)!important;color:var(--color-ink);font-weight:700;letter-spacing:-.005em;text-transform:uppercase!important;text-wrap:balance}
+body.p-sopapo #prod :is(h1,.datos h1){font-size:clamp(40px,11vw,72px);line-height:.95}
+body.p-sopapo #prod :is(h2,.tit2,.rev-title){font-size:clamp(34px,9vw,56px);line-height:.98}
+body.p-sopapo #prod :is(b,strong){color:var(--color-ink);font-weight:600}
+body.p-sopapo #prod :is(.eyebrow,.rot){color:var(--color-primary);font-family:var(--font-body);font-weight:600;letter-spacing:.2em;text-transform:uppercase;font-size:12px}
+body.p-sopapo #prod > :is(section,.bloque,.form){background:transparent;padding:24px var(--space-md)!important;margin-top:0!important}
+body.p-sopapo #prod :is(a,button,.pack,.cta,summary){cursor:pointer}
+body.p-sopapo #prod :focus-visible{outline:2px solid var(--color-ring);outline-offset:3px}
+
+/* tarjetas suizas: blancas, borde fino, esquina casi recta, sombra seca */
+body.p-sopapo #prod :is(.card,.pack,.promo-card,.gar-card,.res-card,.rev,.fq details,.pagoAnt__caja,.sp-carta){background:var(--color-card);border:1px solid var(--color-border);border-radius:var(--radius)!important;
+  box-shadow:var(--shadow-dry);color:var(--color-card-foreground);transition:border-color var(--ease),transform var(--ease)}
+body.p-sopapo #prod :is(.card,.pack):hover{border-color:var(--color-primary);transform:translateY(-2px)}
+body.p-sopapo #prod .pack[aria-pressed="true"],body.p-sopapo #prod .pack.sel{border-color:var(--color-accent);box-shadow:inset 0 0 0 2px var(--color-accent)}
+body.p-sopapo #prod :is(.promo-card *,.gar-card *,.res-card *,.pack *,.cuenta *){font-family:var(--font-body)!important;text-transform:none!important}
+body.p-sopapo #prod :is(.promo-qt,.promo-precio,.gar-card b,.res-card b,.pack b,.pack .precio,.packPrecio,.cuenta b){font-family:var(--font-heading)!important;font-weight:700}
+body.p-sopapo #prod .promo-banner{background:var(--color-ink);color:#FFFFFF;border-radius:var(--radius)}
+body.p-sopapo #prod :is(.off,.promo-off){background:var(--color-accent);color:var(--color-on-accent);border-radius:2px;font-family:var(--font-body);font-weight:700}
+body.p-sopapo #prod :is(.promo-antes,.antes){font-weight:400;text-decoration:line-through;color:var(--color-muted-foreground)}
+body.p-sopapo #prod :is(.precio,.pPrecio,.ahora){font-family:var(--font-heading);color:var(--color-ink);font-weight:800}
+body.p-sopapo #prod :is(input,select,textarea){padding:12px 14px;border:1px solid var(--color-border);border-radius:var(--radius);font-size:16px;font-family:var(--font-body);background:#FFFFFF;transition:border-color var(--ease)}
+body.p-sopapo #prod :is(input,select,textarea):focus{border-color:var(--color-primary);outline:none;box-shadow:0 0 0 3px rgba(100,116,139,.18)}
+body.p-sopapo #prod :is(video,img){border-radius:var(--radius)}
+/* botón: rectángulo naranja del producto, letra condensada en mayúsculas, sin brillos ni pulso */
+body.p-sopapo #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn,.sp-mini){background:var(--color-accent)!important;color:var(--color-on-accent)!important;font-family:var(--font-heading)!important;
+  font-weight:700;font-size:20px;letter-spacing:.04em;text-transform:uppercase!important;padding:14px 24px;min-height:52px;border-radius:var(--radius)!important;border:0;
+  box-shadow:0 4px 0 #A9300F;transition:background var(--ease),transform var(--ease),box-shadow var(--ease);animation:none!important}
+body.p-sopapo #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn,.sp-mini):hover{background:var(--color-accent-hover)!important;transform:translateY(1px);box-shadow:0 3px 0 #A9300F}
+body.p-sopapo #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn,.sp-mini):active{transform:translateY(4px);box-shadow:0 0 0 #A9300F}
+body.p-sopapo .stickycta :is(a,button){background:var(--color-accent)!important;color:var(--color-on-accent)!important;font-family:var(--font-heading)!important;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border-radius:var(--radius)!important}
+body.p-sopapo #prod .sp-mini{display:inline-flex;align-items:center;gap:var(--space-sm);font-size:17px;min-height:46px;padding:10px 18px;background:var(--color-ink)!important;color:#FFFFFF!important;box-shadow:0 4px 0 #334155}
+body.p-sopapo #prod .sp-mini svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+body.p-sopapo #prod .rev p{color:var(--color-muted-foreground)}
+
+/* ---------- HÉROE (patrón Hero-Centric): foto a todo el ancho, titular arriba, datos y botón debajo ---------- */
+body.p-sopapo #prod > .sp-heroe{padding:0!important;display:grid;background:#EEF1F4}
+.sp-marco{position:relative;isolation:isolate}
+.sp-heroe .sp-foto{display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:0!important}
+.sp-marco .sp-arriba{position:absolute;top:0;left:0;right:0;padding:var(--space-lg) var(--space-md)}
+.sp-sello{display:inline-flex;align-items:center;gap:var(--space-sm);margin:0 0 var(--space-sm);font:600 12px/1 var(--font-body);letter-spacing:.2em;text-transform:uppercase;color:var(--color-primary)}
+.sp-sello i{width:10px;height:10px;background:var(--color-accent);display:inline-block}
+body.p-sopapo #prod .sp-h1{margin:0;font:800 clamp(34px,10vw,84px)/.9 var(--font-heading);letter-spacing:-.01em;color:var(--color-ink);text-transform:uppercase!important;max-width:6ch}
+/* 15-10 James "DALE": portada nueva = foto de estudio OSCURA con el sopapo solo (fondo de la foto #080E14 arriba).
+   El titular va en blanco sobre ese negro, el marco del mismo color y la foto se funde con la franja de datos (#0F172A). */
+body.p-sopapo #prod > .sp-heroe{background:#080E14}
+body.p-sopapo #prod > .sp-heroe .sp-marco{background:#080E14;overflow:hidden}
+body.p-sopapo #prod > .sp-heroe .sp-marco::after{content:'';position:absolute;left:0;right:0;bottom:0;height:14%;background:linear-gradient(180deg,rgba(15,23,42,0),#0F172A);pointer-events:none}
+body.p-sopapo #prod .sp-heroe .sp-h1{color:#FFFFFF;max-width:none;font-size:clamp(36px,11vw,84px)}
+body.p-sopapo #prod .sp-heroe .sp-sello{color:#CBD5E1}
+body.p-sopapo #prod .sp-h1 em{font-style:normal;color:var(--color-accent)}
+.sp-heroe .sp-abajo{background:var(--color-ink);padding:var(--space-lg) var(--space-md) var(--space-xl);display:grid;gap:var(--space-lg)}
+body.p-sopapo #prod .sp-baja{margin:0;font-size:18px;color:#CBD5E1;text-align:left}
+.sp-datos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #334155;border-bottom:1px solid #334155}
+body.p-sopapo #prod .sp-datos li{padding:14px 6px;text-align:left;font:500 12px/1.3 var(--font-body);color:#94A3B8;letter-spacing:.06em;text-transform:uppercase}
+body.p-sopapo #prod .sp-datos li+li{border-left:1px solid #334155;padding-left:12px}
+.sp-datos b{display:block;font:800 34px/1 var(--font-heading)!important;color:#FFFFFF!important;margin-bottom:4px;letter-spacing:0}
+.sp-heroe .cta{width:100%;margin:0}
+@media (min-width:768px){.sp-marco .sp-arriba{padding:var(--space-2xl)}.sp-heroe .sp-abajo{grid-template-columns:1.4fr 1fr;align-items:center;padding:var(--space-xl) var(--space-2xl)}}
+@media (min-width:1024px){.sp-heroe .sp-foto{aspect-ratio:16/9;object-position:50% 45%}}
+
+/* ---------- FRANJA: una sola propuesta de valor ---------- */
+body.p-sopapo #prod > .sp-franja{padding:0!important}
+.sp-franja p{margin:0;background:var(--color-accent);color:var(--color-on-accent);font:700 clamp(22px,6vw,30px)/1.05 var(--font-heading);text-transform:uppercase;letter-spacing:.02em;padding:18px var(--space-md);text-align:center}
+body.p-sopapo #prod .sp-franja p{color:var(--color-on-accent);font-family:var(--font-heading)}
+
+/* ---------- BLOQUES SUIZOS: número de sección, titular, cuadrícula ---------- */
+.sp-bloque{max-width:1100px;margin:0 auto;display:grid;gap:var(--space-lg)}
+.sp-num{display:flex;align-items:center;gap:var(--space-md);font:700 13px/1 var(--font-body);letter-spacing:.22em;text-transform:uppercase;color:var(--color-primary)}
+.sp-num::after{content:'';flex:1;height:1px;background:var(--color-border)}
+.sp-bloque h2{margin:0;max-width:14ch}
+.sp-cierre{margin:0}
+body.p-sopapo #prod .sp-carta.grid-item{padding:0;overflow:hidden;margin:0}
+.sp-carta img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:0!important}
+.sp-carta figcaption{padding:var(--space-md) var(--space-lg) var(--space-lg);display:grid;gap:6px}
+.sp-paso{font:800 44px/1 var(--font-heading);color:var(--color-accent)}
+.sp-carta b{font:700 24px/1.05 var(--font-heading)!important;text-transform:uppercase;color:var(--color-ink)}
+body.p-sopapo #prod .sp-carta figcaption p{margin:0;font-size:15px}
+.sp-grid{display:grid;gap:var(--space-md)}
+@media (min-width:768px){.sp-grid{grid-template-columns:repeat(3,1fr)}}
+/* problema: foto + lista con cuadrados naranjas */
+.sp-prob{display:grid;gap:0;background:var(--color-card);border:1px solid var(--color-border);border-radius:var(--radius);overflow:hidden}
+.sp-prob img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:0!important}
+.sp-prob ul{margin:0;padding:var(--space-lg);list-style:none;display:grid;gap:var(--space-md)}
+body.p-sopapo #prod .sp-prob li{padding-left:26px;position:relative;font-size:17px;color:var(--color-foreground)}
+.sp-prob li::before{content:'';position:absolute;left:0;top:.45em;width:12px;height:12px;background:var(--color-accent)}
+@media (min-width:768px){.sp-prob{grid-template-columns:1fr 1fr;align-items:center}}
+/* dónde sirve: foto + etiquetas */
+.sp-usos{display:grid;gap:var(--space-md)}
+.sp-usos img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+.sp-tags{display:flex;flex-wrap:wrap;gap:var(--space-sm);margin:0;padding:0;list-style:none}
+body.p-sopapo #prod .sp-tags li{border:1px solid var(--color-ink);padding:8px 14px;font:700 16px/1 var(--font-heading);text-transform:uppercase;letter-spacing:.06em;color:var(--color-ink);border-radius:2px}
+@media (min-width:768px){.sp-usos{grid-template-columns:1fr 1fr;align-items:center}}
+
+/* ---------- precio: línea de pack bajo el precio ---------- */
+body.p-sopapo #prod .sp-gancho{display:flex;align-items:center;gap:var(--space-sm);margin:12px 0 4px;padding:12px 14px;background:var(--color-ink);color:#FFFFFF;border-radius:var(--radius);font-size:15px;line-height:1.35}
+.sp-gancho svg{flex:0 0 22px;width:22px;height:22px;fill:none;stroke:var(--color-accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+body.p-sopapo #prod .sp-gancho b{color:var(--color-accent);font-weight:700}
+
+/* ---------- promoción: imagen arriba de la tarjeta ---------- */
+.sp-promo-img{margin:0 0 var(--space-md)}
+.sp-promo-img img{display:block;width:100%;height:auto;aspect-ratio:1/1;border:1px solid var(--color-border)}
+body.p-sopapo #prod .promo-sec .cta{width:100%;margin-top:var(--space-sm)}
+
+/* secciones de la ficha siempre visibles (en el celular el animador de entrada a veces no dispara: huecos en blanco) */
+body.p-sopapo #prod [data-rv]{opacity:1!important;translate:none!important}
+body.p-sopapo #prod :is(.res,.formcard,.pack,li,.cmp,.cmp tr,.cir){opacity:1!important}
+@media (prefers-reduced-motion:reduce){body.p-sopapo #prod *{animation:none!important;transition:none!important}}

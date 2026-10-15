@@ -1296,6 +1296,130 @@ window.PRODUCTOS = [
     popular: 1,   /* James 09-10: impulsar el de 72, el que deja más margen */
   },
   {
+    /* 15-10 · SOPAPO DESTAPADOR A PRESIÓN DE AIRE — Dropi 142343 (Chamos / Carlos, 13113), costo $5.500, 64 cm, copa de 9 cm.
+       Lo recomendó Carlos ("se vende bastante") y James dijo "vamos con todo". Competencia en Meta Chile (15-10): BuyPepo 1 $27.990 ·
+       2 $39.990 · 3 $52.990; El Mundo de Piter $27.990; Mercachile $25.990. Escalera APROBADA por James 15-10 ("dale"):
+       1 $25.500 · 2 $37.500 · 3 $49.500 (la más barata en los tres packs). Ganancia por entrega sin pauta ~12.000 / 18.500 / 25.000.
+       Diseño (sopapo.css/.js) = skill ui-ux-pro-max "construction architecture" (Hero-Centric · Minimalismo suizo · gris industrial)
+       con el naranja REAL del cuerpo del sopapo #E5431E y letras Barlow Condensed / Barlow (aprobado por James 15-10).
+       🔴 No prometer "120 PSI" ni "acero inoxidable" (la ficha de Chamos no lo sostiene). No destapa objetos duros caídos: decirlo.
+       Tachados: sin "antes" hasta que James apruebe. */
+    id: 'sopapo', unidad: 'sopapo', promo: 2, promoAntesDelPack: true,
+    dropiId: 142343,
+    etiqueta: 'Nuevo en Chile', etiquetaOro: true,
+    video: 'img/sopapo-ficha.mp4?v=1',
+    resenasRotulo: 'Lo que dicen quienes ya lo usaron',
+    resenasFuente: 'Opiniones reales de compradores de destapadores a presión de aire, tal como las escribieron.',
+    resenasMas: 'Más opiniones',
+    /* 15-10: REALES (sin las que hablan de cocina/lavaplatos o de accesorios que este no trae, James 15-10) (Falabella CL/PE/CO —algunas vienen de Sodimac— y AliExpress como 'Anónimo · país'), destapadores a presión de aire.
+       Fuente: _kn_scratch/sopapo/_resenas_*.js → _resenas_pagina.json. NINGUNA escrita por nosotros. */
+    resenasReales: [
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2026-04-02', estrellas: 5, foto: 'img/resenas-sopapo/r2.webp?v=1', texto: 'la he probado,, y la verdad me a sorprendido,, tiene fuerza la bestia.... hasta me da miedo que rompa las tuberías con solo presión 2 lanza un chorro de aire que da miedo!!!' },
+      { nombre: 'Anónimo · Chile', comuna: '', fecha: '2026-03-21', estrellas: 5, foto: 'img/resenas-sopapo/r3.webp?v=1', texto: 'llegó muy rápido el plástico no se ve como el mejor pero funcionó excelente a la tercera vez de usarlo pude desatascar mi bañera' },
+      { nombre: 'Anónimo · Chile', comuna: '', fecha: '2026-04-07', estrellas: 5, foto: 'img/resenas-sopapo/r4.webp?v=1', texto: 'Buen producto' },
+      { nombre: 'Paola', comuna: '', fecha: '2023-02-14', estrellas: 4, foto: 'img/resenas-sopapo/r5.webp?v=1', texto: 'Tal cual en su descripción' },
+      { nombre: 'Roberta', comuna: '', fecha: '2023-05-05', estrellas: 5, texto: 'Tenía muy tapado el inodoro, al segundo disparo quedó perfecto. Cabe mencionar que había intentado dos horas con sopapo y otros y nada, cumple, sin esfuerzo ni botar agua por todos lados' },
+      { nombre: 'Franco', comuna: '', fecha: '2023-04-14', estrellas: 5, texto: 'Muy bueno. Destapó el WC al primer intento. Intentamos de todo llevada 12 días tapado y nada lo destapaba hasta que compramos y usamos este artículo' },
+      { nombre: 'Cecilia', comuna: '', fecha: '2023-05-28', estrellas: 5, texto: 'Tenía tapado el baño una semana y no resultaba con ninguna sopapo, solo basto una vez y me destapó el baño lo recomiendo 100%' },
+      { nombre: 'Julian', comuna: '', fecha: '2024-02-23', estrellas: 5, texto: 'Recibí el producto ofertado igual a la foto y del tamaño correspondiente, buenas calidad y muy buen funcionamiento' },
+      { nombre: 'Wendy', comuna: '', fecha: '2023-12-26', estrellas: 5, texto: 'Igual a la foto es fácil de usar, llego en el momento que especificaron super satisfecha con mi compra' },
+      { nombre: 'Jude Joseph', comuna: 'Santiago', fecha: '2021-11-26', estrellas: 5, texto: 'Muy bueno el producto, recomiendo a todaa personas que tiene problema de canarelía para comprarle.' },
+      { nombre: 'Estefanía', comuna: '', fecha: '2022-07-27', estrellas: 5, texto: 'Es un buen producto, cumple su función, sólo que hay que hacerlo más veces de las que pensaba.' },
+      { nombre: 'Hugo Lutz', comuna: '', fecha: '2026-08-25', estrellas: 5, texto: 'soluciono sin problemas el atasco que llevaba dias tratando de solucionar, excelente producto' },
+      { nombre: 'Patricia Muñoz Castro', comuna: '', fecha: '2022-12-10', estrellas: 5, texto: 'Características y descripcion acordes, incluso mas higienico que el tradicional sopapo' },
+      { nombre: 'Cavalde', comuna: 'Curico', fecha: '2019-04-30', estrellas: 5, texto: 'Excelente producto... buena calidad y muy util en caso de ser necesario....' },
+      { nombre: 'Pedro', comuna: 'Santiago', fecha: '2021-03-16', estrellas: 5, texto: 'Cumple es funcional, fue utilizada para la pileta en patio de mi madre.' },
+      { nombre: 'Lukas', comuna: '', fecha: '2023-09-21', estrellas: 5, texto: 'Producto excelente, tal cual como se describe y observa en las fotos.' },
+      { nombre: 'Andrés Osorio', comuna: 'San Joaquín', fecha: '2022-06-05', estrellas: 5, texto: 'Excelente, al cuarto intento destapó mi wc, totalmente recomendable' },
+      { nombre: 'Faby', comuna: '', fecha: '2024-07-24', estrellas: 5, texto: 'Lo he usado una vez y es muy práctico y mejor que otros implementos' },
+      { nombre: 'Igt', comuna: '', fecha: '2023-12-12', estrellas: 5, texto: 'Me gusto la calidad y el tamaño es como indican en la descripción' },
+      { nombre: 'Aiguense', comuna: 'Las Piedras', fecha: '2020-10-29', estrellas: 5, texto: 'muy bueno y muy util siendo muy pracxtica para el hogar' },
+      { nombre: 'Sabrina', comuna: 'Santiago', fecha: '2020-06-04', estrellas: 5, texto: 'Lo compré para destapar la tina y me funcionó perfecto.' },
+      { nombre: 'Jdoom', comuna: 'Puerto montt', fecha: '2021-09-02', estrellas: 5, texto: 'Fácil de usar , cumple ampliamente las expectativas' },
+      { nombre: 'Carolina', comuna: '', fecha: '2024-05-17', estrellas: 5, texto: 'Producto de excelente calidad....de mucha utilidad' },
+      { nombre: 'Peggy', comuna: '', fecha: '2024-03-28', estrellas: 5, texto: 'Cumple,con el objetivo destapar wc' },
+      { nombre: 'Maila', comuna: '', fecha: '2023-09-21', estrellas: 5, texto: 'Es de buena calidad el producto' },
+      { nombre: 'Johanna', comuna: '', fecha: '2022-06-08', estrellas: 5, texto: 'funciona maravillosamente bien' },
+      { nombre: 'Sheila', comuna: '', fecha: '2024-10-16', estrellas: 5, texto: 'Excelente. Super efectivo.' },
+      { nombre: 'Lnavaz', comuna: '', fecha: '2024-05-07', estrellas: 5, texto: 'Es de buena calidad.' },
+      { nombre: 'Juan', comuna: '', fecha: '2023-09-22', estrellas: 5, texto: 'Excelente calidad' },
+      { nombre: 'Cesar', comuna: '', fecha: '2025-12-29', estrellas: 5, texto: 'Excelente…!!!' },
+      { nombre: 'Erika', comuna: '', fecha: '2024-03-28', estrellas: 4, texto: 'Igual a la foto, es de buena calidad, bastante práctico cumple la función de destapar las cañería.' },
+      { nombre: 'Cecilia', comuna: '', fecha: '2024-03-08', estrellas: 4, texto: 'Tamaño bien es igual a la foto y de buena calidad Lo recomiendo' },
+      { nombre: 'MMRC', comuna: 'santiago', fecha: '2019-05-06', estrellas: 4, texto: 'Buen producto,un gran paso del sopapo tradicional.' },
+      { nombre: 'Chriss', comuna: 'MELIPILLA', fecha: '2021-02-19', estrellas: 4, texto: 'si, cumple su propósito destape de WC' },
+      { nombre: 'Hernan', comuna: '', fecha: '2023-01-28', estrellas: 4, texto: 'De buena calidad e igual a la foto' },
+      { nombre: 'Fernanda', comuna: '', fecha: '2023-09-21', estrellas: 4, texto: 'Es igual a la foto, funciona bien' },
+      { nombre: 'JOSE MARIO ALEJANDRO GONZ', comuna: '', fecha: '2026-08-26', estrellas: 4, texto: 'Muy práctico y de fácil uso.' },
+      { nombre: 'Carolina Valderrama', comuna: '', fecha: '2023-07-23', estrellas: 4, texto: 'Es facil de usar y funciona' },
+      { nombre: 'Anónimo · México', comuna: '', fecha: '2026-06-07', estrellas: 5, texto: 'excelente producto había intentado de todo para destapar el inodoro, este fue el único producto to q me funcionó recomiendo 100%' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2025-12-17', estrellas: 5, texto: 'A mi me ha funcionado bien, puedes cargar a la presión que necesites y el atasco lo quita sin problemas.' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2026-05-06', estrellas: 5, texto: 'funsiona de maravilla un año con uno de mis servicios atascado y ahora esta funcionando correctamente.' },
+      { nombre: 'Anónimo · Perú', comuna: '', fecha: '2026-04-28', estrellas: 5, texto: 'con este producto me permitio, dejar de contratra una persona para desatorar el baño.' },
+      { nombre: 'Anónimo · México', comuna: '', fecha: '2026-09-26', estrellas: 5, texto: 'llego rapido y muy efectivo, con una sola descarga se destapó el inodoro recomendable' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2025-12-06', estrellas: 5, texto: 'muy bien producto recomiendo calidad precio hace bien su función' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2025-12-13', estrellas: 5, texto: 'funciona correctamente, me ha servido para desatascar cañerias' },
+      { nombre: 'Anónimo · Colombia', comuna: '', fecha: '2026-07-13', estrellas: 5, texto: 'producto de buena calidad, cumple su función con lo descrito' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2026-03-15', estrellas: 5, texto: 'Según la descripción, muy efectivo en lavabos y fregaderas.' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2026-03-29', estrellas: 5, texto: 'esta buena calidad y muy útil como desatacador de inodoro.' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2025-11-24', estrellas: 5, texto: 'Muy bien funciona bien este cacharro de plástico!!' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2026-01-29', estrellas: 5, texto: 'Es estupendo para pequeños atascos lo recomiendo' },
+      { nombre: 'Anónimo · Perú', comuna: '', fecha: '2026-06-07', estrellas: 5, texto: 'llego todo bien. es mi 2da compra. funciona!' },
+      { nombre: 'Anónimo · Chile', comuna: '', fecha: '2026-03-19', estrellas: 5, texto: 'esta muy bien sirve mucho exelente producto' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2026-03-17', estrellas: 5, texto: 'Realmente funciona, lo recomiendo comprar.' },
+      { nombre: 'Anónimo · México', comuna: '', fecha: '2026-07-28', estrellas: 5, texto: 'excelente, funciona muy bien' },
+      { nombre: 'Anónimo · Colombia', comuna: '', fecha: '2026-03-02', estrellas: 5, texto: 'muy buena herramienta' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2025-12-10', estrellas: 5, texto: 'Funciona muy bien' },
+    ],
+    resenasResumen: { total: 56, nota: 4.8, rotulo: 'opiniones de 4 y 5 estrellas', barras: { 5: 47, 4: 9 } },
+    preguntas: [
+      { q: '¿Cómo se usa?', a: 'Pones la copa de goma sobre el desagüe, con un poco de agua para que selle, y empujas el mango con fuerza: el aire a presión empuja el tapón cañería abajo. Se repite 3 a 5 veces hasta que el agua baja.' },
+      { q: '¿Dónde sirve?', a: 'En el baño: el WC, el lavamanos y la ducha, donde la copa pueda sellar bien sobre el desagüe.' },
+      { q: '¿Qué tamaño tiene?', a: 'Mide 64 cm de largo y la copa tiene 9 cm de diámetro. Se guarda parado en un rincón del baño.' },
+      { q: '¿Necesita pilas o químicos?', a: 'No. Funciona solo con aire a presión, sin pilas, sin cables y sin químicos que dañen las cañerías.' },
+      { q: '¿Y si no destapa?', a: 'Sirve para tapones de papel, pelo y residuos. Si se cayó un objeto duro, como un juguete o un frasco, lo recomendable es llamar a un gasfíter.' },
+      { q: '¿Por qué comprarlo antes de que se tape?', a: 'Porque el WC se tapa cuando menos lo esperas: de noche, un domingo o con visitas en casa. Con el sopapo guardado en el baño lo resuelves en minutos, sin esperar ni pagar una visita.' },
+      { q: '¿Cómo pago?', a: 'Pagas cuando lo recibes, en efectivo o con tarjeta de débito. El envío es gratis a todo Chile.' },
+    ],
+    formulaRotulo: 'Lo que trae',
+    formulaTitulo: 'Por qué tenerlo en casa.',
+    formulaSub: 'Lo usas una vez y ya se pagó: una visita del gasfíter cuesta más.',
+    formula: [
+      ['rayo', 'Destapa al primer intento', 'Empujas el mango y el aire a presión empuja el tapón cañería abajo.'],
+      ['agua', 'Todo el baño', 'WC, lavamanos, ducha y tina: donde la copa selle sobre el desagüe.'],
+      ['escudo', 'Sin químicos', 'No daña las cañerías ni deja olor. Sin pilas y sin cables.'],
+      ['llave', 'Sin gasfíter', 'Lo resuelves tú en minutos, aunque sea domingo en la noche.'],
+      ['casa', 'Siempre a mano', 'Se guarda parado en un rincón del baño para la próxima vez.'],
+      ['ondas', 'No salpica', 'La copa sella el desagüe: el aire empuja hacia abajo, no el agua hacia arriba.'],
+    ],
+    comparaTitulo: 'Por qué a presión y no el sopapo de siempre',
+    compara: [
+      'El sopapo de siempre empuja agua hacia arriba y salpica. Este empuja aire hacia abajo, directo al tapón.',
+      'Menos fuerza y menos intentos: el aire a presión hace el trabajo.',
+      'Sin químicos que dañen las cañerías y sin esperar horas a que actúen.',
+    ],
+    nombre: 'Sopapo Destapador a Presión',
+    sub: 'Destapa el WC, el lavamanos y la ducha con aire a presión · 64 cm · sin químicos',
+    categoria: 'Hogar',
+    foto: 'img/sopapo-heroe.webp?v=2',
+    fotos: ['img/sopapo-promo.webp?v=1'],
+    acento: '#E5431E', acento2Manual: '#334155',   /* James 15-10: botón = naranja real del cuerpo del sopapo; gris industrial de la skill como primario */
+    desc: 'Sopapo destapador a presión de aire para el WC, el lavamanos y la ducha. Se pone la copa de goma sobre el desagüe y se empuja el mango: el aire a presión empuja el tapón cañería abajo. Mide 64 cm, copa de 9 cm. Sin químicos, sin pilas y sin cables.',
+    puntos: [
+      'Destapa con aire a presión, sin químicos',
+      'Para el WC, el lavamanos y la ducha',
+      'Menos esfuerzo que el sopapo de siempre',
+      '64 cm de largo, copa de goma de 9 cm',
+      'Sin pilas, sin cables, siempre listo',
+    ],
+    packs: [
+      { cant: 1, precio: 25500, texto: '1 sopapo' },
+      { cant: 2, precio: 37500, texto: '2 sopapos · uno para cada baño' },
+      { cant: 3, precio: 49500, texto: '3 sopapos · uno para cada baño y para regalar' },
+    ],
+    popular: 1,   /* se impulsa el de 2, como "el más llevado" de la competencia */
+  },
+  {
     /* 14-10 · SHAMPOO CUBRE CANAS DEXE, caja de 10 sobres de 25 ml, negro — Dropi 51293 (Chamos / Carlos, 13113), costo $2.000.
        Producto "nuevo para Chile": nadie lo pautea en la Biblioteca de Meta CL (los 16 anunciantes de la categoría venden el
        FRASCO de 400 ml a 19.990-30.990). Escalera de James 14-10: NO hay caja suelta. Dos ganchos, no "packs":
@@ -1862,4 +1986,5 @@ window.PRECIOS_APROBADOS = [
   21490, 33490, 45490,   /* cámara ampolleta WiFi: 1 · 2 · 3 cámaras, 500 bajo CheliExpress (James, 06-10) */
   23000, 31500, 45000, 63000,   /* organizador desde el 13-10 (James): Chamos Store a $8.000 el pack => +3.500 POR PACK (misma ganancia que con MEIBO) */
   22500, 34500, 42500,   /* colágeno NeoCell: 1 · 2 · 3 frascos, 500 bajo Clicka y Tu compra segura (James, 13-10) */
+  25500, 37500, 49500,   /* sopapo destapador a presión: 1 · 2 · 3 sopapos, bajo BuyPepo y Mercachile (James, 15-10) */
 ];
