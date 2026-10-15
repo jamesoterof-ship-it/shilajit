@@ -153,14 +153,7 @@
     var fig = document.createElement('figure'); fig.className = 'dx-promo-img';
     fig.innerHTML = '<img src="img/dexe-promo.webp?v=1" alt="Promoción: Paga 1 y llévate 2 cajas Dexe por $24.500, o paga 2 y llévate 3 por $29.500" width="1024" height="1024" loading="lazy">';
     sec.insertBefore(fig, sec.firstChild);
-    var bp = sec.querySelector('#btnPromo'); if (!bp) return;
-    bp.textContent = 'Quiero Paga 2 y llévate 3';
-    var b2 = document.createElement('button'); b2.type = 'button'; b2.className = 'cta dx-promo-2'; b2.textContent = 'Quiero Paga 1 y llévate 2';
-    bp.insertAdjacentElement('beforebegin', b2);
-    b2.addEventListener('click', function () {
-      var k = document.querySelector('.form-sec .pack[data-i="0"]') || document.querySelector('.pack[data-i="0"]'); if (k) k.click();
-      irAlFormulario();
-    });
+    /* 14-10 James "¿qué hacen 2 botones acá?": un solo botón (regla de la fábrica: nunca dos botones pegados) */
   }
 
   function armar() {
