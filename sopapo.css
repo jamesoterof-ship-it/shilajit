@@ -66,12 +66,14 @@ body.p-sopapo #prod .sp-datos li{background:var(--color-secondary);border-radius
 .sp-heroe .cta{width:100%;margin:0}
 @media (min-width:768px){.sp-marco .sp-arriba{padding:var(--space-2xl)}.sp-heroe .sp-abajo{grid-template-columns:1.4fr 1fr;align-items:center;padding:var(--space-xl) var(--space-2xl)}}
 @media (min-width:1024px){.sp-heroe .sp-foto{aspect-ratio:16/9;object-position:50% 45%}}
-/* efecto de agua (pedido por James): gotas que caen y ondas en la base, solo blanco y azul de la paleta, sin degradados */
+/* efecto de agua (James 15-10: "donde se ven las gotas del agua", NO lluvia): destellos que brillan sobre la salpicadura de la foto
+   y una onda que sale desde la copa. Solo blanco y azul de la paleta. Solo con la foto vertical (en escritorio cambia el encuadre). */
 .sp-agua{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-.sp-agua i{position:absolute;top:-6%;width:7px;height:16px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;background:rgba(255,255,255,0.7);box-shadow:0 0 0 1px rgba(59,130,246,0.35);animation:spGota linear infinite}
-.sp-agua b{position:absolute;bottom:9%;width:40px;height:12px;margin-left:-20px;border:2px solid rgba(59,130,246,0.6);border-radius:50%;opacity:0;animation:spOnda 2.6s ease-out infinite}
-@keyframes spGota{to{transform:translateY(118vh)}}
-@keyframes spOnda{0%{opacity:.8;transform:scale(.3)}100%{opacity:0;transform:scale(2.6)}}
+.sp-agua i{position:absolute;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(255,255,255,0.95);box-shadow:0 0 6px 2px rgba(255,255,255,0.6),0 0 12px 4px rgba(59,130,246,0.35);opacity:0;animation:spBrillo ease-in-out infinite}
+.sp-agua b{position:absolute;width:120px;height:26px;margin:-13px 0 0 -60px;border:2px solid rgba(255,255,255,0.55);border-radius:50%;opacity:0;animation:spOnda 2.8s ease-out infinite}
+@keyframes spBrillo{0%,100%{opacity:0;transform:scale(.3)}45%{opacity:1;transform:scale(1.15)}60%{opacity:.85;transform:scale(1)}}
+@keyframes spOnda{0%{opacity:.7;transform:scale(.35)}100%{opacity:0;transform:scale(1.9)}}
+@media (min-width:1024px){.sp-agua{display:none}}
 
 /* ---------- 2. PRUEBA (patrón: sellos, cifras) ---------- */
 .sp-prueba{max-width:1200px;margin:0 auto;display:grid;gap:var(--space-md)}
@@ -94,6 +96,9 @@ body.p-sopapo #prod .sp-carta.grid-item{padding:0;overflow:hidden;margin:0}
 .sp-carta b{font:600 20px/1.2 var(--font-heading)!important;color:var(--color-foreground)}
 body.p-sopapo #prod .sp-carta figcaption p{margin:0;font-size:15px}
 .sp-grid{display:grid;gap:var(--space-md)}
+.sp-pasos-img img{aspect-ratio:3/2}
+.sp-paso-txt{padding:var(--space-lg);display:grid;gap:6px}
+body.p-sopapo #prod .sp-paso-txt p{margin:0;font-size:15px}
 @media (min-width:768px){.sp-grid{grid-template-columns:repeat(3,1fr)}}
 .sp-prob{display:grid;background:var(--color-card);border-radius:12px;overflow:hidden;box-shadow:var(--shadow-md)}
 .sp-prob img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:0!important}

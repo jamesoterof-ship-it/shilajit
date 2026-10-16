@@ -1381,6 +1381,9 @@ window.PRODUCTOS = [
       { q: '¿Por qué comprarlo antes de que se tape?', a: 'Porque el WC se tapa cuando menos lo esperas: de noche, un domingo o con visitas en casa. Con el sopapo guardado en el baño lo resuelves en minutos, sin esperar ni pagar una visita.' },
       { q: '¿Cómo pago?', a: 'Pagas cuando lo recibes, en efectivo o con tarjeta de débito. El envío es gratis a todo Chile.' },
     ],
+    /* 15-10 James: "¿dónde está el antes y después?" — imagen ilustrativa (OpenAI, línea del héroe), textos escritos con PIL */
+    antesDespues: 'img/sopapo-ba.webp?v=1',
+    antesDespuesSub: 'Antes: el agua sube y no baja. Después: destapado en minutos, sin químicos y sin gasfíter.',
     formulaRotulo: 'Lo que trae',
     formulaTitulo: 'Por qué tenerlo en casa.',
     formulaSub: 'Lo usas una vez y ya se pagó: una visita del gasfíter cuesta más.',

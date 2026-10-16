@@ -56,12 +56,17 @@
     agua(s.querySelector('.sp-agua'));
   }
 
-  /* efecto de agua del héroe (James 15-10): gotas que caen y ondas en la base; nada con reduced-motion */
+  /* efecto de agua del héroe (James 15-10: "donde se ven las gotas del agua", nada de lluvia): destellos SOLO sobre la salpicadura de
+     la foto (zona medida en sopapo-heroe.webp: x 31-93 %, y 79-97 %) y ondas que salen desde la copa (x 60 %, y 94 %). Nada cae. */
   function agua(caja) {
     if (!caja || calma) return;
     var h = '';
-    for (var i = 0; i < 18; i++) h += '<i style="left:' + (4 + Math.random() * 92).toFixed(1) + '%;animation-duration:' + (1.6 + Math.random() * 1.8).toFixed(2) + 's;animation-delay:' + (Math.random() * 3).toFixed(2) + 's;opacity:' + (0.35 + Math.random() * 0.5).toFixed(2) + '"></i>';
-    for (var j = 0; j < 3; j++) h += '<b style="left:' + (38 + j * 12) + '%;animation-delay:' + (j * 0.8) + 's"></b>';
+    for (var i = 0; i < 16; i++) {
+      var x = 31 + Math.random() * 62, y = 79 + Math.random() * 17;
+      if (x > 52 && x < 68 && y > 84) { i--; continue; }   // sobre la copa no: solo en el agua
+      h += '<i style="left:' + x.toFixed(1) + '%;top:' + y.toFixed(1) + '%;animation-duration:' + (1.4 + Math.random() * 1.6).toFixed(2) + 's;animation-delay:' + (Math.random() * 2.5).toFixed(2) + 's"></i>';
+    }
+    for (var j = 0; j < 2; j++) h += '<b style="left:60%;top:94%;animation-delay:' + (j * 1.4) + 's"></b>';
     caja.innerHTML = h;
   }
 
@@ -97,20 +102,21 @@
     if (prod.querySelector('.sp-b1')) return;
     var s = document.createElement('section'); s.className = 'sp-bloque sp-b1';
     s.innerHTML = '<span class="sp-num">01 · El problema</span><h2>Siempre pasa en el peor momento.</h2>'
-      + '<div class="sp-prob grid-item"><img src="img/sopapo-problema.webp?v=1" alt="WC tapado con el agua casi al borde" width="1024" height="1024" loading="lazy">'
+      + '<div class="sp-prob grid-item"><img src="img/sopapo-problema.webp?v=3" alt="WC tapado con el agua casi al borde" width="1024" height="1024" loading="lazy">'
       + '<ul><li>Se tapa de noche o el fin de semana, cuando nadie atiende</li><li>El sopapo de siempre salpica y no destapa</li><li>La soda cáustica tarda horas y daña la cañería</li><li>El gasfíter cobra entre $16.000 y $45.000 la hora</li></ul></div>'
       + mini('Ver cómo funciona');
     antesDelForm(prod, s);
     s.querySelector('.sp-mini').addEventListener('click', function () { var n = prod.querySelector('.sp-b2'); if (n) n.scrollIntoView({ behavior: calma ? 'auto' : 'smooth', block: 'start' }); });
   }
 
+  /* 15-10 noche: una sola imagen con los 3 momentos (James: "crea todas las imágenes nuevamente") + los 3 pasos en tarjetas del script */
   function pasos(prod) {
     if (prod.querySelector('.sp-b2')) return;
     var s = document.createElement('section'); s.className = 'sp-bloque sp-b2';
     s.innerHTML = '<span class="sp-num">02 · Cómo funciona</span><h2>Tres pasos y el agua baja.</h2>'
+      + '<figure class="sp-carta grid-item sp-pasos-img"><img src="img/sopapo-pasos.webp?v=1" alt="Tres momentos: la copa sobre el desagüe del WC, el empuje con el agua salpicando y el WC ya destapado" width="1536" height="1024" loading="lazy"></figure>'
       + '<div class="sp-grid">' + PASOS.map(function (u, i) {
-          return '<figure class="sp-carta grid-item"><img src="' + u[0] + '" alt="' + u[3] + '" width="1024" height="1024" loading="lazy">'
-            + '<figcaption><span class="sp-paso">0' + (i + 1) + '</span><b>' + u[1] + '</b><p>' + u[2] + '</p></figcaption></figure>';
+          return '<div class="sp-carta grid-item"><div class="sp-paso-txt"><span class="sp-paso">' + (i + 1) + '</span><b>' + u[1] + '</b><p>' + u[2] + '</p></div></div>';
         }).join('') + '</div>';
     antesDelForm(prod, s);
   }
@@ -119,7 +125,7 @@
     if (prod.querySelector('.sp-b3')) return;
     var s = document.createElement('section'); s.className = 'sp-bloque sp-b3';
     s.innerHTML = '<span class="sp-num">03 · Para tu casa</span><h2>Listo para la próxima vez.</h2>'
-      + '<div class="sp-usos"><figure class="sp-carta grid-item"><img src="img/sopapo-usos.webp?v=2" alt="Mujer empujando el mango del destapador a presión dentro del WC" width="1024" height="1024" loading="lazy"></figure>'
+      + '<div class="sp-usos"><figure class="sp-carta grid-item"><img src="img/sopapo-usos.webp?v=3" alt="Mujer empujando el mango del destapador a presión dentro del WC" width="1024" height="1024" loading="lazy"></figure>'
       + '<ul class="sp-tags grid-item"><li>WC</li><li>Lavamanos</li><li>Ducha</li><li>Tina</li></ul></div>'
       + mini('Pedir el mío');
     antesDelForm(prod, s);
@@ -129,7 +135,7 @@
   function promo(prod) {
     var sec = prod.querySelector('.promo-sec'); if (!sec || sec.querySelector('.sp-promo-img')) return;
     var fig = document.createElement('figure'); fig.className = 'sp-promo-img';
-    fig.innerHTML = '<img src="img/sopapo-promo.webp?v=1" alt="Promoción: 1 sopapo $25.500, 2 sopapos $37.500, 3 sopapos $49.500" width="1024" height="1024" loading="lazy">';
+    fig.innerHTML = '<img src="img/sopapo-promo.webp?v=2" alt="Promoción: 1 sopapo $25.500, 2 sopapos $37.500, 3 sopapos $49.500" width="1024" height="1024" loading="lazy">';
     sec.insertBefore(fig, sec.firstChild);
   }
 
