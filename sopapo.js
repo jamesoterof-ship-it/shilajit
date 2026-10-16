@@ -1,10 +1,12 @@
 /* ============================================================
-   SOPAPO DESTAPADOR A PRESIÓN · 15-10 · patrón de la skill ui-ux-pro-max "Hero-Centric Design" (aprobado por James):
-     1. Héroe a todo el ancho: foto del producto (solo el producto, grande) + titular Barlow Condensed + datos + botón.
-     2. Franja con UNA propuesta de valor.
-     3. Beneficio / prueba: el problema (WC tapado), cómo funciona en 3 pasos, dónde sirve.
-     4. Botón principal: el formulario de la ficha (y el botón fijo .stickycta que ya pone la ficha).
-   Estilo Minimalismo suizo: cuadrícula, números grandes, sin brillos ni pulso. Con reduced-motion nada se anima.
+   SOPAPO DESTAPADOR A PRESIÓN · 15-10 (2ª versión) · James: "que el script sea el que haga el diseño". Todo del archivo maestro
+   del script (_kn_scratch/sopapo/diseno/design-system/sopapo/MASTER.md), patrón "Trust & Authority + Conversion":
+     1. Héroe (misión / credibilidad): la foto que eligió James + titular + datos + botón. + efecto de agua (pedido por James).
+     2. Prueba (sellos, cifras): opiniones reales, envío gratis, pago al recibir, transportadoras.
+     3. Solución: el problema, cómo funciona en 3 pasos, para tu casa.
+     4. Camino claro al botón: el formulario de la ficha (y el botón fijo .stickycta que ya pone la ficha).
+   Movimiento: "Stagger List" del script tal cual (opacity 0, scale .92, y 16, .4 s, stagger .06 grid auto, back.out(1.4)).
+   Con reduced-motion nada se anima.
    Corre DESPUÉS de ficha.js y solo en ?p=sopapo. No toca el encabezado, el pie, los precios ni el formulario.
    🔴 No prometer "120 PSI" ni "acero inoxidable". No destapa objetos duros caídos (lo dicen las preguntas).
    ============================================================ */
@@ -37,7 +39,8 @@
     s.innerHTML =
         '<div class="sp-marco">'
       +   '<img class="sp-foto" src="img/sopapo-heroe.webp?v=2" alt="Sopapo destapador a presión de aire: mango en T negro, cuerpo naranja y copa de goma" width="1024" height="1536" fetchpriority="high">'
-      +   '<div class="sp-arriba"><p class="sp-sello"><i aria-hidden="true"></i>Nuevo en Chile</p>'
+      +   '<div class="sp-agua" aria-hidden="true"></div>'
+      +   '<div class="sp-arriba"><p class="sp-sello">Nuevo en Chile</p>'
       +   '<h1 class="sp-h1">¿WC tapado? <em>Destápalo con aire.</em></h1></div>'
       + '</div>'
       + '<div class="sp-abajo">'
@@ -50,9 +53,33 @@
       ['.gal', '.miniz'].forEach(function (q) { var el = arriba.querySelector(q); if (el) el.remove(); });
     } else prod.insertBefore(s, prod.firstChild);
     s.querySelector('#spCta').addEventListener('click', irAlFormulario);
-    var f = document.createElement('section'); f.className = 'sp-franja';
-    f.innerHTML = '<p>Una sola visita del gasfíter cuesta más que el sopapo.</p>';
-    s.parentNode.insertBefore(f, s.nextSibling);
+    agua(s.querySelector('.sp-agua'));
+  }
+
+  /* efecto de agua del héroe (James 15-10): gotas que caen y ondas en la base; nada con reduced-motion */
+  function agua(caja) {
+    if (!caja || calma) return;
+    var h = '';
+    for (var i = 0; i < 18; i++) h += '<i style="left:' + (4 + Math.random() * 92).toFixed(1) + '%;animation-duration:' + (1.6 + Math.random() * 1.8).toFixed(2) + 's;animation-delay:' + (Math.random() * 3).toFixed(2) + 's;opacity:' + (0.35 + Math.random() * 0.5).toFixed(2) + '"></i>';
+    for (var j = 0; j < 3; j++) h += '<b style="left:' + (38 + j * 12) + '%;animation-delay:' + (j * 0.8) + 's"></b>';
+    caja.innerHTML = h;
+  }
+
+  /* 2. PRUEBA (patrón del script: sellos y cifras), justo debajo del héroe */
+  function prueba(prod) {
+    if (prod.querySelector('.sp-prueba')) return;
+    var heroe = prod.querySelector('.sp-heroe'); if (!heroe) return;
+    var n = (window.PRODUCTOS || []).find ? ((window.PRODUCTOS || []).find(function (x) { return x.id === 'sopapo'; }) || {}).resenasResumen : null;
+    var tot = n && n.total ? n.total : 0, nota = n && n.nota ? String(n.nota).replace('.', ',') : '';
+    var S = [
+      [ic('<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>'), nota ? nota + ' de 5' : 'Opiniones reales', tot ? tot + ' opiniones reales' : 'de compradores'],
+      [CAMION, 'Envío gratis', 'a todo Chile'],
+      [ic('<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/>'), 'Pagas al recibir', 'efectivo o débito'],
+      [ic('<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>'), 'Starken y Blue', 'despacho a tu casa'],
+    ];
+    var s = document.createElement('section'); s.className = 'sp-prueba';
+    s.innerHTML = '<div class="sp-sellos">' + S.map(function (x) { return '<div class="sp-sello-c grid-item">' + x[0] + '<b>' + x[1] + '</b><span>' + x[2] + '</span></div>'; }).join('') + '</div>';
+    heroe.parentNode.insertBefore(s, heroe.nextSibling);
   }
 
   function gancho(prod) {
@@ -106,23 +133,24 @@
     sec.insertBefore(fig, sec.firstChild);
   }
 
-  /* movimiento suizo: entra corto y seco, sin rebote; las fotos están SIEMPRE visibles (fromTo termina en opacidad 1) */
+  /* MOVIMIENTO = el "Stagger List" del script, con sus mismos valores. Se dispara al entrar en pantalla (IntersectionObserver)
+     y con fromTo termina en opacidad 1: las fotos nunca quedan escondidas en el celular. */
   function mover(prod) {
     if (calma || !window.gsap || !('IntersectionObserver' in window)) return;
     var obs = new IntersectionObserver(function (lista) {
       lista.forEach(function (it) {
         if (!it.isIntersecting) return; obs.unobserve(it.target);
         var items = it.target.querySelectorAll('.grid-item'); if (!items.length) return;
-        gsap.fromTo(items, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.24, stagger: 0.05, ease: 'power2.out', clearProps: 'transform' });
+        gsap.fromTo(items, { opacity: 0, scale: 0.92, y: 16 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: { each: 0.06, from: 'start', grid: 'auto' }, ease: 'back.out(1.4)', clearProps: 'transform' });
       });
     }, { rootMargin: '0px 0px -12% 0px' });
-    prod.querySelectorAll('.sp-bloque').forEach(function (b) { obs.observe(b); });
+    prod.querySelectorAll('.sp-bloque, .sp-prueba').forEach(function (b) { obs.observe(b); });
   }
 
   function armar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2')) return false;
-    portada(prod); gancho(prod); promo(prod); problema(prod); pasos(prod); usos(prod); mover(prod);
+    portada(prod); prueba(prod); gancho(prod); promo(prod); problema(prod); pasos(prod); usos(prod); mover(prod);
     return true;
   }
   function intentar() {

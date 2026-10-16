@@ -1314,10 +1314,10 @@ window.PRODUCTOS = [
     /* 15-10: REALES (sin las que hablan de cocina/lavaplatos o de accesorios que este no trae, James 15-10) (Falabella CL/PE/CO —algunas vienen de Sodimac— y AliExpress como 'Anónimo · país'), destapadores a presión de aire.
        Fuente: _kn_scratch/sopapo/_resenas_*.js → _resenas_pagina.json. NINGUNA escrita por nosotros. */
     resenasReales: [
-      { nombre: 'Anónimo · España', comuna: '', fecha: '2026-04-02', estrellas: 5, foto: 'img/resenas-sopapo/r2.webp?v=1', texto: 'la he probado,, y la verdad me a sorprendido,, tiene fuerza la bestia.... hasta me da miedo que rompa las tuberías con solo presión 2 lanza un chorro de aire que da miedo!!!' },
-      { nombre: 'Anónimo · Chile', comuna: '', fecha: '2026-03-21', estrellas: 5, foto: 'img/resenas-sopapo/r3.webp?v=1', texto: 'llegó muy rápido el plástico no se ve como el mejor pero funcionó excelente a la tercera vez de usarlo pude desatascar mi bañera' },
+      { nombre: 'Anónimo · España', comuna: '', fecha: '2026-04-02', estrellas: 5, texto: 'la he probado,, y la verdad me a sorprendido,, tiene fuerza la bestia.... hasta me da miedo que rompa las tuberías con solo presión 2 lanza un chorro de aire que da miedo!!!' },
+      { nombre: 'Anónimo · Chile', comuna: '', fecha: '2026-03-21', estrellas: 5, texto: 'llegó muy rápido el plástico no se ve como el mejor pero funcionó excelente a la tercera vez de usarlo pude desatascar mi bañera' },
       { nombre: 'Anónimo · Chile', comuna: '', fecha: '2026-04-07', estrellas: 5, foto: 'img/resenas-sopapo/r4.webp?v=1', texto: 'Buen producto' },
-      { nombre: 'Paola', comuna: '', fecha: '2023-02-14', estrellas: 4, foto: 'img/resenas-sopapo/r5.webp?v=1', texto: 'Tal cual en su descripción' },
+      { nombre: 'Paola', comuna: '', fecha: '2023-02-14', estrellas: 4, texto: 'Tal cual en su descripción' },
       { nombre: 'Roberta', comuna: '', fecha: '2023-05-05', estrellas: 5, texto: 'Tenía muy tapado el inodoro, al segundo disparo quedó perfecto. Cabe mencionar que había intentado dos horas con sopapo y otros y nada, cumple, sin esfuerzo ni botar agua por todos lados' },
       { nombre: 'Franco', comuna: '', fecha: '2023-04-14', estrellas: 5, texto: 'Muy bueno. Destapó el WC al primer intento. Intentamos de todo llevada 12 días tapado y nada lo destapaba hasta que compramos y usamos este artículo' },
       { nombre: 'Cecilia', comuna: '', fecha: '2023-05-28', estrellas: 5, texto: 'Tenía tapado el baño una semana y no resultaba con ninguna sopapo, solo basto una vez y me destapó el baño lo recomiendo 100%' },
