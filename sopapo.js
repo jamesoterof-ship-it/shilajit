@@ -102,7 +102,7 @@
     if (prod.querySelector('.sp-b1')) return;
     var s = document.createElement('section'); s.className = 'sp-bloque sp-b1';
     s.innerHTML = '<span class="sp-num">01 · El problema</span><h2>Siempre pasa en el peor momento.</h2>'
-      + '<div class="sp-prob grid-item"><img src="img/sopapo-problema.webp?v=3" alt="WC tapado con el agua casi al borde" width="1024" height="1024" loading="lazy">'
+      + '<div class="sp-prob grid-item"><img src="img/sopapo-problema.webp?v=4" alt="Hombre preocupado mirando el WC tapado en el baño de su casa" width="1024" height="1024" loading="lazy">'
       + '<ul><li>Se tapa de noche o el fin de semana, cuando nadie atiende</li><li>El sopapo de siempre salpica y no destapa</li><li>La soda cáustica tarda horas y daña la cañería</li><li>El gasfíter cobra entre $16.000 y $45.000 la hora</li></ul></div>'
       + mini('Ver cómo funciona');
     antesDelForm(prod, s);
@@ -114,7 +114,7 @@
     if (prod.querySelector('.sp-b2')) return;
     var s = document.createElement('section'); s.className = 'sp-bloque sp-b2';
     s.innerHTML = '<span class="sp-num">02 · Cómo funciona</span><h2>Tres pasos y el agua baja.</h2>'
-      + '<figure class="sp-carta grid-item sp-pasos-img"><img src="img/sopapo-pasos.webp?v=1" alt="Tres momentos: la copa sobre el desagüe del WC, el empuje con el agua salpicando y el WC ya destapado" width="1536" height="1024" loading="lazy"></figure>'
+      + '<figure class="sp-carta grid-item sp-pasos-img"><img src="img/sopapo-pasos.webp?v=2" alt="Hombre empujando el mango del sopapo a presión con la copa dentro del WC" width="1024" height="1280" loading="lazy"></figure>'
       + '<div class="sp-grid">' + PASOS.map(function (u, i) {
           return '<div class="sp-carta grid-item"><div class="sp-paso-txt"><span class="sp-paso">' + (i + 1) + '</span><b>' + u[1] + '</b><p>' + u[2] + '</p></div></div>';
         }).join('') + '</div>';
@@ -125,7 +125,7 @@
     if (prod.querySelector('.sp-b3')) return;
     var s = document.createElement('section'); s.className = 'sp-bloque sp-b3';
     s.innerHTML = '<span class="sp-num">03 · Para tu casa</span><h2>Listo para la próxima vez.</h2>'
-      + '<div class="sp-usos"><figure class="sp-carta grid-item"><img src="img/sopapo-usos.webp?v=3" alt="Mujer empujando el mango del destapador a presión dentro del WC" width="1024" height="1024" loading="lazy"></figure>'
+      + '<div class="sp-usos"><figure class="sp-carta grid-item"><img src="img/sopapo-usos.webp?v=4" alt="Mujer empujando el mango del sopapo a presión dentro del WC de su casa" width="1024" height="1024" loading="lazy"></figure>'
       + '<ul class="sp-tags grid-item"><li>WC</li><li>Lavamanos</li><li>Ducha</li><li>Tina</li></ul></div>'
       + mini('Pedir el mío');
     antesDelForm(prod, s);

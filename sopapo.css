@@ -96,7 +96,7 @@ body.p-sopapo #prod .sp-carta.grid-item{padding:0;overflow:hidden;margin:0}
 .sp-carta b{font:600 20px/1.2 var(--font-heading)!important;color:var(--color-foreground)}
 body.p-sopapo #prod .sp-carta figcaption p{margin:0;font-size:15px}
 .sp-grid{display:grid;gap:var(--space-md)}
-.sp-pasos-img img{aspect-ratio:3/2}
+.sp-pasos-img img{aspect-ratio:4/5}
 .sp-paso-txt{padding:var(--space-lg);display:grid;gap:6px}
 body.p-sopapo #prod .sp-paso-txt p{margin:0;font-size:15px}
 @media (min-width:768px){.sp-grid{grid-template-columns:repeat(3,1fr)}}

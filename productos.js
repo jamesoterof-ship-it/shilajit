@@ -1382,7 +1382,7 @@ window.PRODUCTOS = [
       { q: '¿Cómo pago?', a: 'Pagas cuando lo recibes, en efectivo o con tarjeta de débito. El envío es gratis a todo Chile.' },
     ],
     /* 15-10 James: "¿dónde está el antes y después?" — imagen ilustrativa (OpenAI, línea del héroe), textos escritos con PIL */
-    antesDespues: 'img/sopapo-ba.webp?v=1',
+    antesDespues: 'img/sopapo-ba.webp?v=2',
     antesDespuesSub: 'Antes: el agua sube y no baja. Después: destapado en minutos, sin químicos y sin gasfíter.',
     formulaRotulo: 'Lo que trae',
     formulaTitulo: 'Por qué tenerlo en casa.',
@@ -1405,7 +1405,7 @@ window.PRODUCTOS = [
     sub: 'Destapa el WC, el lavamanos y la ducha con aire a presión · 64 cm · sin químicos',
     categoria: 'Hogar',
     foto: 'img/sopapo-heroe.webp?v=2',
-    fotos: ['img/sopapo-promo.webp?v=1'],
+    fotos: ['img/sopapo-promo.webp?v=2'],
     acento: '#E5431E', acento2Manual: '#334155',   /* James 15-10: botón = naranja real del cuerpo del sopapo; gris industrial de la skill como primario */
     desc: 'Sopapo destapador a presión de aire para el WC, el lavamanos y la ducha. Se pone la copa de goma sobre el desagüe y se empuja el mango: el aire a presión empuja el tapón cañería abajo. Mide 64 cm, copa de 9 cm. Sin químicos, sin pilas y sin cables.',
     puntos: [
