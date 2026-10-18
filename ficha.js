@@ -261,7 +261,8 @@
        tiene 4.893 de stock (16-sep). Precios propuestos 16-sep: 1 u. 7.990 ·
        2 u. 11.990. Los grises y el madera salen de la propia foto del
        producto (James: «utiliza los colores del producto»). */
-    organizador: { nombre: 'Aislante de Puerta Grueso',
+    /* 18-10 James: QUITADO. Chamos (proveedor actual del organizador) no tiene el aislante; con la clave cambiada la ficha ya no lo ofrece. */
+    organizador_QUITADO_1810: { nombre: 'Aislante de Puerta Grueso',
       webhook: 'https://n8n-production-8a42.up.railway.app/webhook/upsell-aislante',
       foto: 'img/aislante.webp',
       beneficios: ['Tapa la rendija de abajo de la puerta', 'Frena el polvo, el ruido y la corriente de aire',
