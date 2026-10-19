@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+/* ============================================================
+   LENTES ONE POWER · POR PÁGINA · 18-10. James: "cambio total a esa página", "el diseño es del script, no tuyo",
+   "solo tú cambia el color por el verde" y "efectos de botones, todo de la herramienta".
+   Sale del archivo maestro del script: _kn_scratch/lentes/diseno/design-system/lentes/MASTER.md (opción #17 del candado)
+   Estilo Swiss Modernism 2.0 · letras y colores del script · patrón Hero + Testimonials + CTA
+   (Hero > Problema > Solución > Opiniones > CTA).
+   Única cosa cambiada por James: el acento ámbar del script pasa al verde de la caja OnePower (#00B0A8 / #009080).
+   Héroe (James 18-10, viendo el de las gafas de Colombia): foto COMPLETA de borde a borde, sin esquinas, y el título
+   ENTRA dentro de la foto en cascada (letra por letra), + lupa que aclara la letra chica.
+   ============================================================ */
+body.p-lentes{
+  --color-primary:#78716C; --color-on-primary:#FFFFFF; --color-secondary:#92400E;
+  --color-accent:#00B0A8; --color-accent-osc:#009080; --color-on-accent:#000000;
+  --color-background:#FFFBEB; --color-foreground:#0F172A; --color-card:#FFFFFF; --color-card-foreground:#0F172A;
+  --color-muted:#F6F6F6; --color-muted-foreground:#475569; --color-border:#EEEDED; --color-ring:#78716C; --color-destructive:#DC2626;
+  --font-heading:'Cormorant Garamond',Georgia,serif; --font-body:'Crimson Pro',Georgia,serif;
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px; --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.05); --shadow-md:0 4px 6px rgba(0,0,0,0.1); --shadow-lg:0 10px 15px rgba(0,0,0,0.1); --shadow-xl:0 20px 25px rgba(0,0,0,0.15);
+  background:var(--color-background);
+}
+body.p-lentes #prod{background:var(--color-background);color:var(--color-foreground);font-family:var(--font-body);overflow-x:clip}
+body.p-lentes #prod :is(a,button,.pack,.cta,summary){cursor:pointer}
+body.p-lentes #prod :focus-visible{outline:2px solid var(--color-ring);outline-offset:3px}
+
+/* Botón primario (MASTER, con el verde de James): padding 12/24, radio 8px, peso 600, 200 ms, hover opacidad .9 y sube 1px */
+body.p-lentes #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn),body.p-lentes .stickycta :is(a,button){background:var(--color-accent)!important;color:var(--color-on-accent)!important;
+  font-family:var(--font-heading)!important;font-weight:700;font-size:19px;text-transform:none!important;letter-spacing:0;padding:12px 24px;min-height:50px;border:0;border-radius:8px!important;box-shadow:none;animation:none!important;transition:all 200ms ease}
+body.p-lentes #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn):hover,body.p-lentes .stickycta :is(a,button):hover{opacity:.9;transform:translateY(-1px)}
+
+/* ---------- 1. HÉROE ---------- */
+body.p-lentes #prod > .ln-heroe{padding:0!important;margin:0!important;background:var(--color-background)}
+.ln-heroe .ln-marco{position:relative;overflow:hidden;line-height:0}
+/* la foto COMPLETA: alto natural, sin recorte ni esquinas (James 18-10: "¿por qué así cuadrado? la quiero completa") */
+.ln-heroe .ln-foto{display:block;width:100%;height:auto;border-radius:0!important;max-width:100%}
+/* James 18-10: la foto completa y en grande, y SOLO las letras entran en cascada encima de ella. Sin franja ni fondo: se leen con sombra clara. */
+.ln-heroe .ln-sobre{position:absolute;left:0;right:0;top:0;padding:var(--space-lg) var(--space-md) 0;line-height:normal;z-index:2}
+.ln-heroe .ln-sobre .ln-rot,.ln-heroe .ln-sobre .ln-h1{text-shadow:0 0 10px rgba(255,251,235,.95),0 0 22px rgba(255,251,235,.85),0 1px 2px rgba(255,251,235,.9)}
+.ln-heroe .ln-rot{display:inline-block;margin:0 0 var(--space-sm);font:600 13px/1.2 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-osc)}
+body.p-lentes #prod .ln-heroe h1.ln-h1{margin:0;font:700 clamp(32px,9.4vw,64px)/1.02 var(--font-heading);color:var(--color-foreground);letter-spacing:-.01em;text-transform:none!important;text-wrap:balance}
+.ln-heroe .ln-h1 em{display:block;font-style:italic;font-weight:500;color:var(--color-accent-osc)}
+
+/* CASCADA: cada letra cae desde arriba, se enfoca, suelta un destello verde y se asienta. Una tras otra (--k). */
+.ln-heroe .ln-w{display:inline-block;white-space:nowrap}
+.ln-heroe .ln-l{display:inline-block}
+.ln-heroe.ln-anda .ln-l{opacity:0;animation:ln-cae .8s cubic-bezier(.25,1.4,.5,1) both;animation-delay:calc(.25s + var(--k) * 42ms)}
+@keyframes ln-cae{
+  0%{opacity:0;transform:translateY(-1.3em) rotate(-8deg);filter:blur(3px)}
+  55%{opacity:1;transform:translateY(.06em) rotate(1.5deg);filter:blur(0);text-shadow:0 0 14px rgba(0,176,168,.9),0 0 2px #FFFFFF}
+  100%{opacity:1;transform:none;text-shadow:none}
+}
+/* lo que acompaña al título entra después, de abajo hacia arriba y en orden (--i) */
+.ln-heroe.ln-anda .ln-sube{opacity:0;animation:ln-sube .6s cubic-bezier(.2,.85,.3,1) both;animation-delay:calc(var(--d,1.4s) + var(--i,0) * .14s)}
+@keyframes ln-sube{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* franja de abajo: la lupa + la bajada + el botón */
+.ln-heroe .ln-abajo{display:grid;gap:var(--space-md);padding:var(--space-lg) var(--space-md) var(--space-xl);background:var(--color-background)}
+.ln-heroe .ln-baja{margin:0;font:400 19px/1.5 var(--font-body);color:var(--color-muted-foreground);max-width:36ch}
+.ln-heroe .ln-baja b{color:var(--color-foreground);font-weight:600}
+.ln-heroe .cta{width:100%;margin:0}
+.ln-heroe .ln-sellos{display:flex;flex-wrap:wrap;gap:var(--space-sm) var(--space-md);margin:0;padding:0;list-style:none}
+.ln-heroe .ln-sellos li{display:flex;align-items:center;gap:6px;font:600 15px/1.2 var(--font-body);color:var(--color-foreground)}
+.ln-heroe .ln-sellos svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--color-accent-osc);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* LA LUPA: la letra chica está borrosa; donde pasa el lente (o el dedo) se lee nítida. Es lo que hacen los One Power. */
+.ln-lupa{position:relative;overflow:hidden;height:150px;border:1px solid var(--color-border);border-radius:12px;background:var(--color-card);box-shadow:var(--shadow-md);touch-action:pan-y;cursor:pointer}
+.ln-lupa .ln-lec{position:absolute;inset:0;padding:12px 14px;margin:0;font:400 17px/1.75 var(--font-body);color:var(--color-foreground);text-align:justify;user-select:none}
+.ln-lupa .ln-lec b{font-weight:600;color:var(--color-accent-osc)}
+.ln-lupa .ln-borroso{filter:blur(2.6px);opacity:.55}
+.ln-lupa .ln-nitido{clip-path:circle(var(--r,56px) at var(--x,30%) var(--y,50%));background:var(--color-card)}
+.ln-lupa .ln-aro{position:absolute;left:var(--x,30%);top:var(--y,50%);width:calc(var(--r,56px) * 2);height:calc(var(--r,56px) * 2);margin:calc(var(--r,56px) * -1) 0 0 calc(var(--r,56px) * -1);
+  border-radius:50%;border:4px solid var(--color-accent);box-shadow:0 0 0 1px rgba(15,23,42,.18),var(--shadow-lg),inset 0 0 18px rgba(0,176,168,.25);pointer-events:none}
+.ln-pista{margin:-6px 0 0;text-align:center;font:400 16px/1.4 var(--font-body);color:var(--color-muted-foreground)}
+.ln-pista b{color:var(--color-accent-osc);font-weight:600}
+
+/* ---------- TODA la página con el sistema del script (letras, colores, tarjetas) ---------- */
+body.p-lentes #prod :is(p,li,td,label,.sub2,.ctaSub,.packDe,.opc){font-family:var(--font-body);color:var(--color-muted-foreground);line-height:1.6;font-size:17px}
+body.p-lentes #prod :is(h2,h3,.tit2,.rev-title,.datos h1){font-family:var(--font-heading)!important;color:var(--color-foreground);font-weight:700;text-transform:none!important;letter-spacing:-.01em;text-wrap:balance}
+body.p-lentes #prod :is(h2,.tit2,.rev-title){font-size:clamp(30px,8vw,44px);line-height:1.08}
+body.p-lentes #prod .datos h1{font-size:clamp(32px,8.5vw,48px);line-height:1.05}
+body.p-lentes #prod :is(b,strong){color:var(--color-foreground);font-weight:600}
+body.p-lentes #prod :is(.eyebrow,.rot){color:var(--color-accent-osc);font-family:var(--font-body);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:13px}
+body.p-lentes #prod > :is(section,.bloque,.form):not(.ln-heroe){background:transparent;padding:var(--space-xl) var(--space-md)!important;margin-top:0!important;border-top:1px solid var(--color-border)}
+/* Cards (MASTER): radio 12px, padding 24px, sombra md; hover sombra lg y sube 2px, 200 ms */
+body.p-lentes #prod :is(.card,.pack,.promo-card,.gar-card,.res-card,.rev,.fq details,.pagoAnt__caja,.ln-carta){background:var(--color-card);color:var(--color-card-foreground);border:1px solid var(--color-border);border-radius:12px!important;box-shadow:var(--shadow-md);transition:all 200ms ease}
+body.p-lentes #prod :is(.card,.pack,.ln-carta,.rev):hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+body.p-lentes #prod .pack[aria-pressed="true"],body.p-lentes #prod .pack.sel{box-shadow:0 0 0 2px var(--color-accent),var(--shadow-md)}
+body.p-lentes #prod :is(.promo-card *,.gar-card *,.res-card *,.pack *,.cuenta *){font-family:var(--font-body)!important;text-transform:none!important}
+body.p-lentes #prod :is(.promo-qt,.promo-precio,.pack b,.pack .precio,.packPrecio,.cuenta b,.precio,.pPrecio,.ahora){font-family:var(--font-heading)!important;font-weight:700;color:var(--color-foreground)}
+body.p-lentes #prod .promo-banner{background:var(--color-foreground);color:var(--color-on-primary);border-radius:8px}
+body.p-lentes #prod :is(.off,.promo-off){background:var(--color-accent);color:var(--color-on-accent);border-radius:8px;font-weight:600}
+body.p-lentes #prod :is(.promo-antes,.antes){text-decoration:line-through;color:var(--color-muted-foreground);font-weight:400}
+/* Inputs (MASTER): padding 12/16, radio 8px, 16px, foco con anillo */
+body.p-lentes #prod :is(input,select,textarea){padding:12px 16px;border:1px solid var(--color-border);border-radius:8px;font-size:16px;font-family:var(--font-body);background:var(--color-card);transition:border-color 200ms ease}
+body.p-lentes #prod :is(input,select,textarea):focus{border-color:var(--color-primary);outline:none;box-shadow:0 0 0 3px rgba(120,113,108,.125)}
+body.p-lentes #prod :is(video,img){border-radius:12px}
+/* Botón secundario (MASTER): transparente, borde 2px */
+body.p-lentes #prod .ln-mini{display:inline-flex;align-items:center;gap:var(--space-sm);background:transparent;color:var(--color-foreground);border:2px solid var(--color-accent-osc);padding:12px 24px;border-radius:8px;font:700 18px/1 var(--font-heading);transition:all 200ms ease;cursor:pointer}
+body.p-lentes #prod .ln-mini:hover{opacity:.9;transform:translateY(-1px)}
+body.p-lentes #prod .ln-mini svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ln-cierre{margin:var(--space-lg) 0 0;text-align:center}
+
+/* ---------- 2. PROBLEMA · 3. SOLUCIÓN · VIDEO ---------- */
+.ln-bloque{display:grid;gap:var(--space-md)}
+.ln-bloque h2{margin:0}
+.ln-num{font:600 13px/1.2 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent-osc)}
+.ln-carta{margin:0;overflow:hidden}
+.ln-carta img{display:block;width:100%;height:auto;border-radius:0!important}
+.ln-lista{display:grid;gap:var(--space-sm);margin:0;padding:var(--space-lg);list-style:none}
+.ln-lista li{display:flex;gap:10px;align-items:flex-start}
+.ln-lista svg{width:20px;height:20px;flex:none;margin-top:4px;fill:none;stroke:var(--color-destructive);stroke-width:2.2;stroke-linecap:round}
+.ln-grid{display:grid;gap:var(--space-md)}
+.ln-punto{padding:var(--space-lg);display:grid;gap:6px}
+.ln-punto svg{width:28px;height:28px;fill:none;stroke:var(--color-accent-osc);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ln-punto b{font:700 22px/1.15 var(--font-heading)}
+.ln-punto p{margin:0}
+.ln-video{position:relative;max-width:420px;width:100%;margin:0 auto;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-xl);background:var(--color-foreground);line-height:0}
+.ln-video video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;border-radius:0!important}
+.ln-sonido{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 14px;border:0;border-radius:8px;background:rgba(15,23,42,.78);color:var(--color-on-primary);font:600 15px/1 var(--font-body);cursor:pointer;transition:all 200ms ease}
+.ln-sonido:hover{opacity:.9;transform:translateY(-1px)}
+.ln-sonido svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* fade-in del script al entrar en pantalla */
+body.ln-js .ln-entra{opacity:0;transform:translateY(12px);transition:opacity 300ms ease-out,transform 300ms ease-out}
+body.ln-js .ln-entra.ln-visto{opacity:1;transform:none}
+
+@media (min-width:768px){
+  .ln-grid{grid-template-columns:repeat(3,1fr)}
+  .ln-b1 .ln-carta{display:grid;grid-template-columns:1fr 1fr;align-items:center}
+  .ln-heroe .ln-sobre{padding:var(--space-2xl) var(--space-2xl) 0}
+  .ln-heroe .ln-abajo{grid-template-columns:1.2fr 1fr;align-items:start;padding:var(--space-xl) var(--space-2xl)}
+}
+@media (prefers-reduced-motion:reduce){
+  .ln-heroe.ln-anda .ln-l,.ln-heroe.ln-anda .ln-sube{animation:none;opacity:1}
+}
