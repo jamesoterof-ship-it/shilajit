@@ -100,6 +100,14 @@ body.p-lentes #prod .ln-mini:hover{opacity:.9;transform:translateY(-1px)}
 body.p-lentes #prod .ln-mini svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ln-cierre{margin:var(--space-lg) 0 0;text-align:center}
 
+/* el héroe conserva su verde y sus medidas por encima de las reglas generales de arriba */
+body.p-lentes #prod .ln-heroe .ln-rot{color:var(--color-accent-osc);font-size:13px;line-height:1.2}
+body.p-lentes #prod .ln-lupa .ln-lec{color:var(--color-foreground);font-size:17px;line-height:1.75}
+body.p-lentes #prod .ln-lupa .ln-lec b,body.p-lentes #prod .ln-pista b{color:var(--color-accent-osc)}
+body.p-lentes #prod .ln-pista{font-size:16px;line-height:1.4}
+body.p-lentes #prod .ln-heroe .ln-baja{font-size:19px;line-height:1.5}
+body.p-lentes #prod .ln-heroe .ln-sellos li{color:var(--color-foreground);font-size:15px;line-height:1.2}
+
 /* ---------- 2. PROBLEMA · 3. SOLUCIÓN · VIDEO ---------- */
 .ln-bloque{display:grid;gap:var(--space-md)}
 .ln-bloque h2{margin:0}
