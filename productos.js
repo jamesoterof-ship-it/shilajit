@@ -676,10 +676,10 @@ window.PRODUCTOS = [
          salia sin tachado ni descuento. */
       /* 13-10 James: proveedor nuevo Chamos Store (pack x3 a $8.000) => +3.500 parejo a cada pack: 23.000 / 28.000 / 38.000.
          El "antes" del de 3 sigue la regla del 30 % (23.000 x 1.3 = 29.900). La medida se deja como estaba (James 13-10). */
-      { cant: 3, precio: 23000, antes: 29900, texto: '3 cajas · 294 litros' },
-      /* 13-10 tarde James: "que quede con la misma ganancia" => +3.500 POR PACK: 6 cajas 31.500 · 9 cajas 45.000 (antes 28.000 / 38.000) */
-      { cant: 6, precio: 31500, antes: 39000, texto: '6 cajas · 588 litros' },
-      { cant: 9, precio: 45000, antes: 58500, texto: '9 cajas · 882 litros' },
+      /* 22-10 James: MEIBO 56932 volvio con stock ($4.500 el pack) => de vuelta a los precios que vendian (misma ganancia que Chamos a 23.000/31.500/45.000) */
+      { cant: 3, precio: 19500, antes: 25350, texto: '3 cajas · 294 litros' },
+      { cant: 6, precio: 24500, antes: 39000, texto: '6 cajas · 588 litros' },
+      { cant: 9, precio: 34500, antes: 58500, texto: '9 cajas · 882 litros' },
     ],
     popular: 2,
   },
@@ -1987,7 +1987,8 @@ window.PRECIOS_APROBADOS = [
   22500, 31500, 44500,   /* zapatero organizador colgador 4 niveles: 1 · 2 · 3 unidades (James, 01-10) */
   24500, 34500, 44500,   /* desengrasante en espuma: combos de 2 · 4 · 6 espumas, con 2 regalos (James, 03-10) */
   21490, 33490, 45490,   /* cámara ampolleta WiFi: 1 · 2 · 3 cámaras, 500 bajo CheliExpress (James, 06-10) */
-  23000, 31500, 45000, 63000,   /* organizador desde el 13-10 (James): Chamos Store a $8.000 el pack => +3.500 POR PACK (misma ganancia que con MEIBO) */
+  19500, 24500, 34500, 49000,   /* organizador desde el 22-10 (James): de vuelta a MEIBO 56932 ($4.500 el pack) y a los precios que vendian */
+  23000, 31500, 45000, 63000,   /* organizador 13-10 a 22-10 (Chamos 24921): se dejan para los pedidos que ya estaban abiertos con ese precio */
   22500, 34500, 42500,   /* colágeno NeoCell: 1 · 2 · 3 frascos, 500 bajo Clicka y Tu compra segura (James, 13-10) */
   25500, 37500, 49500,   /* sopapo destapador a presión: 1 · 2 · 3 sopapos, bajo BuyPepo y Mercachile (James, 15-10) */
 ];
