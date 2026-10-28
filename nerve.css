@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+/* ============================================================
+   NEURAZENX NERVE SUPPORT · POR PÁGINA · 28-10 (3er rediseño). James: "yo quiero unos diseños diferentes a los que siempre
+   me estás haciendo" y "si" al diseño que la skill eligió de su catálogo. Plano del script ui-ux-pro-max, opción #73 del candado:
+   design-system/design-system/neurazenx-noche/MASTER.md + pages/nerve.md.
+   Estilo DARK MODE (OLED): fondo de noche, poco blanco encendido, brillo suave en los títulos (text-shadow 0 0 10px),
+   transiciones de oscuro a claro, foco bien visible. Colores "Night indigo + dream violet on dark": fondo #0F172A, tarjetas #192134,
+   índigo #4338CA / #6366F1, botón violeta #7C3AED con letra blanca (5,7:1), texto blanco y gris #94A3B8.
+   Letra: Inter. Botones radio 8 px, tarjetas 12 px, 200 ms (MASTER). Patrón: Héroe > Problema > Solución > Opiniones > Botón.
+   Solo pinta ?p=nerve. Encabezado, pie, logo y estrellas (doradas) no se tocan.
+   ============================================================ */
+body.p-nerve{
+  --color-primary:#4338CA; --color-on-primary:#FFFFFF; --color-secondary:#6366F1; --color-on-secondary:#000000;
+  --color-accent:#7C3AED; --color-on-accent:#FFFFFF;
+  --color-background:#0F172A; --color-foreground:#FFFFFF; --color-card:#192134; --color-card-foreground:#FFFFFF;
+  --color-muted:#131936; --color-muted-foreground:#94A3B8; --color-border:rgba(255,255,255,0.08); --color-ring:#FFFFFF; --color-destructive:#DC2626;
+  --font-heading:'Inter',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif;
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px; --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+  --brillo:0 0 10px rgba(99,102,241,0.45);
+  background:var(--color-background);
+}
+body.p-nerve #prod{background:var(--color-background);color:var(--color-foreground);font-family:var(--font-body);overflow-x:clip}
+body.p-nerve #prod :is(a,button,.pack,.cta,summary){cursor:pointer}
+body.p-nerve #prod :focus-visible{outline:3px solid var(--color-ring);outline-offset:3px}
+
+/* fondo de noche en todos los bloques de la ficha */
+body.p-nerve #prod > :is(section,.bloque,div){background-color:transparent}
+body.p-nerve #prod :is(.bloque,.arriba2,.datos,.desc,.form-sec,.cmp-sec,.res-sec,.gar-sec,.ba-sec,.rev-sec,.vid-wrap,.promo-sec,.pagoAnt,.esc-sec,.zon-sec,.med-sec){background:transparent!important;color:var(--color-foreground)}
+
+/* texto: blanco para títulos, gris claro para el cuerpo (bajo blanco encendido) */
+body.p-nerve #prod :is(p,li,td,th,label,small,.sub,.sub2,.ctaSub,.packDe,.opc,.cnt,.rev-fuente,.rev-auto-label){font-family:var(--font-body);color:var(--color-muted-foreground);line-height:1.6}
+body.p-nerve #prod :is(p,li,label){font-size:17px}
+body.p-nerve #prod :is(h1,h2,h3,.tit2,.rev-title,.datos h1,summary){font-family:var(--font-heading)!important;color:var(--color-foreground)!important;font-weight:700;text-transform:none!important;letter-spacing:-.02em;text-wrap:balance;text-shadow:var(--brillo)}
+body.p-nerve #prod :is(h2,.tit2,.rev-title){font-size:clamp(28px,7.8vw,46px);line-height:1.1}
+body.p-nerve #prod .datos h1{font-size:clamp(30px,8vw,48px);line-height:1.06}
+body.p-nerve #prod :is(b,strong){color:var(--color-foreground);font-weight:700}
+body.p-nerve #prod .pasoRot > b{color:#FFFFFF;background:var(--color-primary)}
+body.p-nerve #prod :is(.eyebrow,.rot){color:var(--color-secondary);font-family:var(--font-body);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:13px}
+
+/* tarjetas (MASTER: radio 12 px) */
+body.p-nerve #prod :is(.card,.promo-card,.gar-card,.res-card,.pagoAnt__caja,.rsc,.formcard,.ing,.res,.fq details,.pack,.pago-op,.resumen,.cmp-sec table){background:var(--color-card)!important;color:var(--color-foreground);border:1px solid var(--color-border)!important;border-radius:12px!important;box-shadow:none}
+body.p-nerve #prod :is(.formcard,.pagoAnt__caja,.promo-card) *{border-color:var(--color-border)}
+body.p-nerve #prod :is(video,img){border-radius:12px}
+body.p-nerve #prod .cuenta > div{background:var(--color-muted)!important;border:1px solid var(--color-border)!important;border-radius:8px!important}
+body.p-nerve #prod .cuenta :is(b,span){color:var(--color-foreground)!important}
+
+/* botón primario (MASTER): violeta con letra blanca, radio 8 px, 200 ms, hover opacidad .9 y sube 1 px */
+body.p-nerve #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn,.nz-boton,.masRs,.btn-write),body.p-nerve .stickycta :is(a,button){background:var(--color-accent)!important;color:var(--color-on-accent)!important;
+  font-family:var(--font-body)!important;font-weight:700;font-size:18px;text-transform:none!important;letter-spacing:0;padding:12px 24px;min-height:52px;
+  border:0!important;border-radius:8px!important;box-shadow:0 0 18px rgba(124,58,237,0.35);animation:none!important;transition:all 200ms ease}
+body.p-nerve #prod :is(.masRs,.btn-write){background:transparent!important;color:var(--color-foreground)!important;border:2px solid var(--color-secondary)!important;box-shadow:none}
+body.p-nerve #prod :is(.cta,.btnComprar,.btn-cta,.comprar,.pagoAnt__btn,.nz-boton):hover,body.p-nerve .stickycta :is(a,button):hover{opacity:.9;transform:translateY(-1px)}
+
+/* packs, precios y pago */
+body.p-nerve #prod .pack[aria-pressed="true"],body.p-nerve #prod .pack.sel{box-shadow:0 0 0 2px var(--color-accent),0 0 18px rgba(124,58,237,0.35)!important}
+body.p-nerve #prod :is(.promo-card *,.gar-card *,.res-card *,.pack *,.cuenta *){font-family:var(--font-body)!important;text-transform:none!important}
+body.p-nerve #prod :is(.promo-qt,.promo-precio,.pack b,.pack .precio,.packPrecio,.cuenta b,.precio,.pPrecio,.ahora){font-family:var(--font-heading)!important;font-weight:800;color:var(--color-foreground)!important}
+body.p-nerve #prod .promo-banner{background:var(--color-primary);color:var(--color-on-primary);border-radius:8px}
+body.p-nerve #prod :is(.off,.promo-off){background:var(--color-accent);color:var(--color-on-accent);border-radius:8px;font-weight:700}
+body.p-nerve #prod :is(.promo-antes,.antes){text-decoration:line-through;color:var(--color-muted-foreground)!important;font-weight:400}
+body.p-nerve #prod :is(input,select,textarea){padding:12px 16px;border:1px solid var(--color-border);border-radius:8px;font-size:16px;font-family:var(--font-body);background:var(--color-muted);color:var(--color-foreground);transition:border-color 200ms ease}
+body.p-nerve #prod :is(input,select,textarea)::placeholder{color:var(--color-muted-foreground)}
+body.p-nerve #prod :is(input,select,textarea):focus{border-color:var(--color-secondary);outline:none;box-shadow:0 0 0 3px rgba(99,102,241,0.25)}
+
+/* piezas de la ficha base que traían texto oscuro o fondo claro: se pasan a la noche (contraste medido con la página corriendo) */
+body.p-nerve #prod :is(.cuantas,.cuantas a,.res span,.gar-chips span,.carriers .cl,.rev-score .cnt){color:var(--color-muted-foreground)!important}
+body.p-nerve #prod :is(.rev-score .big,.bar .lvl,.bar b,.rsc .quien,.pack .info .t,.pack .pr .n,.summary,.summary *,.sello,.sello *,.oc,.oc *,.formnote a){color:var(--color-foreground)!important}
+body.p-nerve #prod .rsc .quien small{color:var(--color-muted-foreground)!important}
+body.p-nerve #prod .rsc .verif{color:var(--color-muted-foreground)!important}
+body.p-nerve #prod .pack .info .s{color:var(--color-foreground)!important}
+body.p-nerve #prod .nz-sol .nz-num{color:var(--color-foreground)!important}
+body.p-nerve #prod :is(.cir,.sello,.oc,.summary,.cc-btn,.cmp-sec th,.cmp-sec td){background:var(--color-muted)!important;border-color:var(--color-border)!important}
+body.p-nerve #prod .cmp-sec :is(th,td){color:var(--color-foreground)!important}
+body.p-nerve #prod .cir svg{stroke:var(--color-secondary)}
+body.p-nerve #prod .cc-btn{color:var(--color-foreground)!important}
+
+/* ---------- 1. HÉROE: producto solo, borde a borde ---------- */
+body.p-nerve #prod > .nz-heroe{padding:0!important;margin:0!important;background:var(--color-background)}
+.nz-heroe .nz-marco{position:relative;overflow:hidden;line-height:0;background:var(--color-background)}
+.nz-heroe .nz-foto{display:block;width:100%;height:auto;max-width:100%;border-radius:0!important}
+.nz-heroe .nz-chispas{position:absolute;inset:0;pointer-events:none;z-index:1}
+.nz-heroe .nz-sobre{position:absolute;left:0;right:0;top:0;padding:var(--space-lg) var(--space-md) 0;line-height:normal;z-index:2}
+body.p-nerve #prod .nz-heroe .nz-rot{display:inline-flex;align-items:center;gap:8px;margin:0 0 var(--space-md);color:#FFFFFF;background:var(--color-muted);border:1px solid var(--color-border);border-radius:999px;font:600 13px/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;white-space:nowrap}
+.nz-heroe .nz-rot svg{width:16px;height:16px;fill:none;stroke:var(--color-secondary);stroke-width:2}
+body.p-nerve #prod .nz-heroe h1.nz-h1{margin:0;font:800 clamp(36px,10vw,84px)/1.02 var(--font-heading);color:#FFFFFF;letter-spacing:-.035em;text-transform:none!important;text-wrap:balance;text-shadow:var(--brillo)}
+body.p-nerve #prod .nz-heroe h1.nz-h1 em{font-style:normal;color:var(--color-secondary);display:block}
+.nz-w{display:inline-block;white-space:nowrap}
+.nz-l{display:inline-block}
+.nz-heroe.nz-anda .nz-l{opacity:0;transform:translateY(.4em);animation:nzLetra .32s ease-out forwards;animation-delay:calc(.25s + var(--k) * .035s)}
+.nz-heroe.nz-anda .nz-sube{opacity:0;transform:translateY(12px);animation:nzSube .4s ease-out forwards;animation-delay:calc(var(--d,.1s) + var(--i,0) * .07s)}
+@keyframes nzLetra{to{opacity:1;transform:none}}
+@keyframes nzSube{to{opacity:1;transform:none}}
+
+/* franja de 3 cifras */
+.nz-heroe .nz-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0;padding:var(--space-md);list-style:none;background:var(--color-background)}
+.nz-heroe .nz-datos li{display:flex;flex-direction:column;gap:4px;padding:14px 8px;border-radius:12px;background:var(--color-card);border:1px solid var(--color-border);line-height:1.15;text-align:center}
+.nz-heroe .nz-datos b{font:800 clamp(22px,6.4vw,34px)/1 var(--font-heading);color:#FFFFFF;white-space:nowrap;text-shadow:var(--brillo)}
+.nz-heroe .nz-datos span{font:500 13px/1.25 var(--font-body);color:var(--color-muted-foreground)}
+
+/* ---------- bloques del patrón ---------- */
+body.p-nerve #prod .nz-bloque{padding:var(--space-2xl) var(--space-md);background:var(--color-background)}
+.nz-bloque .nz-num{display:inline-block;margin:0 0 var(--space-sm);font:700 13px/1 var(--font-body)!important;letter-spacing:.12em;text-transform:uppercase;color:var(--color-secondary)!important}
+body.p-nerve #prod .nz-bloque h2{margin:0 0 var(--space-lg)}
+body.p-nerve #prod .nz-bloque h2 em{font-style:normal;color:var(--color-secondary)}
+.nz-bloque .nz-foto2{margin:0 0 var(--space-lg);border-radius:12px;overflow:hidden;line-height:0;border:1px solid var(--color-border)}
+.nz-bloque .nz-foto2 img{display:block;width:100%;height:auto;border-radius:0!important}
+.nz-bloque .nz-lista{list-style:none;margin:0 0 var(--space-lg);padding:0;display:grid;gap:12px}
+.nz-bloque .nz-lista li{display:flex;gap:14px;align-items:flex-start;background:var(--color-card);border:1px solid var(--color-border);border-radius:12px;padding:16px}
+.nz-bloque .nz-lista svg{flex:0 0 28px;width:28px;height:28px;fill:none;stroke:var(--color-secondary);stroke-width:2}
+.nz-bloque .nz-sol{background:var(--color-card);border:1px solid var(--color-border);border-radius:12px;padding:var(--space-lg);box-shadow:0 0 24px rgba(67,56,202,0.25)}
+.nz-bloque .nz-sol .nz-foto2{margin:var(--space-sm) 0 var(--space-md)}
+body.p-nerve #prod .nz-bloque .nz-sol p{color:#FFFFFF;font-size:18px}
+.nz-bloque .nz-boton{display:inline-flex;align-items:center;gap:10px;width:100%;justify-content:center;margin-top:var(--space-sm)}
+.nz-bloque .nz-boton svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4}
+
+/* sellos de confianza */
+body.p-nerve #prod .nz-b0{padding-top:var(--space-lg);padding-bottom:var(--space-lg)}
+.nz-sellos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nz-sellos li{display:flex;flex-direction:column;gap:4px;padding:16px 14px;background:var(--color-card);border:1px solid var(--color-border);border-radius:12px}
+.nz-sellos svg{width:28px;height:28px;fill:none;stroke:var(--color-secondary);stroke-width:2;margin-bottom:4px}
+body.p-nerve #prod .nz-sellos b{font-size:16px;line-height:1.2;color:#FFFFFF}
+body.p-nerve #prod .nz-sellos span{font-size:14px;line-height:1.4;color:var(--color-muted-foreground)}
+
+/* segundo video */
+body.p-nerve #prod .nz-b3{background:var(--color-muted)}
+body.p-nerve #prod .nz-b3 h2{margin:0 0 var(--space-sm)}
+body.p-nerve #prod .nz-bajada{margin:0 0 var(--space-lg)}
+.nz-b3 .nz-video{border-radius:12px;overflow:hidden;line-height:0;max-width:420px;margin:0 auto;box-shadow:0 0 28px rgba(124,58,237,0.3)}
+.nz-b3 .nz-video video{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;background:var(--color-background);border-radius:0!important}
+
+/* antes y después: rótulos en la página */
+body.p-nerve #prod .ba-img.nz-ba{position:relative;border-radius:12px;overflow:hidden}
+.nz-ba .nz-ba-rot{position:absolute;top:12px;padding:8px 14px;border-radius:8px;font:700 14px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase}
+.nz-ba .nz-ba-rot--a{left:12px;background:var(--color-background);color:#FFFFFF;border:1px solid var(--color-border)}
+.nz-ba .nz-ba-rot--d{right:12px;background:var(--color-accent);color:#FFFFFF}
+.nz-ba-lista{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:var(--space-md) 0 var(--space-sm)}
+.nz-ba-col{list-style:none;margin:0;padding:12px;border-radius:12px;background:var(--color-card);border:1px solid var(--color-border);display:grid;gap:8px}
+body.p-nerve #prod .nz-ba-col li{display:flex;gap:8px;align-items:flex-start;font-size:15px;line-height:1.35}
+.nz-ba-col svg{flex:0 0 20px;width:20px;height:20px;fill:none;stroke-width:2.6}
+.nz-ba-col--a svg{stroke:var(--color-destructive)}
+.nz-ba-col--d svg{stroke:var(--color-secondary)}
+body.p-nerve #prod .nz-ba-nota{font-size:14px;margin:0 0 var(--space-md);text-align:center}
+
+/* entrada al aparecer: de oscuro a claro (efecto del estilo) */
+body.nz-js .nz-entra{opacity:0;transform:translateY(12px);transition:opacity 300ms ease,transform 300ms ease}
+body.nz-js .nz-entra.nz-visto{opacity:1;transform:none}
+
+@media (min-width:768px){
+  .nz-heroe .nz-sobre{padding:var(--space-2xl) var(--space-xl) 0}
+  .nz-sellos{grid-template-columns:repeat(4,1fr)}
+  body.p-nerve #prod .nz-bloque{padding:var(--space-3xl) var(--space-xl)}
+  .nz-bloque .nz-boton{width:auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .nz-heroe .nz-l,.nz-heroe .nz-sube{opacity:1!important;transform:none!important;animation:none!important}
+  body.nz-js .nz-entra{opacity:1;transform:none;transition:none}
+}

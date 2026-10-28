@@ -1948,6 +1948,121 @@ window.PRODUCTOS = [
     ],
     popular: 2,
   },
+  {
+    /* 28-10 · NEURAZENX NERVE SUPPORT — Dropi 147557 (NIBRESMA; "neil" en Dropdata), costo $5.500, 60 cápsulas, alfa lipoico 600.
+       Dropdata 28-10: ~110/día la última semana, 6 semanas subiendo. Meta CL: ~10 anunciantes; el más barato VentaClick
+       23.990 / 2×29.990 / 3×37.990. Escalera APROBADA por James 28-10 ("si"): 22.990 / 28.990 / 36.990; anticipado −10 % lo calcula la ficha.
+       Diseño propio (nerve.css/.js) del script ui-ux-pro-max 28-10, opción 73 (James: "yo quiero unos diseños diferentes" y "si"
+       al que la skill eligió de su catálogo): Dark Mode (OLED), noche #0F172A + índigo #4338CA + botón violeta #7C3AED, Inter.
+       Héroe = PRODUCTO SOLO (James 28-10). Tachados: el de 2 y 3 = lo que costarían sueltos (2×22.990, 3×22.990).
+       🔴 SUPLEMENTO ALIMENTARIO (D.S. 977/96): nada de "cura", "trata" ni "previene"; no reemplaza medicamentos. */
+    id: 'nerve', unidad: 'frasco', promo: 2, promoAntesDelPack: true,
+    /* video REAL (TikTok @neurazenx.ecuador 7645760288893209877, primeros 22 s: cápsulas, frasco en la mesa y en la mano),
+       sin textos ni marcas ajenas; lo de después eran capturas de su perfil y se cortó. OJO: ese frasco dice 1200 / 120 cápsulas. */
+    video: 'img/nerve-ficha.mp4?v=1',
+    /* antes y después: la misma señora y la misma pieza (de noche sin dormir / de mañana descansando con su frasco en el velador).
+       La imagen NO trae letras (James 28-10): "Antes / Después" y los puntos los pone nerve.js en la página. Imagen ilustrativa. */
+    antesDespues: 'img/nerve-ba.webp?v=1',
+    antesDespuesSub: 'La misma noche, dos maneras de vivirla: con el hormigueo que no deja dormir, y con una ayuda diaria para tus nervios.',
+    resenasRotulo: 'Lo que dicen quienes lo toman',
+    resenasFuente: 'Opiniones reales, tal como las escribieron: personas con este mismo frasco en TikTok (algunas en colaboración con TikTok Shop) y compradores de cápsulas para los nervios en AliExpress.',
+    resenasMas: 'Más opiniones de quienes toman cápsulas para los nervios',
+    resenasResumen: { total: 50, nota: 4.9, rotulo: 'opiniones de 4 y 5 estrellas', barras: { 5: 46, 4: 4 } },
+    /* 28-10 James: mínimo 50, las 4 o 5 primeras con foto. Foto = cuadro del video de cada persona en TikTok (algunas son
+       colaboraciones pagadas de TikTok Shop) y la foto de sus cápsulas de un comprador de AliExpress. Anita tiene el frasco de 600. */
+    resenasReales: [
+      {nombre: "Valentina",comuna: "TikTok @valentinarecomienda3",fecha: "21 abr 2026",estrellas: 5,foto: "img/resenas-nerve/rn1.webp?v=1",texto: "¡me encanto se los recomiendo!"},
+      {nombre: "Miguelito",comuna: "TikTok @miguelbravougc",fecha: "6 oct 2025",estrellas: 5,foto: "img/resenas-nerve/rn2.webp?v=1",texto: "Así es como lo integro en mi rutina diaria, me resulta práctico y sencillo de tomar."},
+      {nombre: "Anita",comuna: "TikTok @anitalove869",fecha: "4 feb 2025",estrellas: 5,foto: "img/resenas-nerve/rn3.webp?v=1",texto: "Aprobar lo q le llego del TikTok shop 🙈✨"},
+      {nombre: "Paso a Paso",comuna: "TikTok @percyclau",fecha: "23 sep 2025",estrellas: 5,foto: "img/resenas-nerve/rn4.webp?v=1",texto: "Neurazenx Neuropathy Support Suplemento que apoya los nervios desde la cabeza a los pies"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "5 ago 2026",estrellas: 5,foto: "img/resenas-nerve/rn5.webp?v=1",texto: "Las cápsulas son de tamaño moderado y lisas, muy fáciles de tragar con agua durante las comidas."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "30 jul 2026",estrellas: 5,foto: "",texto: "Sigo estrictamente las instrucciones de la etiqueta: 2 cápsulas cada mañana con el desayuno. En dos semanas, el hormigueo nocturno intenso que solía despertarme disminuyó significativamente. Después de 30 días, mis pies casi nunca se sienten adormecidos al caminar, y la rigidez en mis manos después de escribir todo el día ha desaparecido. Me encanta que combine vitaminas activas de alta potencia con hierbas suaves y calmantes, sin efectos secundarios fuertes incluso con un consumo diario a largo plazo. Ya he vuelto a pedir una segunda botella para la protección continua de los nervios."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "1 jul 2026",estrellas: 5,foto: "",texto: "Este complejo integral para el soporte nervioso ofrece un alivio específico para las molestias nerviosas gracias a vitaminas B de alta potencia, ácido R-alfa lipoico y extractos herbales calmantes. Cada frasco contiene 60 cápsulas vegetales (30 porciones diarias completas); la porción recomendada es de 2 cápsulas al día con agua. Su fórmula rica en antioxidantes nutre el tejido nervioso, alivia el hormigueo, el entumecimiento y la tensión, con potencia antioxidante garantizada. Después de una ingesta diaria constante, el persistente hormigueo en mis manos y pies se redujo drásticamente. Cápsulas de origen vegetal fáciles de tragar, sin irritación agresiva en el estómago. ¡Seguiré comprándolas para el bienestar nervioso a largo plazo!"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "30 jul 2026",estrellas: 5,foto: "",texto: "Mi mamá a menudo siente un hormigueo incómodo en los nervios de las manos, así que le compré este suplemento para el soporte nervioso. Ella toma dos cápsulas con las comidas diariamente, y la sensación incómoda ha disminuido después de un mes. El servicio al cliente explicó con paciencia la función de las vitaminas ALA y B. Los pedidos se envían rápidamente, y el frasco viene bien sellado para proteger las cápsulas."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "20 oct 2026",estrellas: 5,foto: "",texto: "Mis pantorrillas solían sentirse tensas e incómodas por la noche, especialmente después de un largo día de estar de pie. Desde que comencé a tomar estas cápsulas, mis músculos se sienten más relajados por la tarde, y esa sensación de rigidez me molesta mucho menos. Ha hecho que mis noches sean más agradables, y estoy realmente satisfecho con la diferencia."},
+      {nombre: "Q***k",comuna: "AliExpress · Estados Unidos",fecha: "4 jun 2026",estrellas: 5,foto: "",texto: "Estoy muy satisfecho con este producto; cumplió exactamente con lo que prometía. Literalmente, no siento ningún dolor en los nervios."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Perú",fecha: "4 jun 2026",estrellas: 5,foto: "",texto: "mi madre con 75 años las toma y segun me dice le ha ayudado bastante con los calambres y los nervios en general"},
+      {nombre: "M***o",comuna: "AliExpress · México",fecha: "4 feb 2026",estrellas: 4,foto: "",texto: "Tiene una semana que lo estoy tomando y puedo decir que he notado menos dolor en mis pies ."},
+      {nombre: "m***r",comuna: "AliExpress · Estados Unidos",fecha: "3 sep 2026",estrellas: 5,foto: "",texto: "Ahora lo tomo a diario y puedo decir honestamente que la fatiga se ha reducido significativamente, y mis músculos ya no son tan propensos a calambres como antes."},
+      {nombre: "I***y",comuna: "AliExpress · Canadá",fecha: "13 sep 2026",estrellas: 4,foto: "",texto: "La primera noche dormí toda la noche, algo que nunca había logrado antes. Para tu información: tomé 2 antes de acostarme. Lee las instrucciones y decide. Definitivamente compraré más pronto."},
+      {nombre: "n***o",comuna: "AliExpress · México",fecha: "27 mar 2026",estrellas: 5,foto: "",texto: "Es una maravilla! En la primera toma redujo el 50% el dolor, muchas gracias ☺️"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Colombia",fecha: "25 mar 2026",estrellas: 5,foto: "",texto: "Muy buen producto, he mejorado mucho mis calambres"},
+      {nombre: "Compra verificada",comuna: "AliExpress · México",fecha: "7 ago 2026",estrellas: 5,foto: "",texto: "Excelente producto,desde que lo utilizo hace 3 meses no me duelen mis piernas!"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Nueva Zelanda",fecha: "8 mar 2026",estrellas: 5,foto: "",texto: "Noté una diferencia en mis pies al día siguiente después de tomar la mitad de la dosis máxima diaria."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Alemania",fecha: "23 jun 2026",estrellas: 4,foto: "",texto: "Estoy entusiasmado con estas cápsulas; he notado pequeñas mejoras después de 4 días y espero que siga así."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Colombia",fecha: "25 sep 2026",estrellas: 5,foto: "",texto: "a mi papá le gustó le dio mas energía y se siente con mas bienestar"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "13 dic 2025",estrellas: 5,foto: "",texto: "Me encantan mis pastillas para la neuropatía AAA++++"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Australia",fecha: "18 sep 2026",estrellas: 5,foto: "",texto: "El estrés laboral me dejaba agotado todos los días después del trabajo. Escuché que ALA apoya la energía celular, así que decidí probarlo. Después de casi un mes, el cambio más notable es que mi energía ha mejorado: no es un empuje nervioso, sino una base sólida y constante. Ya no me siento agotado por la tarde."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "30 jul 2026",estrellas: 5,foto: "",texto: "¡Estas maravillosas pastillas son un excelente suplemento para el apoyo antioxidante, el refuerzo de la inmunidad, el aumento de energía y el cuidado del corazón! ¡Un gran descubrimiento!"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "27 sep 2026",estrellas: 5,foto: "",texto: "Gran energía y ayuda a mejorar la concentración. ¡Lo he regalado a otras personas!"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Australia",fecha: "23 oct 2026",estrellas: 5,foto: "",texto: "Siempre me siento somnoliento al programar por la tarde y mi mente se bloquea. Después de aproximadamente una semana usando este R-ALA, no me siento tan agotado y puedo mantenerme concentrado hasta la hora de salir. Las cápsulas son pequeñas y fáciles de tragar."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Bosnia",fecha: "16 may 2026",estrellas: 5,foto: "",texto: "Todo perfecto. Llegó bastante rápido también. Recomendado."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Perú",fecha: "15 sep 2026",estrellas: 5,foto: "",texto: "el producto llegó en buen estado llegó lo requerido llegó con sus respectivo sello, es cuestión de esperar resultados"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Polonia",fecha: "8 jul 2026",estrellas: 5,foto: "",texto: "Tal como se describe. Lo recomiendo a todos."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "24 oct 2026",estrellas: 5,foto: "",texto: "¡Este producto realmente funciona si tienes calambres en las piernas! Justo la otra noche tuve uno terrible. Tomé dos de estos y, en cuestión de minutos, ¡se resolvió por completo! Esta es mi segunda compra. Seguiré comprándolos porque ¡funcionan!"},
+      {nombre: "v***r",comuna: "AliExpress · Canadá",fecha: "20 jun 2026",estrellas: 5,foto: "",texto: "Este es mi segundo pedido. El producto reduce el dolor sin causar molestias en el estómago. Gracias."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "12 oct 2026",estrellas: 5,foto: "",texto: "Me ayudó con un pequeño problema de salud. Calambres en las piernas."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "22 oct 2026",estrellas: 5,foto: "",texto: "Con tu sistema nervioso para calmarte... Lo recomiendo."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Australia",fecha: "4 sep 2026",estrellas: 5,foto: "",texto: "Solía tener calambres dolorosos en los pantalones en medio de la noche que me despertaban, y al día siguiente me quedaba muy dolorido. La mayor sorpresa después de empezar con esto es que los calambres casi han desaparecido por completo. Mis músculos y nervios finalmente sienten que pueden relajarse. ¡Con solo 2 cápsulas al día, unas piernas felices significan una noche de sueño tranquilo!"},
+      {nombre: "Compra verificada",comuna: "AliExpress · Australia",fecha: "24 oct 2026",estrellas: 5,foto: "",texto: "Sentado en un escritorio todo el día, mis manos a menudo se entumecen y mis piernas se vuelven rígidas por la tarde. Después de aproximadamente una semana tomando estas cápsulas para el soporte nervioso, el hormigueo y el entumecimiento similar a picaduras de agujas han mejorado considerablemente. Fáciles de tragar, sin sabor extraño."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "15 oct 2026",estrellas: 5,foto: "",texto: "Como alguien que escribe todo el día, mis manos solían estar rígidas y con hormigueo para el mediodía. ¡Estas cápsulas han sido un cambio total para la circulación en mis manos! La fórmula parece realmente enfocarse en esos pequeños nervios en los dedos. Puedo escribir por más tiempo sin necesidad de sacudir mis manos constantemente. La afirmación de \"Circulación Saludable en Manos y Pies\" es completamente acertada: me siento más ágil y menos torpe. Una opción sólida y confiable para trabajadores de oficina o cualquier persona con sobrecarga repetitiva."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "17 sep 2026",estrellas: 5,foto: "",texto: "Compré estos productos porque quería un apoyo diario suave para mi sistema nervioso y circulación a medida que envejezco. Después de usarlos durante 3 semanas, tomar las cápsulas se convirtió en una parte sencilla de mi rutina. Me gusta que se sienta como una pequeña y constante incorporación, en lugar de un cambio drástico. Me siento un poco más cómodo en mis rutinas diarias, y mis manos y pies parecen menos notables. Lo recomendaría como un apoyo modesto para el día a día, si eso es lo que estás buscando."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Emiratos Árabes",fecha: "15 ago 2026",estrellas: 5,foto: "",texto: "Parece legítimo. Llevo tomando esto una semana y he notado un aumento en la energía."},
+      {nombre: "Compra verificada",comuna: "AliExpress · México",fecha: "7 jun 2026",estrellas: 5,foto: "",texto: "Sí, funciona. Me quedo dormido muy relajado."},
+      {nombre: "p***r",comuna: "AliExpress · México",fecha: "8 may 2026",estrellas: 5,foto: "",texto: "Excelente suplemento para la salud nerviosa. He notado una energía más constante durante todo el día, y es suave para mi cuerpo. Fácil de tomar a diario, sencillo y útil."},
+      {nombre: "e***r",comuna: "AliExpress · México",fecha: "27 sep 2026",estrellas: 5,foto: "",texto: "He lidiado con molestias en el nervio ciático que me recorren desde la cadera hasta la pierna durante un tiempo. Probé este suplemento durante unas semanas. La tensión en mi muslo se ha aliviado, lo que me ayuda a moverme con mayor comodidad. Sin molestias estomacales."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Nueva Zelanda",fecha: "21 ago 2026",estrellas: 4,foto: "",texto: "Parece estar funcionando bien, reduce el dolor, especialmente por la noche."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Australia",fecha: "29 sep 2026",estrellas: 5,foto: "",texto: "Después de aproximadamente una semana, el cambio más evidente es que me duermo más fácilmente. Antes solía dar vueltas en la cama, pero ahora me siento somnoliento simplemente deslizando mi teléfono, y no me despierto tanto durante la noche. Las cápsulas son fáciles de tragar y no tienen un sabor extraño."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "10 ago 2026",estrellas: 5,foto: "",texto: "Paso la mayor parte de mi jornada laboral sentado frente a una computadora, por lo que he estado prestando más atención al cuidado de los nervios y al bienestar general. Estas cápsulas son fáciles de incorporar a mi rutina matutina, y valoro mucho su fórmula sencilla y directa."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "27 oct 2026",estrellas: 5,foto: "",texto: "Funciona en una semana y ha reducido significativamente mi neuropatía. Muy satisfecho."},
+      {nombre: "Compra verificada",comuna: "AliExpress · España",fecha: "13 jul 2026",estrellas: 5,foto: "",texto: "Las pastillas son muy buenas , yo tenía una ciatica severa y me fue bajando el dolor punzante y el agarrotamiento , en unas semanas note mejoría notable , pero en una se va notando 🙏 gracias 💗"},
+      {nombre: "J***i",comuna: "AliExpress · México",fecha: "14 sep 2026",estrellas: 5,foto: "",texto: "Me siento mejor después de una semana de tomarlo. Cada día tengo más fuerza. El entumecimiento de las piernas está mejorando, ya que sufro de mala circulación. Tras una semana de uso, siento alivio en la parte inferior de las piernas al estar mucho tiempo de pie; ya no tengo dolor. Deberías probar este producto tú también."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Emiratos Árabes",fecha: "19 jul 2026",estrellas: 5,foto: "",texto: "Compré el producto porque tenía una distensión persistente en la pierna y los dedos. Lo probé y, afortunadamente, el resultado fue excelente."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Estados Unidos",fecha: "13 oct 2026",estrellas: 5,foto: "",texto: "Lo compré para mi mamá. Está envejeciendo y a menudo dice que por la noche se le entumecen las manos, se le encoge el cuello, se le entumecen los pies y que no puede dormir bien. El doctor le sugirió complementar con vitaminas del grupo B, así que elegí estas cápsulas de soporte neural compuestas, que contienen B6 y B12. Después de tomarlas durante unas seis semanas, mi madre comentó que tiene más energía que antes, no se siente somnolienta por la tarde y duerme más profundamente por la noche. Los sentimientos personales no reemplazan el consejo de un médico. Las cápsulas son fáciles de tragar y no tienen ningún olor extraño. Seguiremos comprándolas."},
+      {nombre: "Compra verificada",comuna: "AliExpress · Canadá",fecha: "22 abr 2026",estrellas: 5,foto: "",texto: "El producto parece aliviar mi dolor de espalda."},
+      {nombre: "v***k",comuna: "AliExpress · Israel",fecha: "8 dic 2025",estrellas: 5,foto: "",texto: "Esta no es la primera vez que lo compro; me ayuda con el dolor de cuello y espalda, gracias."},
+    ],
+    preguntas: [
+      { q: '¿Cómo se toma?', a: 'Con un vaso de agua, junto a una comida, en la dosis que indica la etiqueta del frasco. Lo importante es tomarlo todos los días.' },
+      { q: '¿Cuánto dura un frasco?', a: 'Cada frasco trae 60 cápsulas vegetales: alrededor de un mes. Por eso el pack de 2 es el que más se lleva.' },
+      { q: '¿Es un medicamento?', a: 'No. Es un suplemento alimentario y no reemplaza ningún tratamiento ni medicamento. Si tomas remedios, estás embarazada o tienes una enfermedad, consulta a tu médico antes de tomarlo.' },
+      { q: '¿Cuándo se notan los cambios?', a: 'Depende de cada persona. Lo que sí cuenta es la constancia: tomarlo todos los días, sin saltarse.' },
+      { q: '¿Quién lo puede tomar?', a: 'Personas adultas, hombres y mujeres. No es para niños.' },
+    ],
+    formulaRotulo: 'Lo que trae',
+    formulaTitulo: 'Fórmula 20 en 1 con ácido alfa lipoico 600.',
+    formulaSub: 'Cápsulas vegetales para tomar todos los días, en casa o fuera.',
+    formula: [
+      ['rayo', 'Ácido alfa lipoico 600', 'El antioxidante que más se usa para apoyar el bienestar de los nervios.'],
+      ['sol', 'Fórmula 20 en 1', 'Varios nutrientes juntos en una sola cápsula.'],
+      ['agua', 'Con Bioperine', 'Extracto de pimienta negra que ayuda a absorber mejor la fórmula.'],
+      ['pluma', 'Cápsulas vegetales', 'Lisas y fáciles de tragar con un vaso de agua.'],
+      ['escudo', 'Sello de seguridad', 'El frasco llega sellado de fábrica.'],
+      ['casa', '60 cápsulas por frasco', 'Alrededor de un mes de uso diario.'],
+    ],
+    comparaTitulo: '¿Por qué NeuraZenx?',
+    compara: ['Ácido alfa lipoico 600 y 20 nutrientes en una sola cápsula, no cinco frascos distintos.', 'Con Bioperine, para que la fórmula se absorba mejor.', 'Frasco sellado de 60 cápsulas vegetales, con envío gratis y pago al recibir.'],
+    nombre: 'NeuraZenx Nerve Support',
+    sub: 'Cápsulas para el bienestar de los nervios de pies y manos',
+    categoria: 'Salud',
+    foto: 'img/prod-nerve.webp?v=5',
+    fotos: ['img/prod-nerve.webp?v=5', 'img/prod-nerve-2.webp?v=1', 'img/prod-nerve-3.webp?v=1', 'img/prod-nerve-4.webp?v=1', 'img/prod-nerve-5.webp?v=1'],
+    acento: '#7C3AED',
+    botonAlt: '#4338CA',
+    desc: 'NeuraZenx Nerve Support es un suplemento alimentario en cápsulas vegetales con ácido alfa lipoico 600, en una fórmula 20 en 1 con Bioperine (extracto de pimienta negra) para una mejor absorción. Pensado para quienes sienten hormigueo, ardor o adormecimiento en pies y manos y quieren apoyar sus nervios todos los días. Cada frasco trae 60 cápsulas y llega con sello de seguridad.',
+    puntos: [
+      'Ácido alfa lipoico 600 en fórmula 20 en 1',
+      'Con Bioperine para una mejor absorción',
+      '60 cápsulas vegetales por frasco',
+      'Frasco con sello de seguridad',
+    ],
+    packs: [
+      { cant: 1, precio: 22990, antes: 34990, texto: '1 frasco · 60 cápsulas' },
+      { cant: 2, precio: 28990, antes: 45980, texto: '2 frascos · 120 cápsulas' },
+      { cant: 3, precio: 36990, antes: 68970, texto: '3 frascos · 180 cápsulas' },
+    ],
+    popular: 1,
+  },
 ];
 
 /* Preguntas frecuentes. Salen de lo que los clientes preguntan DE VERDAD por
@@ -1991,4 +2106,5 @@ window.PRECIOS_APROBADOS = [
   23000, 31500, 45000, 63000,   /* organizador 13-10 a 22-10 (Chamos 24921): se dejan para los pedidos que ya estaban abiertos con ese precio */
   22500, 34500, 42500,   /* colágeno NeoCell: 1 · 2 · 3 frascos, 500 bajo Clicka y Tu compra segura (James, 13-10) */
   25500, 37500, 49500,   /* sopapo destapador a presión: 1 · 2 · 3 sopapos, bajo BuyPepo y Mercachile (James, 15-10) */
+  22990, 28990, 36990,   /* NeuraZenx Nerve Support: 1 · 2 · 3 frascos, bajo VentaClick 23.990 / 29.990 / 37.990 (James, 28-10) */
 ];
