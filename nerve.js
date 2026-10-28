@@ -149,6 +149,14 @@
   /* James 28-10: en la PÁGINA va UN solo video (el de la ficha); los 2 videos son para la CAMPAÑA. El segundo clip limpio
      (img/nerve-video2.mp4) queda guardado para los anuncios. */
 
+  /* ---------- 3 bis · FOTO DE LA PROMOCIÓN (James 28-10: "te hace falta una imagen de la promoción"): los 2 frascos del pack
+     que se empuja, sin letras ni precio dentro (los precios ya van en la tarjeta, en HTML) ---------- */
+  function promoFoto(prod) {
+    var banda = prod.querySelector('.promo-card .promo-banner');
+    if (!banda || prod.querySelector('.nz-promo-foto')) return;
+    banda.insertAdjacentHTML('afterend', '<figure class="nz-promo-foto"><img src="img/nerve-promo.webp?v=1" alt="Dos frascos de NeuraZenx Nerve Support con cápsulas, el pack de 2 de la promoción" width="900" height="900" loading="lazy"></figure>');
+  }
+
   /* ---------- 4 · ANTES Y DESPUÉS: los rótulos van en la página (James 28-10: nada de letras dentro de las imágenes) ---------- */
   function cambio(prod) {
     var caja = prod.querySelector('.ba-sec .ba-img');
@@ -174,7 +182,7 @@
   function armar() {
     var prod = document.getElementById('prod');
     if (!prod || !prod.querySelector('.arriba2')) return false;
-    portada(prod); prueba(prod); solucion(prod); cambio(prod); mover(prod);
+    portada(prod); prueba(prod); solucion(prod); promoFoto(prod); cambio(prod); mover(prod);
     return true;
   }
   function intentar() {
