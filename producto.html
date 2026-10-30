@@ -17,6 +17,12 @@
       q.delete('p'); var r = q.toString();
       history.replaceState(history.state, '', '/' + p + (r ? '?' + r : '') + location.hash);
     }
+    /* 30-10 James: "arregla todas las páginas que están en publicidad". La foto del héroe la pone el script de cada producto
+       DESPUÉS de bajar ficha.js y productos.js: en 4G salía a los 5-7 s. Aquí se le pide al navegador desde el primer instante,
+       con la MISMA dirección exacta que usa el script (así no se baja dos veces). No cambia nada de lo que se ve. */
+    var HEROE = { organizador: 'img/prod-organizador.webp?v=1', nerve: 'img/nerve-heroe-noche.webp?v=2', tabletas: 'img/tab-heroe.webp?v=1',
+      neocell: 'img/neo-heroe.webp?v=1', lymphoria: 'img/lym-hero.webp?v=1', antena: 'img/antena-hero.webp?v=2' };
+    if (HEROE[p]) { var l = document.createElement('link'); l.rel = 'preload'; l.as = 'image'; l.href = HEROE[p]; l.setAttribute('fetchpriority', 'high'); document.head.appendChild(l); }
   } catch (e) {}
 })();
 </script>
@@ -27,26 +33,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@200;300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="tienda.css?v=239">
-<link rel="stylesheet" href="organizador.css?v=23">
-<link rel="stylesheet" href="zapatero.css?v=3">
-<link rel="stylesheet" href="desengrasante.css?v=5">
-<link rel="stylesheet" href="ampolleta.css?v=8">
-<link rel="stylesheet" href="tabletas.css?v=5">
-<link rel="stylesheet" href="neocell.css?v=12">
-<link rel="stylesheet" href="dexe.css?v=8">
-<link rel="stylesheet" href="sopapo.css?v=9">
-<link rel="stylesheet" href="lentes.css?v=2">
-<link rel="stylesheet" href="nerve.css?v=12">
-<link rel="stylesheet" href="clorofila.css?v=23">
-<link rel="stylesheet" href="lymphoria.css?v=23">
-<link rel="stylesheet" href="antena.css?v=6">
-<link rel="stylesheet" href="cargador.css?v=23">
-<link rel="stylesheet" href="guirnalda.css?v=30">
-<link rel="stylesheet" href="foco.css?v=19">
-<link rel="stylesheet" href="mascara.css?v=1">
+<!-- 30-10 James: "arregla todas las páginas que están en publicidad". Cada ficha bajaba la hoja de estilos de los 18 productos
+     (y sus 18 scripts al final). Las 6 que están en anuncios (window.__P) bajan SOLO la suya; el resto sigue bajando todas como
+     antes. Se escribe en el mismo orden y mientras se lee el <head>, así que se ve exactamente igual. -->
+<script>
+window.__SOLO_LO_SUYO = { organizador: 1, nerve: 1, tabletas: 1, neocell: 1, lymphoria: 1, antena: 1 };
+(function () {
+  var P = window.__P || '', solo = window.__SOLO_LO_SUYO[P];
+  [['organizador', 'organizador.css?v=23'], ['zapatero', 'zapatero.css?v=3'], ['desengrasante', 'desengrasante.css?v=5'],
+   ['ampolleta', 'ampolleta.css?v=8'], ['tabletas', 'tabletas.css?v=5'], ['neocell', 'neocell.css?v=12'], ['dexe', 'dexe.css?v=8'],
+   ['sopapo', 'sopapo.css?v=9'], ['lentes', 'lentes.css?v=2'], ['nerve', 'nerve.css?v=12'], ['clorofila', 'clorofila.css?v=23'],
+   ['lymphoria', 'lymphoria.css?v=23'], ['antena', 'antena.css?v=6'], ['cargador', 'cargador.css?v=23'], ['guirnalda', 'guirnalda.css?v=30'],
+   ['foco', 'foco.css?v=19'], ['mascara', 'mascara.css?v=1']
+  ].forEach(function (x) { if (!solo || x[0] === P) document.write('<link rel="stylesheet" href="' + x[1] + '">'); });
+})();
+</script>
 <!-- Bálsamo Rosetimes (29-09): hero de foto grande + piel rosa/crema, traídos de la tienda de España -->
 <link rel="stylesheet" href="hero.css?v=1">
-<link rel="stylesheet" href="balsamo.css?v=1">
+<script>if (!window.__SOLO_LO_SUYO[window.__P || '']) document.write('<link rel="stylesheet" href="balsamo.css?v=1">');</script>
 <style>
 /* ============================================================
    FICHA DE PRODUCTO
@@ -1220,24 +1224,18 @@ window.jayePixel = (function () {
   <script src="lib/ScrollTrigger.min.js"></script>
   <script src="lib/countup.umd.js"></script>
 <script src="efectos-ficha.js?v=23"></script>
-<script src="organizador.js?v=26"></script>
-<script src="zapatero.js?v=3"></script>
-<script src="desengrasante.js?v=6"></script>
-<script src="ampolleta.js?v=6"></script>
-<script src="tabletas.js?v=5"></script>
-<script src="neocell.js?v=12"></script>
-<script src="dexe.js?v=5"></script>
-<script src="sopapo.js?v=8"></script>
-<script src="lentes.js?v=1"></script>
-<script src="nerve.js?v=8"></script>
-<script src="clorofila.js?v=24"></script>
-<script src="lymphoria.js?v=24"></script>
-<script src="antena.js?v=9"></script>
-<script src="cargador.js?v=24"></script>
-<script src="guirnalda.js?v=31"></script>
-<script src="foco.js?v=21"></script>
-<script src="mascara.js?v=3"></script>
-<script src="balsamo.js?v=2"></script>
+<!-- 30-10: igual que las hojas de estilo, las 6 fichas en anuncios bajan solo SU script; las demás, todos como antes (mismo orden) -->
+<script>
+(function () {
+  var P = window.__P || '', solo = window.__SOLO_LO_SUYO && window.__SOLO_LO_SUYO[P];
+  [['organizador', 'organizador.js?v=26'], ['zapatero', 'zapatero.js?v=3'], ['desengrasante', 'desengrasante.js?v=6'],
+   ['ampolleta', 'ampolleta.js?v=6'], ['tabletas', 'tabletas.js?v=5'], ['neocell', 'neocell.js?v=12'], ['dexe', 'dexe.js?v=5'],
+   ['sopapo', 'sopapo.js?v=8'], ['lentes', 'lentes.js?v=1'], ['nerve', 'nerve.js?v=8'], ['clorofila', 'clorofila.js?v=24'],
+   ['lymphoria', 'lymphoria.js?v=24'], ['antena', 'antena.js?v=9'], ['cargador', 'cargador.js?v=24'], ['guirnalda', 'guirnalda.js?v=31'],
+   ['foco', 'foco.js?v=21'], ['mascara', 'mascara.js?v=3'], ['balsamo', 'balsamo.js?v=2']
+  ].forEach(function (x) { if (!solo || x[0] === P) document.write('<script src="' + x[1] + '"><\/script>'); });
+})();
+</script>
 <script>
 /* ---- el video del producto NO se baja al abrir la pagina ----
    Antes iba con preload="auto": el celular se traia los 2,1 MB de una,
