@@ -608,9 +608,10 @@ window.PRODUCTOS = [
       { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "excelente proyección pequeña, pero buena" },
       { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Llegó en excelentes condiciones, gracias al vendedor." },
     ],
-    /* video REAL del proyector funcionando (ficha de AliExpress del mismo modelo): 10 s, recortado a cuadrado,
-       sin audio, sin texto ni marca de agua */
-    video: 'img/proyector-ficha.mp4?v=1',
+    /* video REAL del proyector funcionando. 06-11 James: "el video malísimo, no muestra nada… busca otro".
+       Ahora: TikTok @curiosidades.jass (7693268494707674389), 10 s vertical, la mano con el MISMO proyector
+       negro y la pieza llena de figuras. Sin audio, sin texto ni marca de agua. */
+    video: 'img/proyector-ficha-v2.mp4?v=1',
     antesDespues: 'img/prod-proyector-ba.webp?v=1',
     antesDespuesSub: 'La misma casa, la misma noche: a oscuras, y con el proyector encendido en el pasto. Imagen ilustrativa.',
     preguntas: [
