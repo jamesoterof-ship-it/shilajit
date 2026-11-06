@@ -159,7 +159,29 @@
     window.addEventListener('scroll', cargar, { once: true, passive: true });
   }
 
+  /* 05-11 James: "ponle efectos a los botones, de algo de Navidad, de estrellitas".
+     A cada botón de compra (los de la ficha y los mini de cada paso) se le meten
+     estrellitas que titilan y un brillo que lo cruza. Son spans vacíos encima del
+     texto, sin tocar el botón: si esto falla, el botón queda igual que siempre. */
+  var CHISPAS = [[8, 22, 0], [22, 70, .7], [48, 18, 1.4], [70, 74, .35], [88, 30, 1.05], [36, 82, 1.75]];
+  function estrellitas() {
+    var botones = document.querySelectorAll('.p-proyector .cta.rojo, .p-proyector .py-mini, .p-proyector .btn-flota');
+    [].forEach.call(botones, function (b) {
+      if (b.querySelector('.py-chispa')) return;
+      b.classList.add('py-brilla');
+      var html = '<span class="py-barrido" aria-hidden="true"></span>';
+      CHISPAS.forEach(function (c, i) {
+        html += '<span class="py-chispa" aria-hidden="true" style="left:' + c[0] + '%;top:' + c[1] + '%;animation-delay:' + c[2] + 's;--t:' + (i % 2 ? 11 : 14) + 'px"></span>';
+      });
+      b.insertAdjacentHTML('beforeend', html);
+    });
+  }
+
   function animar() {
+    estrellitas();
+    /* la ficha pinta algunos botones después (formulario, barra de abajo): se repasa un par de veces */
+    setTimeout(estrellitas, 1500);
+    setTimeout(estrellitas, 4000);
     document.body.classList.add('py-listo');
     if (!('IntersectionObserver' in window)) return;
     var obs = new IntersectionObserver(function (filas) {
