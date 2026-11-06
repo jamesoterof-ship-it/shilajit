@@ -182,7 +182,14 @@
     /* la ficha pinta algunos botones después (formulario, barra de abajo): se repasa un par de veces */
     setTimeout(estrellitas, 1500);
     setTimeout(estrellitas, 4000);
-    document.body.classList.add('py-listo');
+    /* 06-11: la cascada corre UNA vez y después el titular queda fijo (si no, en algunos navegadores se
+       quedaba invisible). Si la pestaña está escondida al cargar, ni se anima. */
+    if (document.hidden) { document.body.classList.add('py-quieto'); }
+    else {
+      document.body.classList.add('py-listo');
+      setTimeout(function () { document.body.classList.add('py-quieto'); }, 2600);
+    }
+    document.addEventListener('visibilitychange', function () { document.body.classList.add('py-quieto'); });
     if (!('IntersectionObserver' in window)) return;
     var obs = new IntersectionObserver(function (filas) {
       filas.forEach(function (f) {

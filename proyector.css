@@ -106,6 +106,10 @@
   color: rgba(255,255,255,.92);
 }
 .p-proyector.py-listo .py-frase { animation: py-sube .7s ease both; animation-delay: 1.1s; }
+/* 06-11: en algunos navegadores la animación se quedaba en el primer cuadro y el titular no se veía.
+   Al terminar la cascada (o si la pestaña está escondida) el JS pone .py-quieto y el texto queda fijo. */
+.p-proyector.py-quieto .py-l,
+.p-proyector.py-quieto .py-frase { animation: none !important; opacity: 1 !important; transform: none !important; }
 @keyframes py-sube { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
 /* ---------- los 3 datos y los sellos ---------- */
