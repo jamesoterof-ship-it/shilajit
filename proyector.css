@@ -1,0 +1,218 @@
+/* ============================================================
+   PROYECTOR NAVIDEÑO LED · 05-11-2026
+   Opción "Bento Box Grid" del script ui-ux-pro-max
+   (design-system/proyector-navidad-cl), aprobada por James el 05-11.
+     colores  rojo #DC2626 · rojo claro #F87171 · dorado #A16207 (botón)
+              fondo #FEF2F2 · texto #450A0A · borde #FECACA · oscuro #0F172A
+     letras   Righteous (títulos) / Poppins (texto)
+     estilo   Bento Box Grid: tarjetas de distinto tamaño, radio 16 px,
+              sombras suaves, sube 1.02 al tocarla, transiciones suaves
+   🟢 VERDE #16A34A: el script no lo dio junto con el rojo y el dorado en 11
+   corridas; James lo autorizó a mano ("ponle tú el verde, yo te autorizo"),
+   registrado con candado-paleta.js acento. Va en los sellos de confianza y
+   en el rótulo de cada paso.
+   Lección de la guirnalda: NO se repinta la ficha entera (rompía el
+   contraste del precio y de las reseñas). Solo se pintan las secciones
+   py-* y los botones. No toca el encabezado (.top) ni el pie (.pie).
+   ============================================================ */
+
+.p-proyector {
+  --py-rojo: #DC2626;
+  --py-rojo2: #F87171;
+  --py-oro: #A16207;
+  --py-fondo: #FEF2F2;
+  --py-texto: #450A0A;
+  --py-borde: #FECACA;
+  --py-oscuro: #0F172A;
+  --py-verde: #16A34A;   /* James 05-11: "ponle tú el verde, yo te autorizo" (candado-paleta acento) */
+  --py-sombra: 0 4px 6px rgba(15,23,42,.1);
+  --py-sombra2: 0 10px 15px rgba(15,23,42,.12);
+}
+
+/* ---------- títulos y texto de las secciones propias ---------- */
+.p-proyector .py-h1,
+.p-proyector .py-h2,
+.p-proyector .py-datos b,
+.p-proyector .py-b b {
+  font-family: 'Righteous', 'Poppins', sans-serif;
+  font-weight: 400;
+  letter-spacing: .005em;
+}
+.p-proyector .py-hero,
+.p-proyector .py-paso,
+.p-proyector .py-datos,
+.p-proyector .py-sellos {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ---------- 1 · HÉROE EN VIDEO, a sangre y sin radio ---------- */
+.p-proyector .py-hero {
+  position: relative;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+  max-width: 100vw;
+  height: min(100svh, 150vw);
+  min-height: 520px;
+  overflow: hidden;
+  background: var(--py-oscuro);
+}
+.p-proyector .py-video {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 70%;
+}
+/* velo oscuro solo arriba, para que el titular se lea sobre la pared */
+.p-proyector .py-velo {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(15,23,42,.8) 0%, rgba(15,23,42,.38) 34%, rgba(15,23,42,0) 52%);
+  pointer-events: none; z-index: 1;
+}
+.p-proyector .py-sobre {
+  position: absolute; left: 0; right: 0; top: 0; z-index: 2;
+  padding: 26px 20px 0;
+  max-width: 620px; margin: 0 auto;
+  color: #FFFFFF;
+}
+.p-proyector .py-rot {
+  display: inline-block;
+  font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: #FFFFFF;
+  background: var(--py-rojo);
+  padding: 6px 12px; border-radius: 999px;
+}
+.p-proyector .py-h1 {
+  margin: 14px 0 10px;
+  font-size: clamp(38px, 10.5vw, 64px);
+  line-height: 1.02;
+  color: #FFFFFF;
+  text-shadow: 0 0 10px rgba(15,23,42,.45);   /* "minimal glow" de la página en el plano */
+}
+.p-proyector .py-h1 .py-clave { color: var(--py-rojo2); }
+.p-proyector .py-pal { display: inline-block; white-space: nowrap; }
+/* cascada letra por letra: visibles por defecto (si el JS falla, se leen igual) */
+.p-proyector.py-listo .py-l {
+  display: inline-block;
+  animation: py-cae .55s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: calc(var(--n) * 38ms + 150ms);
+}
+@keyframes py-cae {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: none; }
+}
+.p-proyector .py-frase {
+  margin: 0; max-width: 30ch;
+  font-size: 16px; line-height: 1.45; font-weight: 500;
+  color: rgba(255,255,255,.92);
+}
+.p-proyector.py-listo .py-frase { animation: py-sube .7s ease both; animation-delay: 1.1s; }
+@keyframes py-sube { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* ---------- los 3 datos y los sellos ---------- */
+.p-proyector .py-datos {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  margin: 16px 16px 10px;
+}
+.p-proyector .py-datos > div {
+  background: #FFFFFF; border: 1px solid var(--py-borde); border-radius: 16px;
+  padding: 12px 8px; text-align: center; box-shadow: 0 1px 2px rgba(15,23,42,.06);
+}
+.p-proyector .py-datos b { display: block; font-size: 24px; color: var(--py-rojo); line-height: 1.1; }
+.p-proyector .py-datos small { display: block; font-size: 12px; color: var(--py-texto); opacity: .8; }
+.p-proyector .py-estr { display: block; color: var(--py-oro); font-size: 13px; letter-spacing: 1px; }  /* estrellas siempre doradas */
+.p-proyector .py-sellos { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 16px 8px; }
+.p-proyector .py-sellos span {
+  font-size: 12.5px; font-weight: 600; color: var(--py-verde);
+  background: #FFFFFF; border: 1px solid var(--py-verde);
+  padding: 6px 12px; border-radius: 999px;
+}
+.p-proyector .py-sellos span::before { content: '✓ '; font-weight: 700; color: var(--py-verde); }
+
+/* ---------- 2 · LOS 3 PASOS DEL EMBUDO ---------- */
+.p-proyector .py-paso {
+  position: relative;
+  margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
+  width: 100vw; max-width: 100vw;
+  padding: 40px max(18px, calc(50vw - 50% + 18px)) 34px;
+  background: var(--py-fondo);
+  color: var(--py-texto);
+}
+.p-proyector .py-paso + .py-paso { border-top: 1px solid var(--py-borde); }
+.p-proyector .py-num {
+  display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #FFFFFF; background: var(--py-verde); padding: 5px 12px; border-radius: 999px;
+}
+.p-proyector .py-h2 {
+  margin: 8px 0 18px; font-size: clamp(26px, 7.2vw, 40px); line-height: 1.12; color: var(--py-texto);
+}
+.p-proyector .py-h2 em { font-style: normal; color: var(--py-rojo); }
+
+/* el bento: tarjetas de distinto tamaño */
+.p-proyector .py-bento { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.p-proyector .py-b {
+  margin: 0; min-width: 0;
+  background: #FFFFFF; border: 1px solid var(--py-borde); border-radius: 16px;
+  padding: 16px; box-shadow: var(--py-sombra);
+  transition: transform .2s ease, box-shadow .2s ease, opacity .5s ease;
+}
+.p-proyector .py-b:hover { transform: scale(1.02); box-shadow: var(--py-sombra2); }
+.p-proyector .py-b b { display: block; font-size: 19px; line-height: 1.2; color: var(--py-texto); margin-bottom: 6px; }
+.p-proyector .py-b p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--py-texto); opacity: .82; }
+.p-proyector .py-b--ancho, .p-proyector .py-b--grande { grid-column: 1 / -1; }
+.p-proyector .py-bento--prob .py-b { border-left: 4px solid var(--py-rojo2); }
+
+.p-proyector .py-bf { padding: 0; overflow: hidden; }
+.p-proyector .py-bf img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; }
+.p-proyector .py-bf figcaption { padding: 12px 14px 14px; }
+.p-proyector .py-bf:not(.py-b--grande) b { font-size: 16px; }
+.p-proyector .py-bf:not(.py-b--grande) p { font-size: 13px; }
+/* en celular las tarjetas chicas van de a dos: foto y título, sin el párrafo (si no, queda una palabra por línea) */
+@media (max-width: 759px) {
+  .p-proyector .py-bf:not(.py-b--grande) p { display: none; }
+  .p-proyector .py-bf:not(.py-b--grande) figcaption { padding: 10px 12px 12px; }
+  .p-proyector .py-bf:not(.py-b--grande) b { font-size: 15px; margin-bottom: 0; }
+  .p-proyector .py-bento--prob .py-b { padding: 14px; }
+  .p-proyector .py-bento--prob .py-b b { font-size: 17px; }
+  .p-proyector .py-bento--prob .py-b p { font-size: 13px; }
+}
+.p-proyector .py-rot2 {
+  display: block; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--py-oro); margin-bottom: 4px;
+}
+.p-proyector .py-bento--of .py-b:not(.py-bf) { border: 2px solid var(--py-oro); }
+
+/* entrada al aparecer: solo se esconde lo que el JS marcó .py-pre */
+.p-proyector .py-b.py-pre { opacity: 0; transform: translateY(16px); }
+.p-proyector .py-b.vis { opacity: 1; }
+
+/* el mini botón al final de cada paso (plano: botón primario dorado, 8 px de radio) */
+.p-proyector .py-mini {
+  display: block; margin: 18px auto 0; max-width: 420px;
+  text-align: center; text-decoration: none;
+  background: var(--py-oro); color: #FFFFFF;
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px;
+  padding: 14px 22px; border-radius: 8px;
+  box-shadow: var(--py-sombra);
+  transition: opacity .2s ease, transform .2s ease;
+  cursor: pointer;
+}
+.p-proyector .py-mini:hover { opacity: .9; transform: translateY(-1px); }
+.p-proyector .py-mini:focus-visible { outline: 3px solid var(--py-rojo); outline-offset: 2px; }
+
+/* ---------- los botones de compra de la ficha: dorado del plano ---------- */
+.p-proyector .cta.rojo {
+  background: var(--py-oro) !important;
+  border-color: var(--py-oro) !important;
+  color: #FFFFFF !important;
+}
+
+@media (min-width: 760px) {
+  .p-proyector .py-bento { grid-template-columns: repeat(3, 1fr); }
+  .p-proyector .py-bento--prob .py-b--ancho { grid-column: auto; }
+  .p-proyector .py-b--grande { grid-column: span 2; grid-row: span 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p-proyector * { animation: none !important; transition: none !important; }
+  .p-proyector .py-b.py-pre { opacity: 1; transform: none; }
+}

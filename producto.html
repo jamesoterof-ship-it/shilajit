@@ -21,7 +21,8 @@
        DESPUÉS de bajar ficha.js y productos.js: en 4G salía a los 5-7 s. Aquí se le pide al navegador desde el primer instante,
        con la MISMA dirección exacta que usa el script (así no se baja dos veces). No cambia nada de lo que se ve. */
     var HEROE = { organizador: 'img/prod-organizador.webp?v=1', nerve: 'img/nerve-heroe-noche.webp?v=2', tabletas: 'img/tab-heroe.webp?v=1',
-      neocell: 'img/neo-heroe.webp?v=1', lymphoria: 'img/lym-hero.webp?v=1', antena: 'img/antena-hero.webp?v=2' };
+      neocell: 'img/neo-heroe.webp?v=1', lymphoria: 'img/lym-hero.webp?v=1', antena: 'img/antena-hero.webp?v=2',
+      proyector: 'img/proyector-hero-poster.webp?v=1' };
     if (HEROE[p]) { var l = document.createElement('link'); l.rel = 'preload'; l.as = 'image'; l.href = HEROE[p]; l.setAttribute('fetchpriority', 'high'); document.head.appendChild(l); }
   } catch (e) {}
 })();
@@ -37,14 +38,14 @@
      (y sus 18 scripts al final). Las 6 que están en anuncios (window.__P) bajan SOLO la suya; el resto sigue bajando todas como
      antes. Se escribe en el mismo orden y mientras se lee el <head>, así que se ve exactamente igual. -->
 <script>
-window.__SOLO_LO_SUYO = { organizador: 1, nerve: 1, tabletas: 1, neocell: 1, lymphoria: 1, antena: 1 };
+window.__SOLO_LO_SUYO = { organizador: 1, nerve: 1, tabletas: 1, neocell: 1, lymphoria: 1, antena: 1, proyector: 1 };
 (function () {
   var P = window.__P || '', solo = window.__SOLO_LO_SUYO[P];
   [['organizador', 'organizador.css?v=23'], ['zapatero', 'zapatero.css?v=3'], ['desengrasante', 'desengrasante.css?v=5'],
    ['ampolleta', 'ampolleta.css?v=8'], ['tabletas', 'tabletas.css?v=5'], ['neocell', 'neocell.css?v=12'], ['dexe', 'dexe.css?v=8'],
    ['sopapo', 'sopapo.css?v=9'], ['lentes', 'lentes.css?v=2'], ['nerve', 'nerve.css?v=12'], ['clorofila', 'clorofila.css?v=23'],
    ['lymphoria', 'lymphoria.css?v=23'], ['antena', 'antena.css?v=6'], ['cargador', 'cargador.css?v=23'], ['guirnalda', 'guirnalda.css?v=30'],
-   ['foco', 'foco.css?v=19'], ['mascara', 'mascara.css?v=1']
+   ['foco', 'foco.css?v=19'], ['mascara', 'mascara.css?v=1'], ['proyector', 'proyector.css?v=1']
   ].forEach(function (x) { if (!solo || x[0] === P) document.write('<link rel="stylesheet" href="' + x[1] + '">'); });
 })();
 </script>
@@ -1232,7 +1233,7 @@ window.jayePixel = (function () {
    ['ampolleta', 'ampolleta.js?v=6'], ['tabletas', 'tabletas.js?v=5'], ['neocell', 'neocell.js?v=12'], ['dexe', 'dexe.js?v=5'],
    ['sopapo', 'sopapo.js?v=8'], ['lentes', 'lentes.js?v=1'], ['nerve', 'nerve.js?v=8'], ['clorofila', 'clorofila.js?v=24'],
    ['lymphoria', 'lymphoria.js?v=24'], ['antena', 'antena.js?v=9'], ['cargador', 'cargador.js?v=24'], ['guirnalda', 'guirnalda.js?v=31'],
-   ['foco', 'foco.js?v=21'], ['mascara', 'mascara.js?v=3'], ['balsamo', 'balsamo.js?v=2']
+   ['foco', 'foco.js?v=21'], ['mascara', 'mascara.js?v=3'], ['balsamo', 'balsamo.js?v=2'], ['proyector', 'proyector.js?v=1']
   ].forEach(function (x) { if (!solo || x[0] === P) document.write('<script src="' + x[1] + '"><\/script>'); });
 })();
 </script>

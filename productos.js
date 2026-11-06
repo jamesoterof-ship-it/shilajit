@@ -540,6 +540,126 @@ window.PRODUCTOS = [
     popular: 2,
   },
   {
+    /* PROYECTOR NAVIDEÑO LED · Dropi 187712 (Chamos/Carlos) · 05-11-2026.
+       Precios aprobados por James 05-11: 1 u. 19.500 · 2 u. 27.990 · 3 u. 34.990 (bajo los mas baratos de la
+       Biblioteca de Meta: 19.990 la unidad y 29.990 el par). Tachado = regla del 30 % del organizador.
+       Lo que se afirma sale de la ficha de una tienda que vende ESTE mismo producto de Dropi (Nochebuena):
+       soporte en U con tornillo, lamina de diseños cambiable, se enciende al enchufarlo con su cable
+       integrado, caja de 14 x 10 x 8 cm (230 g). 🔴 NO se dice USB ni 220 V ni que sea resistente al agua:
+       no esta confirmado. Diseño (proyector.css/.js): skill ui-ux-pro-max, aprobado por James 05-11. */
+    id: 'proyector', unidad: 'uno', promo: 2, promoAntesDelPack: true,
+    /* Reseñas REALES de compradores de este mismo proyector (cilindro negro, soporte en U, figuras navideñas)
+       en AliExpress, publicacion 3256806097732513, leidas el 05-11-2026: 794 opiniones, 736 de 4 y 5 estrellas
+       (668 de 5 y 68 de 4). Texto tal cual (traduccion de la propia tienda), solo compradores de habla hispana.
+       Fuera: las que hablan de la alimentacion (USB/pilas), del exterior o de quejas. NINGUNA escrita por nosotros. */
+    resenasResumen: { total: 736, nota: 4.9, rotulo: 'opiniones de 4 y 5 estrellas', barras: { 5: 668, 4: 68 } },
+    resenasReales: [
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-proyector/rp1.webp?v=1', texto: "Está increíble, ojalá hubiera pedido otro. Súper recomiendo y llego antes de tiempo" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-proyector/rp2.webp?v=1', texto: "todo bien es el segundo que compro, recomiendo ampliamente" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-proyector/rp3.webp?v=1', texto: "muy lindo, y la proyección es hermosa, colores hermosos" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-proyector/rp4.webp?v=1', texto: "está muy bien, pequeño y manejable, dibujos muy majos" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, foto: 'img/resenas-proyector/rp5.webp?v=1', texto: "llegó antes de tiempo ,me gusto mucho el artículo" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Luce genial, si está algo lejano no se distorsionan las imágenes y se ven grandes, el precio en oferta fue súper bajo 10/10" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Muy buen equipo proyector de imágenes navideñas, funciona muy bien aunque es pequeño, recomiendo comprarlo" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "exta hermoso me encantó justo como lo indica la foto lo recomiendo comprare mas" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Genial para decorar paredes o techos" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "muy bueno ... con una distancia de 10 metros , increíble luminosidad" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "exelente calidad, llegó en perfectas condiciones y funciona muy bien ampliamente recomendado" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Nos encantó 100% recomendado" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "rápida entrega y muy bonito sobre techo o paredes. gracias." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "es muy bonito, funciona muy bien. mi nieto está encantado" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Super chulo, los dibujos y las formas se ven genial, es pequeño y discreto." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "me gustó el toque que le dio al pasillo en mi deco navideña" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "está súper lindo, tal cual la descripción" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Quedas muy bonita en la habitación, se proyecta en varias posiciones, gracias al soporte que incluye. Muy buen producto." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "funciona bien 👍 gracias recomendado 👍🇨🇱😎" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Es muy bonito, solo que habría pedido uno más grande 😍" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "muy buen producto buena calidad" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "todo perfecto buen producto funciona perfectamente muy bonito gracias" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Es muy linda la proyección, estoy satisfecha con mi compra" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Todo perfecto y muy rápido." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Excelente, volveré a comprar." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "muy buen producto me gustó mucho" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Hermoso, funciona perfectamente" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "perfecto para la temporada" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "esta linda y me llegó rapidísimo" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Es súper bonito me encanta" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Muy bueno y funciona de manera excelente. Entrega puntual." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "excelente articulo y rápido" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Perfecto como lo explica" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "muy cumplida la entrega" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Ok. producto según descripción" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Producto encantador, vale la pena por el poco dinero." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "funciona bien, igual que la descripción" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "esta muy bien, veremos que dura" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "equilibrio calidad /precio" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "todo muy bien, como se describe." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 4, texto: "llegó en buen estado, dentro del plazo establecido para la entrega, es como se describe" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 4, texto: "Muy buena relación calidad-precio." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "muy bien calidad precio" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Bonito juguete para la diversión de los niños." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "esta muy lindo!!! las fotos no salen tan nítidas por que las imágenes están en movimiento. gracias vendedor! !" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "llegó en perfectas condiciones y en muy buen tiempo. recomiendo totalmente al vendedor y el producto. gracias." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "excelente me gustó mucho, algo sencillo el material pero cumple con su función, llegó antes de lo estimado" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Buen producto, proyecta bonitas imágenes . Servicio de envío y entrega muy rápido Muchas Gracias ." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "todo perfecto y envío rápido" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Buen producto y muy rápido en el envío" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Envío rápido. Buena calidad de imagen, aunque solo lo hemos probado en interior." },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "excelente proyección pequeña, pero buena" },
+      { nombre: 'Cliente', comuna: '', fecha: '', estrellas: 5, texto: "Llegó en excelentes condiciones, gracias al vendedor." },
+    ],
+    /* video REAL del proyector funcionando (ficha de AliExpress del mismo modelo): 10 s, recortado a cuadrado,
+       sin audio, sin texto ni marca de agua */
+    video: 'img/proyector-ficha.mp4?v=1',
+    antesDespues: 'img/prod-proyector-ba.webp?v=1',
+    antesDespuesSub: 'La misma casa, la misma noche: a oscuras, y con el proyector encendido en el pasto. Imagen ilustrativa.',
+    preguntas: [
+      { q: '¿Cómo se usa?', a: 'Lo enchufas y se enciende solo, con su cable integrado. Lo apuntas a la pared, al techo o a la fachada, y con la base en U y su tornillo le das la inclinación que quieras.' },
+      { q: '¿Qué figuras proyecta?', a: 'Figuras navideñas de colores que se mueven: copos de nieve, Papá Noel, árboles, renos, estrellas y campanas. La lámina de diseños se puede cambiar para variar la decoración.' },
+      { q: '¿Dónde lo puedo poner?', a: 'En el living, el comedor, el pasillo, la pieza de los niños o apuntando a la entrada. Mientras más oscuro el lugar, más brillan las figuras.' },
+      { q: '¿Sirve para afuera?', a: 'Puedes apuntarlo a la fachada desde un lugar protegido, como el alero o una ventana. Si lo dejas afuera, que quede donde no le caiga la lluvia.' },
+      { q: '¿Qué tamaño tiene?', a: 'Es chico y liviano: la caja mide 14 x 10 x 8 cm y pesa 230 gramos. Cabe en la palma de la mano.' },
+    ],
+    formulaRotulo: 'Qué incluye',
+    formulaTitulo: 'Tu casa de Navidad en un minuto.',
+    formulaSub: 'Sin escaleras, sin enredar guirnaldas y sin pasar la tarde colgando luces.',
+    formula: [
+      ['casa', 'Sin escaleras', 'Llena la pared o la fachada desde el piso, sin subirte a nada.'],
+      ['rayo', 'Se enchufa y listo', 'Se enciende al enchufarlo, con su cable integrado.'],
+      ['ojo', 'Figuras en movimiento', 'Copos, Papá Noel, árboles y renos que giran de colores.'],
+      ['llave', 'Base en U con tornillo', 'Le das la inclinación exacta hacia donde quieras proyectar.'],
+      ['pluma', 'Lámina cambiable', 'Cambias los diseños para variar la decoración.'],
+      ['escudo', 'Chico y liviano', '230 gramos: lo cambias de lugar cuando quieras.'],
+    ],
+    comparaTitulo: '¿Qué lo hace diferente?',
+    compara: [
+      'Cero escaleras: decoras la fachada entera desde el suelo.',
+      'Nada de guirnaldas enredadas ni ampolletas quemadas que revisar una por una.',
+      'Lo enchufas, lo apuntas y en un minuto la casa ya está de Navidad.',
+    ],
+    nombre: 'Proyector Navideño LED',
+    sub: 'Llena tu pared de figuras navideñas que se mueven',
+    categoria: 'Hogar',
+    foto: 'img/prod-proyector.webp?v=1',
+    fotos: ['img/prod-proyector.webp?v=1', 'img/prod-proyector-2.webp?v=1', 'img/prod-proyector-3.webp?v=1'],
+    acento: '#DC2626',   /* rojo navidad de la paleta de la skill (Gift & Wishlist), aprobado por James 05-11 */
+    desc: 'Un proyector LED chico que llena tu pared, el techo o la fachada de figuras navideñas de colores que se mueven: copos de nieve, Papá Noel, árboles, renos y estrellas.\n\nLo enchufas y se enciende solo. Con su base en U le das la inclinación que quieras, y la lámina de diseños se puede cambiar.\n\nSin escaleras, sin guirnaldas enredadas y sin pasar la tarde colgando luces: en un minuto la casa ya está de Navidad.',
+    puntos: [
+      'Figuras navideñas de colores que se mueven',
+      'Sin escaleras: decora la fachada desde el suelo',
+      'Se enchufa y se enciende, con cable integrado',
+      'Base en U con tornillo para darle la inclinación',
+      'Lámina de diseños cambiable',
+    ],
+    packs: [
+      /* 05-11 James: 19.500 / 27.990 / 34.990. Tachado = +30 % (regla del organizador), redondeado a la centena */
+      { cant: 1, precio: 19500, antes: 25400, texto: '1 proyector' },
+      { cant: 2, precio: 27990, antes: 36400, texto: '2 proyectores' },
+      { cant: 3, precio: 34990, antes: 45500, texto: '3 proyectores' },
+    ],
+    popular: 1,
+  },
+  {
     id: 'ducha', unidad: 'uno', promo: 2,
     fotosResenas: ['img/resenas-ducha/rd1.webp?v=1','img/resenas-ducha/rd2.webp?v=1','img/resenas-ducha/rd3.webp?v=1','img/resenas-ducha/rd4.webp?v=1'],
     antesDespues: 'img/prod-ducha-ba.webp?v=1',
@@ -2110,4 +2230,5 @@ window.PRECIOS_APROBADOS = [
   22500, 34500, 42500,   /* colágeno NeoCell: 1 · 2 · 3 frascos, 500 bajo Clicka y Tu compra segura (James, 13-10) */
   25500, 37500, 49500,   /* sopapo destapador a presión: 1 · 2 · 3 sopapos, bajo BuyPepo y Mercachile (James, 15-10) */
   22990, 28990, 36990,   /* NeuraZenx Nerve Support: 1 · 2 · 3 frascos, bajo VentaClick 23.990 / 29.990 / 37.990 (James, 28-10) */
+  19500, 27990, 34990,   /* proyector navideño LED 187712: 1 · 2 · 3, bajo Kikora/Nochebuena 19.990 y Anugus 2 x 29.990 (James, 05-11) */
 ];
